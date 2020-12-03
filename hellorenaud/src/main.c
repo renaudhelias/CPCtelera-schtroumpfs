@@ -14,6 +14,9 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+// https://github.com/lronaldo/cpctelera/tree/drawbackbuffer/cpctelera/src/sprites/drawToSpriteBuffer
+// https://bit.ly/CPCtelera15WIP cpct_getScreenToSprite
 //------------------------------------------------------------------------------
 
 #include <cpctelera.h>
@@ -35,9 +38,13 @@ void main(void) {
    u8* pvmem;  // Pointer to video memory
    u8* p;
    u8* sprite=g_items_0;
+   u8 pos;
+   u32 seed;
    //CPCT_BlendMode mode;
    // Clear Screen
    cpct_disableFirmware();
+   // CLS with 0.
+   cpct_clearScreen_f64(0);
    cpct_setVideoMode(0);
    cpct_setBorder(HW_BLACK);
    cpct_setPalette(g_tile_palette, 6);
@@ -57,6 +64,9 @@ void main(void) {
    p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
    cpct_drawSprite(sprite, p, 4, 8);
 
+   p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
+   cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+
    //p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
    //cpct_drawSpriteBlended(p, 32, 16, g_tile_schtroumpf);
    cpct_drawStringM0("Welcome to you!", pvmem, 2, 0);
@@ -67,5 +77,26 @@ void main(void) {
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
    // Loop forever
-   while (1);
+   while (1){
+      seed++;
+
+      cpct_scanKeyboard_f();
+
+      // Check if user has pressed a Cursor Key and, if so, move the sprite if
+      // it will still be inside screen boundaries
+      if      (cpct_isKeyPressed(Key_CursorRight) && pos < 0xFF ) ++pos; 
+      else if (cpct_isKeyPressed(Key_CursorLeft)  && pos > 0    ) --pos; 
+      if      (cpct_isKeyPressed(Key_CursorUp)    && pos > 0    ) --pos;
+      else if (cpct_isKeyPressed(Key_CursorDown)  && pos < 0xFF ) ++pos;
+ 
+
+   p = cpct_getScreenPtr(CPCT_VMEM_START, 32-1,16-1);
+   cpct_drawCharM0(p, 2,0, pos);
+   p  = cpct_getScreenPtr(CPCT_VMEM_START, 8-1, 94);
+   cpct_srand(seed);
+   cpct_drawCharM0(p, 2,0, cpct_rand());
+}
+
+
+
 }
