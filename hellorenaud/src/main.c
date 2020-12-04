@@ -15,8 +15,6 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-// https://github.com/lronaldo/cpctelera/tree/drawbackbuffer/cpctelera/src/sprites/drawToSpriteBuffer
-// https://bit.ly/CPCtelera15WIP cpct_getScreenToSprite
 //------------------------------------------------------------------------------
 
 #include <cpctelera.h>
@@ -40,7 +38,7 @@ void main(void) {
    u8* sprite=g_items_0;
    u8 pos;
    u32 seed;
-   //CPCT_BlendMode mode;
+
    // Clear Screen
    cpct_disableFirmware();
    // CLS with 0.
@@ -50,29 +48,25 @@ void main(void) {
    cpct_setPalette(g_tile_palette, 6);
    cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
-   // Draw String on the middle of the screen
-   pvmem = cpct_getScreenPtr(CPCT_VMEM_START, 20, 88);
-//   cpct_drawStringM0("Welcome to you!", pvmem, 2, 0);
-
-
-   // CPCT_BLEND_XOR, CPCT_BLEND_AND x, CPCT_BLEND_OR, CPCT_BLEND_ADD, CPCT_BLEND_SUB, CPCT_BLEND_LDI x, CPCT_BLEND_ADC, CPCT_BLEND_SBC, CPCT_BLEND_NOP
-
-   //mode = CPCT_BLEND_ADD;
-   // Set the blend mode to use before drawing the sprite using blending
-   //cpct_setBlendMode(mode);
-   // Draw the sprite to screen with blending
+   // Draw the sprite to screen
    p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
+   cpct_drawSprite(sprite, p, 4, 8);
+
+   // efface l'ecran
+   cpct_memset_f64 (CPCT_VMEM_START, 0xFFFF, 0x4000);
+
+   //cpct_hflipSpriteMaskedM0 : affichage de la tete de mort de droite à gauche (flip)
+   cpct_hflipSpriteM0(4, 8, sprite);
    cpct_drawSprite(sprite, p, 4, 8);
 
    p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
    cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 
-   //p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
-   //cpct_drawSpriteBlended(p, 32, 16, g_tile_schtroumpf);
+   // Draw String on the middle of the screen
+   pvmem = cpct_getScreenPtr(CPCT_VMEM_START, 20, 88);
    cpct_drawStringM0("Welcome to you!", pvmem, 2, 0);
 
-   //mode = CPCT_BLEND_OR;
-   //cpct_setBlendMode(mode);
+   // le schtroumpf est affiché devant la phrase.
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
@@ -89,14 +83,11 @@ void main(void) {
       if      (cpct_isKeyPressed(Key_CursorUp)    && pos > 0    ) --pos;
       else if (cpct_isKeyPressed(Key_CursorDown)  && pos < 0xFF ) ++pos;
  
-
-   p = cpct_getScreenPtr(CPCT_VMEM_START, 32-1,16-1);
-   cpct_drawCharM0(p, 2,0, pos);
-   p  = cpct_getScreenPtr(CPCT_VMEM_START, 8-1, 94);
-   cpct_srand(seed);
-   cpct_drawCharM0(p, 2,0, cpct_rand());
-}
-
-
+      p = cpct_getScreenPtr(CPCT_VMEM_START, 32-1,16-1);
+      cpct_drawCharM0(p, 2,0, pos);
+      p = cpct_getScreenPtr(CPCT_VMEM_START, 8-1, 94);
+      cpct_srand(seed);
+      cpct_drawCharM0(p, 2,0, cpct_rand());
+   }
 
 }
