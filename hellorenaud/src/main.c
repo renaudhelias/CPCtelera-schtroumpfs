@@ -44,7 +44,7 @@ void main(void) {
    u8* sprite=g_items_0;
    u8 pos;
 
-   // Clear Screen
+   // Clear Screen (cpct_drawStringM0)
    cpct_disableFirmware();
 
    // CLS with 0.
