@@ -54,6 +54,7 @@ void main(void) {
    cpct_setPalette(g_tile_palette, 6);
    //cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
+   // horizontal scroll
    cpct_setVideoMemoryOffset(3);
 
    // Draw the sprite to screen
