@@ -14,6 +14,7 @@
 	.globl _cpct_setSeed_mxor
 	.globl _cpct_getRandom_mxor_u8
 	.globl _cpct_getScreenPtr
+	.globl _cpct_setVideoMemoryOffset
 	.globl _cpct_setPALColour
 	.globl _cpct_setPalette
 	.globl _cpct_setVideoMode
@@ -148,6 +149,9 @@ _main::
 	ld	hl, #_g_tile_palette
 	push	hl
 	call	_cpct_setPalette
+;src/main.c:57: cpct_setVideoMemoryOffset(3);
+	ld	l, #0x03
+	call	_cpct_setVideoMemoryOffset
 ;src/main.c:60: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
 	ld	hl, #0x0f0f
 	push	hl
