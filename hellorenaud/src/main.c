@@ -32,21 +32,29 @@ const u8 g_items_0[4 * 8] = {
 	0x00, 0x00, 0x00, 0x00
 };
 
+void myInterruptHandler() {
+   static u8 i;
+   cpct_setBorder(i+1);
+   if (++i > 5) i=0;
+}
+
 void main(void) {
    u8* pvmem;  // Pointer to video memory
    u8* p;
    u8* sprite=g_items_0;
    u8 pos;
-   u32 seed;
 
    // Clear Screen
    cpct_disableFirmware();
+
    // CLS with 0.
    cpct_clearScreen_f64(0);
    cpct_setVideoMode(0);
    cpct_setBorder(HW_BLACK);
    cpct_setPalette(g_tile_palette, 6);
-   cpct_memset(CPCT_VMEM_START, 0, 0x4000);
+   //cpct_memset(CPCT_VMEM_START, 0, 0x4000);
+
+   
 
    // Draw the sprite to screen
    p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
@@ -70,24 +78,18 @@ void main(void) {
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
+   pvmem = cpct_getScreenPtr(CPCT_VMEM_START, 10, 150);
+   cpct_drawStringM0("Press ENTER.", pvmem, 3, 2);
    // Loop forever
-   while (1){
-      seed++;
-
-      cpct_scanKeyboard_f();
-
-      // Check if user has pressed a Cursor Key and, if so, move the sprite if
-      // it will still be inside screen boundaries
-      if      (cpct_isKeyPressed(Key_CursorRight) && pos < 0xFF ) ++pos; 
-      else if (cpct_isKeyPressed(Key_CursorLeft)  && pos > 0    ) --pos; 
-      if      (cpct_isKeyPressed(Key_CursorUp)    && pos > 0    ) --pos;
-      else if (cpct_isKeyPressed(Key_CursorDown)  && pos < 0xFF ) ++pos;
- 
-      p = cpct_getScreenPtr(CPCT_VMEM_START, 32-1,16-1);
-      cpct_drawCharM0(p, 2,0, pos);
+   cpct_srand(77);
+      
+   cpct_scanKeyboard_f();
+   while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
       p = cpct_getScreenPtr(CPCT_VMEM_START, 8-1, 94);
-      cpct_srand(seed);
       cpct_drawCharM0(p, 2,0, cpct_rand());
+      cpct_scanKeyboard_f();
    }
+   cpct_setInterruptHandler(myInterruptHandler);
+   while (1) {}
 
 }

@@ -7,7 +7,8 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-  0 ___str_0                                                       01C3 R
+  0 ___str_0                                                       0166 R
+  0 ___str_1                                                       0176 R
     _cpct_disableFirmware                                          **** GX
     _cpct_drawCharM0                                               **** GX
     _cpct_drawSolidBox                                             **** GX
@@ -18,19 +19,21 @@ Symbol Table
     _cpct_getScreenPtr                                             **** GX
     _cpct_hflipSpriteM0                                            **** GX
     _cpct_isKeyPressed                                             **** GX
-    _cpct_memset                                                   **** GX
     _cpct_memset_f64                                               **** GX
     _cpct_px2byteM0                                                **** GX
     _cpct_restoreState_mxor_u8                                     **** GX
     _cpct_scanKeyboard_f                                           **** GX
+    _cpct_setInterruptHandler                                      **** GX
     _cpct_setPALColour                                             **** GX
     _cpct_setPalette                                               **** GX
     _cpct_setSeed_mxor                                             **** GX
     _cpct_setVideoMode                                             **** GX
-  0 _g_items_0                                                     01A3 GR
+  0 _g_items_0                                                     0020 GR
     _g_tile_palette                                                **** GX
     _g_tile_schtroumpf                                             **** GX
-  0 _main                                                          0000 GR
+  0 _main                                                          0040 GR
+  0 _myInterruptHandler                                            0000 GR
+  1 _myInterruptHandler_i_1_78                                     0000 R
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
@@ -38,8 +41,8 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  1D3   flags    0
-   1 _DATA                                      size    0   flags    0
+   0 _CODE                                      size  183   flags    0
+   1 _DATA                                      size    1   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8
    4 _HOME                                      size    0   flags    0

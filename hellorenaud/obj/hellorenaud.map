@@ -10,7 +10,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  .__.ABS.                           cpct_random
      00000000  l__CABS                         
      00000000  l__DABS                         
-     00000000  l__DATA                         
      00000000  l__GSFINAL                      
      00000000  l__GSINIT                       
      00000000  l__HOME                         
@@ -18,66 +17,79 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  l__INITIALIZER                  
      00000000  s__CABS                         
      00000000  s__DABS                         
-     00000A18  l__CODE                         
+     00000001  l__DATA                         
+     000009E2  l__CODE                         
      00004000  s__CODE                         
-     00004A18  s__DATA                         
-     00004A18  s__GSFINAL                      
-     00004A18  s__GSINIT                       
-     00004A18  s__HOME                         
-     00004A18  s__INITIALIZED                  
-     00004A18  s__INITIALIZER                  
+     000049E2  s__DATA                         
+     000049E3  s__GSFINAL                      
+     000049E3  s__GSINIT                       
+     000049E3  s__HOME                         
+     000049E3  s__INITIALIZED                  
+     000049E3  s__INITIALIZER                  
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00004000    00000A18 =        2584. bytes (REL,CON)
+_CODE                               00004000    000009E2 =        2530. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004000  _main                              main
-     000041A3  _g_items_0                         main
-     000041D3  _g_tile_palette                    schtroumpf
-     000041D9  _g_tile_schtroumpf                 schtroumpf
-     000045D9  _cpct_setPalette                   cpct_video
-     000045F0  _cpct_isKeyPressed                 cpct_keyboard
-     000045F0  cpct_isKeyPressed_asm              cpct_keyboard
-     000045FC  _cpct_scanKeyboard_f               cpct_keyboard
-     000045FC  cpct_scanKeyboard_f_asm            cpct_keyboard
-     00004666  _cpct_setPALColour                 cpct_video
-     00004672  _cpct_drawStringM0                 cpct_strings
-     0000467A  cpct_drawStringM0_asm              cpct_strings
-     00004696  _cpct_drawSprite                   cpct_sprites
-     0000473B  _cpct_drawCharM0                   cpct_strings
-     00004748  cpct_drawCharM0_asm                cpct_strings
-     000047C8  _cpct_keyboardStatusBuffer         cpct_keyboard
-     000047D2  _cpct_setSeed_mxor                 cpct_random
-     000047D2  cpct_setSeed_mxor_asm              cpct_random
-     000047DA  _cpct_restoreState_mxor_u8         cpct_random
-     000047DA  cpct_restoreState_mxor_u8_asm      cpct_random
-     000047E0  _cpct_getRandom_mxor_u8            cpct_random
-     000047E0  cpct_getRandom_mxor_u8             cpct_random
-     000047E1  cpct_randomIdx_mxor_u8             cpct_random
-     00004805  _cpct_drawSpriteMasked             cpct_sprites
-     00004834  _cpct_memset_f64                   cpct_memutils
-     0000487C  _cpct_nextRandom_mxor_u32          cpct_random
-     0000487C  cpct_nextRandom_mxor_u32_asm       cpct_random
-     0000489F  _cpct_hflipSpriteM0                cpct_sprites
-     000048E3  _cpct_setVideoMode                 cpct_video
-     000048F1  dc_mode0_ct                        cpct_strings
-     00004901  _cpct_px2byteM0                    cpct_sprites
-     0000491D  _cpct_memset                       cpct_memutils
-     0000492B  _cpct_disableFirmware              cpct_firmware
-     0000492B  _cpct_removeInterruptHandler       cpct_firmware
-     0000492B  cpct_disableFirmware_asm           cpct_firmware
-     0000492B  cpct_removeInterruptHandler_asm    cpct_firmware
-     0000493B  _cpct_drawSolidBox                 cpct_sprites
-     000049F3  _cpct_mode_rom_status              cpct_firmware
-     000049F4  _cpct_getScreenPtr                 cpct_video
-     00004A14  _cpct_mxor32_seed                  cpct_random
+     00004000  _myInterruptHandler                main
+     00004020  _g_items_0                         main
+     00004040  _main                              main
+     00004183  _g_tile_palette                    schtroumpf
+     00004189  _g_tile_schtroumpf                 schtroumpf
+     00004589  _cpct_setPalette                   cpct_video
+     000045A0  _cpct_isKeyPressed                 cpct_keyboard
+     000045A0  cpct_isKeyPressed_asm              cpct_keyboard
+     000045AC  _cpct_scanKeyboard_f               cpct_keyboard
+     000045AC  cpct_scanKeyboard_f_asm            cpct_keyboard
+     00004616  _cpct_setPALColour                 cpct_video
+     00004622  _cpct_drawStringM0                 cpct_strings
+     0000462A  cpct_drawStringM0_asm              cpct_strings
+     00004646  _cpct_drawSprite                   cpct_sprites
+     000046EB  _cpct_drawCharM0                   cpct_strings
+     000046F8  cpct_drawCharM0_asm                cpct_strings
+     00004778  _cpct_keyboardStatusBuffer         cpct_keyboard
+     00004782  _cpct_setSeed_mxor                 cpct_random
+     00004782  cpct_setSeed_mxor_asm              cpct_random
+     0000478A  _cpct_restoreState_mxor_u8         cpct_random
+     0000478A  cpct_restoreState_mxor_u8_asm      cpct_random
+     00004790  _cpct_getRandom_mxor_u8            cpct_random
+     00004790  cpct_getRandom_mxor_u8             cpct_random
+     00004791  cpct_randomIdx_mxor_u8             cpct_random
+     000047B5  _cpct_drawSpriteMasked             cpct_sprites
+     000047E4  _cpct_memset_f64                   cpct_memutils
+     0000482C  _cpct_nextRandom_mxor_u32          cpct_random
+     0000482C  cpct_nextRandom_mxor_u32_asm       cpct_random
+     0000484F  _cpct_hflipSpriteM0                cpct_sprites
+     00004893  _cpct_setVideoMode                 cpct_video
+     000048A1  dc_mode0_ct                        cpct_strings
+     000048B1  _cpct_px2byteM0                    cpct_sprites
+     000048CD  _cpct_disableFirmware              cpct_firmware
+     000048CD  _cpct_removeInterruptHandler       cpct_firmware
+     000048CD  cpct_disableFirmware_asm           cpct_firmware
+     000048CD  cpct_removeInterruptHandler_asm    cpct_firmware
+     000048DD  _cpct_drawSolidBox                 cpct_sprites
+     00004995  _cpct_mode_rom_status              cpct_firmware
+     00004996  _cpct_getScreenPtr                 cpct_video
+     000049B6  _cpct_setInterruptHandler          cpct_firmware
+     000049B6  cpct_setInterruptHandler_asm       cpct_firmware
+     000049C7  cpct_safeInterruptHandlerHook      cpct_firmware
+     000049DE  _cpct_mxor32_seed                  cpct_random
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_DATA                               000049E2    00000001 =           1. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 
 Files Linked                              [ module(s) ]
 
@@ -124,8 +136,6 @@ Libraries Linked                          [ object file ]
 /home/freemac/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_px2byteM0_cbindings.rel ]
 /home/freemac/cpctelera/cpctelera/cpctelera.lib
-                                          [ cpct_memset_cbinding.rel ]
-/home/freemac/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_removeInterruptHandler.rel ]
 /home/freemac/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_drawSolidBox_cbindings.rel ]
@@ -134,9 +144,11 @@ Libraries Linked                          [ object file ]
 /home/freemac/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_getScreenPtr_cbindings.rel ]
 /home/freemac/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_setInterruptHandler.rel ]
+/home/freemac/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_mxor32_seed.rel ]
 
-ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 
 User Base Address Definitions
 
