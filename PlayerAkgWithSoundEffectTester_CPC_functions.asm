@@ -54,6 +54,9 @@ Start:  equ $
         ld hl,SoundEffects
         call PLY_AKG_InitSoundEffects
         
+		ei
+		ret
+
 Sync:
  ;; backup Z80 state
   push af

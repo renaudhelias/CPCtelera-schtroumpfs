@@ -34,7 +34,7 @@ Symbol Table
     _g_tile_schtroumpf                                             **** GX
   0 _main                                                          0040 GR
   0 _myInterruptHandler                                            0000 GR
-  1 _myInterruptHandler_i_1_78                                     0000 R
+  1 _myInterruptHandler_i_1_79                                     0000 R
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.

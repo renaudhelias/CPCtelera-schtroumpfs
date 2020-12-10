@@ -17,8 +17,14 @@
 //
 //------------------------------------------------------------------------------
 
+#define NO_SOUND
+
 #include <cpctelera.h>
 #include "schtroumpf.h"
+#ifndef NO_SOUND
+#include "audio.h"
+#endif
+#include "jdvapi_floppy.h"
 
 // Tile g_items_0: 8x8 pixels, 4x8 bytes.
 const u8 g_items_0[4 * 8] = {
@@ -33,9 +39,17 @@ const u8 g_items_0[4 * 8] = {
 };
 
 void myInterruptHandler() {
+
+
    static u8 i;
    cpct_setBorder(i+1);
    if (++i > 5) i=0;
+
+#ifndef NO_SOUND
+if (i==2) {
+akp_musicPlay();
+}
+#endif
 }
 
 void main(void) {
@@ -83,7 +97,14 @@ void main(void) {
    cpct_drawStringM0("Press ENTER.", pvmem, 3, 2);
    // Loop forever
    cpct_srand(77);
-      
+   
+#ifndef NO_SOUND
+   SetupDOS();
+   LoadFile("AKG6000.BIN", (char *)0x6000);
+   LoadFile("MOLUSK.AKG", (char *)0x7000);
+   akp_musicInit();
+#endif
+
    cpct_scanKeyboard_f();
    while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
       p = cpct_getScreenPtr(CPCT_VMEM_START, 8-1, 94);
