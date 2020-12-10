@@ -1,0 +1,2 @@
+rasm PlayerAkgWithSoundEffectTester_CPC_functions.asm
+pause
