@@ -3,7 +3,7 @@
 #define _SCHTROUMPF_H_
 
 #include <types.h>
-extern const u8 g_tile_palette[6];
+extern const u8 g_tile_palette[16];
 
 #define G_TILE_SCHTROUMPF_W 16
 #define G_TILE_SCHTROUMPF_H 32

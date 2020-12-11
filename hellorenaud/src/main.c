@@ -58,25 +58,40 @@ void main(void) {
    u8* sprite=g_items_0;
    u8 pos;
 
+//   SetupDOS();
+//	if (1==1) return;
+//   LoadFile("akg6000.bin", (char *)0x6000);
+//   LoadFile("molusk.akg", (char *)0x7000);
+
+
+
    // Clear Screen (cpct_drawStringM0)
    cpct_disableFirmware();
+// display &4000
+  __asm
+    ld bc,#0xBC00+12 ; On met la valeur 16 dans
+    out (c),c      ; le registre 12 du CRTC
+    ld bc,#0xBD00+16
+    out (c),c
+  __endasm;
 
    // CLS with 0.
-   cpct_clearScreen_f64(0);
+   //cpct_clearScreen_f64(0);
    cpct_setVideoMode(0);
    cpct_setBorder(HW_BLACK);
-   cpct_setPalette(g_tile_palette, 6);
+   cpct_setPalette(g_tile_palette, 16);
    //cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
    // horizontal scroll
-   cpct_setVideoMemoryOffset(3);
+   //cpct_setVideoMemoryOffset(3);
 
    // Draw the sprite to screen
    p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
    cpct_drawSprite(sprite, p, 4, 8);
 
    // efface l'ecran
-   cpct_memset_f64 (CPCT_VMEM_START, 0xFFFF, 0x4000);
+   //cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x4000);
+   //cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x4000);
 
    //cpct_hflipSpriteMaskedM0 : affichage de la tete de mort de droite à gauche (flip)
    cpct_hflipSpriteM0(4, 8, sprite);
@@ -98,10 +113,8 @@ void main(void) {
    // Loop forever
    cpct_srand(77);
    
+   
 #ifndef NO_SOUND
-   SetupDOS();
-   LoadFile("AKG6000.BIN", (char *)0x6000);
-   LoadFile("MOLUSK.AKG", (char *)0x7000);
    akp_musicInit();
 #endif
 
@@ -111,6 +124,14 @@ void main(void) {
       cpct_drawCharM0(p, 2,0, cpct_rand());
       cpct_scanKeyboard_f();
    }
+// back to &C000
+  __asm
+    ld bc,#0xBC00+12 ; On met la valeur 48 dans
+    out (c),c      ; le registre 12 du CRTC
+    ld bc,#0xBD00+48
+    out (c),c
+  __endasm;
+
    cpct_setInterruptHandler(myInterruptHandler);
    while (1) {}
 

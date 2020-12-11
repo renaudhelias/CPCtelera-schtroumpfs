@@ -49,6 +49,16 @@ _g_tile_palette:
 	.db #0x54	; 84	'T'
 	.db #0x57	; 87	'W'
 	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
 _g_tile_schtroumpf:
 	.db #0xff	; 255
 	.db #0x00	; 0
