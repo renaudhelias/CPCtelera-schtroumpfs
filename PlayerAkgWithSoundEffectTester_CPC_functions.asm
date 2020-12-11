@@ -14,7 +14,7 @@
         ;bankset 0
 		
 		
-LAST_SOUND_EFFECT_INDEX: equ 5                 ;Index of the last sound effect.
+LAST_SOUND_EFFECT_INDEX: equ 2                 ;Index of the last sound effect.
 
         org #6000
 		jp Start
@@ -51,7 +51,7 @@ Start:  equ $
 
 		ld (SoundEffects),de
         ;Initializes the sound effects.
-        ld hl,SoundEffects
+        ld hl,de
         call PLY_AKG_InitSoundEffects
         
 		ei
