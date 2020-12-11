@@ -67,9 +67,9 @@ void main(void) {
 
 
    // Clear Screen (cpct_drawStringM0)
-   // cpct_disableFirmware();
-   raster_halt();
-   cpct_setStackLocation(0x8000);
+   cpct_disableFirmware();
+   //raster_halt();
+   //cpct_setStackLocation(0x8000);
 
 // copy from &4000 bank4 to &C000
 //bank4_4000();
@@ -80,7 +80,7 @@ calque4000();
    // CLS with 0.
    //cpct_clearScreen_f64(0);
    cpct_setVideoMode(0);
-
+while (1) {}
    cpct_setBorder(HW_BLACK);
    cpct_setPalette(g_tile_palette, 16);
    //cpct_memset(CPCT_VMEM_START, 0, 0x4000);
