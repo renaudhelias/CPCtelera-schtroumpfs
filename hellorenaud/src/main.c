@@ -58,6 +58,7 @@ void main(void) {
    u8* sprite=g_items_0;
    u8 pos;
 
+// sdcc -mz80 -c --std-c99 --opt-code-speed --fno-omit-frame-pointer --oldralloc jdvapi_floppy.c
 //   SetupDOS();
 //	if (1==1) return;
 //   LoadFile("akg6000.bin", (char *)0x6000);
@@ -66,13 +67,14 @@ void main(void) {
 
 
    // Clear Screen (cpct_drawStringM0)
-   cpct_disableFirmware();
+   // cpct_disableFirmware();
+   raster_halt();
    cpct_setStackLocation(0x8000);
 
 // copy from &4000 bank4 to &C000
 //bank4_4000();
 //cpct_memcpy(0x4000, 0xC000, 0x4000);
-//bank0123();
+bank0123();
 calque4000();
 
    // CLS with 0.
@@ -84,7 +86,7 @@ calque4000();
    //cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
    // horizontal scroll
-   //cpct_setVideoMemoryOffset(3);
+   cpct_setVideoMemoryOffset(3);
 
    // Draw the sprite to screen
    p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
@@ -92,7 +94,7 @@ calque4000();
 
    // efface l'ecran
    //cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x4000);
-   //cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x4000);
+   cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
 
    //cpct_hflipSpriteMaskedM0 : affichage de la tete de mort de droite à gauche (flip)
    cpct_hflipSpriteM0(4, 8, sprite);

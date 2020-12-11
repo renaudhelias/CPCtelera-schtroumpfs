@@ -7,11 +7,11 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-  0 ___str_0                                                       0154 R
-  0 ___str_1                                                       0164 R
+  0 ___str_0                                                       016D R
+  0 ___str_1                                                       017D R
+    _bank0123                                                      **** GX
     _calque4000                                                    **** GX
     _calqueC000                                                    **** GX
-    _cpct_disableFirmware                                          **** GX
     _cpct_drawCharM0                                               **** GX
     _cpct_drawSolidBox                                             **** GX
     _cpct_drawSprite                                               **** GX
@@ -21,6 +21,7 @@ Symbol Table
     _cpct_getScreenPtr                                             **** GX
     _cpct_hflipSpriteM0                                            **** GX
     _cpct_isKeyPressed                                             **** GX
+    _cpct_memset_f64                                               **** GX
     _cpct_px2byteM0                                                **** GX
     _cpct_restoreState_mxor_u8                                     **** GX
     _cpct_scanKeyboard_f                                           **** GX
@@ -29,6 +30,7 @@ Symbol Table
     _cpct_setPalette                                               **** GX
     _cpct_setSeed_mxor                                             **** GX
     _cpct_setStackLocation                                         **** GX
+    _cpct_setVideoMemoryOffset                                     **** GX
     _cpct_setVideoMode                                             **** GX
   0 _g_items_0                                                     0020 GR
     _g_tile_palette                                                **** GX
@@ -36,13 +38,14 @@ Symbol Table
   0 _main                                                          0040 GR
   0 _myInterruptHandler                                            0000 GR
   1 _myInterruptHandler_i_1_80                                     0000 R
+    _raster_halt                                                   **** GX
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  171   flags    0
+   0 _CODE                                      size  18A   flags    0
    1 _DATA                                      size    1   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8
