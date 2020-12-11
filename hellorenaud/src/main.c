@@ -24,7 +24,7 @@
 #ifndef NO_SOUND
 #include "audio.h"
 #endif
-#include "jdvapi_floppy.h"
+#include "jdvapi_sync.h"
 
 // Tile g_items_0: 8x8 pixels, 4x8 bytes.
 const u8 g_items_0[4 * 8] = {
@@ -67,17 +67,18 @@ void main(void) {
 
    // Clear Screen (cpct_drawStringM0)
    cpct_disableFirmware();
-// display &4000
-  __asm
-    ld bc,#0xBC00+12 ; On met la valeur 16 dans
-    out (c),c      ; le registre 12 du CRTC
-    ld bc,#0xBD00+16
-    out (c),c
-  __endasm;
+   cpct_setStackLocation(0x8000);
+
+// copy from &4000 bank4 to &C000
+//bank4_4000();
+//cpct_memcpy(0x4000, 0xC000, 0x4000);
+//bank0123();
+calque4000();
 
    // CLS with 0.
    //cpct_clearScreen_f64(0);
    cpct_setVideoMode(0);
+
    cpct_setBorder(HW_BLACK);
    cpct_setPalette(g_tile_palette, 16);
    //cpct_memset(CPCT_VMEM_START, 0, 0x4000);
@@ -124,14 +125,7 @@ void main(void) {
       cpct_drawCharM0(p, 2,0, cpct_rand());
       cpct_scanKeyboard_f();
    }
-// back to &C000
-  __asm
-    ld bc,#0xBC00+12 ; On met la valeur 48 dans
-    out (c),c      ; le registre 12 du CRTC
-    ld bc,#0xBD00+48
-    out (c),c
-  __endasm;
-
+calqueC000();
    cpct_setInterruptHandler(myInterruptHandler);
    while (1) {}
 
