@@ -53,10 +53,8 @@ akp_musicPlay();
 }
 
 void main(void) {
-   u8* pvmem;  // Pointer to video memory
    u8* p;
    u8* sprite=g_items_0;
-   u8 pos;
 
 // sdcc -mz80 -c --std-c99 --opt-code-speed --fno-omit-frame-pointer --oldralloc jdvapi_floppy.c
 //   SetupDOS();
@@ -64,26 +62,22 @@ void main(void) {
 //   LoadFile("akg6000.bin", (char *)0x6000);
 //   LoadFile("molusk.akg", (char *)0x7000);
 
-
-
    // Clear Screen (cpct_drawStringM0)
    cpct_disableFirmware();
    //raster_halt();
    //cpct_setStackLocation(0x8000);
 
-// copy from &4000 bank4 to &C000
-//bank4_4000();
-//cpct_memcpy(0x4000, 0xC000, 0x4000);
-bank0123();
-calque4000();
-
+   bank4_4000();
+   bank0123();
+   calqueC000();
    // CLS with 0.
    //cpct_clearScreen_f64(0);
    cpct_setVideoMode(0);
-while (1) {}
+
+
    cpct_setBorder(HW_BLACK);
    cpct_setPalette(g_tile_palette, 16);
-   //cpct_memset(CPCT_VMEM_START, 0, 0x4000);
+   cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
    // horizontal scroll
    cpct_setVideoMemoryOffset(3);
@@ -101,18 +95,19 @@ while (1) {}
    cpct_drawSprite(sprite, p, 4, 8);
 
    p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
-   cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 
-   // Draw String on the middle of the screen
-   pvmem = cpct_getScreenPtr(CPCT_VMEM_START, 20, 88);
-   cpct_drawStringM0("Welcome to you!", pvmem, 2, 0);
+   cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 
    // le schtroumpf est affiché devant la phrase.
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
-   pvmem = cpct_getScreenPtr(CPCT_VMEM_START, 10, 150);
-   cpct_drawStringM0("Press ENTER.", pvmem, 3, 2);
+//Faire BIP (PRINT CHR$(7))
+//__asm
+//ld a,#0x07
+//call #0xBB5A
+//__endasm;
+
    // Loop forever
    cpct_srand(77);
    
@@ -123,11 +118,13 @@ while (1) {}
 
    cpct_scanKeyboard_f();
    while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
-      p = cpct_getScreenPtr(CPCT_VMEM_START, 8-1, 94);
-      cpct_drawCharM0(p, 2,0, cpct_rand());
       cpct_scanKeyboard_f();
    }
-calqueC000();
+
+   // horizontal scroll
+   cpct_setVideoMemoryOffset(0);
+   calque4000();
+
    cpct_setInterruptHandler(myInterruptHandler);
    while (1) {}
 
