@@ -4,5 +4,7 @@
 void akp_musicInit();
 
 void akp_musicPlay();
+
+void akp_sfxPlay();
 #endif
 #endif

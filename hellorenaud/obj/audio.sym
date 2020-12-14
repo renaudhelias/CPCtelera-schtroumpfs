@@ -9,16 +9,18 @@ Symbol Table
     .__.H$L.                                                    =  0000 L
   0 _akp_musicInit                                                 0000 GR
   0 _akp_musicPlay                                                 00AF GR
+  0 _akp_sfxPlay                                                   00CF GR
   0 _effets1                                                       0044 GR
   0 _effets2                                                       0089 GR
   1 _i                                                             0000 GR
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size   CF   flags    0
+   0 _CODE                                      size   EF   flags    0
    1 _DATA                                      size    2   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

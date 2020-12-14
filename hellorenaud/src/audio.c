@@ -146,4 +146,40 @@ void akp_musicPlay()
   pop af
 	__endasm;
 }
+
+void akp_sfxPlay()
+{
+	__asm
+	;; backup Z80 state
+  push af
+  push bc
+  push de
+  push hl
+  push ix
+  push iy
+  exx
+  ex af, af' ;; '
+  push af
+  push bc
+  push de
+  push hl
+	
+	;; AKG6000.BIN/exemple.asm
+	call #0x6006
+	
+	;; restore Z80 state
+  pop hl
+  pop de
+  pop bc
+  pop af
+  ex af, af' ;; '
+  exx
+  pop iy
+  pop ix
+  pop hl
+  pop de
+  pop bc
+  pop af
+	__endasm;
+}
 #endif

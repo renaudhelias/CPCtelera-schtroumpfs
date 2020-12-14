@@ -8,6 +8,7 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _akp_sfxPlay
 	.globl _akp_musicPlay
 	.globl _akp_musicInit
 	.globl _i
@@ -200,6 +201,41 @@ _akp_musicPlay::
 	push	hl
 ;;	AKG6000.BIN/exemple.asm
 	call	#0x6003
+;;	restore Z80 state
+	pop	hl
+	pop	de
+	pop	bc
+	pop	af
+	ex	af, af' ;; '
+	exx
+	pop	iy
+	pop	ix
+	pop	hl
+	pop	de
+	pop	bc
+	pop	af
+	ret
+;src/audio.c:150: void akp_sfxPlay()
+;	---------------------------------
+; Function akp_sfxPlay
+; ---------------------------------
+_akp_sfxPlay::
+;src/audio.c:183: __endasm;
+;;	backup Z80 state
+	push	af
+	push	bc
+	push	de
+	push	hl
+	push	ix
+	push	iy
+	exx
+	ex	af, af' ;; '
+	push	af
+	push	bc
+	push	de
+	push	hl
+;;	AKG6000.BIN/exemple.asm
+	call	#0x6006
 ;;	restore Z80 state
 	pop	hl
 	pop	de

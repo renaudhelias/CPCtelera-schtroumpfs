@@ -112,20 +112,26 @@ void main(void) {
    cpct_srand(77);
    
    
-#ifndef NO_SOUND
-   akp_musicInit();
-#endif
 
    cpct_scanKeyboard_f();
    while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
       cpct_scanKeyboard_f();
    }
 
-   // horizontal scroll
+#ifndef NO_SOUND
+   akp_musicInit();
+#endif
+ 
+  // horizontal scroll
    cpct_setVideoMemoryOffset(0);
    calque4000();
 
    cpct_setInterruptHandler(myInterruptHandler);
-   while (1) {}
+   while (1) {
+      cpct_scanKeyboard_f();
+      if (cpct_isKeyPressed(Key_Space)) {
+          akp_sfxPlay();
+      }
+   }
 
 }

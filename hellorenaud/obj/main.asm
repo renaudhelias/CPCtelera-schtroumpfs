@@ -14,6 +14,7 @@
 	.globl _bank0123
 	.globl _calque4000
 	.globl _calqueC000
+	.globl _akp_sfxPlay
 	.globl _akp_musicPlay
 	.globl _akp_musicInit
 	.globl _cpct_restoreState_mxor_u8
@@ -243,11 +244,9 @@ _main::
 	ld	de,#0x0000
 	call	_cpct_setSeed_mxor
 	call	_cpct_restoreState_mxor_u8
-;src/main.c:116: akp_musicInit();
-	call	_akp_musicInit
-;src/main.c:119: cpct_scanKeyboard_f();
+;src/main.c:116: cpct_scanKeyboard_f();
 	call	_cpct_scanKeyboard_f
-;src/main.c:120: while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
+;src/main.c:117: while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
 00102$:
 	ld	hl, #0x4000
 	call	_cpct_isKeyPressed
@@ -259,21 +258,33 @@ _main::
 	ld	a, l
 	or	a, a
 	jr	NZ,00104$
-;src/main.c:121: cpct_scanKeyboard_f();
+;src/main.c:118: cpct_scanKeyboard_f();
 	call	_cpct_scanKeyboard_f
 	jr	00102$
 00104$:
-;src/main.c:125: cpct_setVideoMemoryOffset(0);
+;src/main.c:122: akp_musicInit();
+	call	_akp_musicInit
+;src/main.c:126: cpct_setVideoMemoryOffset(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMemoryOffset
-;src/main.c:126: calque4000();
+;src/main.c:127: calque4000();
 	call	_calque4000
-;src/main.c:128: cpct_setInterruptHandler(myInterruptHandler);
+;src/main.c:129: cpct_setInterruptHandler(myInterruptHandler);
 	ld	hl, #_myInterruptHandler
 	call	_cpct_setInterruptHandler
-;src/main.c:129: while (1) {}
-00106$:
-	jr	00106$
+;src/main.c:130: while (1) {
+00108$:
+;src/main.c:131: cpct_scanKeyboard_f();
+	call	_cpct_scanKeyboard_f
+;src/main.c:132: if (cpct_isKeyPressed(Key_Space)) {
+	ld	hl, #0x8005
+	call	_cpct_isKeyPressed
+	ld	a, l
+	or	a, a
+	jr	Z,00108$
+;src/main.c:133: akp_sfxPlay();
+	call	_akp_sfxPlay
+	jr	00108$
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)
