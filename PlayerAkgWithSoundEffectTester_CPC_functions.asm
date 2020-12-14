@@ -35,31 +35,16 @@ Start:  equ $
         ld (#38),hl
 
         ;Initializes the music.
-        ld hl,#7000 ;; bc : soundtrack (#7000)
+        ld hl,bc ;; bc : Music_Start (#7000)
         xor a                   ;Subsong 0.
         call PLY_AKG_Init
 
         ;Initializes the sound effects.
-        ld hl,SoundEffects ;; de : soundeffect
+        ld hl,SoundEffects ;;de ;; de : SoundEffects
         call PLY_AKG_InitSoundEffects
-        
-        ;Some dots on the screen to judge how much CPU takes the player.
-        ld a,255
-        ;ld hl,#c000 + 5 * #50
-        ;ld (hl),a
-        ;ld hl,#c000 + 6 * #50
-        ;ld (hl),a
-        ;ld hl,#c000 + 7 * #50
-        ;ld (hl),a
-        ;ld hl,#c000 + 8 * #50
-        ;ld (hl),a
-        ;ld hl,#c000 + 9 * #50
-        ;ld (hl),a
 
-        ld bc,#7f03
-        out (c),c
-        ld a,#4c
-        out (c),a
+        ei
+		ret
         
 StartMusic:
         call PLY_AKG_Play
