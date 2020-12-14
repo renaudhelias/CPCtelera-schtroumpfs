@@ -19,7 +19,7 @@ LAST_SOUND_EFFECT_INDEX: equ 2                 ;Index of the last sound effect.
         org #6000
 		jp Start
 		jp StartMusic
-		jp StopMusic
+		;;jp StopMusic
 		jp PlayOnChannel1
 		jp PlayOnChannel2
 		jp PlayOnChannel3
@@ -27,119 +27,44 @@ LAST_SOUND_EFFECT_INDEX: equ 2                 ;Index of the last sound effect.
 		jp StopChannel2
 		jp StopChannel3
 		
-Music_Start:
-		dw #7000
-        ;include "../resources/Music_AHarmlessGrenade.asm"
-        ;include "../resources/Music_Empty.asm"		;Useful to listen to the sound effects alone.
-Music_End:
 
-
-SoundEffects:
-        dw #7000
-		
 Start:  equ $
 
         di
         ld hl,#c9fb
         ld (#38),hl
 
-		ld (Music_Start),bc
         ;Initializes the music.
-        ld hl,bc
+        ld hl,#7000 ;; bc : soundtrack (#7000)
         xor a                   ;Subsong 0.
         call PLY_AKG_Init
 
-		ld (SoundEffects),de
         ;Initializes the sound effects.
-        ld hl,de
+        ld hl,SoundEffects ;; de : soundeffect
         call PLY_AKG_InitSoundEffects
         
-		ei
-		ret
+        ;Some dots on the screen to judge how much CPU takes the player.
+        ld a,255
+        ;ld hl,#c000 + 5 * #50
+        ;ld (hl),a
+        ;ld hl,#c000 + 6 * #50
+        ;ld (hl),a
+        ;ld hl,#c000 + 7 * #50
+        ;ld (hl),a
+        ;ld hl,#c000 + 8 * #50
+        ;ld (hl),a
+        ;ld hl,#c000 + 9 * #50
+        ;ld (hl),a
 
-Sync:
- ;; backup Z80 state
-  push af
-  push bc
-  push de
-  push hl
-  push ix
-  push iy
-  exx
-  ex af, af'
-  push af
-  push bc
-  push de
-  push hl
-
-        ld a,(silence)
-		dec a
-		jp nz,Compteur_ok
-        call PLY_AKG_Play
-Compteur_ok:
-
-  pop hl
-  pop de
-  pop bc
-  pop af
-  ex af, af'
-  exx
-  pop iy
-  pop ix
-  pop hl
-  pop de
-  pop bc
-  pop af
-
-        ret
-
-
-
-silence:
-db #01
-
+        ld bc,#7f03
+        out (c),c
+        ld a,#4c
+        out (c),a
+        
 StartMusic:
-				ld a,#1
-				ld (silence),a
-ret
-StopMusic:
-        di
- ;; backup Z80 state
-  push af
-  push bc
-  push de
-  push hl
-  push ix
-  push iy
-  exx
-  ex af, af'
-  push af
-  push bc
-  push de
-  push hl
-				ld a,#2
-				ld (silence),a
-call PLY_AKG_Stop
-
-
-		;; restore Z80 state
-  pop hl
-  pop de
-  pop bc
-  pop af
-  ex af, af'
-  exx
-  pop iy
-  pop ix
-  pop hl
-  pop de
-  pop bc
-  pop af
-
-        ei        
-ret
-
-
+        call PLY_AKG_Play
+		ret
+     
 PlayOnChannel1:
         ld c,0          ;Channel 1.
 PlayOnChannelShared:
@@ -168,6 +93,10 @@ StopChannel3:
 
 SelectedSoundEffect: db 1                       ;The selected sound effect (>=1).
 
+KeyboardMaskLine0: db 255
+KeyboardMaskLine1: db 255
+KeyboardMaskLine2: db 255
+
 Main_Player_Start:
         ;IMPORTANT: enables the sound effects in the player. This must be declared BEFORE the player itself.
         PLY_AKG_MANAGE_SOUND_EFFECTS = 1
@@ -194,3 +123,5 @@ Main_Player_Start:
         
 Main_Player_End:
 
+SoundEffects:
+        include "../resources/SoundEffects.asm"
