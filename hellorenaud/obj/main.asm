@@ -14,6 +14,8 @@
 	.globl _bank0123
 	.globl _calque4000
 	.globl _calqueC000
+	.globl _akp_musicPlay
+	.globl _akp_musicInit
 	.globl _cpct_restoreState_mxor_u8
 	.globl _cpct_setSeed_mxor
 	.globl _cpct_getScreenPtr
@@ -86,8 +88,15 @@ _myInterruptHandler::
 	inc	0 (iy)
 	ld	a, #0x05
 	sub	a, 0 (iy)
-	ret	NC
+	jr	NC,00102$
 	ld	0 (iy), #0x00
+00102$:
+;src/main.c:49: if (i==2) {
+	ld	a,(#_myInterruptHandler_i_1_80 + 0)
+	sub	a, #0x02
+	ret	NZ
+;src/main.c:50: akp_musicPlay();
+	call	_akp_musicPlay
 	ret
 _g_items_0:
 	.db #0x05	; 5
@@ -234,6 +243,8 @@ _main::
 	ld	de,#0x0000
 	call	_cpct_setSeed_mxor
 	call	_cpct_restoreState_mxor_u8
+;src/main.c:116: akp_musicInit();
+	call	_akp_musicInit
 ;src/main.c:119: cpct_scanKeyboard_f();
 	call	_cpct_scanKeyboard_f
 ;src/main.c:120: while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){

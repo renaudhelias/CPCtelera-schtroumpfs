@@ -17,7 +17,7 @@
 //
 //------------------------------------------------------------------------------
 
-#define NO_SOUND
+//#define NO_SOUND
 
 #include <cpctelera.h>
 #include "schtroumpf.h"

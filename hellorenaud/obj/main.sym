@@ -7,6 +7,8 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
+    _akp_musicInit                                                 **** GX
+    _akp_musicPlay                                                 **** GX
     _bank0123                                                      **** GX
     _bank4_4000                                                    **** GX
     _calque4000                                                    **** GX
@@ -29,10 +31,10 @@ Symbol Table
     _cpct_setSeed_mxor                                             **** GX
     _cpct_setVideoMemoryOffset                                     **** GX
     _cpct_setVideoMode                                             **** GX
-  0 _g_items_0                                                     0020 GR
+  0 _g_items_0                                                     002A GR
     _g_tile_palette                                                **** GX
     _g_tile_schtroumpf                                             **** GX
-  0 _main                                                          0040 GR
+  0 _main                                                          004A GR
   0 _myInterruptHandler                                            0000 GR
   1 _myInterruptHandler_i_1_80                                     0000 R
 
@@ -42,7 +44,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  124   flags    0
+   0 _CODE                                      size  131   flags    0
    1 _DATA                                      size    1   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8
