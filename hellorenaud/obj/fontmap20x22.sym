@@ -7,39 +7,41 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-  0 _g_tile_fontmap20x22_00                                        0000 GR
-  0 _g_tile_fontmap20x22_01                                        00DC GR
-  0 _g_tile_fontmap20x22_02                                        01B8 GR
-  0 _g_tile_fontmap20x22_03                                        0294 GR
-  0 _g_tile_fontmap20x22_04                                        0370 GR
-  0 _g_tile_fontmap20x22_05                                        044C GR
-  0 _g_tile_fontmap20x22_06                                        0528 GR
-  0 _g_tile_fontmap20x22_07                                        0604 GR
-  0 _g_tile_fontmap20x22_08                                        06E0 GR
-  0 _g_tile_fontmap20x22_09                                        07BC GR
-  0 _g_tile_fontmap20x22_10                                        0898 GR
-  0 _g_tile_fontmap20x22_11                                        0974 GR
-  0 _g_tile_fontmap20x22_12                                        0A50 GR
-  0 _g_tile_fontmap20x22_13                                        0B2C GR
-  0 _g_tile_fontmap20x22_14                                        0C08 GR
-  0 _g_tile_fontmap20x22_15                                        0CE4 GR
-  0 _g_tile_fontmap20x22_16                                        0DC0 GR
-  0 _g_tile_fontmap20x22_17                                        0E9C GR
-  0 _g_tile_fontmap20x22_18                                        0F78 GR
-  0 _g_tile_fontmap20x22_19                                        1054 GR
-  0 _g_tile_fontmap20x22_20                                        1130 GR
-  0 _g_tile_fontmap20x22_21                                        120C GR
-  0 _g_tile_fontmap20x22_22                                        12E8 GR
-  0 _g_tile_fontmap20x22_23                                        13C4 GR
-  0 _g_tile_fontmap20x22_24                                        14A0 GR
-  0 _g_tile_fontmap20x22_25                                        157C GR
+  0 _g_tile_fontmap20x22_00                                        0034 GR
+  0 _g_tile_fontmap20x22_01                                        0110 GR
+  0 _g_tile_fontmap20x22_02                                        01EC GR
+  0 _g_tile_fontmap20x22_03                                        02C8 GR
+  0 _g_tile_fontmap20x22_04                                        03A4 GR
+  0 _g_tile_fontmap20x22_05                                        0480 GR
+  0 _g_tile_fontmap20x22_06                                        055C GR
+  0 _g_tile_fontmap20x22_07                                        0638 GR
+  0 _g_tile_fontmap20x22_08                                        0714 GR
+  0 _g_tile_fontmap20x22_09                                        07F0 GR
+  0 _g_tile_fontmap20x22_10                                        08CC GR
+  0 _g_tile_fontmap20x22_11                                        09A8 GR
+  0 _g_tile_fontmap20x22_12                                        0A84 GR
+  0 _g_tile_fontmap20x22_13                                        0B60 GR
+  0 _g_tile_fontmap20x22_14                                        0C3C GR
+  0 _g_tile_fontmap20x22_15                                        0D18 GR
+  0 _g_tile_fontmap20x22_16                                        0DF4 GR
+  0 _g_tile_fontmap20x22_17                                        0ED0 GR
+  0 _g_tile_fontmap20x22_18                                        0FAC GR
+  0 _g_tile_fontmap20x22_19                                        1088 GR
+  0 _g_tile_fontmap20x22_20                                        1164 GR
+  0 _g_tile_fontmap20x22_21                                        1240 GR
+  0 _g_tile_fontmap20x22_22                                        131C GR
+  0 _g_tile_fontmap20x22_23                                        13F8 GR
+  0 _g_tile_fontmap20x22_24                                        14D4 GR
+  0 _g_tile_fontmap20x22_25                                        15B0 GR
+  0 _g_tile_tileset                                                0000 GR
+
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size 1658   flags    0
+   0 _CODE                                      size 168C   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

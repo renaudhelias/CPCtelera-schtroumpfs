@@ -17,287 +17,300 @@
                              17 	.globl _akp_sfxPlay
                              18 	.globl _akp_musicPlay
                              19 	.globl _akp_musicInit
-                             20 	.globl _cpct_restoreState_mxor_u8
-                             21 	.globl _cpct_setSeed_mxor
-                             22 	.globl _cpct_getScreenPtr
-                             23 	.globl _cpct_setVideoMemoryOffset
-                             24 	.globl _cpct_setPALColour
-                             25 	.globl _cpct_setPalette
-                             26 	.globl _cpct_setVideoMode
-                             27 	.globl _cpct_hflipSpriteM0
-                             28 	.globl _cpct_drawSolidBox
-                             29 	.globl _cpct_drawSpriteMasked
-                             30 	.globl _cpct_drawSprite
-                             31 	.globl _cpct_px2byteM0
-                             32 	.globl _cpct_isKeyPressed
-                             33 	.globl _cpct_scanKeyboard_f
-                             34 	.globl _cpct_memset_f64
-                             35 	.globl _cpct_memset
-                             36 	.globl _cpct_setInterruptHandler
-                             37 	.globl _cpct_disableFirmware
-                             38 	.globl _g_items_0
-                             39 ;--------------------------------------------------------
-                             40 ; special function registers
-                             41 ;--------------------------------------------------------
+                             20 	.globl _scroll
+                             21 	.globl _cpct_restoreState_mxor_u8
+                             22 	.globl _cpct_setSeed_mxor
+                             23 	.globl _cpct_getScreenPtr
+                             24 	.globl _cpct_setVideoMemoryOffset
+                             25 	.globl _cpct_setPALColour
+                             26 	.globl _cpct_setPalette
+                             27 	.globl _cpct_setVideoMode
+                             28 	.globl _cpct_hflipSpriteM0
+                             29 	.globl _cpct_drawSolidBox
+                             30 	.globl _cpct_drawSpriteMasked
+                             31 	.globl _cpct_drawSprite
+                             32 	.globl _cpct_px2byteM0
+                             33 	.globl _cpct_isKeyPressed
+                             34 	.globl _cpct_scanKeyboard_f
+                             35 	.globl _cpct_memset_f64
+                             36 	.globl _cpct_memset
+                             37 	.globl _cpct_setInterruptHandler
+                             38 	.globl _cpct_disableFirmware
+                             39 	.globl _g_items_0
+                             40 ;--------------------------------------------------------
+                             41 ; special function registers
                              42 ;--------------------------------------------------------
-                             43 ; ram data
-                             44 ;--------------------------------------------------------
-                             45 	.area _DATA
-   0000                      46 _myInterruptHandler_i_1_80:
-   0000                      47 	.ds 1
-                             48 ;--------------------------------------------------------
-                             49 ; ram data
-                             50 ;--------------------------------------------------------
-                             51 	.area _INITIALIZED
-                             52 ;--------------------------------------------------------
-                             53 ; absolute external ram data
-                             54 ;--------------------------------------------------------
-                             55 	.area _DABS (ABS)
-                             56 ;--------------------------------------------------------
-                             57 ; global & static initialisations
-                             58 ;--------------------------------------------------------
-                             59 	.area _HOME
-                             60 	.area _GSINIT
-                             61 	.area _GSFINAL
-                             62 	.area _GSINIT
-                             63 ;--------------------------------------------------------
-                             64 ; Home
-                             65 ;--------------------------------------------------------
-                             66 	.area _HOME
+                             43 ;--------------------------------------------------------
+                             44 ; ram data
+                             45 ;--------------------------------------------------------
+                             46 	.area _DATA
+   0000                      47 _myInterruptHandler_i_1_81:
+   0000                      48 	.ds 1
+                             49 ;--------------------------------------------------------
+                             50 ; ram data
+                             51 ;--------------------------------------------------------
+                             52 	.area _INITIALIZED
+                             53 ;--------------------------------------------------------
+                             54 ; absolute external ram data
+                             55 ;--------------------------------------------------------
+                             56 	.area _DABS (ABS)
+                             57 ;--------------------------------------------------------
+                             58 ; global & static initialisations
+                             59 ;--------------------------------------------------------
+                             60 	.area _HOME
+                             61 	.area _GSINIT
+                             62 	.area _GSFINAL
+                             63 	.area _GSINIT
+                             64 ;--------------------------------------------------------
+                             65 ; Home
+                             66 ;--------------------------------------------------------
                              67 	.area _HOME
-                             68 ;--------------------------------------------------------
-                             69 ; code
-                             70 ;--------------------------------------------------------
-                             71 	.area _CODE
-                             72 ;src/main.c:42: void myInterruptHandler() {
-                             73 ;	---------------------------------
-                             74 ; Function myInterruptHandler
-                             75 ; ---------------------------------
-   0000                      76 _myInterruptHandler::
-                             77 ;src/main.c:46: cpct_setBorder(i+1);
-   0000 21r00r00      [10]   78 	ld	hl,#_myInterruptHandler_i_1_80 + 0
-   0003 46            [ 7]   79 	ld	b, (hl)
-   0004 04            [ 4]   80 	inc	b
-   0005 C5            [11]   81 	push	bc
-   0006 33            [ 6]   82 	inc	sp
-   0007 3E 10         [ 7]   83 	ld	a, #0x10
-   0009 F5            [11]   84 	push	af
-   000A 33            [ 6]   85 	inc	sp
-   000B CDr00r00      [17]   86 	call	_cpct_setPALColour
-                             87 ;src/main.c:47: if (++i > 5) i=0;
-   000E FD 21r00r00   [14]   88 	ld	iy, #_myInterruptHandler_i_1_80
-   0012 FD 34 00      [23]   89 	inc	0 (iy)
-   0015 3E 05         [ 7]   90 	ld	a, #0x05
-   0017 FD 96 00      [19]   91 	sub	a, 0 (iy)
-   001A 30 04         [12]   92 	jr	NC,00102$
-   001C FD 36 00 00   [19]   93 	ld	0 (iy), #0x00
-   0020                      94 00102$:
-                             95 ;src/main.c:50: if (i==2) {
-   0020 3Ar00r00      [13]   96 	ld	a,(#_myInterruptHandler_i_1_80 + 0)
-   0023 D6 02         [ 7]   97 	sub	a, #0x02
-   0025 C0            [11]   98 	ret	NZ
-                             99 ;src/main.c:51: akp_musicPlay();
-   0026 CDr00r00      [17]  100 	call	_akp_musicPlay
-   0029 C9            [10]  101 	ret
-   002A                     102 _g_items_0:
-   002A 05                  103 	.db #0x05	; 5
-   002B 0F                  104 	.db #0x0f	; 15
-   002C 0F                  105 	.db #0x0f	; 15
-   002D 00                  106 	.db #0x00	; 0
-   002E 0F                  107 	.db #0x0f	; 15
-   002F 0F                  108 	.db #0x0f	; 15
-   0030 0F                  109 	.db #0x0f	; 15
-   0031 0A                  110 	.db #0x0a	; 10
-   0032 0F                  111 	.db #0x0f	; 15
-   0033 0A                  112 	.db #0x0a	; 10
-   0034 05                  113 	.db #0x05	; 5
-   0035 00                  114 	.db #0x00	; 0
-   0036 0F                  115 	.db #0x0f	; 15
-   0037 0A                  116 	.db #0x0a	; 10
-   0038 05                  117 	.db #0x05	; 5
-   0039 00                  118 	.db #0x00	; 0
-   003A 05                  119 	.db #0x05	; 5
-   003B 0F                  120 	.db #0x0f	; 15
-   003C 0A                  121 	.db #0x0a	; 10
-   003D 0A                  122 	.db #0x0a	; 10
-   003E 00                  123 	.db #0x00	; 0
-   003F 0F                  124 	.db #0x0f	; 15
-   0040 0F                  125 	.db #0x0f	; 15
-   0041 0A                  126 	.db #0x0a	; 10
-   0042 00                  127 	.db #0x00	; 0
-   0043 0A                  128 	.db #0x0a	; 10
-   0044 0A                  129 	.db #0x0a	; 10
-   0045 0A                  130 	.db #0x0a	; 10
-   0046 00                  131 	.db #0x00	; 0
-   0047 00                  132 	.db #0x00	; 0
-   0048 00                  133 	.db #0x00	; 0
-   0049 00                  134 	.db #0x00	; 0
-                            135 ;src/main.c:56: void main(void) {
-                            136 ;	---------------------------------
-                            137 ; Function main
-                            138 ; ---------------------------------
-   004A                     139 _main::
-                            140 ;src/main.c:58: u8* sprite=g_items_0;
-                            141 ;src/main.c:67: cpct_disableFirmware();
-   004A CDr00r00      [17]  142 	call	_cpct_disableFirmware
-                            143 ;src/main.c:71: bank4_4000();
-   004D CDr00r00      [17]  144 	call	_bank4_4000
-                            145 ;src/main.c:72: bank0123();
-   0050 CDr00r00      [17]  146 	call	_bank0123
-                            147 ;src/main.c:73: calqueC000();
-   0053 CDr00r00      [17]  148 	call	_calqueC000
-                            149 ;src/main.c:76: cpct_setVideoMode(0);
-   0056 2E 00         [ 7]  150 	ld	l, #0x00
-   0058 CDr00r00      [17]  151 	call	_cpct_setVideoMode
-                            152 ;src/main.c:79: cpct_setBorder(HW_BLACK);
-   005B 21 10 14      [10]  153 	ld	hl, #0x1410
-   005E E5            [11]  154 	push	hl
-   005F CDr00r00      [17]  155 	call	_cpct_setPALColour
-                            156 ;src/main.c:80: cpct_setPalette(g_tile_palette, 6);
-   0062 21 06 00      [10]  157 	ld	hl, #0x0006
-   0065 E5            [11]  158 	push	hl
-   0066 21r00r00      [10]  159 	ld	hl, #_g_tile_palette
-   0069 E5            [11]  160 	push	hl
-   006A CDr00r00      [17]  161 	call	_cpct_setPalette
-                            162 ;src/main.c:81: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
-   006D 21 00 40      [10]  163 	ld	hl, #0x4000
-   0070 E5            [11]  164 	push	hl
-   0071 AF            [ 4]  165 	xor	a, a
-   0072 F5            [11]  166 	push	af
-   0073 33            [ 6]  167 	inc	sp
-   0074 26 C0         [ 7]  168 	ld	h, #0xc0
-   0076 E5            [11]  169 	push	hl
-   0077 CDr00r00      [17]  170 	call	_cpct_memset
-                            171 ;src/main.c:84: cpct_setVideoMemoryOffset(3);
-   007A 2E 03         [ 7]  172 	ld	l, #0x03
-   007C CDr00r00      [17]  173 	call	_cpct_setVideoMemoryOffset
-                            174 ;src/main.c:87: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
-   007F 21 0F 0F      [10]  175 	ld	hl, #0x0f0f
-   0082 E5            [11]  176 	push	hl
-   0083 21 00 C0      [10]  177 	ld	hl, #0xc000
-   0086 E5            [11]  178 	push	hl
-   0087 CDr00r00      [17]  179 	call	_cpct_getScreenPtr
-                            180 ;src/main.c:88: cpct_drawSprite(sprite, p, 4, 8);
-   008A E5            [11]  181 	push	hl
-   008B 01 04 08      [10]  182 	ld	bc, #0x0804
-   008E C5            [11]  183 	push	bc
-   008F E5            [11]  184 	push	hl
-   0090 01r2Ar00      [10]  185 	ld	bc, #_g_items_0
-   0093 C5            [11]  186 	push	bc
-   0094 CDr00r00      [17]  187 	call	_cpct_drawSprite
-   0097 01 00 20      [10]  188 	ld	bc, #0x2000
-   009A C5            [11]  189 	push	bc
-   009B 01 FF FF      [10]  190 	ld	bc, #0xffff
-   009E C5            [11]  191 	push	bc
-   009F 01 00 C0      [10]  192 	ld	bc, #0xc000
-   00A2 C5            [11]  193 	push	bc
-   00A3 CDr00r00      [17]  194 	call	_cpct_memset_f64
-   00A6 01r2Ar00      [10]  195 	ld	bc, #_g_items_0
-   00A9 C5            [11]  196 	push	bc
-   00AA 01 04 08      [10]  197 	ld	bc, #0x0804
-   00AD C5            [11]  198 	push	bc
-   00AE CDr00r00      [17]  199 	call	_cpct_hflipSpriteM0
-   00B1 E1            [10]  200 	pop	hl
-                            201 ;src/main.c:96: cpct_drawSprite(sprite, p, 4, 8);
-   00B2 01 04 08      [10]  202 	ld	bc, #0x0804
-   00B5 C5            [11]  203 	push	bc
-   00B6 E5            [11]  204 	push	hl
-   00B7 21r2Ar00      [10]  205 	ld	hl, #_g_items_0
-   00BA E5            [11]  206 	push	hl
-   00BB CDr00r00      [17]  207 	call	_cpct_drawSprite
-                            208 ;src/main.c:98: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
-   00BE 21 0F 1F      [10]  209 	ld	hl, #0x1f0f
-   00C1 E5            [11]  210 	push	hl
-   00C2 21 00 C0      [10]  211 	ld	hl, #0xc000
-   00C5 E5            [11]  212 	push	hl
-   00C6 CDr00r00      [17]  213 	call	_cpct_getScreenPtr
-                            214 ;src/main.c:100: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
-   00C9 E5            [11]  215 	push	hl
-   00CA 21 02 03      [10]  216 	ld	hl, #0x0302
-   00CD E5            [11]  217 	push	hl
-   00CE CDr00r00      [17]  218 	call	_cpct_px2byteM0
-   00D1 55            [ 4]  219 	ld	d, l
-   00D2 C1            [10]  220 	pop	bc
-   00D3 21 0A 14      [10]  221 	ld	hl, #0x140a
-   00D6 E5            [11]  222 	push	hl
-   00D7 D5            [11]  223 	push	de
-   00D8 33            [ 6]  224 	inc	sp
-   00D9 C5            [11]  225 	push	bc
-   00DA CDr00r00      [17]  226 	call	_cpct_drawSolidBox
-   00DD F1            [10]  227 	pop	af
-                            228 ;src/main.c:103: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
-   00DE 33            [ 6]  229 	inc	sp
-   00DF 21 09 4F      [10]  230 	ld	hl,#0x4f09
-   00E2 E3            [19]  231 	ex	(sp),hl
-   00E3 21 00 C0      [10]  232 	ld	hl, #0xc000
-   00E6 E5            [11]  233 	push	hl
-   00E7 CDr00r00      [17]  234 	call	_cpct_getScreenPtr
-                            235 ;src/main.c:104: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
-   00EA 01r00r00      [10]  236 	ld	bc, #_g_tile_schtroumpf+0
-   00ED 11 10 20      [10]  237 	ld	de, #0x2010
-   00F0 D5            [11]  238 	push	de
-   00F1 E5            [11]  239 	push	hl
-   00F2 C5            [11]  240 	push	bc
-   00F3 CDr00r00      [17]  241 	call	_cpct_drawSpriteMasked
-                            242 ;src/main.c:106: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
-   00F6 21 09 77      [10]  243 	ld	hl, #0x7709
-   00F9 E5            [11]  244 	push	hl
-   00FA 21 00 C0      [10]  245 	ld	hl, #0xc000
-   00FD E5            [11]  246 	push	hl
-   00FE CDr00r00      [17]  247 	call	_cpct_getScreenPtr
-                            248 ;src/main.c:107: cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
-   0101 01r00r00      [10]  249 	ld	bc, #_g_tile_fontmap20x22_00+0
-   0104 11 0A 16      [10]  250 	ld	de, #0x160a
-   0107 D5            [11]  251 	push	de
-   0108 E5            [11]  252 	push	hl
-   0109 C5            [11]  253 	push	bc
-   010A CDr00r00      [17]  254 	call	_cpct_drawSprite
-                            255 ;src/main.c:117: cpct_srand(77);
-   010D 21 4D 00      [10]  256 	ld	hl,#0x004d
-   0110 11 00 00      [10]  257 	ld	de,#0x0000
-   0113 CDr00r00      [17]  258 	call	_cpct_setSeed_mxor
-   0116 CDr00r00      [17]  259 	call	_cpct_restoreState_mxor_u8
-                            260 ;src/main.c:121: cpct_scanKeyboard_f();
-   0119 CDr00r00      [17]  261 	call	_cpct_scanKeyboard_f
-                            262 ;src/main.c:122: while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
-   011C                     263 00102$:
-   011C 21 00 40      [10]  264 	ld	hl, #0x4000
-   011F CDr00r00      [17]  265 	call	_cpct_isKeyPressed
-   0122 7D            [ 4]  266 	ld	a, l
-   0123 B7            [ 4]  267 	or	a, a
-   0124 20 0F         [12]  268 	jr	NZ,00104$
-   0126 21 02 04      [10]  269 	ld	hl, #0x0402
-   0129 CDr00r00      [17]  270 	call	_cpct_isKeyPressed
-   012C 7D            [ 4]  271 	ld	a, l
-   012D B7            [ 4]  272 	or	a, a
-   012E 20 05         [12]  273 	jr	NZ,00104$
-                            274 ;src/main.c:123: cpct_scanKeyboard_f();
-   0130 CDr00r00      [17]  275 	call	_cpct_scanKeyboard_f
-   0133 18 E7         [12]  276 	jr	00102$
-   0135                     277 00104$:
-                            278 ;src/main.c:127: akp_musicInit();
-   0135 CDr00r00      [17]  279 	call	_akp_musicInit
-                            280 ;src/main.c:131: cpct_setVideoMemoryOffset(0);
-   0138 2E 00         [ 7]  281 	ld	l, #0x00
-   013A CDr00r00      [17]  282 	call	_cpct_setVideoMemoryOffset
-                            283 ;src/main.c:132: calque4000();
-   013D CDr00r00      [17]  284 	call	_calque4000
-                            285 ;src/main.c:134: cpct_setInterruptHandler(myInterruptHandler);
-   0140 21r00r00      [10]  286 	ld	hl, #_myInterruptHandler
-   0143 CDr00r00      [17]  287 	call	_cpct_setInterruptHandler
-                            288 ;src/main.c:135: while (1) {
-   0146                     289 00108$:
-                            290 ;src/main.c:136: cpct_scanKeyboard_f();
-   0146 CDr00r00      [17]  291 	call	_cpct_scanKeyboard_f
-                            292 ;src/main.c:137: if (cpct_isKeyPressed(Key_Space)) {
-   0149 21 05 80      [10]  293 	ld	hl, #0x8005
-   014C CDr00r00      [17]  294 	call	_cpct_isKeyPressed
-   014F 7D            [ 4]  295 	ld	a, l
-   0150 B7            [ 4]  296 	or	a, a
-   0151 28 F3         [12]  297 	jr	Z,00108$
-                            298 ;src/main.c:138: akp_sfxPlay();
-   0153 CDr00r00      [17]  299 	call	_akp_sfxPlay
-   0156 18 EE         [12]  300 	jr	00108$
-                            301 	.area _CODE
-                            302 	.area _INITIALIZER
-                            303 	.area _CABS (ABS)
+                             68 	.area _HOME
+                             69 ;--------------------------------------------------------
+                             70 ; code
+                             71 ;--------------------------------------------------------
+                             72 	.area _CODE
+                             73 ;src/main.c:43: void myInterruptHandler() {
+                             74 ;	---------------------------------
+                             75 ; Function myInterruptHandler
+                             76 ; ---------------------------------
+   0000                      77 _myInterruptHandler::
+                             78 ;src/main.c:47: cpct_setBorder(i+1);
+   0000 21r00r00      [10]   79 	ld	hl,#_myInterruptHandler_i_1_81 + 0
+   0003 46            [ 7]   80 	ld	b, (hl)
+   0004 04            [ 4]   81 	inc	b
+   0005 C5            [11]   82 	push	bc
+   0006 33            [ 6]   83 	inc	sp
+   0007 3E 10         [ 7]   84 	ld	a, #0x10
+   0009 F5            [11]   85 	push	af
+   000A 33            [ 6]   86 	inc	sp
+   000B CDr00r00      [17]   87 	call	_cpct_setPALColour
+                             88 ;src/main.c:48: if (++i > 5) i=0;
+   000E FD 21r00r00   [14]   89 	ld	iy, #_myInterruptHandler_i_1_81
+   0012 FD 34 00      [23]   90 	inc	0 (iy)
+   0015 3E 05         [ 7]   91 	ld	a, #0x05
+   0017 FD 96 00      [19]   92 	sub	a, 0 (iy)
+   001A 30 04         [12]   93 	jr	NC,00102$
+   001C FD 36 00 00   [19]   94 	ld	0 (iy), #0x00
+   0020                      95 00102$:
+                             96 ;src/main.c:51: if (i==2) {
+   0020 3Ar00r00      [13]   97 	ld	a,(#_myInterruptHandler_i_1_81 + 0)
+   0023 D6 02         [ 7]   98 	sub	a, #0x02
+   0025 C0            [11]   99 	ret	NZ
+                            100 ;src/main.c:52: akp_musicPlay();
+   0026 CDr00r00      [17]  101 	call	_akp_musicPlay
+   0029 C9            [10]  102 	ret
+   002A                     103 _g_items_0:
+   002A 05                  104 	.db #0x05	; 5
+   002B 0F                  105 	.db #0x0f	; 15
+   002C 0F                  106 	.db #0x0f	; 15
+   002D 00                  107 	.db #0x00	; 0
+   002E 0F                  108 	.db #0x0f	; 15
+   002F 0F                  109 	.db #0x0f	; 15
+   0030 0F                  110 	.db #0x0f	; 15
+   0031 0A                  111 	.db #0x0a	; 10
+   0032 0F                  112 	.db #0x0f	; 15
+   0033 0A                  113 	.db #0x0a	; 10
+   0034 05                  114 	.db #0x05	; 5
+   0035 00                  115 	.db #0x00	; 0
+   0036 0F                  116 	.db #0x0f	; 15
+   0037 0A                  117 	.db #0x0a	; 10
+   0038 05                  118 	.db #0x05	; 5
+   0039 00                  119 	.db #0x00	; 0
+   003A 05                  120 	.db #0x05	; 5
+   003B 0F                  121 	.db #0x0f	; 15
+   003C 0A                  122 	.db #0x0a	; 10
+   003D 0A                  123 	.db #0x0a	; 10
+   003E 00                  124 	.db #0x00	; 0
+   003F 0F                  125 	.db #0x0f	; 15
+   0040 0F                  126 	.db #0x0f	; 15
+   0041 0A                  127 	.db #0x0a	; 10
+   0042 00                  128 	.db #0x00	; 0
+   0043 0A                  129 	.db #0x0a	; 10
+   0044 0A                  130 	.db #0x0a	; 10
+   0045 0A                  131 	.db #0x0a	; 10
+   0046 00                  132 	.db #0x00	; 0
+   0047 00                  133 	.db #0x00	; 0
+   0048 00                  134 	.db #0x00	; 0
+   0049 00                  135 	.db #0x00	; 0
+                            136 ;src/main.c:57: void main(void) {
+                            137 ;	---------------------------------
+                            138 ; Function main
+                            139 ; ---------------------------------
+   004A                     140 _main::
+                            141 ;src/main.c:59: u8* sprite=g_items_0;
+                            142 ;src/main.c:68: cpct_disableFirmware();
+   004A CDr00r00      [17]  143 	call	_cpct_disableFirmware
+                            144 ;src/main.c:72: bank4_4000();
+   004D CDr00r00      [17]  145 	call	_bank4_4000
+                            146 ;src/main.c:73: bank0123();
+   0050 CDr00r00      [17]  147 	call	_bank0123
+                            148 ;src/main.c:74: calqueC000();
+   0053 CDr00r00      [17]  149 	call	_calqueC000
+                            150 ;src/main.c:77: cpct_setVideoMode(0);
+   0056 2E 00         [ 7]  151 	ld	l, #0x00
+   0058 CDr00r00      [17]  152 	call	_cpct_setVideoMode
+                            153 ;src/main.c:80: cpct_setBorder(HW_BLACK);
+   005B 21 10 14      [10]  154 	ld	hl, #0x1410
+   005E E5            [11]  155 	push	hl
+   005F CDr00r00      [17]  156 	call	_cpct_setPALColour
+                            157 ;src/main.c:81: cpct_setPalette(g_tile_palette, 6);
+   0062 21 06 00      [10]  158 	ld	hl, #0x0006
+   0065 E5            [11]  159 	push	hl
+   0066 21r00r00      [10]  160 	ld	hl, #_g_tile_palette
+   0069 E5            [11]  161 	push	hl
+   006A CDr00r00      [17]  162 	call	_cpct_setPalette
+                            163 ;src/main.c:82: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
+   006D 21 00 40      [10]  164 	ld	hl, #0x4000
+   0070 E5            [11]  165 	push	hl
+   0071 AF            [ 4]  166 	xor	a, a
+   0072 F5            [11]  167 	push	af
+   0073 33            [ 6]  168 	inc	sp
+   0074 26 C0         [ 7]  169 	ld	h, #0xc0
+   0076 E5            [11]  170 	push	hl
+   0077 CDr00r00      [17]  171 	call	_cpct_memset
+                            172 ;src/main.c:85: cpct_setVideoMemoryOffset(3);
+   007A 2E 03         [ 7]  173 	ld	l, #0x03
+   007C CDr00r00      [17]  174 	call	_cpct_setVideoMemoryOffset
+                            175 ;src/main.c:88: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
+   007F 21 0F 0F      [10]  176 	ld	hl, #0x0f0f
+   0082 E5            [11]  177 	push	hl
+   0083 21 00 C0      [10]  178 	ld	hl, #0xc000
+   0086 E5            [11]  179 	push	hl
+   0087 CDr00r00      [17]  180 	call	_cpct_getScreenPtr
+                            181 ;src/main.c:89: cpct_drawSprite(sprite, p, 4, 8);
+   008A E5            [11]  182 	push	hl
+   008B 01 04 08      [10]  183 	ld	bc, #0x0804
+   008E C5            [11]  184 	push	bc
+   008F E5            [11]  185 	push	hl
+   0090 01r2Ar00      [10]  186 	ld	bc, #_g_items_0
+   0093 C5            [11]  187 	push	bc
+   0094 CDr00r00      [17]  188 	call	_cpct_drawSprite
+   0097 01 00 20      [10]  189 	ld	bc, #0x2000
+   009A C5            [11]  190 	push	bc
+   009B 01 FF FF      [10]  191 	ld	bc, #0xffff
+   009E C5            [11]  192 	push	bc
+   009F 01 00 C0      [10]  193 	ld	bc, #0xc000
+   00A2 C5            [11]  194 	push	bc
+   00A3 CDr00r00      [17]  195 	call	_cpct_memset_f64
+   00A6 01r2Ar00      [10]  196 	ld	bc, #_g_items_0
+   00A9 C5            [11]  197 	push	bc
+   00AA 01 04 08      [10]  198 	ld	bc, #0x0804
+   00AD C5            [11]  199 	push	bc
+   00AE CDr00r00      [17]  200 	call	_cpct_hflipSpriteM0
+   00B1 E1            [10]  201 	pop	hl
+                            202 ;src/main.c:97: cpct_drawSprite(sprite, p, 4, 8);
+   00B2 01 04 08      [10]  203 	ld	bc, #0x0804
+   00B5 C5            [11]  204 	push	bc
+   00B6 E5            [11]  205 	push	hl
+   00B7 21r2Ar00      [10]  206 	ld	hl, #_g_items_0
+   00BA E5            [11]  207 	push	hl
+   00BB CDr00r00      [17]  208 	call	_cpct_drawSprite
+                            209 ;src/main.c:99: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
+   00BE 21 0F 1F      [10]  210 	ld	hl, #0x1f0f
+   00C1 E5            [11]  211 	push	hl
+   00C2 21 00 C0      [10]  212 	ld	hl, #0xc000
+   00C5 E5            [11]  213 	push	hl
+   00C6 CDr00r00      [17]  214 	call	_cpct_getScreenPtr
+                            215 ;src/main.c:101: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+   00C9 E5            [11]  216 	push	hl
+   00CA 21 02 03      [10]  217 	ld	hl, #0x0302
+   00CD E5            [11]  218 	push	hl
+   00CE CDr00r00      [17]  219 	call	_cpct_px2byteM0
+   00D1 55            [ 4]  220 	ld	d, l
+   00D2 C1            [10]  221 	pop	bc
+   00D3 21 0A 14      [10]  222 	ld	hl, #0x140a
+   00D6 E5            [11]  223 	push	hl
+   00D7 D5            [11]  224 	push	de
+   00D8 33            [ 6]  225 	inc	sp
+   00D9 C5            [11]  226 	push	bc
+   00DA CDr00r00      [17]  227 	call	_cpct_drawSolidBox
+   00DD F1            [10]  228 	pop	af
+                            229 ;src/main.c:104: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
+   00DE 33            [ 6]  230 	inc	sp
+   00DF 21 09 4F      [10]  231 	ld	hl,#0x4f09
+   00E2 E3            [19]  232 	ex	(sp),hl
+   00E3 21 00 C0      [10]  233 	ld	hl, #0xc000
+   00E6 E5            [11]  234 	push	hl
+   00E7 CDr00r00      [17]  235 	call	_cpct_getScreenPtr
+                            236 ;src/main.c:105: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+   00EA 01r00r00      [10]  237 	ld	bc, #_g_tile_schtroumpf+0
+   00ED 11 10 20      [10]  238 	ld	de, #0x2010
+   00F0 D5            [11]  239 	push	de
+   00F1 E5            [11]  240 	push	hl
+   00F2 C5            [11]  241 	push	bc
+   00F3 CDr00r00      [17]  242 	call	_cpct_drawSpriteMasked
+                            243 ;src/main.c:107: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
+   00F6 21 09 77      [10]  244 	ld	hl, #0x7709
+   00F9 E5            [11]  245 	push	hl
+   00FA 21 00 C0      [10]  246 	ld	hl, #0xc000
+   00FD E5            [11]  247 	push	hl
+   00FE CDr00r00      [17]  248 	call	_cpct_getScreenPtr
+                            249 ;src/main.c:108: cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
+   0101 01r00r00      [10]  250 	ld	bc, #_g_tile_fontmap20x22_00+0
+   0104 11 0A 16      [10]  251 	ld	de, #0x160a
+   0107 D5            [11]  252 	push	de
+   0108 E5            [11]  253 	push	hl
+   0109 C5            [11]  254 	push	bc
+   010A CDr00r00      [17]  255 	call	_cpct_drawSprite
+                            256 ;src/main.c:110: scroll(" ABRUTI", 7);
+   010D 21 07 00      [10]  257 	ld	hl, #0x0007
+   0110 E5            [11]  258 	push	hl
+   0111 21r65r01      [10]  259 	ld	hl, #___str_0
+   0114 E5            [11]  260 	push	hl
+   0115 CDr00r00      [17]  261 	call	_scroll
+   0118 F1            [10]  262 	pop	af
+   0119 F1            [10]  263 	pop	af
+                            264 ;src/main.c:119: cpct_srand(77);
+   011A 21 4D 00      [10]  265 	ld	hl,#0x004d
+   011D 11 00 00      [10]  266 	ld	de,#0x0000
+   0120 CDr00r00      [17]  267 	call	_cpct_setSeed_mxor
+   0123 CDr00r00      [17]  268 	call	_cpct_restoreState_mxor_u8
+                            269 ;src/main.c:123: cpct_scanKeyboard_f();
+   0126 CDr00r00      [17]  270 	call	_cpct_scanKeyboard_f
+                            271 ;src/main.c:124: while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
+   0129                     272 00102$:
+   0129 21 00 40      [10]  273 	ld	hl, #0x4000
+   012C CDr00r00      [17]  274 	call	_cpct_isKeyPressed
+   012F 7D            [ 4]  275 	ld	a, l
+   0130 B7            [ 4]  276 	or	a, a
+   0131 20 0F         [12]  277 	jr	NZ,00104$
+   0133 21 02 04      [10]  278 	ld	hl, #0x0402
+   0136 CDr00r00      [17]  279 	call	_cpct_isKeyPressed
+   0139 7D            [ 4]  280 	ld	a, l
+   013A B7            [ 4]  281 	or	a, a
+   013B 20 05         [12]  282 	jr	NZ,00104$
+                            283 ;src/main.c:125: cpct_scanKeyboard_f();
+   013D CDr00r00      [17]  284 	call	_cpct_scanKeyboard_f
+   0140 18 E7         [12]  285 	jr	00102$
+   0142                     286 00104$:
+                            287 ;src/main.c:129: akp_musicInit();
+   0142 CDr00r00      [17]  288 	call	_akp_musicInit
+                            289 ;src/main.c:133: cpct_setVideoMemoryOffset(0);
+   0145 2E 00         [ 7]  290 	ld	l, #0x00
+   0147 CDr00r00      [17]  291 	call	_cpct_setVideoMemoryOffset
+                            292 ;src/main.c:134: calque4000();
+   014A CDr00r00      [17]  293 	call	_calque4000
+                            294 ;src/main.c:136: cpct_setInterruptHandler(myInterruptHandler);
+   014D 21r00r00      [10]  295 	ld	hl, #_myInterruptHandler
+   0150 CDr00r00      [17]  296 	call	_cpct_setInterruptHandler
+                            297 ;src/main.c:137: while (1) {
+   0153                     298 00108$:
+                            299 ;src/main.c:138: cpct_scanKeyboard_f();
+   0153 CDr00r00      [17]  300 	call	_cpct_scanKeyboard_f
+                            301 ;src/main.c:139: if (cpct_isKeyPressed(Key_Space)) {
+   0156 21 05 80      [10]  302 	ld	hl, #0x8005
+   0159 CDr00r00      [17]  303 	call	_cpct_isKeyPressed
+   015C 7D            [ 4]  304 	ld	a, l
+   015D B7            [ 4]  305 	or	a, a
+   015E 28 F3         [12]  306 	jr	Z,00108$
+                            307 ;src/main.c:140: akp_sfxPlay();
+   0160 CDr00r00      [17]  308 	call	_akp_sfxPlay
+   0163 18 EE         [12]  309 	jr	00108$
+   0165                     310 ___str_0:
+   0165 20 41 42 52 55 54   311 	.ascii " ABRUTI"
+        49
+   016C 00                  312 	.db 0x00
+                            313 	.area _CODE
+                            314 	.area _INITIALIZER
+                            315 	.area _CABS (ABS)

@@ -22,6 +22,7 @@
 #include <cpctelera.h>
 #include "schtroumpf.h"
 #include "fontmap20x22.h"
+#include "txt_scroll.h"s
 #ifndef NO_SOUND
 #include "audio.h"
 #endif
@@ -106,6 +107,7 @@ void main(void) {
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
    cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
 
+   scroll(" ABRUTI", 7);
 
 //Faire BIP (PRINT CHR$(7))
 //__asm

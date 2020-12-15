@@ -34,6 +34,7 @@
 	.globl _g_tile_fontmap20x22_02
 	.globl _g_tile_fontmap20x22_01
 	.globl _g_tile_fontmap20x22_00
+	.globl _g_tile_tileset
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -66,6 +67,33 @@
 ;--------------------------------------------------------
 	.area _CODE
 	.area _CODE
+_g_tile_tileset:
+	.dw _g_tile_fontmap20x22_00
+	.dw _g_tile_fontmap20x22_01
+	.dw _g_tile_fontmap20x22_02
+	.dw _g_tile_fontmap20x22_03
+	.dw _g_tile_fontmap20x22_04
+	.dw _g_tile_fontmap20x22_05
+	.dw _g_tile_fontmap20x22_06
+	.dw _g_tile_fontmap20x22_07
+	.dw _g_tile_fontmap20x22_08
+	.dw _g_tile_fontmap20x22_09
+	.dw _g_tile_fontmap20x22_10
+	.dw _g_tile_fontmap20x22_11
+	.dw _g_tile_fontmap20x22_12
+	.dw _g_tile_fontmap20x22_13
+	.dw _g_tile_fontmap20x22_14
+	.dw _g_tile_fontmap20x22_15
+	.dw _g_tile_fontmap20x22_16
+	.dw _g_tile_fontmap20x22_17
+	.dw _g_tile_fontmap20x22_18
+	.dw _g_tile_fontmap20x22_19
+	.dw _g_tile_fontmap20x22_20
+	.dw _g_tile_fontmap20x22_21
+	.dw _g_tile_fontmap20x22_22
+	.dw _g_tile_fontmap20x22_23
+	.dw _g_tile_fontmap20x22_24
+	.dw _g_tile_fontmap20x22_25
 _g_tile_fontmap20x22_00:
 	.db #0x00	; 0
 	.db #0x00	; 0

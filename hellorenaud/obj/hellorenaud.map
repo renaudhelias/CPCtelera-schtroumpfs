@@ -19,181 +19,183 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000004  l__INITIALIZED                  
      00000004  l__INITIALIZER                  
      00000138  s__CODE                         
-     0000227E  l__CODE                         
-     000023B6  s__DATA                         
-     000023B9  s__INITIALIZED                  
-     000023BD  s__GSFINAL                      
-     000023BD  s__GSINIT                       
-     000023BD  s__HOME                         
-     000023BD  s__INITIALIZER                  
+     00002332  l__CODE                         
+     0000246A  s__DATA                         
+     0000246D  s__INITIALIZED                  
+     00002471  s__GSFINAL                      
+     00002471  s__GSINIT                       
+     00002471  s__HOME                         
+     00002471  s__INITIALIZER                  
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000227E =        8830. bytes (REL,CON)
+_CODE                               00000138    00002332 =        9010. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000138  _SetupDOS                          jdvapi_floppy
-     00000150  _start222                          jdvapi_floppy
-     00000160  _LoadFile                          jdvapi_floppy
-     0000018D  _akp_musicInit                     audio
-     000001CD  _liste1                            audio
-     000001CF  _liste2                            audio
-     000001D1  _effets1                           audio
-     00000212  _effets2                           audio
-     00000238  _akp_musicPlay                     audio
-     00000258  _akp_sfxPlay                       audio
-     00000278  _myInterruptHandler                main
-     000002A2  _g_items_0                         main
-     000002C2  _main                              main
-     000003D0  _vsync                             jdvapi_sync
-     000003DE  _raster_halt                       jdvapi_sync
-     000003E7  _callback                          jdvapi_sync
-     000003EB  _raster_handler                    jdvapi_sync
-     0000042E  _raster                            jdvapi_sync
-     0000043D  _handle_raster                     jdvapi_sync
-     0000044E  _halt                              jdvapi_sync
-     00000450  _calqueC000                        jdvapi_sync
-     0000045B  _calque4000                        jdvapi_sync
-     00000466  _calque4C00                        jdvapi_sync
-     00000471  _bank0123                          jdvapi_sync
-     00000477  _bank7_C000                        jdvapi_sync
-     0000047D  _bank4_4000                        jdvapi_sync
-     00000483  _bank5_4000                        jdvapi_sync
-     00000489  _bank6_4000                        jdvapi_sync
-     0000048F  _bank7_4000                        jdvapi_sync
-     00000495  _overscanH                         jdvapi_sync
-     000004BE  _scan                              jdvapi_sync
-     000004E7  _g_tile_palette                    schtroumpf
-     000004ED  _g_tile_schtroumpf                 schtroumpf
-     000008ED  _g_tile_fontmap20x22_00            fontmap20x22
-     000009C9  _g_tile_fontmap20x22_01            fontmap20x22
-     00000AA5  _g_tile_fontmap20x22_02            fontmap20x22
-     00000B81  _g_tile_fontmap20x22_03            fontmap20x22
-     00000C5D  _g_tile_fontmap20x22_04            fontmap20x22
-     00000D39  _g_tile_fontmap20x22_05            fontmap20x22
-     00000E15  _g_tile_fontmap20x22_06            fontmap20x22
-     00000EF1  _g_tile_fontmap20x22_07            fontmap20x22
-     00000FCD  _g_tile_fontmap20x22_08            fontmap20x22
-     000010A9  _g_tile_fontmap20x22_09            fontmap20x22
-     00001185  _g_tile_fontmap20x22_10            fontmap20x22
-     00001261  _g_tile_fontmap20x22_11            fontmap20x22
-     0000133D  _g_tile_fontmap20x22_12            fontmap20x22
-     00001419  _g_tile_fontmap20x22_13            fontmap20x22
-     000014F5  _g_tile_fontmap20x22_14            fontmap20x22
-     000015D1  _g_tile_fontmap20x22_15            fontmap20x22
-     000016AD  _g_tile_fontmap20x22_16            fontmap20x22
+     00000138  _scroll                            txt_scroll
+     000001A3  _SetupDOS                          jdvapi_floppy
+     000001BB  _start222                          jdvapi_floppy
+     000001CB  _LoadFile                          jdvapi_floppy
+     000001F8  _akp_musicInit                     audio
+     00000238  _liste1                            audio
+     0000023A  _liste2                            audio
+     0000023C  _effets1                           audio
+     0000027D  _effets2                           audio
+     000002A3  _akp_musicPlay                     audio
+     000002C3  _akp_sfxPlay                       audio
+     000002E3  _myInterruptHandler                main
+     0000030D  _g_items_0                         main
+     0000032D  _main                              main
+     00000450  _vsync                             jdvapi_sync
+     0000045E  _raster_halt                       jdvapi_sync
+     00000467  _callback                          jdvapi_sync
+     0000046B  _raster_handler                    jdvapi_sync
+     000004AE  _raster                            jdvapi_sync
+     000004BD  _handle_raster                     jdvapi_sync
+     000004CE  _halt                              jdvapi_sync
+     000004D0  _calqueC000                        jdvapi_sync
+     000004DB  _calque4000                        jdvapi_sync
+     000004E6  _calque4C00                        jdvapi_sync
+     000004F1  _bank0123                          jdvapi_sync
+     000004F7  _bank7_C000                        jdvapi_sync
+     000004FD  _bank4_4000                        jdvapi_sync
+     00000503  _bank5_4000                        jdvapi_sync
+     00000509  _bank6_4000                        jdvapi_sync
+     0000050F  _bank7_4000                        jdvapi_sync
+     00000515  _overscanH                         jdvapi_sync
+     0000053E  _scan                              jdvapi_sync
+     00000567  _g_tile_palette                    schtroumpf
+     0000056D  _g_tile_schtroumpf                 schtroumpf
+     0000096D  _g_tile_tileset                    fontmap20x22
+     000009A1  _g_tile_fontmap20x22_00            fontmap20x22
+     00000A7D  _g_tile_fontmap20x22_01            fontmap20x22
+     00000B59  _g_tile_fontmap20x22_02            fontmap20x22
+     00000C35  _g_tile_fontmap20x22_03            fontmap20x22
+     00000D11  _g_tile_fontmap20x22_04            fontmap20x22
+     00000DED  _g_tile_fontmap20x22_05            fontmap20x22
+     00000EC9  _g_tile_fontmap20x22_06            fontmap20x22
+     00000FA5  _g_tile_fontmap20x22_07            fontmap20x22
+     00001081  _g_tile_fontmap20x22_08            fontmap20x22
+     0000115D  _g_tile_fontmap20x22_09            fontmap20x22
+     00001239  _g_tile_fontmap20x22_10            fontmap20x22
+     00001315  _g_tile_fontmap20x22_11            fontmap20x22
+     000013F1  _g_tile_fontmap20x22_12            fontmap20x22
+     000014CD  _g_tile_fontmap20x22_13            fontmap20x22
+     000015A9  _g_tile_fontmap20x22_14            fontmap20x22
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000227E =        8830. bytes (REL,CON)
+_CODE                               00000138    00002332 =        9010. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00001789  _g_tile_fontmap20x22_17            fontmap20x22
-     00001865  _g_tile_fontmap20x22_18            fontmap20x22
-     00001941  _g_tile_fontmap20x22_19            fontmap20x22
-     00001A1D  _g_tile_fontmap20x22_20            fontmap20x22
-     00001AF9  _g_tile_fontmap20x22_21            fontmap20x22
-     00001BD5  _g_tile_fontmap20x22_22            fontmap20x22
-     00001CB1  _g_tile_fontmap20x22_23            fontmap20x22
-     00001D8D  _g_tile_fontmap20x22_24            fontmap20x22
-     00001E69  _g_tile_fontmap20x22_25            fontmap20x22
-     00001F45  _cpct_setPalette                   cpct_video
-     00001F5C  _cpct_isKeyPressed                 cpct_keyboard
-     00001F5C  cpct_isKeyPressed_asm              cpct_keyboard
-     00001F68  _cpct_scanKeyboard_f               cpct_keyboard
-     00001F68  cpct_scanKeyboard_f_asm            cpct_keyboard
-     00001FD2  _cpct_setPALColour                 cpct_video
-     00001FDE  _cpct_setVideoMemoryOffset         cpct_video
-     00001FDE  cpct_setVideoMemoryOffset_asm      cpct_video
-     00001FE7  _cpct_drawSprite                   cpct_sprites
-     0000208C  _cpct_keyboardStatusBuffer         cpct_keyboard
-     00002096  _cpct_setSeed_mxor                 cpct_random
-     00002096  cpct_setSeed_mxor_asm              cpct_random
-     0000209E  _cpct_restoreState_mxor_u8         cpct_random
-     0000209E  cpct_restoreState_mxor_u8_asm      cpct_random
-     000020A4  _cpct_getRandom_mxor_u8            cpct_random
-     000020A4  cpct_getRandom_mxor_u8             cpct_random
-     000020A5  cpct_randomIdx_mxor_u8             cpct_random
-     000020C9  _cpct_drawSpriteMasked             cpct_sprites
-     000020F8  _cpct_memset_f64                   cpct_memutils
-     00002140  _cpct_nextRandom_mxor_u32          cpct_random
-     00002140  cpct_nextRandom_mxor_u32_asm       cpct_random
-     00002163  ___sdcc_call_hl                    
-     00002164  _cpct_hflipSpriteM0                cpct_sprites
-     000021A8  _cpct_setVideoMode                 cpct_video
-     000021B6  _cpct_px2byteM0                    cpct_sprites
-     000021D2  _cpct_memset                       cpct_memutils
-     000021E0  _strlen                            
-     000021EF  _cpct_disableFirmware              cpct_firmware
-     000021EF  _cpct_removeInterruptHandler       cpct_firmware
-     000021EF  cpct_disableFirmware_asm           cpct_firmware
-     000021EF  cpct_removeInterruptHandler_asm    cpct_firmware
-     000021FF  _cpct_drawSolidBox                 cpct_sprites
-     000022B7  __modschar                         
-     000022C4  __modsint                          
-     000022D0  _cpct_mode_rom_status              cpct_firmware
-     000022D1  _cpct_getScreenPtr                 cpct_video
-     000022F1  _cpct_setInterruptHandler          cpct_firmware
-     000022F1  cpct_setInterruptHandler_asm       cpct_firmware
-     00002302  cpct_safeInterruptHandlerHook      cpct_firmware
-     00002319  _cpct_mxor32_seed                  cpct_random
-     0000231D  __divsint                          
-     00002326  __divschar                         
+     00001685  _g_tile_fontmap20x22_15            fontmap20x22
+     00001761  _g_tile_fontmap20x22_16            fontmap20x22
+     0000183D  _g_tile_fontmap20x22_17            fontmap20x22
+     00001919  _g_tile_fontmap20x22_18            fontmap20x22
+     000019F5  _g_tile_fontmap20x22_19            fontmap20x22
+     00001AD1  _g_tile_fontmap20x22_20            fontmap20x22
+     00001BAD  _g_tile_fontmap20x22_21            fontmap20x22
+     00001C89  _g_tile_fontmap20x22_22            fontmap20x22
+     00001D65  _g_tile_fontmap20x22_23            fontmap20x22
+     00001E41  _g_tile_fontmap20x22_24            fontmap20x22
+     00001F1D  _g_tile_fontmap20x22_25            fontmap20x22
+     00001FF9  _cpct_setPalette                   cpct_video
+     00002010  _cpct_isKeyPressed                 cpct_keyboard
+     00002010  cpct_isKeyPressed_asm              cpct_keyboard
+     0000201C  _cpct_scanKeyboard_f               cpct_keyboard
+     0000201C  cpct_scanKeyboard_f_asm            cpct_keyboard
+     00002086  _cpct_setPALColour                 cpct_video
+     00002092  _cpct_setVideoMemoryOffset         cpct_video
+     00002092  cpct_setVideoMemoryOffset_asm      cpct_video
+     0000209B  _cpct_drawSprite                   cpct_sprites
+     00002140  _cpct_keyboardStatusBuffer         cpct_keyboard
+     0000214A  _cpct_setSeed_mxor                 cpct_random
+     0000214A  cpct_setSeed_mxor_asm              cpct_random
+     00002152  _cpct_restoreState_mxor_u8         cpct_random
+     00002152  cpct_restoreState_mxor_u8_asm      cpct_random
+     00002158  _cpct_getRandom_mxor_u8            cpct_random
+     00002158  cpct_getRandom_mxor_u8             cpct_random
+     00002159  cpct_randomIdx_mxor_u8             cpct_random
+     0000217D  _cpct_drawSpriteMasked             cpct_sprites
+     000021AC  _cpct_memset_f64                   cpct_memutils
+     000021F4  _cpct_nextRandom_mxor_u32          cpct_random
+     000021F4  cpct_nextRandom_mxor_u32_asm       cpct_random
+     00002217  ___sdcc_call_hl                    
+     00002218  _cpct_hflipSpriteM0                cpct_sprites
+     0000225C  _cpct_setVideoMode                 cpct_video
+     0000226A  _cpct_px2byteM0                    cpct_sprites
+     00002286  _cpct_memset                       cpct_memutils
+     00002294  _strlen                            
+     000022A3  _cpct_disableFirmware              cpct_firmware
+     000022A3  _cpct_removeInterruptHandler       cpct_firmware
+     000022A3  cpct_disableFirmware_asm           cpct_firmware
+     000022A3  cpct_removeInterruptHandler_asm    cpct_firmware
+     000022B3  _cpct_drawSolidBox                 cpct_sprites
+     0000236B  __modschar                         
+     00002378  __modsint                          
+     00002384  _cpct_mode_rom_status              cpct_firmware
+     00002385  _cpct_getScreenPtr                 cpct_video
+     000023A5  _cpct_setInterruptHandler          cpct_firmware
+     000023A5  cpct_setInterruptHandler_asm       cpct_firmware
+     000023B6  cpct_safeInterruptHandlerHook      cpct_firmware
+     000023CD  _cpct_mxor32_seed                  cpct_random
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000227E =        8830. bytes (REL,CON)
+_CODE                               00000138    00002332 =        9010. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000232D  __div8                             
-     00002331  __div_signexte                     
-     00002335  __div16                            
-     0000235B  __get_remainder                    
-     00002365  __divuint                          
-     0000236D  __divuchar                         
-     00002374  __divu8                            
-     00002377  __divu16                           
-     000023A6  dc_mode0_ct                        cpct_strings
+     000023D1  __divsint                          
+     000023DA  __divschar                         
+     000023E1  __div8                             
+     000023E5  __div_signexte                     
+     000023E9  __div16                            
+     0000240F  __get_remainder                    
+     00002419  __divuint                          
+     00002421  __divuchar                         
+     00002428  __divu8                            
+     0000242B  __divu16                           
+     0000245A  dc_mode0_ct                        cpct_strings
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_DATA                               000023B6    00000003 =           3. bytes (REL,CON)
+_DATA                               0000246A    00000003 =           3. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000023B6  _i                                 audio
+     0000246A  _i                                 audio
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZED                        000023B9    00000004 =           4. bytes (REL,CON)
+_INITIALIZED                        0000246D    00000004 =           4. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000023B9  _nFileNameLen                      jdvapi_floppy
-     000023BA  _callback_counter                  jdvapi_sync
-     000023BB  _aFunction                         jdvapi_sync
+     0000246D  _nFileNameLen                      jdvapi_floppy
+     0000246E  _callback_counter                  jdvapi_sync
+     0000246F  _aFunction                         jdvapi_sync
 ASxxxx Linker V03.00 + NoICE + sdld,  page 7.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZER                        000023BD    00000004 =           4. bytes (REL,CON)
+_INITIALIZER                        00002471    00000004 =           4. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -201,6 +203,7 @@ _INITIALIZER                        000023BD    00000004 =           4. bytes (R
 
 Files Linked                              [ module(s) ]
 
+obj/txt_scroll.rel                        [ txt_scroll ]
 obj/jdvapi_floppy.rel                     [ jdvapi_floppy ]
 obj/audio.rel                             [ audio ]
 obj/main.rel                              [ main ]

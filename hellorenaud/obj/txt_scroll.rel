@@ -1,0 +1,46 @@
+XL2
+H 9 areas 5 global symbols
+M txt_scroll
+O -mz80
+S _cpct_drawSprite Ref0000
+S .__.ABS. Def0000
+S _g_tile_tileset Ref0000
+S _cpct_getScreenPtr Ref0000
+A _CODE size 6B flags 0 addr 0
+S _scroll Def0000
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00
+R 00 00 00 00
+T 00 00 DD E5 DD 21 00 00 DD 39 3B DD 36 FF 00
+R 00 00 00 00
+T 0D 00
+R 00 00 00 00
+T 0D 00 DD 7E FF 06 00 DD 96 06 78 DD 9E 07 30 4C
+R 00 00 00 00
+T 1B 00 DD 7E 04 DD 86 FF 6F DD 7E 05 CE 00 67 4E
+R 00 00 00 00
+T 29 00 79 D6 20 28 34 06 00 79 C6 BF 4F 78 CE FF
+R 00 00 00 00
+T 37 00 47 DD 7E FF 5F 87 87 83 87 57 C5 3E 77 F5
+R 00 00 00 00
+T 45 00 33 D5 33 21 00 C0 E5 CD 00 00 EB E1 29 01
+R 00 00 00 00 02 0A 03 00
+T 53 00 00 00 09 4E 23 46 21 0A 16 E5 D5 C5 CD
+R 00 00 00 00 02 02 02 00
+T 60 00 00 00
+R 00 00 00 00 02 02 00 00
+T 62 00
+R 00 00 00 00
+T 62 00 DD 34 FF 18 A6
+R 00 00 00 00
+T 67 00
+R 00 00 00 00
+T 67 00 33 DD E1 C9
+R 00 00 00 00
