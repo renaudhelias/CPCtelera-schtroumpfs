@@ -22,7 +22,7 @@
 #include <cpctelera.h>
 #include "schtroumpf.h"
 #include "fontmap20x22.h"
-#include "txt_scroll.h"s
+#include "txt_scroll.h"
 #ifndef NO_SOUND
 #include "audio.h"
 #endif
@@ -55,6 +55,7 @@ akp_musicPlay();
 }
 
 void main(void) {
+   unsigned int t=0;
    u8* p;
    u8* sprite=g_items_0;
 
@@ -107,8 +108,8 @@ void main(void) {
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
    cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
 
-   scroll(" ABRUTI", 7);
-
+   //scroll(" ABRUTI", 7);
+   
 //Faire BIP (PRINT CHR$(7))
 //__asm
 //ld a,#0x07
@@ -121,7 +122,11 @@ void main(void) {
    
 
    cpct_scanKeyboard_f();
+   t=0;
    while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
+      scroll(" ABRUTI ", 8, t);
+      t=t+1;
+      if (t>160) {t=0;}
       cpct_scanKeyboard_f();
    }
 
