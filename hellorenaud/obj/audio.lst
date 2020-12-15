@@ -14,242 +14,239 @@
                              14 	.globl _i
                              15 	.globl _effets2
                              16 	.globl _effets1
-                             17 ;--------------------------------------------------------
-                             18 ; special function registers
+                             17 	.globl _liste2
+                             18 	.globl _liste1
                              19 ;--------------------------------------------------------
-                             20 ;--------------------------------------------------------
-                             21 ; ram data
+                             20 ; special function registers
+                             21 ;--------------------------------------------------------
                              22 ;--------------------------------------------------------
-                             23 	.area _DATA
-   0000                      24 _i::
-   0000                      25 	.ds 2
-                             26 ;--------------------------------------------------------
-                             27 ; ram data
+                             23 ; ram data
+                             24 ;--------------------------------------------------------
+                             25 	.area _DATA
+   0000                      26 _i::
+   0000                      27 	.ds 2
                              28 ;--------------------------------------------------------
-                             29 	.area _INITIALIZED
+                             29 ; ram data
                              30 ;--------------------------------------------------------
-                             31 ; absolute external ram data
+                             31 	.area _INITIALIZED
                              32 ;--------------------------------------------------------
-                             33 	.area _DABS (ABS)
+                             33 ; absolute external ram data
                              34 ;--------------------------------------------------------
-                             35 ; global & static initialisations
+                             35 	.area _DABS (ABS)
                              36 ;--------------------------------------------------------
-                             37 	.area _HOME
-                             38 	.area _GSINIT
-                             39 	.area _GSFINAL
+                             37 ; global & static initialisations
+                             38 ;--------------------------------------------------------
+                             39 	.area _HOME
                              40 	.area _GSINIT
-                             41 ;--------------------------------------------------------
-                             42 ; Home
+                             41 	.area _GSFINAL
+                             42 	.area _GSINIT
                              43 ;--------------------------------------------------------
-                             44 	.area _HOME
-                             45 	.area _HOME
-                             46 ;--------------------------------------------------------
-                             47 ; code
+                             44 ; Home
+                             45 ;--------------------------------------------------------
+                             46 	.area _HOME
+                             47 	.area _HOME
                              48 ;--------------------------------------------------------
-                             49 	.area _CODE
-                             50 ;src/audio.c:51: void akp_musicInit()
-                             51 ;	---------------------------------
-                             52 ; Function akp_musicInit
-                             53 ; ---------------------------------
-   0000                      54 _akp_musicInit::
-                             55 ;src/audio.c:53: i=i+1;
-   0000 FD 21r00r00   [14]   56 	ld	iy, #_i
-   0004 FD 34 00      [23]   57 	inc	0 (iy)
-   0007 20 03         [12]   58 	jr	NZ,00103$
-   0009 FD 34 01      [23]   59 	inc	1 (iy)
-   000C                      60 00103$:
-                             61 ;src/audio.c:111: __endasm;
-                             62 ;;	backup Z80 state
-   000C F5            [11]   63 	push	af
-   000D C5            [11]   64 	push	bc
-   000E D5            [11]   65 	push	de
-   000F E5            [11]   66 	push	hl
-   0010 DD E5         [15]   67 	push	ix
-   0012 FD E5         [15]   68 	push	iy
-   0014 D9            [ 4]   69 	exx
-   0015 08            [ 4]   70 	ex	af, af' ;; '
-   0016 F5            [11]   71 	push	af
-   0017 C5            [11]   72 	push	bc
-   0018 D5            [11]   73 	push	de
-   0019 E5            [11]   74 	push	hl
-   001A 01r44r00      [10]   75 	ld	bc,#_effets1 ;; OK
-   001D ED 43r44r00   [20]   76 	ld	(#_effets1),bc ;; OK
-   0021 03            [ 6]   77 	inc	bc
-   0022 03            [ 6]   78 	inc	bc
-   0023 11r89r00      [10]   79 	ld	de,#_effets2
-   0026 7A            [ 4]   80 	ld	a,d
-   0027 02            [ 7]   81 	LD	(bc),a
-   0028 03            [ 6]   82 	inc	bc
-   0029 7B            [ 4]   83 	ld	a,e
-   002A 02            [ 7]   84 	LD	(bc),a
-   002B 03            [ 6]   85 	inc	bc
-                             86 ;;	AKG6000.BIN/exemple.asm
-   002C 01 00 70      [10]   87 	ld	bc,#0x7000
-   002F 11r44r00      [10]   88 	ld	de,#_effets1 ;;sfx
-   0032 CD 00 60      [17]   89 	call	#0x6000
-                             90 ;;	restore Z80 state
-   0035 E1            [10]   91 	pop	hl
-   0036 D1            [10]   92 	pop	de
-   0037 C1            [10]   93 	pop	bc
-   0038 F1            [10]   94 	pop	af
-   0039 08            [ 4]   95 	ex	af, af' ;; '
-   003A D9            [ 4]   96 	exx
-   003B FD E1         [14]   97 	pop	iy
-   003D DD E1         [14]   98 	pop	ix
-   003F E1            [10]   99 	pop	hl
-   0040 D1            [10]  100 	pop	de
-   0041 C1            [10]  101 	pop	bc
-   0042 F1            [10]  102 	pop	af
-   0043 C9            [10]  103 	ret
-   0044                     104 _effets1:
-   0044 00 00               105 	.dw #0x0000
-   0046 00 00               106 	.dw #0x0000
-   0048 00                  107 	.db #0x00	; 0
-   0049 3D                  108 	.db #0x3d	; 61
-   004A EF 00               109 	.dw #0x00ef
-   004C 39                  110 	.db #0x39	; 57	'9'
-   004D EF 00               111 	.dw #0x00ef
-   004F 35                  112 	.db #0x35	; 53	'5'
-   0050 EF 00               113 	.dw #0x00ef
-   0052 31                  114 	.db #0x31	; 49	'1'
-   0053 EF 00               115 	.dw #0x00ef
-   0055 C7                  116 	.db #0xc7	; 199
-   0056 EF 00               117 	.dw #0x00ef
-   0058 29                  118 	.db #0x29	; 41
-   0059 EF 00               119 	.dw #0x00ef
-   005B 25                  120 	.db #0x25	; 37
-   005C EF 00               121 	.dw #0x00ef
-   005E 21                  122 	.db #0x21	; 33
-   005F EF 00               123 	.dw #0x00ef
-   0061 1D                  124 	.db #0x1d	; 29
-   0062 EF 00               125 	.dw #0x00ef
-   0064 19                  126 	.db #0x19	; 25
-   0065 EF 00               127 	.dw #0x00ef
-   0067 15                  128 	.db #0x15	; 21
-   0068 53 01               129 	.dw #0x0153
-   006A 11                  130 	.db #0x11	; 17
-   006B EF 00               131 	.dw #0x00ef
-   006D 0D                  132 	.db #0x0d	; 13
-   006E EF 00               133 	.dw #0x00ef
-   0070 09                  134 	.db #0x09	; 9
-   0071 EF 00               135 	.dw #0x00ef
-   0073 05                  136 	.db #0x05	; 5
-   0074 EF 00               137 	.dw #0x00ef
-   0076 04                  138 	.db #0x04	; 4
-   0077 00                  139 	.db #0x00	; 0
+                             49 ; code
+                             50 ;--------------------------------------------------------
+                             51 	.area _CODE
+                             52 ;src/audio.c:64: void akp_musicInit()
+                             53 ;	---------------------------------
+                             54 ; Function akp_musicInit
+                             55 ; ---------------------------------
+   0000                      56 _akp_musicInit::
+                             57 ;src/audio.c:66: i=i+1;
+   0000 FD 21r00r00   [14]   58 	ld	iy, #_i
+   0004 FD 34 00      [23]   59 	inc	0 (iy)
+   0007 20 03         [12]   60 	jr	NZ,00103$
+   0009 FD 34 01      [23]   61 	inc	1 (iy)
+   000C                      62 00103$:
+                             63 ;src/audio.c:116: __endasm;
+                             64 ;;	backup Z80 state
+   000C F5            [11]   65 	push	af
+   000D C5            [11]   66 	push	bc
+   000E D5            [11]   67 	push	de
+   000F E5            [11]   68 	push	hl
+   0010 DD E5         [15]   69 	push	ix
+   0012 FD E5         [15]   70 	push	iy
+   0014 D9            [ 4]   71 	exx
+   0015 08            [ 4]   72 	ex	af, af' ;; '
+   0016 F5            [11]   73 	push	af
+   0017 C5            [11]   74 	push	bc
+   0018 D5            [11]   75 	push	de
+   0019 E5            [11]   76 	push	hl
+   001A 01r44r00      [10]   77 	ld	bc,#_effets1 ;; OK
+   001D ED 43r40r00   [20]   78 	ld	(#_liste1),bc ;; OK
+   0021 01r85r00      [10]   79 	ld	bc,#_effets2 ;; #_effets2 ;; OK
+   0024 ED 43r42r00   [20]   80 	ld	(#_liste2),bc ;; OK
+                             81 ;;	AKG6000.BIN/exemple.asm
+   0028 01 00 70      [10]   82 	ld	bc,#0x7000
+   002B 11r40r00      [10]   83 	ld	de,#_liste1 ;;sfx
+   002E CD 00 60      [17]   84 	call	#0x6000
+                             85 ;;	restore Z80 state
+   0031 E1            [10]   86 	pop	hl
+   0032 D1            [10]   87 	pop	de
+   0033 C1            [10]   88 	pop	bc
+   0034 F1            [10]   89 	pop	af
+   0035 08            [ 4]   90 	ex	af, af' ;; '
+   0036 D9            [ 4]   91 	exx
+   0037 FD E1         [14]   92 	pop	iy
+   0039 DD E1         [14]   93 	pop	ix
+   003B E1            [10]   94 	pop	hl
+   003C D1            [10]   95 	pop	de
+   003D C1            [10]   96 	pop	bc
+   003E F1            [10]   97 	pop	af
+   003F C9            [10]   98 	ret
+   0040                      99 _liste1:
+   0040 00 00               100 	.dw #0x0000
+   0042                     101 _liste2:
+   0042 00 00               102 	.dw #0x0000
+   0044                     103 _effets1:
+   0044 00                  104 	.db #0x00	; 0
+   0045 3D                  105 	.db #0x3d	; 61
+   0046 EF 00               106 	.dw #0x00ef
+   0048 39                  107 	.db #0x39	; 57	'9'
+   0049 EF 00               108 	.dw #0x00ef
+   004B 35                  109 	.db #0x35	; 53	'5'
+   004C EF 00               110 	.dw #0x00ef
+   004E 31                  111 	.db #0x31	; 49	'1'
+   004F EF 00               112 	.dw #0x00ef
+   0051 C7                  113 	.db #0xc7	; 199
+   0052 EF 00               114 	.dw #0x00ef
+   0054 29                  115 	.db #0x29	; 41
+   0055 EF 00               116 	.dw #0x00ef
+   0057 25                  117 	.db #0x25	; 37
+   0058 EF 00               118 	.dw #0x00ef
+   005A 21                  119 	.db #0x21	; 33
+   005B EF 00               120 	.dw #0x00ef
+   005D 1D                  121 	.db #0x1d	; 29
+   005E EF 00               122 	.dw #0x00ef
+   0060 19                  123 	.db #0x19	; 25
+   0061 EF 00               124 	.dw #0x00ef
+   0063 15                  125 	.db #0x15	; 21
+   0064 53 01               126 	.dw #0x0153
+   0066 11                  127 	.db #0x11	; 17
+   0067 EF 00               128 	.dw #0x00ef
+   0069 0D                  129 	.db #0x0d	; 13
+   006A EF 00               130 	.dw #0x00ef
+   006C 09                  131 	.db #0x09	; 9
+   006D EF 00               132 	.dw #0x00ef
+   006F 05                  133 	.db #0x05	; 5
+   0070 EF 00               134 	.dw #0x00ef
+   0072 04                  135 	.db #0x04	; 4
+   0073 00                  136 	.db #0x00	; 0
+   0074 BD                  137 	.db #0xbd	; 189
+   0075 01                  138 	.db #0x01	; 1
+   0076 5F 00               139 	.dw #0x005f
    0078 BD                  140 	.db #0xbd	; 189
    0079 01                  141 	.db #0x01	; 1
-   007A 5F 00               142 	.dw #0x005f
-   007C BD                  143 	.db #0xbd	; 189
+   007A 63 00               142 	.dw #0x0063
+   007C B1                  143 	.db #0xb1	; 177
    007D 01                  144 	.db #0x01	; 1
-   007E 63 00               145 	.dw #0x0063
-   0080 B1                  146 	.db #0xb1	; 177
+   007E 66 00               145 	.dw #0x0066
+   0080 AD                  146 	.db #0xad	; 173
    0081 01                  147 	.db #0x01	; 1
-   0082 66 00               148 	.dw #0x0066
-   0084 AD                  149 	.db #0xad	; 173
-   0085 01                  150 	.db #0x01	; 1
-   0086 6A 00               151 	.dw #0x006a
-   0088 04                  152 	.db #0x04	; 4
-   0089                     153 _effets2:
-   0089 00                  154 	.db #0x00	; 0
+   0082 6A 00               148 	.dw #0x006a
+   0084 04                  149 	.db #0x04	; 4
+   0085                     150 _effets2:
+   0085 00                  151 	.db #0x00	; 0
+   0086 BD                  152 	.db #0xbd	; 189
+   0087 01                  153 	.db #0x01	; 1
+   0088 2D 01               154 	.dw #0x012d
    008A BD                  155 	.db #0xbd	; 189
-   008B 01                  156 	.db #0x01	; 1
-   008C 2D 01               157 	.dw #0x012d
-   008E BD                  158 	.db #0xbd	; 189
-   008F 08                  159 	.db #0x08	; 8
-   0090 3F 01               160 	.dw #0x013f
-   0092 B9                  161 	.db #0xb9	; 185
-   0093 02                  162 	.db #0x02	; 2
-   0094 92 01               163 	.dw #0x0192
-   0096 B5                  164 	.db #0xb5	; 181
-   0097 10                  165 	.db #0x10	; 16
-   0098 D5 00               166 	.dw #0x00d5
-   009A B1                  167 	.db #0xb1	; 177
+   008B 08                  156 	.db #0x08	; 8
+   008C 3F 01               157 	.dw #0x013f
+   008E B9                  158 	.db #0xb9	; 185
+   008F 02                  159 	.db #0x02	; 2
+   0090 92 01               160 	.dw #0x0192
+   0092 B5                  161 	.db #0xb5	; 181
+   0093 10                  162 	.db #0x10	; 16
+   0094 D5 00               163 	.dw #0x00d5
+   0096 B1                  164 	.db #0xb1	; 177
+   0097 02                  165 	.db #0x02	; 2
+   0098 E1 00               166 	.dw #0x00e1
+   009A AD                  167 	.db #0xad	; 173
    009B 02                  168 	.db #0x02	; 2
-   009C E1 00               169 	.dw #0x00e1
-   009E AD                  170 	.db #0xad	; 173
-   009F 02                  171 	.db #0x02	; 2
-   00A0 EF 00               172 	.dw #0x00ef
-   00A2 A5                  173 	.db #0xa5	; 165
-   00A3 10                  174 	.db #0x10	; 16
-   00A4 66 01               175 	.dw #0x0166
-   00A6 9D                  176 	.db #0x9d	; 157
-   00A7 1F                  177 	.db #0x1f	; 31
-   00A8 77 00               178 	.dw #0x0077
-   00AA 99                  179 	.db #0x99	; 153
-   00AB 07                  180 	.db #0x07	; 7
-   00AC 50 00               181 	.dw #0x0050
-   00AE 04                  182 	.db #0x04	; 4
-                            183 ;src/audio.c:114: void akp_musicPlay()
-                            184 ;	---------------------------------
-                            185 ; Function akp_musicPlay
-                            186 ; ---------------------------------
-   00AF                     187 _akp_musicPlay::
-                            188 ;src/audio.c:147: __endasm;
-                            189 ;;	backup Z80 state
-   00AF F5            [11]  190 	push	af
-   00B0 C5            [11]  191 	push	bc
-   00B1 D5            [11]  192 	push	de
-   00B2 E5            [11]  193 	push	hl
-   00B3 DD E5         [15]  194 	push	ix
-   00B5 FD E5         [15]  195 	push	iy
-   00B7 D9            [ 4]  196 	exx
-   00B8 08            [ 4]  197 	ex	af, af' ;; '
-   00B9 F5            [11]  198 	push	af
-   00BA C5            [11]  199 	push	bc
-   00BB D5            [11]  200 	push	de
-   00BC E5            [11]  201 	push	hl
-                            202 ;;	AKG6000.BIN/exemple.asm
-   00BD CD 03 60      [17]  203 	call	#0x6003
-                            204 ;;	restore Z80 state
-   00C0 E1            [10]  205 	pop	hl
-   00C1 D1            [10]  206 	pop	de
-   00C2 C1            [10]  207 	pop	bc
-   00C3 F1            [10]  208 	pop	af
-   00C4 08            [ 4]  209 	ex	af, af' ;; '
-   00C5 D9            [ 4]  210 	exx
-   00C6 FD E1         [14]  211 	pop	iy
-   00C8 DD E1         [14]  212 	pop	ix
-   00CA E1            [10]  213 	pop	hl
-   00CB D1            [10]  214 	pop	de
-   00CC C1            [10]  215 	pop	bc
-   00CD F1            [10]  216 	pop	af
-   00CE C9            [10]  217 	ret
-                            218 ;src/audio.c:150: void akp_sfxPlay()
-                            219 ;	---------------------------------
-                            220 ; Function akp_sfxPlay
-                            221 ; ---------------------------------
-   00CF                     222 _akp_sfxPlay::
-                            223 ;src/audio.c:183: __endasm;
-                            224 ;;	backup Z80 state
-   00CF F5            [11]  225 	push	af
-   00D0 C5            [11]  226 	push	bc
-   00D1 D5            [11]  227 	push	de
-   00D2 E5            [11]  228 	push	hl
-   00D3 DD E5         [15]  229 	push	ix
-   00D5 FD E5         [15]  230 	push	iy
-   00D7 D9            [ 4]  231 	exx
-   00D8 08            [ 4]  232 	ex	af, af' ;; '
-   00D9 F5            [11]  233 	push	af
-   00DA C5            [11]  234 	push	bc
-   00DB D5            [11]  235 	push	de
-   00DC E5            [11]  236 	push	hl
-                            237 ;;	AKG6000.BIN/exemple.asm
-   00DD CD 06 60      [17]  238 	call	#0x6006
-                            239 ;;	restore Z80 state
-   00E0 E1            [10]  240 	pop	hl
-   00E1 D1            [10]  241 	pop	de
-   00E2 C1            [10]  242 	pop	bc
-   00E3 F1            [10]  243 	pop	af
-   00E4 08            [ 4]  244 	ex	af, af' ;; '
-   00E5 D9            [ 4]  245 	exx
-   00E6 FD E1         [14]  246 	pop	iy
-   00E8 DD E1         [14]  247 	pop	ix
-   00EA E1            [10]  248 	pop	hl
-   00EB D1            [10]  249 	pop	de
-   00EC C1            [10]  250 	pop	bc
-   00ED F1            [10]  251 	pop	af
-   00EE C9            [10]  252 	ret
-                            253 	.area _CODE
-                            254 	.area _INITIALIZER
-                            255 	.area _CABS (ABS)
+   009C EF 00               169 	.dw #0x00ef
+   009E A5                  170 	.db #0xa5	; 165
+   009F 10                  171 	.db #0x10	; 16
+   00A0 66 01               172 	.dw #0x0166
+   00A2 9D                  173 	.db #0x9d	; 157
+   00A3 1F                  174 	.db #0x1f	; 31
+   00A4 77 00               175 	.dw #0x0077
+   00A6 99                  176 	.db #0x99	; 153
+   00A7 07                  177 	.db #0x07	; 7
+   00A8 50 00               178 	.dw #0x0050
+   00AA 04                  179 	.db #0x04	; 4
+                            180 ;src/audio.c:119: void akp_musicPlay()
+                            181 ;	---------------------------------
+                            182 ; Function akp_musicPlay
+                            183 ; ---------------------------------
+   00AB                     184 _akp_musicPlay::
+                            185 ;src/audio.c:152: __endasm;
+                            186 ;;	backup Z80 state
+   00AB F5            [11]  187 	push	af
+   00AC C5            [11]  188 	push	bc
+   00AD D5            [11]  189 	push	de
+   00AE E5            [11]  190 	push	hl
+   00AF DD E5         [15]  191 	push	ix
+   00B1 FD E5         [15]  192 	push	iy
+   00B3 D9            [ 4]  193 	exx
+   00B4 08            [ 4]  194 	ex	af, af' ;; '
+   00B5 F5            [11]  195 	push	af
+   00B6 C5            [11]  196 	push	bc
+   00B7 D5            [11]  197 	push	de
+   00B8 E5            [11]  198 	push	hl
+                            199 ;;	AKG6000.BIN/exemple.asm
+   00B9 CD 03 60      [17]  200 	call	#0x6003
+                            201 ;;	restore Z80 state
+   00BC E1            [10]  202 	pop	hl
+   00BD D1            [10]  203 	pop	de
+   00BE C1            [10]  204 	pop	bc
+   00BF F1            [10]  205 	pop	af
+   00C0 08            [ 4]  206 	ex	af, af' ;; '
+   00C1 D9            [ 4]  207 	exx
+   00C2 FD E1         [14]  208 	pop	iy
+   00C4 DD E1         [14]  209 	pop	ix
+   00C6 E1            [10]  210 	pop	hl
+   00C7 D1            [10]  211 	pop	de
+   00C8 C1            [10]  212 	pop	bc
+   00C9 F1            [10]  213 	pop	af
+   00CA C9            [10]  214 	ret
+                            215 ;src/audio.c:155: void akp_sfxPlay()
+                            216 ;	---------------------------------
+                            217 ; Function akp_sfxPlay
+                            218 ; ---------------------------------
+   00CB                     219 _akp_sfxPlay::
+                            220 ;src/audio.c:188: __endasm;
+                            221 ;;	backup Z80 state
+   00CB F5            [11]  222 	push	af
+   00CC C5            [11]  223 	push	bc
+   00CD D5            [11]  224 	push	de
+   00CE E5            [11]  225 	push	hl
+   00CF DD E5         [15]  226 	push	ix
+   00D1 FD E5         [15]  227 	push	iy
+   00D3 D9            [ 4]  228 	exx
+   00D4 08            [ 4]  229 	ex	af, af' ;; '
+   00D5 F5            [11]  230 	push	af
+   00D6 C5            [11]  231 	push	bc
+   00D7 D5            [11]  232 	push	de
+   00D8 E5            [11]  233 	push	hl
+                            234 ;;	AKG6000.BIN/exemple.asm
+   00D9 CD 06 60      [17]  235 	call	#0x6006
+                            236 ;;	restore Z80 state
+   00DC E1            [10]  237 	pop	hl
+   00DD D1            [10]  238 	pop	de
+   00DE C1            [10]  239 	pop	bc
+   00DF F1            [10]  240 	pop	af
+   00E0 08            [ 4]  241 	ex	af, af' ;; '
+   00E1 D9            [ 4]  242 	exx
+   00E2 FD E1         [14]  243 	pop	iy
+   00E4 DD E1         [14]  244 	pop	ix
+   00E6 E1            [10]  245 	pop	hl
+   00E7 D1            [10]  246 	pop	de
+   00E8 C1            [10]  247 	pop	bc
+   00E9 F1            [10]  248 	pop	af
+   00EA C9            [10]  249 	ret
+                            250 	.area _CODE
+                            251 	.area _INITIALIZER
+                            252 	.area _CABS (ABS)

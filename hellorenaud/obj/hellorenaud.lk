@@ -12,5 +12,6 @@ obj/audio.rel
 obj/main.rel
 obj/jdvapi_sync.rel
 obj/schtroumpf.rel
+obj/fontmap20x22.rel
 
 -e

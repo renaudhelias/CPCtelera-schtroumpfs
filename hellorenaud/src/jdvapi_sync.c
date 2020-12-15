@@ -63,7 +63,7 @@ void raster_handler()
   push ix
   push iy
   exx
-  ex af, af'
+  ex af, af' ; '
   push af
   push bc
   push de
@@ -81,7 +81,7 @@ void raster_handler()
   pop de
   pop bc
   pop af
-  ex af, af'
+  ex af, af' ; '
   exx
   pop iy
   pop ix

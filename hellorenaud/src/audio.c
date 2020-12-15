@@ -3,7 +3,9 @@
 
 int i;
 
-
+//__asm
+//#include "SoundEffects.asm"
+//__endasm;
 
 typedef struct {
   unsigned char volume;
@@ -26,7 +28,7 @@ typedef struct {
 } SFX_SOUND;
 
 struct AKG_SFX {
- unsigned int liste[2];
+ //unsigned int liste[2];
  SFX_SOUND sfx_sound;
 };
 struct AKG_SIMPLE_SFX {
@@ -35,9 +37,20 @@ struct AKG_SIMPLE_SFX {
   unsigned char sfx_end;
 };
 
+struct AKG_LIST_SFX {
+  unsigned int liste;
+};
+
+
 //const struct SFX effet = {.volume=10,.noise=7,.period=8};
+const struct AKG_LIST_SFX liste1 = {
+  .liste=0
+};
+const struct AKG_LIST_SFX liste2 = {
+  .liste=0
+};
 const struct AKG_SFX effets1 = {
-	.liste={0,0},
+//	.liste={0,0},
 	.sfx_sound={0,{{61,239},{57,239},{53,239},{49,239},{455,239},{41,239},{37,239},{33,239},{29,239},{25,239},{21,339},{17,239},{13,239},{9,239},{5,239}},4,0,{{189,1,95},{189,1,99},{177,1,102},{173,1,106}},4},
 		
 };
@@ -78,21 +91,13 @@ i=i+1;
 	//LD reg16,nn
 //LD (nn),reg16
 	ld bc,#_effets1 ;; OK
-//LD A,(reg16)
-	ld (#_effets1),bc ;; OK
-	inc bc	
-	inc bc
-        ld de,#_effets2
-	ld a,d
-        LD (bc),a
-        inc bc
-	ld a,e
-        LD (bc),a
-	inc bc
+	ld (#_liste1),bc ;; OK
+        ld bc,#_effets2 ;; #_effets2 ;; OK
+	ld (#_liste2),bc ;; OK
 	
 	;; AKG6000.BIN/exemple.asm
 	ld bc,#0x7000
-	ld de,#_effets1 ;;sfx
+	ld de,#_liste1 ;;sfx
 	call #0x6000
 	
 	;; restore Z80 state

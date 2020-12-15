@@ -21,6 +21,7 @@
 
 #include <cpctelera.h>
 #include "schtroumpf.h"
+#include "fontmap20x22.h"
 #ifndef NO_SOUND
 #include "audio.h"
 #endif
@@ -76,7 +77,7 @@ void main(void) {
 
 
    cpct_setBorder(HW_BLACK);
-   cpct_setPalette(g_tile_palette, 16);
+   cpct_setPalette(g_tile_palette, 6);
    cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
    // horizontal scroll
@@ -101,6 +102,10 @@ void main(void) {
    // le schtroumpf est affiché devant la phrase.
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+
+   p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
+   cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
+
 
 //Faire BIP (PRINT CHR$(7))
 //__asm

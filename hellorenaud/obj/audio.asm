@@ -14,6 +14,8 @@
 	.globl _i
 	.globl _effets2
 	.globl _effets1
+	.globl _liste2
+	.globl _liste1
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -47,18 +49,18 @@ _i::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/audio.c:51: void akp_musicInit()
+;src/audio.c:64: void akp_musicInit()
 ;	---------------------------------
 ; Function akp_musicInit
 ; ---------------------------------
 _akp_musicInit::
-;src/audio.c:53: i=i+1;
+;src/audio.c:66: i=i+1;
 	ld	iy, #_i
 	inc	0 (iy)
 	jr	NZ,00103$
 	inc	1 (iy)
 00103$:
-;src/audio.c:111: __endasm;
+;src/audio.c:116: __endasm;
 ;;	backup Z80 state
 	push	af
 	push	bc
@@ -73,19 +75,12 @@ _akp_musicInit::
 	push	de
 	push	hl
 	ld	bc,#_effets1 ;; OK
-	ld	(#_effets1),bc ;; OK
-	inc	bc
-	inc	bc
-	ld	de,#_effets2
-	ld	a,d
-	LD	(bc),a
-	inc	bc
-	ld	a,e
-	LD	(bc),a
-	inc	bc
+	ld	(#_liste1),bc ;; OK
+	ld	bc,#_effets2 ;; #_effets2 ;; OK
+	ld	(#_liste2),bc ;; OK
 ;;	AKG6000.BIN/exemple.asm
 	ld	bc,#0x7000
-	ld	de,#_effets1 ;;sfx
+	ld	de,#_liste1 ;;sfx
 	call	#0x6000
 ;;	restore Z80 state
 	pop	hl
@@ -101,9 +96,11 @@ _akp_musicInit::
 	pop	bc
 	pop	af
 	ret
+_liste1:
+	.dw #0x0000
+_liste2:
+	.dw #0x0000
 _effets1:
-	.dw #0x0000
-	.dw #0x0000
 	.db #0x00	; 0
 	.db #0x3d	; 61
 	.dw #0x00ef
@@ -180,12 +177,12 @@ _effets2:
 	.db #0x07	; 7
 	.dw #0x0050
 	.db #0x04	; 4
-;src/audio.c:114: void akp_musicPlay()
+;src/audio.c:119: void akp_musicPlay()
 ;	---------------------------------
 ; Function akp_musicPlay
 ; ---------------------------------
 _akp_musicPlay::
-;src/audio.c:147: __endasm;
+;src/audio.c:152: __endasm;
 ;;	backup Z80 state
 	push	af
 	push	bc
@@ -215,12 +212,12 @@ _akp_musicPlay::
 	pop	bc
 	pop	af
 	ret
-;src/audio.c:150: void akp_sfxPlay()
+;src/audio.c:155: void akp_sfxPlay()
 ;	---------------------------------
 ; Function akp_sfxPlay
 ; ---------------------------------
 _akp_sfxPlay::
-;src/audio.c:183: __endasm;
+;src/audio.c:188: __endasm;
 ;;	backup Z80 state
 	push	af
 	push	bc

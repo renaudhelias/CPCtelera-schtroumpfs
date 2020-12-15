@@ -113,7 +113,7 @@
    001F DD E5         [15]  113 	push	ix
    0021 FD E5         [15]  114 	push	iy
    0023 D9            [ 4]  115 	exx
-   0024 08            [ 4]  116 	ex	af, af'
+   0024 08            [ 4]  116 	ex	af, af' ; '
    0025 F5            [11]  117 	push	af
    0026 C5            [11]  118 	push	bc
    0027 D5            [11]  119 	push	de
@@ -145,7 +145,7 @@
    004E D1            [10]  145 	pop	de
    004F C1            [10]  146 	pop	bc
    0050 F1            [10]  147 	pop	af
-   0051 08            [ 4]  148 	ex	af, af'
+   0051 08            [ 4]  148 	ex	af, af' ; '
    0052 D9            [ 4]  149 	exx
    0053 FD E1         [14]  150 	pop	iy
    0055 DD E1         [14]  151 	pop	ix
