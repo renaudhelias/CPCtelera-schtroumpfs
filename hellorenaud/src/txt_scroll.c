@@ -8,7 +8,7 @@
  * l : la longueur du texte
  * step : le pas de l'animation, de 0 à N, N peu importe.
  */
-void scroll(char * texte, unsigned int l, int step) {//step 160 200
+void scroll(char * texte, unsigned int l, int step) {
 	u8* p;
 	int c1;
 	int c2;
@@ -27,7 +27,7 @@ void scroll(char * texte, unsigned int l, int step) {//step 160 200
 		div=c2/G_TILE_FONTMAP20X22_00_W;
 		mod=c2%G_TILE_FONTMAP20X22_00_W;
 		if (mod==0) {
-			if (texte[div]!=' ') {
+			if (texte[div]!=' ') { // on zap les espaces FIXME mauvais pour le timing !
 				o=texte[div]-'A';
 				// on affiche c2 en c1
 				p = cpct_getScreenPtr(CPCT_VMEM_START, c1,120-1);
