@@ -169,9 +169,6 @@ _main::
 	ld	h, #0xc0
 	push	hl
 	call	_cpct_memset
-;src/main.c:86: cpct_setVideoMemoryOffset(3);
-	ld	l, #0x03
-	call	_cpct_setVideoMemoryOffset
 ;src/main.c:89: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
 	ld	hl, #0x0f0f
 	push	hl
@@ -240,19 +237,6 @@ _main::
 	push	hl
 	push	bc
 	call	_cpct_drawSpriteMasked
-;src/main.c:108: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
-	ld	hl, #0x7709
-	push	hl
-	ld	hl, #0xc000
-	push	hl
-	call	_cpct_getScreenPtr
-;src/main.c:109: cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
-	ld	bc, #_g_tile_fontmap20x22_00+0
-	ld	de, #0x160a
-	push	de
-	push	hl
-	push	bc
-	call	_cpct_drawSprite
 ;src/main.c:120: cpct_srand(77);
 	ld	hl,#0x004d
 	ld	de,#0x0000
@@ -278,10 +262,10 @@ _main::
 	ld	a, l
 	or	a, a
 	jr	NZ,00106$
-;src/main.c:127: scroll(" ABRUTI ", 8, t);
+;src/main.c:127: scroll("WEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASANDAHAPPYNEWYEAR", 88, t);
 	push	bc
 	push	bc
-	ld	hl, #0x0008
+	ld	hl, #0x0058
 	push	hl
 	ld	hl, #___str_0
 	push	hl
@@ -292,12 +276,15 @@ _main::
 	pop	bc
 ;src/main.c:128: t=t+1;
 	inc	bc
-;src/main.c:129: if (t>160) {t=0;}
-	ld	a, #0xa0
+;src/main.c:129: if (t>88*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
+	ld	a, #0x10
 	cp	a, c
-	ld	a, #0x00
+	ld	a, #0x04
 	sbc	a, b
-	jr	NC,00102$
+	jp	PO, 00138$
+	xor	a, #0x80
+00138$:
+	jp	P, 00102$
 	ld	bc, #0x0000
 00102$:
 ;src/main.c:130: cpct_scanKeyboard_f();
@@ -330,7 +317,8 @@ _main::
 	call	_akp_sfxPlay
 	jr	00110$
 ___str_0:
-	.ascii " ABRUTI "
+	.ascii "WEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASWEWISHYOUAME"
+	.ascii "RRYCHRISTMASANDAHAPPYNEWYEAR"
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER

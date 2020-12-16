@@ -55,7 +55,7 @@ akp_musicPlay();
 }
 
 void main(void) {
-   unsigned int t=0;
+   int t=0;
    u8* p;
    u8* sprite=g_items_0;
 
@@ -83,7 +83,7 @@ void main(void) {
    cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
    // horizontal scroll
-   cpct_setVideoMemoryOffset(3);
+//   cpct_setVideoMemoryOffset(3);
 
    // Draw the sprite to screen
    p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
@@ -105,8 +105,8 @@ void main(void) {
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
-   p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
-   cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
+//   p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
+//   cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
 
    //scroll(" ABRUTI", 7);
    
@@ -124,9 +124,9 @@ void main(void) {
    cpct_scanKeyboard_f();
    t=0;
    while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
-      scroll(" ABRUTI ", 8, t);
+      scroll("WEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASANDAHAPPYNEWYEAR", 88, t);
       t=t+1;
-      if (t>160) {t=0;}
+      if (t>88*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
       cpct_scanKeyboard_f();
    }
 

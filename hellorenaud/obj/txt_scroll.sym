@@ -7,8 +7,8 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-    __divuchar                                                     **** GX
-    __moduchar                                                     **** GX
+    __divsint                                                      **** GX
+    __modsint                                                      **** GX
     _cpct_drawSprite                                               **** GX
     _cpct_getScreenPtr                                             **** GX
     _g_tile_tileset                                                **** GX
@@ -20,7 +20,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size   D3   flags    0
+   0 _CODE                                      size   BE   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

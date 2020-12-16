@@ -7,7 +7,7 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-  0 ___str_0                                                       0180 R
+  0 ___str_0                                                       016A R
     _akp_musicInit                                                 **** GX
     _akp_musicPlay                                                 **** GX
     _akp_sfxPlay                                                   **** GX
@@ -34,7 +34,6 @@ Symbol Table
     _cpct_setVideoMemoryOffset                                     **** GX
     _cpct_setVideoMode                                             **** GX
   0 _g_items_0                                                     002A GR
-    _g_tile_fontmap20x22_00                                        **** GX
     _g_tile_palette                                                **** GX
     _g_tile_schtroumpf                                             **** GX
   0 _main                                                          004A GR
@@ -48,7 +47,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  189   flags    0
+   0 _CODE                                      size  1C3   flags    0
    1 _DATA                                      size    1   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

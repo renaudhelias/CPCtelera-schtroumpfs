@@ -42,7 +42,7 @@
                              42 ; code
                              43 ;--------------------------------------------------------
                              44 	.area _CODE
-                             45 ;src/txt_scroll.c:6: void scroll(char * texte, unsigned int l, unsigned int step) {
+                             45 ;src/txt_scroll.c:11: void scroll(char * texte, unsigned int l, int step) {//step 160 200
                              46 ;	---------------------------------
                              47 ; Function scroll
                              48 ; ---------------------------------
@@ -52,142 +52,129 @@
    013E DD 39         [15]   52 	add	ix,sp
    0140 F5            [11]   53 	push	af
    0141 F5            [11]   54 	push	af
-   0142 3B            [ 6]   55 	dec	sp
-                             56 ;src/txt_scroll.c:10: for(c=step;c<G_TILE_FONTMAP20X22_00_W*l;c=c+1) {
-   0143 DD 4E 08      [19]   57 	ld	c, 8 (ix)
-   0146 41            [ 4]   58 	ld	b, c
-   0147 DD 5E 06      [19]   59 	ld	e,6 (ix)
-   014A DD 56 07      [19]   60 	ld	d,7 (ix)
-   014D 6B            [ 4]   61 	ld	l, e
-   014E 62            [ 4]   62 	ld	h, d
-   014F 29            [11]   63 	add	hl, hl
-   0150 29            [11]   64 	add	hl, hl
-   0151 19            [11]   65 	add	hl, de
-   0152 29            [11]   66 	add	hl, hl
-   0153 EB            [ 4]   67 	ex	de,hl
-   0154                      68 00108$:
-   0154 68            [ 4]   69 	ld	l, b
-   0155 26 00         [ 7]   70 	ld	h, #0x00
-   0157 BF            [ 4]   71 	cp	a, a
-   0158 ED 52         [15]   72 	sbc	hl, de
-   015A D2 06 02      [10]   73 	jp	NC, 00110$
-                             74 ;src/txt_scroll.c:11: if (c-step>SCREEN_WIDTH) {return;}
-   015D 68            [ 4]   75 	ld	l, b
-   015E 26 00         [ 7]   76 	ld	h, #0x00
-   0160 7D            [ 4]   77 	ld	a, l
-   0161 DD 96 08      [19]   78 	sub	a, 8 (ix)
-   0164 6F            [ 4]   79 	ld	l, a
-   0165 7C            [ 4]   80 	ld	a, h
-   0166 DD 9E 09      [19]   81 	sbc	a, 9 (ix)
-   0169 67            [ 4]   82 	ld	h, a
-   016A 3E A0         [ 7]   83 	ld	a, #0xa0
-   016C BD            [ 4]   84 	cp	a, l
-   016D 3E 00         [ 7]   85 	ld	a, #0x00
-   016F 9C            [ 4]   86 	sbc	a, h
-   0170 DA 06 02      [10]   87 	jp	C,00110$
-                             88 ;src/txt_scroll.c:12: if (texte[c]!=' ' && c%G_TILE_FONTMAP20X22_00_W==0) {
-   0173 DD 7E 04      [19]   89 	ld	a, 4 (ix)
-   0176 80            [ 4]   90 	add	a, b
-   0177 6F            [ 4]   91 	ld	l, a
-   0178 DD 7E 05      [19]   92 	ld	a, 5 (ix)
-   017B CE 00         [ 7]   93 	adc	a, #0x00
-   017D 67            [ 4]   94 	ld	h, a
-   017E 7E            [ 7]   95 	ld	a, (hl)
-   017F D6 20         [ 7]   96 	sub	a, #0x20
-   0181 CA 02 02      [10]   97 	jp	Z,00109$
-   0184 C5            [11]   98 	push	bc
-   0185 D5            [11]   99 	push	de
-   0186 3E 0A         [ 7]  100 	ld	a, #0x0a
-   0188 F5            [11]  101 	push	af
-   0189 33            [ 6]  102 	inc	sp
-   018A C5            [11]  103 	push	bc
-   018B 33            [ 6]  104 	inc	sp
-   018C CD C4 21      [17]  105 	call	__moduchar
-   018F F1            [10]  106 	pop	af
-   0190 D1            [10]  107 	pop	de
-   0191 C1            [10]  108 	pop	bc
-   0192 7D            [ 4]  109 	ld	a, l
-   0193 B7            [ 4]  110 	or	a, a
-   0194 20 6C         [12]  111 	jr	NZ,00109$
-                            112 ;src/txt_scroll.c:13: o=texte[c/G_TILE_FONTMAP20X22_00_W]-'A';
-   0196 C5            [11]  113 	push	bc
-   0197 D5            [11]  114 	push	de
-   0198 3E 0A         [ 7]  115 	ld	a, #0x0a
-   019A F5            [11]  116 	push	af
-   019B 33            [ 6]  117 	inc	sp
-   019C C5            [11]  118 	push	bc
-   019D 33            [ 6]  119 	inc	sp
-   019E CD E3 21      [17]  120 	call	__divuchar
-   01A1 F1            [10]  121 	pop	af
-   01A2 DD 75 FF      [19]  122 	ld	-1 (ix), l
-   01A5 D1            [10]  123 	pop	de
-   01A6 C1            [10]  124 	pop	bc
-   01A7 DD 7E 04      [19]  125 	ld	a, 4 (ix)
-   01AA DD 86 FF      [19]  126 	add	a, -1 (ix)
-   01AD 6F            [ 4]  127 	ld	l, a
-   01AE DD 7E 05      [19]  128 	ld	a, 5 (ix)
-   01B1 CE 00         [ 7]  129 	adc	a, #0x00
-   01B3 67            [ 4]  130 	ld	h, a
-   01B4 6E            [ 7]  131 	ld	l, (hl)
-   01B5 26 00         [ 7]  132 	ld	h, #0x00
-   01B7 7D            [ 4]  133 	ld	a, l
-   01B8 C6 BF         [ 7]  134 	add	a, #0xbf
-   01BA DD 77 FB      [19]  135 	ld	-5 (ix), a
-   01BD 7C            [ 4]  136 	ld	a, h
-   01BE CE FF         [ 7]  137 	adc	a, #0xff
-   01C0 DD 77 FC      [19]  138 	ld	-4 (ix), a
-                            139 ;src/txt_scroll.c:14: p = cpct_getScreenPtr(CPCT_VMEM_START, c-step,120-1);
-   01C3 78            [ 4]  140 	ld	a, b
-   01C4 91            [ 4]  141 	sub	a, c
-   01C5 67            [ 4]  142 	ld	h, a
-   01C6 C5            [11]  143 	push	bc
-   01C7 D5            [11]  144 	push	de
-   01C8 3E 77         [ 7]  145 	ld	a, #0x77
-   01CA F5            [11]  146 	push	af
-   01CB 33            [ 6]  147 	inc	sp
-   01CC E5            [11]  148 	push	hl
-   01CD 33            [ 6]  149 	inc	sp
-   01CE 21 00 C0      [10]  150 	ld	hl, #0xc000
-   01D1 E5            [11]  151 	push	hl
-   01D2 CD 61 24      [17]  152 	call	_cpct_getScreenPtr
-   01D5 D1            [10]  153 	pop	de
-   01D6 C1            [10]  154 	pop	bc
-                            155 ;src/txt_scroll.c:15: cpct_drawSprite(g_tile_tileset[o], p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
-   01D7 E5            [11]  156 	push	hl
-   01D8 FD E1         [14]  157 	pop	iy
-   01DA E1            [10]  158 	pop	hl
-   01DB E5            [11]  159 	push	hl
-   01DC 29            [11]  160 	add	hl, hl
-   01DD 3E F1         [ 7]  161 	ld	a, #<(_g_tile_tileset)
-   01DF 85            [ 4]  162 	add	a, l
-   01E0 6F            [ 4]  163 	ld	l, a
-   01E1 3E 09         [ 7]  164 	ld	a, #>(_g_tile_tileset)
-   01E3 8C            [ 4]  165 	adc	a, h
-   01E4 67            [ 4]  166 	ld	h, a
-   01E5 7E            [ 7]  167 	ld	a, (hl)
-   01E6 23            [ 6]  168 	inc	hl
-   01E7 66            [ 7]  169 	ld	h, (hl)
-   01E8 DD 77 FD      [19]  170 	ld	-3 (ix), a
-   01EB DD 74 FE      [19]  171 	ld	-2 (ix), h
-   01EE C5            [11]  172 	push	bc
-   01EF D5            [11]  173 	push	de
-   01F0 21 0A 16      [10]  174 	ld	hl, #0x160a
-   01F3 E5            [11]  175 	push	hl
-   01F4 FD E5         [15]  176 	push	iy
-   01F6 DD 6E FD      [19]  177 	ld	l,-3 (ix)
-   01F9 DD 66 FE      [19]  178 	ld	h,-2 (ix)
-   01FC E5            [11]  179 	push	hl
-   01FD CD 1F 21      [17]  180 	call	_cpct_drawSprite
-   0200 D1            [10]  181 	pop	de
-   0201 C1            [10]  182 	pop	bc
-   0202                     183 00109$:
-                            184 ;src/txt_scroll.c:10: for(c=step;c<G_TILE_FONTMAP20X22_00_W*l;c=c+1) {
-   0202 04            [ 4]  185 	inc	b
-   0203 C3 54 01      [10]  186 	jp	00108$
-   0206                     187 00110$:
-   0206 DD F9         [10]  188 	ld	sp, ix
-   0208 DD E1         [14]  189 	pop	ix
-   020A C9            [10]  190 	ret
-                            191 	.area _CODE
-                            192 	.area _INITIALIZER
-                            193 	.area _CABS (ABS)
+                             55 ;src/txt_scroll.c:18: c2=step+SCREEN_WIDTH; // on insère du vide au début de step
+   0142 DD 7E 08      [19]   56 	ld	a, 8 (ix)
+   0145 C6 50         [ 7]   57 	add	a, #0x50
+   0147 4F            [ 4]   58 	ld	c, a
+   0148 DD 7E 09      [19]   59 	ld	a, 9 (ix)
+   014B CE 00         [ 7]   60 	adc	a, #0x00
+   014D 47            [ 4]   61 	ld	b, a
+                             62 ;src/txt_scroll.c:20: for(c1=0;c1<=(SCREEN_WIDTH-G_TILE_FONTMAP20X22_00_W);c1=c1+1) {
+   014E DD 5E 06      [19]   63 	ld	e,6 (ix)
+   0151 DD 56 07      [19]   64 	ld	d,7 (ix)
+   0154 6B            [ 4]   65 	ld	l, e
+   0155 62            [ 4]   66 	ld	h, d
+   0156 29            [11]   67 	add	hl, hl
+   0157 29            [11]   68 	add	hl, hl
+   0158 19            [11]   69 	add	hl, de
+   0159 29            [11]   70 	add	hl, hl
+   015A DD 75 FE      [19]   71 	ld	-2 (ix), l
+   015D DD 74 FF      [19]   72 	ld	-1 (ix), h
+   0160 21 00 00      [10]   73 	ld	hl, #0x0000
+   0163 E3            [19]   74 	ex	(sp), hl
+   0164                      75 00111$:
+                             76 ;src/txt_scroll.c:22: c2=c2+1;
+   0164 03            [ 6]   77 	inc	bc
+                             78 ;src/txt_scroll.c:24: if (c2 < 0) {continue;}
+   0165 CB 78         [ 8]   79 	bit	7, b
+   0167 20 6E         [12]   80 	jr	NZ,00109$
+                             81 ;src/txt_scroll.c:25: if (c2 > l*G_TILE_FONTMAP20X22_00_W) {continue;}
+   0169 59            [ 4]   82 	ld	e, c
+   016A 50            [ 4]   83 	ld	d, b
+   016B DD 7E FE      [19]   84 	ld	a, -2 (ix)
+   016E 93            [ 4]   85 	sub	a, e
+   016F DD 7E FF      [19]   86 	ld	a, -1 (ix)
+   0172 9A            [ 4]   87 	sbc	a, d
+   0173 38 62         [12]   88 	jr	C,00109$
+                             89 ;src/txt_scroll.c:27: div=c2/G_TILE_FONTMAP20X22_00_W;
+   0175 C5            [11]   90 	push	bc
+   0176 21 0A 00      [10]   91 	ld	hl, #0x000a
+   0179 E5            [11]   92 	push	hl
+   017A C5            [11]   93 	push	bc
+   017B CD 76 24      [17]   94 	call	__divsint
+   017E F1            [10]   95 	pop	af
+   017F F1            [10]   96 	pop	af
+   0180 EB            [ 4]   97 	ex	de,hl
+   0181 C1            [10]   98 	pop	bc
+                             99 ;src/txt_scroll.c:28: mod=c2%G_TILE_FONTMAP20X22_00_W;
+   0182 C5            [11]  100 	push	bc
+   0183 D5            [11]  101 	push	de
+   0184 21 0A 00      [10]  102 	ld	hl, #0x000a
+   0187 E5            [11]  103 	push	hl
+   0188 C5            [11]  104 	push	bc
+                            105 ;src/txt_scroll.c:29: if (mod==0) {
+   0189 CD 21 24      [17]  106 	call	__modsint
+   018C F1            [10]  107 	pop	af
+   018D F1            [10]  108 	pop	af
+   018E D1            [10]  109 	pop	de
+   018F C1            [10]  110 	pop	bc
+   0190 7C            [ 4]  111 	ld	a, h
+   0191 B5            [ 4]  112 	or	a,l
+   0192 20 43         [12]  113 	jr	NZ,00109$
+                            114 ;src/txt_scroll.c:30: if (texte[div]!=' ') {
+   0194 DD 6E 04      [19]  115 	ld	l,4 (ix)
+   0197 DD 66 05      [19]  116 	ld	h,5 (ix)
+   019A 19            [11]  117 	add	hl, de
+   019B 5E            [ 7]  118 	ld	e, (hl)
+   019C 7B            [ 4]  119 	ld	a, e
+   019D D6 20         [ 7]  120 	sub	a, #0x20
+   019F 28 36         [12]  121 	jr	Z,00109$
+                            122 ;src/txt_scroll.c:31: o=texte[div]-'A';
+   01A1 16 00         [ 7]  123 	ld	d, #0x00
+   01A3 7B            [ 4]  124 	ld	a, e
+   01A4 C6 BF         [ 7]  125 	add	a, #0xbf
+   01A6 5F            [ 4]  126 	ld	e, a
+   01A7 7A            [ 4]  127 	ld	a, d
+   01A8 CE FF         [ 7]  128 	adc	a, #0xff
+   01AA 57            [ 4]  129 	ld	d, a
+                            130 ;src/txt_scroll.c:33: p = cpct_getScreenPtr(CPCT_VMEM_START, c1,120-1);
+   01AB DD 66 FC      [19]  131 	ld	h, -4 (ix)
+   01AE C5            [11]  132 	push	bc
+   01AF D5            [11]  133 	push	de
+   01B0 3E 77         [ 7]  134 	ld	a, #0x77
+   01B2 F5            [11]  135 	push	af
+   01B3 33            [ 6]  136 	inc	sp
+   01B4 E5            [11]  137 	push	hl
+   01B5 33            [ 6]  138 	inc	sp
+   01B6 21 00 C0      [10]  139 	ld	hl, #0xc000
+   01B9 E5            [11]  140 	push	hl
+   01BA CD 2E 24      [17]  141 	call	_cpct_getScreenPtr
+   01BD D1            [10]  142 	pop	de
+   01BE C1            [10]  143 	pop	bc
+                            144 ;src/txt_scroll.c:34: cpct_drawSprite(g_tile_tileset[o], p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
+   01BF E5            [11]  145 	push	hl
+   01C0 FD E1         [14]  146 	pop	iy
+   01C2 EB            [ 4]  147 	ex	de,hl
+   01C3 29            [11]  148 	add	hl, hl
+   01C4 11 16 0A      [10]  149 	ld	de, #_g_tile_tileset
+   01C7 19            [11]  150 	add	hl, de
+   01C8 5E            [ 7]  151 	ld	e, (hl)
+   01C9 23            [ 6]  152 	inc	hl
+   01CA 56            [ 7]  153 	ld	d, (hl)
+   01CB C5            [11]  154 	push	bc
+   01CC 21 0A 16      [10]  155 	ld	hl, #0x160a
+   01CF E5            [11]  156 	push	hl
+   01D0 FD E5         [15]  157 	push	iy
+   01D2 D5            [11]  158 	push	de
+   01D3 CD 44 21      [17]  159 	call	_cpct_drawSprite
+   01D6 C1            [10]  160 	pop	bc
+   01D7                     161 00109$:
+                            162 ;src/txt_scroll.c:20: for(c1=0;c1<=(SCREEN_WIDTH-G_TILE_FONTMAP20X22_00_W);c1=c1+1) {
+   01D7 DD 34 FC      [23]  163 	inc	-4 (ix)
+   01DA 20 03         [12]  164 	jr	NZ,00136$
+   01DC DD 34 FD      [23]  165 	inc	-3 (ix)
+   01DF                     166 00136$:
+   01DF 3E 46         [ 7]  167 	ld	a, #0x46
+   01E1 DD BE FC      [19]  168 	cp	a, -4 (ix)
+   01E4 3E 00         [ 7]  169 	ld	a, #0x00
+   01E6 DD 9E FD      [19]  170 	sbc	a, -3 (ix)
+   01E9 E2 EE 01      [10]  171 	jp	PO, 00137$
+   01EC EE 80         [ 7]  172 	xor	a, #0x80
+   01EE                     173 00137$:
+   01EE F2 64 01      [10]  174 	jp	P, 00111$
+   01F1 DD F9         [10]  175 	ld	sp, ix
+   01F3 DD E1         [14]  176 	pop	ix
+   01F5 C9            [10]  177 	ret
+                            178 	.area _CODE
+                            179 	.area _INITIALIZER
+                            180 	.area _CABS (ABS)

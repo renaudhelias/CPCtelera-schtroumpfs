@@ -42,7 +42,7 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/txt_scroll.c:6: void scroll(char * texte, unsigned int l, unsigned int step) {
+;src/txt_scroll.c:11: void scroll(char * texte, unsigned int l, int step) {//step 160 200
 ;	---------------------------------
 ; Function scroll
 ; ---------------------------------
@@ -52,10 +52,14 @@ _scroll::
 	add	ix,sp
 	push	af
 	push	af
-	dec	sp
-;src/txt_scroll.c:10: for(c=step;c<G_TILE_FONTMAP20X22_00_W*l;c=c+1) {
-	ld	c, 8 (ix)
-	ld	b, c
+;src/txt_scroll.c:18: c2=step+SCREEN_WIDTH; // on insère du vide au début de step
+	ld	a, 8 (ix)
+	add	a, #0x50
+	ld	c, a
+	ld	a, 9 (ix)
+	adc	a, #0x00
+	ld	b, a
+;src/txt_scroll.c:20: for(c1=0;c1<=(SCREEN_WIDTH-G_TILE_FONTMAP20X22_00_W);c1=c1+1) {
 	ld	e,6 (ix)
 	ld	d,7 (ix)
 	ld	l, e
@@ -64,82 +68,67 @@ _scroll::
 	add	hl, hl
 	add	hl, de
 	add	hl, hl
-	ex	de,hl
-00108$:
-	ld	l, b
-	ld	h, #0x00
-	cp	a, a
-	sbc	hl, de
-	jp	NC, 00110$
-;src/txt_scroll.c:11: if (c-step>SCREEN_WIDTH) {return;}
-	ld	l, b
-	ld	h, #0x00
-	ld	a, l
-	sub	a, 8 (ix)
-	ld	l, a
-	ld	a, h
-	sbc	a, 9 (ix)
-	ld	h, a
-	ld	a, #0xa0
-	cp	a, l
-	ld	a, #0x00
-	sbc	a, h
-	jp	C,00110$
-;src/txt_scroll.c:12: if (texte[c]!=' ' && c%G_TILE_FONTMAP20X22_00_W==0) {
-	ld	a, 4 (ix)
-	add	a, b
-	ld	l, a
-	ld	a, 5 (ix)
-	adc	a, #0x00
-	ld	h, a
-	ld	a, (hl)
-	sub	a, #0x20
-	jp	Z,00109$
-	push	bc
-	push	de
-	ld	a, #0x0a
-	push	af
-	inc	sp
-	push	bc
-	inc	sp
-	call	__moduchar
-	pop	af
-	pop	de
-	pop	bc
-	ld	a, l
-	or	a, a
+	ld	-2 (ix), l
+	ld	-1 (ix), h
+	ld	hl, #0x0000
+	ex	(sp), hl
+00111$:
+;src/txt_scroll.c:22: c2=c2+1;
+	inc	bc
+;src/txt_scroll.c:24: if (c2 < 0) {continue;}
+	bit	7, b
 	jr	NZ,00109$
-;src/txt_scroll.c:13: o=texte[c/G_TILE_FONTMAP20X22_00_W]-'A';
+;src/txt_scroll.c:25: if (c2 > l*G_TILE_FONTMAP20X22_00_W) {continue;}
+	ld	e, c
+	ld	d, b
+	ld	a, -2 (ix)
+	sub	a, e
+	ld	a, -1 (ix)
+	sbc	a, d
+	jr	C,00109$
+;src/txt_scroll.c:27: div=c2/G_TILE_FONTMAP20X22_00_W;
+	push	bc
+	ld	hl, #0x000a
+	push	hl
+	push	bc
+	call	__divsint
+	pop	af
+	pop	af
+	ex	de,hl
+	pop	bc
+;src/txt_scroll.c:28: mod=c2%G_TILE_FONTMAP20X22_00_W;
 	push	bc
 	push	de
-	ld	a, #0x0a
-	push	af
-	inc	sp
+	ld	hl, #0x000a
+	push	hl
 	push	bc
-	inc	sp
-	call	__divuchar
+;src/txt_scroll.c:29: if (mod==0) {
+	call	__modsint
 	pop	af
-	ld	-1 (ix), l
+	pop	af
 	pop	de
 	pop	bc
-	ld	a, 4 (ix)
-	add	a, -1 (ix)
-	ld	l, a
-	ld	a, 5 (ix)
-	adc	a, #0x00
-	ld	h, a
-	ld	l, (hl)
-	ld	h, #0x00
-	ld	a, l
-	add	a, #0xbf
-	ld	-5 (ix), a
 	ld	a, h
+	or	a,l
+	jr	NZ,00109$
+;src/txt_scroll.c:30: if (texte[div]!=' ') {
+	ld	l,4 (ix)
+	ld	h,5 (ix)
+	add	hl, de
+	ld	e, (hl)
+	ld	a, e
+	sub	a, #0x20
+	jr	Z,00109$
+;src/txt_scroll.c:31: o=texte[div]-'A';
+	ld	d, #0x00
+	ld	a, e
+	add	a, #0xbf
+	ld	e, a
+	ld	a, d
 	adc	a, #0xff
-	ld	-4 (ix), a
-;src/txt_scroll.c:14: p = cpct_getScreenPtr(CPCT_VMEM_START, c-step,120-1);
-	ld	a, b
-	sub	a, c
-	ld	h, a
+	ld	d, a
+;src/txt_scroll.c:33: p = cpct_getScreenPtr(CPCT_VMEM_START, c1,120-1);
+	ld	h, -4 (ix)
 	push	bc
 	push	de
 	ld	a, #0x77
@@ -152,39 +141,37 @@ _scroll::
 	call	_cpct_getScreenPtr
 	pop	de
 	pop	bc
-;src/txt_scroll.c:15: cpct_drawSprite(g_tile_tileset[o], p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
+;src/txt_scroll.c:34: cpct_drawSprite(g_tile_tileset[o], p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
 	push	hl
 	pop	iy
-	pop	hl
-	push	hl
+	ex	de,hl
 	add	hl, hl
-	ld	a, #<(_g_tile_tileset)
-	add	a, l
-	ld	l, a
-	ld	a, #>(_g_tile_tileset)
-	adc	a, h
-	ld	h, a
-	ld	a, (hl)
+	ld	de, #_g_tile_tileset
+	add	hl, de
+	ld	e, (hl)
 	inc	hl
-	ld	h, (hl)
-	ld	-3 (ix), a
-	ld	-2 (ix), h
+	ld	d, (hl)
 	push	bc
-	push	de
 	ld	hl, #0x160a
 	push	hl
 	push	iy
-	ld	l,-3 (ix)
-	ld	h,-2 (ix)
-	push	hl
+	push	de
 	call	_cpct_drawSprite
-	pop	de
 	pop	bc
 00109$:
-;src/txt_scroll.c:10: for(c=step;c<G_TILE_FONTMAP20X22_00_W*l;c=c+1) {
-	inc	b
-	jp	00108$
-00110$:
+;src/txt_scroll.c:20: for(c1=0;c1<=(SCREEN_WIDTH-G_TILE_FONTMAP20X22_00_W);c1=c1+1) {
+	inc	-4 (ix)
+	jr	NZ,00136$
+	inc	-3 (ix)
+00136$:
+	ld	a, #0x46
+	cp	a, -4 (ix)
+	ld	a, #0x00
+	sbc	a, -3 (ix)
+	jp	PO, 00137$
+	xor	a, #0x80
+00137$:
+	jp	P, 00111$
 	ld	sp, ix
 	pop	ix
 	ret
