@@ -35,7 +35,6 @@
 	.globl _cpct_memset_f64
 	.globl _cpct_memset
 	.globl _cpct_setInterruptHandler
-	.globl _cpct_disableFirmware
 	.globl _g_items_0
 ;--------------------------------------------------------
 ; special function registers
@@ -139,28 +138,31 @@ _g_items_0:
 ; ---------------------------------
 _main::
 ;src/main.c:60: u8* sprite=g_items_0;
-;src/main.c:69: cpct_disableFirmware();
-	call	_cpct_disableFirmware
-;src/main.c:73: bank4_4000();
+;src/main.c:71: akp_musicInit();
+	call	_akp_musicInit
+;src/main.c:76: cpct_setInterruptHandler(myInterruptHandler);
+	ld	hl, #_myInterruptHandler
+	call	_cpct_setInterruptHandler
+;src/main.c:80: bank4_4000();
 	call	_bank4_4000
-;src/main.c:74: bank0123();
+;src/main.c:81: bank0123();
 	call	_bank0123
-;src/main.c:75: calqueC000();
+;src/main.c:82: calqueC000();
 	call	_calqueC000
-;src/main.c:78: cpct_setVideoMode(0);
+;src/main.c:85: cpct_setVideoMode(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMode
-;src/main.c:81: cpct_setBorder(HW_BLACK);
+;src/main.c:88: cpct_setBorder(HW_BLACK);
 	ld	hl, #0x1410
 	push	hl
 	call	_cpct_setPALColour
-;src/main.c:82: cpct_setPalette(g_tile_palette, 6);
+;src/main.c:89: cpct_setPalette(g_tile_palette, 6);
 	ld	hl, #0x0006
 	push	hl
 	ld	hl, #_g_tile_palette
 	push	hl
 	call	_cpct_setPalette
-;src/main.c:83: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
+;src/main.c:90: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 	ld	hl, #0x4000
 	push	hl
 	xor	a, a
@@ -169,13 +171,13 @@ _main::
 	ld	h, #0xc0
 	push	hl
 	call	_cpct_memset
-;src/main.c:89: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
+;src/main.c:96: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
 	ld	hl, #0x0f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:90: cpct_drawSprite(sprite, p, 4, 8);
+;src/main.c:97: cpct_drawSprite(sprite, p, 4, 8);
 	push	hl
 	ld	bc, #0x0804
 	push	bc
@@ -196,20 +198,20 @@ _main::
 	push	bc
 	call	_cpct_hflipSpriteM0
 	pop	hl
-;src/main.c:98: cpct_drawSprite(sprite, p, 4, 8);
+;src/main.c:105: cpct_drawSprite(sprite, p, 4, 8);
 	ld	bc, #0x0804
 	push	bc
 	push	hl
 	ld	hl, #_g_items_0
 	push	hl
 	call	_cpct_drawSprite
-;src/main.c:100: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
+;src/main.c:107: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
 	ld	hl, #0x1f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:102: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+;src/main.c:109: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 	push	hl
 	ld	hl, #0x0302
 	push	hl
@@ -223,49 +225,61 @@ _main::
 	push	bc
 	call	_cpct_drawSolidBox
 	pop	af
-;src/main.c:105: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
+;src/main.c:112: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
 	inc	sp
 	ld	hl,#0x4f09
 	ex	(sp),hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:106: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+;src/main.c:113: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 	ld	bc, #_g_tile_schtroumpf+0
 	ld	de, #0x2010
 	push	de
 	push	hl
 	push	bc
 	call	_cpct_drawSpriteMasked
-;src/main.c:120: cpct_srand(77);
+;src/main.c:127: cpct_srand(77);
 	ld	hl,#0x004d
 	ld	de,#0x0000
 	call	_cpct_setSeed_mxor
 	call	_cpct_restoreState_mxor_u8
-;src/main.c:124: cpct_scanKeyboard_f();
+;src/main.c:131: cpct_scanKeyboard_f();
 	call	_cpct_scanKeyboard_f
-;src/main.c:125: t=0;
+;src/main.c:132: t=0;
 	ld	bc, #0x0000
-;src/main.c:126: while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
-00104$:
+;src/main.c:133: while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
+00107$:
+	push	bc
+	ld	hl, #0x0080
+	push	hl
+	push	bc
+	call	__modsint
+	pop	af
+	pop	af
+	pop	bc
+	ld	a, h
+	or	a,l
+	jr	NZ,00108$
 	push	bc
 	ld	hl, #0x4000
 	call	_cpct_isKeyPressed
 	pop	bc
 	ld	a, l
 	or	a, a
-	jr	NZ,00106$
+	jr	NZ,00109$
 	push	bc
 	ld	hl, #0x0402
 	call	_cpct_isKeyPressed
 	pop	bc
 	ld	a, l
 	or	a, a
-	jr	NZ,00106$
-;src/main.c:127: scroll("WEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASANDAHAPPYNEWYEAR", 88, t);
+	jr	NZ,00109$
+00108$:
+;src/main.c:134: scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
 	push	bc
 	push	bc
-	ld	hl, #0x0058
+	ld	hl, #0x006e
 	push	hl
 	ld	hl, #___str_0
 	push	hl
@@ -274,51 +288,58 @@ _main::
 	add	hl, sp
 	ld	sp, hl
 	pop	bc
-;src/main.c:128: t=t+1;
+;src/main.c:135: t=t+1;
 	inc	bc
-;src/main.c:129: if (t>88*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
-	ld	a, #0x10
+;src/main.c:136: if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
+	ld	a, #0xec
 	cp	a, c
 	ld	a, #0x04
 	sbc	a, b
-	jp	PO, 00138$
+	jp	PO, 00145$
 	xor	a, #0x80
-00138$:
+00145$:
 	jp	P, 00102$
 	ld	bc, #0x0000
 00102$:
-;src/main.c:130: cpct_scanKeyboard_f();
+;src/main.c:137: if (t%128==0) {
+	push	bc
+	ld	hl, #0x0080
+	push	hl
+	push	bc
+	call	__modsint
+	pop	af
+	pop	af
+	pop	bc
+	ld	a, h
+	or	a,l
+	jr	NZ,00107$
+;src/main.c:138: cpct_scanKeyboard_f();
 	push	bc
 	call	_cpct_scanKeyboard_f
 	pop	bc
-	jr	00104$
-00106$:
-;src/main.c:134: akp_musicInit();
-	call	_akp_musicInit
-;src/main.c:138: cpct_setVideoMemoryOffset(0);
+	jr	00107$
+00109$:
+;src/main.c:144: cpct_setVideoMemoryOffset(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMemoryOffset
-;src/main.c:139: calque4000();
+;src/main.c:145: calque4000();
 	call	_calque4000
-;src/main.c:141: cpct_setInterruptHandler(myInterruptHandler);
-	ld	hl, #_myInterruptHandler
-	call	_cpct_setInterruptHandler
-;src/main.c:142: while (1) {
-00110$:
-;src/main.c:143: cpct_scanKeyboard_f();
+;src/main.c:147: while (1) {
+00113$:
+;src/main.c:148: cpct_scanKeyboard_f();
 	call	_cpct_scanKeyboard_f
-;src/main.c:144: if (cpct_isKeyPressed(Key_Space)) {
+;src/main.c:149: if (cpct_isKeyPressed(Key_Space)) {
 	ld	hl, #0x8005
 	call	_cpct_isKeyPressed
 	ld	a, l
 	or	a, a
-	jr	Z,00110$
-;src/main.c:145: akp_sfxPlay();
+	jr	Z,00113$
+;src/main.c:150: akp_sfxPlay();
 	call	_akp_sfxPlay
-	jr	00110$
+	jr	00113$
 ___str_0:
-	.ascii "WEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASWEWISHYOUAME"
-	.ascii "RRYCHRISTMASANDAHAPPYNEWYEAR"
+	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
+	.ascii "WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR"
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER

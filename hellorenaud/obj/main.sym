@@ -7,7 +7,8 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-  0 ___str_0                                                       016A R
+  0 ___str_0                                                       0187 R
+    __modsint                                                      **** GX
     _akp_musicInit                                                 **** GX
     _akp_musicPlay                                                 **** GX
     _akp_sfxPlay                                                   **** GX
@@ -15,7 +16,6 @@ Symbol Table
     _bank4_4000                                                    **** GX
     _calque4000                                                    **** GX
     _calqueC000                                                    **** GX
-    _cpct_disableFirmware                                          **** GX
     _cpct_drawSolidBox                                             **** GX
     _cpct_drawSprite                                               **** GX
     _cpct_drawSpriteMasked                                         **** GX
@@ -47,7 +47,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  1C3   flags    0
+   0 _CODE                                      size  1F6   flags    0
    1 _DATA                                      size    1   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

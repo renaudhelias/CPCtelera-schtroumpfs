@@ -66,9 +66,16 @@ void main(void) {
 //   LoadFile("molusk.akg", (char *)0x7000);
 
    // Clear Screen (cpct_drawStringM0)
-   cpct_disableFirmware();
+
+#ifndef NO_SOUND
+   akp_musicInit();
+#endif
+   //cpct_disableFirmware();
    //raster_halt();
    //cpct_setStackLocation(0x8000);
+   cpct_setInterruptHandler(myInterruptHandler);
+
+
 
    bank4_4000();
    bank0123();
@@ -123,22 +130,20 @@ void main(void) {
 
    cpct_scanKeyboard_f();
    t=0;
-   while (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return)){
-      scroll("WEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASWEWISHYOUAMERRYCHRISTMASANDAHAPPYNEWYEAR", 88, t);
+   while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
+      scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
       t=t+1;
-      if (t>88*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
-      cpct_scanKeyboard_f();
+      if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
+      if (t%128==0) {
+	      cpct_scanKeyboard_f();
+      }
    }
 
-#ifndef NO_SOUND
-   akp_musicInit();
-#endif
  
   // horizontal scroll
    cpct_setVideoMemoryOffset(0);
    calque4000();
 
-   cpct_setInterruptHandler(myInterruptHandler);
    while (1) {
       cpct_scanKeyboard_f();
       if (cpct_isKeyPressed(Key_Space)) {
