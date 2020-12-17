@@ -14,9 +14,12 @@
 	.globl _bank0123
 	.globl _calque4000
 	.globl _calqueC000
-	.globl _akp_sfxPlay
+	.globl _vsync
 	.globl _akp_musicPlay
 	.globl _akp_musicInit
+	.globl _rupture
+	.globl _restoreVBL
+	.globl _killVBL
 	.globl _scroll
 	.globl _cpct_restoreState_mxor_u8
 	.globl _cpct_setSeed_mxor
@@ -35,6 +38,7 @@
 	.globl _cpct_memset_f64
 	.globl _cpct_memset
 	.globl _cpct_setInterruptHandler
+	.globl _intCounter
 	.globl _g_items_0
 ;--------------------------------------------------------
 ; special function registers
@@ -43,12 +47,12 @@
 ; ram data
 ;--------------------------------------------------------
 	.area _DATA
-_myInterruptHandler_i_1_81:
-	.ds 1
 ;--------------------------------------------------------
 ; ram data
 ;--------------------------------------------------------
 	.area _INITIALIZED
+_intCounter::
+	.ds 1
 ;--------------------------------------------------------
 ; absolute external ram data
 ;--------------------------------------------------------
@@ -69,35 +73,67 @@ _myInterruptHandler_i_1_81:
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/main.c:43: void myInterruptHandler() {
+;src/main.c:45: void myInterruptHandler() {
 ;	---------------------------------
 ; Function myInterruptHandler
 ; ---------------------------------
 _myInterruptHandler::
-;src/main.c:47: cpct_setBorder(i+1);
-	ld	hl,#_myInterruptHandler_i_1_81 + 0
-	ld	b, (hl)
-	inc	b
-	push	bc
-	inc	sp
-	ld	a, #0x10
-	push	af
-	inc	sp
-	call	_cpct_setPALColour
-;src/main.c:48: if (++i > 5) i=0;
-	ld	iy, #_myInterruptHandler_i_1_81
+;src/main.c:46: intCounter=intCounter+1;
+	ld	iy, #_intCounter
 	inc	0 (iy)
-	ld	a, #0x05
-	sub	a, 0 (iy)
-	jr	NC,00102$
+;src/main.c:47: if (intCounter == 6) intCounter=0;
+	ld	a, 0 (iy)
+	sub	a, #0x06
+	jr	NZ,00102$
 	ld	0 (iy), #0x00
 00102$:
-;src/main.c:51: if (i==2) {
-	ld	a,(#_myInterruptHandler_i_1_81 + 0)
+;src/main.c:49: if (intCounter == 2) {
+	ld	a,(#_intCounter + 0)
+	sub	a, #0x02
+	jr	NZ,00104$
+;src/main.c:50: cpct_setBorder(2);
+	ld	hl, #0x0210
+	push	hl
+	call	_cpct_setPALColour
+	jr	00105$
+00104$:
+;src/main.c:52: cpct_setBorder(3);
+	ld	hl, #0x0310
+	push	hl
+	call	_cpct_setPALColour
+00105$:
+;src/main.c:56: if (intCounter==2) {
+	ld	a,(#_intCounter + 0)
+	sub	a, #0x02
+	jr	NZ,00107$
+;src/main.c:57: akp_musicPlay();
+	call	_akp_musicPlay
+00107$:
+;src/main.c:61: if (intCounter==5) {
+	ld	a,(#_intCounter + 0)
+	sub	a, #0x05
+	jr	NZ,00109$
+;src/main.c:62: killVBL();
+	call	_killVBL
+;src/main.c:63: rupture(19);
+	ld	a, #0x13
+	push	af
+	inc	sp
+	call	_rupture
+	inc	sp
+00109$:
+;src/main.c:66: if (intCounter==2) {
+	ld	a,(#_intCounter + 0)
 	sub	a, #0x02
 	ret	NZ
-;src/main.c:52: akp_musicPlay();
-	call	_akp_musicPlay
+;src/main.c:67: restoreVBL();
+	call	_restoreVBL
+;src/main.c:68: rupture(39-19);
+	ld	a, #0x14
+	push	af
+	inc	sp
+	call	_rupture
+	inc	sp
 	ret
 _g_items_0:
 	.db #0x05	; 5
@@ -132,37 +168,37 @@ _g_items_0:
 	.db #0x00	; 0
 	.db #0x00	; 0
 	.db #0x00	; 0
-;src/main.c:57: void main(void) {
+;src/main.c:73: void main(void) {
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;src/main.c:60: u8* sprite=g_items_0;
-;src/main.c:71: akp_musicInit();
+;src/main.c:76: u8* sprite=g_items_0;
+;src/main.c:87: akp_musicInit();
 	call	_akp_musicInit
-;src/main.c:76: cpct_setInterruptHandler(myInterruptHandler);
+;src/main.c:92: cpct_setInterruptHandler(myInterruptHandler);
 	ld	hl, #_myInterruptHandler
 	call	_cpct_setInterruptHandler
-;src/main.c:80: bank4_4000();
+;src/main.c:96: bank4_4000();
 	call	_bank4_4000
-;src/main.c:81: bank0123();
+;src/main.c:97: bank0123();
 	call	_bank0123
-;src/main.c:82: calqueC000();
+;src/main.c:98: calqueC000();
 	call	_calqueC000
-;src/main.c:85: cpct_setVideoMode(0);
+;src/main.c:101: cpct_setVideoMode(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMode
-;src/main.c:88: cpct_setBorder(HW_BLACK);
+;src/main.c:104: cpct_setBorder(HW_BLACK);
 	ld	hl, #0x1410
 	push	hl
 	call	_cpct_setPALColour
-;src/main.c:89: cpct_setPalette(g_tile_palette, 6);
+;src/main.c:105: cpct_setPalette(g_tile_palette, 6);
 	ld	hl, #0x0006
 	push	hl
 	ld	hl, #_g_tile_palette
 	push	hl
 	call	_cpct_setPalette
-;src/main.c:90: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
+;src/main.c:106: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 	ld	hl, #0x4000
 	push	hl
 	xor	a, a
@@ -171,13 +207,13 @@ _main::
 	ld	h, #0xc0
 	push	hl
 	call	_cpct_memset
-;src/main.c:96: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
+;src/main.c:112: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
 	ld	hl, #0x0f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:97: cpct_drawSprite(sprite, p, 4, 8);
+;src/main.c:113: cpct_drawSprite(sprite, p, 4, 8);
 	push	hl
 	ld	bc, #0x0804
 	push	bc
@@ -198,20 +234,20 @@ _main::
 	push	bc
 	call	_cpct_hflipSpriteM0
 	pop	hl
-;src/main.c:105: cpct_drawSprite(sprite, p, 4, 8);
+;src/main.c:121: cpct_drawSprite(sprite, p, 4, 8);
 	ld	bc, #0x0804
 	push	bc
 	push	hl
 	ld	hl, #_g_items_0
 	push	hl
 	call	_cpct_drawSprite
-;src/main.c:107: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
+;src/main.c:123: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
 	ld	hl, #0x1f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:109: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+;src/main.c:125: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 	push	hl
 	ld	hl, #0x0302
 	push	hl
@@ -225,30 +261,30 @@ _main::
 	push	bc
 	call	_cpct_drawSolidBox
 	pop	af
-;src/main.c:112: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
+;src/main.c:128: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
 	inc	sp
 	ld	hl,#0x4f09
 	ex	(sp),hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:113: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+;src/main.c:129: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 	ld	bc, #_g_tile_schtroumpf+0
 	ld	de, #0x2010
 	push	de
 	push	hl
 	push	bc
 	call	_cpct_drawSpriteMasked
-;src/main.c:127: cpct_srand(77);
+;src/main.c:143: cpct_srand(77);
 	ld	hl,#0x004d
 	ld	de,#0x0000
 	call	_cpct_setSeed_mxor
 	call	_cpct_restoreState_mxor_u8
-;src/main.c:131: cpct_scanKeyboard_f();
+;src/main.c:147: cpct_scanKeyboard_f();
 	call	_cpct_scanKeyboard_f
-;src/main.c:132: t=0;
+;src/main.c:148: t=0;
 	ld	bc, #0x0000
-;src/main.c:133: while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
+;src/main.c:149: while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
 00107$:
 	push	bc
 	ld	hl, #0x0080
@@ -276,7 +312,7 @@ _main::
 	or	a, a
 	jr	NZ,00109$
 00108$:
-;src/main.c:134: scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
+;src/main.c:150: scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
 	push	bc
 	push	bc
 	ld	hl, #0x006e
@@ -288,20 +324,20 @@ _main::
 	add	hl, sp
 	ld	sp, hl
 	pop	bc
-;src/main.c:135: t=t+1;
+;src/main.c:151: t=t+1;
 	inc	bc
-;src/main.c:136: if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
+;src/main.c:152: if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
 	ld	a, #0xec
 	cp	a, c
 	ld	a, #0x04
 	sbc	a, b
-	jp	PO, 00145$
+	jp	PO, 00139$
 	xor	a, #0x80
-00145$:
+00139$:
 	jp	P, 00102$
 	ld	bc, #0x0000
 00102$:
-;src/main.c:137: if (t%128==0) {
+;src/main.c:153: if (t%128==0) {
 	push	bc
 	ld	hl, #0x0080
 	push	hl
@@ -313,34 +349,31 @@ _main::
 	ld	a, h
 	or	a,l
 	jr	NZ,00107$
-;src/main.c:138: cpct_scanKeyboard_f();
+;src/main.c:154: cpct_scanKeyboard_f();
 	push	bc
 	call	_cpct_scanKeyboard_f
 	pop	bc
 	jr	00107$
 00109$:
-;src/main.c:144: cpct_setVideoMemoryOffset(0);
+;src/main.c:160: cpct_setVideoMemoryOffset(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMemoryOffset
-;src/main.c:145: calque4000();
+;src/main.c:161: calque4000();
 	call	_calque4000
-;src/main.c:147: while (1) {
-00113$:
-;src/main.c:148: cpct_scanKeyboard_f();
-	call	_cpct_scanKeyboard_f
-;src/main.c:149: if (cpct_isKeyPressed(Key_Space)) {
-	ld	hl, #0x8005
-	call	_cpct_isKeyPressed
-	ld	a, l
-	or	a, a
-	jr	Z,00113$
-;src/main.c:150: akp_sfxPlay();
-	call	_akp_sfxPlay
-	jr	00113$
+;src/main.c:163: while (1) {
+00111$:
+;src/main.c:164: vsync();
+	call	_vsync
+;src/main.c:165: intCounter=0;
+	ld	hl,#_intCounter + 0
+	ld	(hl), #0x00
+	jr	00111$
 ___str_0:
 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
 	.ascii "WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR"
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER
+__xinit__intCounter:
+	.db #0x00	; 0
 	.area _CABS (ABS)

@@ -40,25 +40,41 @@ const u8 g_items_0[4 * 8] = {
 	0x00, 0x00, 0x00, 0x00
 };
 
+u8 intCounter=0;
+
 void myInterruptHandler() {
+   intCounter=intCounter+1;
+   if (intCounter == 6) intCounter=0;
 
-
-   static u8 i;
-   cpct_setBorder(i+1);
-   if (++i > 5) i=0;
+   if (intCounter == 2) {
+	cpct_setBorder(2);
+   } else {
+	cpct_setBorder(3);
+   }
 
 #ifndef NO_SOUND
-if (i==2) {
+if (intCounter==2) {
 akp_musicPlay();
 }
 #endif
+
+	if (intCounter==5) {
+		killVBL();
+		rupture(19);
+	}
+
+	if (intCounter==2) {
+		restoreVBL();
+		rupture(39-19);
+	}
+
 }
 
 void main(void) {
    int t=0;
    u8* p;
    u8* sprite=g_items_0;
-
+   int initInterruptDone;
 // sdcc -mz80 -c --std-c99 --opt-code-speed --fno-omit-frame-pointer --oldralloc jdvapi_floppy.c
 //   SetupDOS();
 //	if (1==1) return;
@@ -143,12 +159,19 @@ void main(void) {
   // horizontal scroll
    cpct_setVideoMemoryOffset(0);
    calque4000();
-
+   initInterruptDone=0;
    while (1) {
-      cpct_scanKeyboard_f();
-      if (cpct_isKeyPressed(Key_Space)) {
-          akp_sfxPlay();
-      }
+      vsync();
+      intCounter=0;
+      //killVBL();
+      //rupture(39);
+      //restoreVBL();
+
+
+//      cpct_scanKeyboard_f();
+//      if (cpct_isKeyPressed(Key_Space)) {
+//          akp_sfxPlay();
+//      }
    }
 
 }

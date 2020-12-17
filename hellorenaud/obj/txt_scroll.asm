@@ -8,9 +8,13 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _rupture
+	.globl _restoreVBL
+	.globl _killVBL
 	.globl _scroll
 	.globl _cpct_getScreenPtr
 	.globl _cpct_drawSprite
+	.globl _vblPosition
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -22,6 +26,8 @@
 ; ram data
 ;--------------------------------------------------------
 	.area _INITIALIZED
+_vblPosition::
+	.ds 2
 ;--------------------------------------------------------
 ; absolute external ram data
 ;--------------------------------------------------------
@@ -42,7 +48,7 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/txt_scroll.c:11: void scroll(char * texte, unsigned int l, int step) {//step 160 200
+;src/txt_scroll.c:11: void scroll(char * texte, unsigned int l, int step) {
 ;	---------------------------------
 ; Function scroll
 ; ---------------------------------
@@ -111,7 +117,7 @@ _scroll::
 	ld	a, h
 	or	a,l
 	jr	NZ,00109$
-;src/txt_scroll.c:30: if (texte[div]!=' ') {
+;src/txt_scroll.c:30: if (texte[div]!=' ') { // on zap les espaces FIXME mauvais pour le timing !
 	ld	l,4 (ix)
 	ld	h,5 (ix)
 	add	hl, de
@@ -175,6 +181,64 @@ _scroll::
 	ld	sp, ix
 	pop	ix
 	ret
+;src/txt_scroll.c:45: void killVBL() {
+;	---------------------------------
+; Function killVBL
+; ---------------------------------
+_killVBL::
+;src/txt_scroll.c:52: __endasm;
+	ld	bc,#0xbc07 ; Kill VBL
+	ld	a,#0x7f
+	out	(c),c
+	inc	b
+	out	(c),a
+;src/txt_scroll.c:53: vblPosition=37;
+	ld	hl, #0x0025
+	ld	(_vblPosition), hl
+	ret
+;src/txt_scroll.c:56: void restoreVBL() {
+;	---------------------------------
+; Function restoreVBL
+; ---------------------------------
+_restoreVBL::
+;src/txt_scroll.c:63: __endasm;
+	ld	bc,#0xbc07 ; On repositionne la VBL
+	ld	a,(_vblPosition)
+	out	(c),c
+	inc	b
+	out	(c),a
+	ret
+;src/txt_scroll.c:69: void rupture(unsigned char nbCharLigne) {
+;	---------------------------------
+; Function rupture
+; ---------------------------------
+_rupture::
+;src/txt_scroll.c:80: __endasm;
+	ld	bc,#0xbc04 ; Rupture 1
+;;ld	a,(_nbCharLigne)
+	ld	hl, #2+0
+	add	hl, sp
+	ld	a, (hl)
+	dec	a
+	out	(c),c
+	inc	b
+	out	(c),a
+;src/txt_scroll.c:81: vblPosition=vblPosition-nbCharLigne;
+	ld	hl, #2+0
+	add	hl, sp
+	ld	c, (hl)
+	ld	b, #0x00
+	ld	hl, #_vblPosition
+	ld	a, (hl)
+	sub	a, c
+	ld	(hl), a
+	inc	hl
+	ld	a, (hl)
+	sbc	a, b
+	ld	(hl), a
+	ret
 	.area _CODE
 	.area _INITIALIZER
+__xinit__vblPosition:
+	.dw #0x0000
 	.area _CABS (ABS)
