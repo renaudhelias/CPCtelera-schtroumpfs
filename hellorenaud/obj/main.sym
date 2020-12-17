@@ -7,7 +7,7 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-  0 ___str_0                                                       01AC R
+  0 ___str_0                                                       01B2 R
     __modsint                                                      **** GX
   7 __xinit__intCounter                                            0000 R
     _akp_musicInit                                                 **** GX
@@ -33,12 +33,12 @@ Symbol Table
     _cpct_setSeed_mxor                                             **** GX
     _cpct_setVideoMemoryOffset                                     **** GX
     _cpct_setVideoMode                                             **** GX
-  0 _g_items_0                                                     0057 GR
+  0 _g_items_0                                                     005D GR
     _g_tile_palette                                                **** GX
     _g_tile_schtroumpf                                             **** GX
   2 _intCounter                                                    0000 GR
     _killVBL                                                       **** GX
-  0 _main                                                          0077 GR
+  0 _main                                                          007D GR
   0 _myInterruptHandler                                            0000 GR
     _restoreVBL                                                    **** GX
     _rupture                                                       **** GX
@@ -51,7 +51,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  21B   flags    0
+   0 _CODE                                      size  221   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    1   flags    0
    3 _DABS                                      size    0   flags    8

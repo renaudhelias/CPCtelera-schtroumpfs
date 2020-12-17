@@ -113,23 +113,27 @@ _myInterruptHandler::
 	ld	a,(#_intCounter + 0)
 	sub	a, #0x05
 	jr	NZ,00109$
-;src/main.c:62: killVBL();
+;src/main.c:62: calqueC000();
+	call	_calqueC000
+;src/main.c:63: killVBL();
 	call	_killVBL
-;src/main.c:63: rupture(19);
-	ld	a, #0x13
+;src/main.c:64: rupture(19-1);
+	ld	a, #0x12
 	push	af
 	inc	sp
 	call	_rupture
 	inc	sp
 00109$:
-;src/main.c:66: if (intCounter==2) {
+;src/main.c:67: if (intCounter==2) {
 	ld	a,(#_intCounter + 0)
 	sub	a, #0x02
 	ret	NZ
-;src/main.c:67: restoreVBL();
+;src/main.c:68: calque4000();
+	call	_calque4000
+;src/main.c:69: restoreVBL();
 	call	_restoreVBL
-;src/main.c:68: rupture(39-19);
-	ld	a, #0x14
+;src/main.c:70: rupture(39-19+1);
+	ld	a, #0x15
 	push	af
 	inc	sp
 	call	_rupture
@@ -168,37 +172,37 @@ _g_items_0:
 	.db #0x00	; 0
 	.db #0x00	; 0
 	.db #0x00	; 0
-;src/main.c:73: void main(void) {
+;src/main.c:75: void main(void) {
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;src/main.c:76: u8* sprite=g_items_0;
-;src/main.c:87: akp_musicInit();
+;src/main.c:78: u8* sprite=g_items_0;
+;src/main.c:89: akp_musicInit();
 	call	_akp_musicInit
-;src/main.c:92: cpct_setInterruptHandler(myInterruptHandler);
+;src/main.c:94: cpct_setInterruptHandler(myInterruptHandler);
 	ld	hl, #_myInterruptHandler
 	call	_cpct_setInterruptHandler
-;src/main.c:96: bank4_4000();
+;src/main.c:98: bank4_4000();
 	call	_bank4_4000
-;src/main.c:97: bank0123();
+;src/main.c:99: bank0123();
 	call	_bank0123
-;src/main.c:98: calqueC000();
+;src/main.c:100: calqueC000();
 	call	_calqueC000
-;src/main.c:101: cpct_setVideoMode(0);
+;src/main.c:103: cpct_setVideoMode(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMode
-;src/main.c:104: cpct_setBorder(HW_BLACK);
+;src/main.c:106: cpct_setBorder(HW_BLACK);
 	ld	hl, #0x1410
 	push	hl
 	call	_cpct_setPALColour
-;src/main.c:105: cpct_setPalette(g_tile_palette, 6);
+;src/main.c:107: cpct_setPalette(g_tile_palette, 6);
 	ld	hl, #0x0006
 	push	hl
 	ld	hl, #_g_tile_palette
 	push	hl
 	call	_cpct_setPalette
-;src/main.c:106: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
+;src/main.c:108: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 	ld	hl, #0x4000
 	push	hl
 	xor	a, a
@@ -207,13 +211,13 @@ _main::
 	ld	h, #0xc0
 	push	hl
 	call	_cpct_memset
-;src/main.c:112: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
+;src/main.c:114: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
 	ld	hl, #0x0f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:113: cpct_drawSprite(sprite, p, 4, 8);
+;src/main.c:115: cpct_drawSprite(sprite, p, 4, 8);
 	push	hl
 	ld	bc, #0x0804
 	push	bc
@@ -234,20 +238,20 @@ _main::
 	push	bc
 	call	_cpct_hflipSpriteM0
 	pop	hl
-;src/main.c:121: cpct_drawSprite(sprite, p, 4, 8);
+;src/main.c:123: cpct_drawSprite(sprite, p, 4, 8);
 	ld	bc, #0x0804
 	push	bc
 	push	hl
 	ld	hl, #_g_items_0
 	push	hl
 	call	_cpct_drawSprite
-;src/main.c:123: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
+;src/main.c:125: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
 	ld	hl, #0x1f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:125: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+;src/main.c:127: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 	push	hl
 	ld	hl, #0x0302
 	push	hl
@@ -261,30 +265,30 @@ _main::
 	push	bc
 	call	_cpct_drawSolidBox
 	pop	af
-;src/main.c:128: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
+;src/main.c:130: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
 	inc	sp
 	ld	hl,#0x4f09
 	ex	(sp),hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:129: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+;src/main.c:131: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 	ld	bc, #_g_tile_schtroumpf+0
 	ld	de, #0x2010
 	push	de
 	push	hl
 	push	bc
 	call	_cpct_drawSpriteMasked
-;src/main.c:143: cpct_srand(77);
+;src/main.c:145: cpct_srand(77);
 	ld	hl,#0x004d
 	ld	de,#0x0000
 	call	_cpct_setSeed_mxor
 	call	_cpct_restoreState_mxor_u8
-;src/main.c:147: cpct_scanKeyboard_f();
+;src/main.c:149: cpct_scanKeyboard_f();
 	call	_cpct_scanKeyboard_f
-;src/main.c:148: t=0;
+;src/main.c:150: t=0;
 	ld	bc, #0x0000
-;src/main.c:149: while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
+;src/main.c:151: while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
 00107$:
 	push	bc
 	ld	hl, #0x0080
@@ -312,7 +316,7 @@ _main::
 	or	a, a
 	jr	NZ,00109$
 00108$:
-;src/main.c:150: scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
+;src/main.c:152: scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
 	push	bc
 	push	bc
 	ld	hl, #0x006e
@@ -324,9 +328,9 @@ _main::
 	add	hl, sp
 	ld	sp, hl
 	pop	bc
-;src/main.c:151: t=t+1;
+;src/main.c:153: t=t+1;
 	inc	bc
-;src/main.c:152: if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
+;src/main.c:154: if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
 	ld	a, #0xec
 	cp	a, c
 	ld	a, #0x04
@@ -337,7 +341,7 @@ _main::
 	jp	P, 00102$
 	ld	bc, #0x0000
 00102$:
-;src/main.c:153: if (t%128==0) {
+;src/main.c:155: if (t%128==0) {
 	push	bc
 	ld	hl, #0x0080
 	push	hl
@@ -349,22 +353,22 @@ _main::
 	ld	a, h
 	or	a,l
 	jr	NZ,00107$
-;src/main.c:154: cpct_scanKeyboard_f();
+;src/main.c:156: cpct_scanKeyboard_f();
 	push	bc
 	call	_cpct_scanKeyboard_f
 	pop	bc
 	jr	00107$
 00109$:
-;src/main.c:160: cpct_setVideoMemoryOffset(0);
+;src/main.c:162: cpct_setVideoMemoryOffset(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMemoryOffset
-;src/main.c:161: calque4000();
+;src/main.c:163: calque4000();
 	call	_calque4000
-;src/main.c:163: while (1) {
+;src/main.c:165: while (1) {
 00111$:
-;src/main.c:164: vsync();
+;src/main.c:166: vsync();
 	call	_vsync
-;src/main.c:165: intCounter=0;
+;src/main.c:167: intCounter=0;
 	ld	hl,#_intCounter + 0
 	ld	(hl), #0x00
 	jr	00111$

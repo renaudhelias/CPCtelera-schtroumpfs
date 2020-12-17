@@ -59,13 +59,15 @@ akp_musicPlay();
 #endif
 
 	if (intCounter==5) {
+		calqueC000();
 		killVBL();
-		rupture(19);
+		rupture(19-1);
 	}
 
 	if (intCounter==2) {
+		calque4000();
 		restoreVBL();
-		rupture(39-19);
+		rupture(39-19+1);
 	}
 
 }
