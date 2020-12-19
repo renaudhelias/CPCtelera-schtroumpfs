@@ -17,7 +17,7 @@
 //
 //------------------------------------------------------------------------------
 
-//#define NO_SOUND
+#define NO_SOUND
 
 #include <cpctelera.h>
 #include "schtroumpf.h"
@@ -41,6 +41,7 @@ const u8 g_items_0[4 * 8] = {
 };
 
 u8 intCounter=0;
+u8 hScroll=0;
 
 void myInterruptHandler() {
    intCounter=intCounter+1;
@@ -59,15 +60,26 @@ akp_musicPlay();
 #endif
 
 	if (intCounter==5) {
-		calqueC000();
+		calque4000();
+		// horizontal scroll
+		hScroll+=1;
+		if (hScroll==160/2) {hScroll=0;}
+		cpct_setVideoMemoryOffset(hScroll);
 		killVBL();
 		rupture(19-1);
 	}
 
-	if (intCounter==2) {
-		calque4000();
+        if (intCounter==2) {
+		calqueC000();
+		cpct_setVideoMemoryOffset(0);
+		rupture(7);
+	}
+
+	if (intCounter==3) {
+		calqueC000();
+		cpct_setVideoMemoryOffset(0);
 		restoreVBL();
-		rupture(39-19+1);
+		rupture(39-19-7+1);
 	}
 
 }
@@ -107,8 +119,7 @@ void main(void) {
    cpct_setPalette(g_tile_palette, 6);
    cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
-   // horizontal scroll
-//   cpct_setVideoMemoryOffset(3);
+
 
    // Draw the sprite to screen
    p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
@@ -164,7 +175,7 @@ void main(void) {
    initInterruptDone=0;
    while (1) {
       vsync();
-      intCounter=0;
+      //intCounter=0;
       //killVBL();
       //rupture(39);
       //restoreVBL();
