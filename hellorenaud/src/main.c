@@ -40,6 +40,27 @@ const u8 g_items_0[4 * 8] = {
 	0x00, 0x00, 0x00, 0x00
 };
 
+// poke &C000+79, 255:REM en haut à droite
+// FOR C=0 TO 3
+// FOR L=0 TO 7
+// POKE &C000+l*&800+80*C+79
+// NEXT L
+// NEXT C
+void monterDerniereColonne() {
+	unsigned int c;
+	unsigned int l;
+	u16 plot_column;
+	// on transert 3 lignes en haut, et celle du haut va en bas
+	// &4000  // to,from,size)
+	for (c=0;c<4;c++) {// caractères hauteur
+		for (l=0;l<8;l++) {
+			// mode 0 : deux pixels par byte
+			plot_column=0x4000 + l*0x800 + 80*c+79;
+			cpct_memcpy(plot_column,plot_column,1);
+		}
+	}
+}
+
 u8 intCounter=0;
 u8 hScroll=0;
 
@@ -63,7 +84,12 @@ akp_musicPlay();
 		calque4000();
 		// horizontal scroll
 		hScroll+=1;
-		if (hScroll==160/2) {hScroll=0;}
+		//monterDerniereColonne();
+		if (hScroll==64) {}
+		if (hScroll==128) {}
+		if (hScroll==160) {}
+		if (hScroll==240) {hScroll=0;}
+
 		cpct_setVideoMemoryOffset(hScroll);
 		killVBL();
 		rupture(19-1);
