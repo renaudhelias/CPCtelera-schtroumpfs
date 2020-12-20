@@ -51,6 +51,7 @@ const struct AKG_LIST_SFX liste2 = {
 };
 const struct AKG_SFX effets1 = {
 //	.liste={0,0},
+//FIXME src/audio.c:54: warning 158: overflow in implicit constant conversion
 	.sfx_sound={0,{{61,239},{57,239},{53,239},{49,239},{455,239},{41,239},{37,239},{33,239},{29,239},{25,239},{21,339},{17,239},{13,239},{9,239},{5,239}},4,0,{{189,1,95},{189,1,99},{177,1,102},{173,1,106}},4},
 		
 };

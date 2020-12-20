@@ -49,18 +49,18 @@ _i::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/audio.c:64: void akp_musicInit()
+;src/audio.c:65: void akp_musicInit()
 ;	---------------------------------
 ; Function akp_musicInit
 ; ---------------------------------
 _akp_musicInit::
-;src/audio.c:66: i=i+1;
+;src/audio.c:67: i=i+1;
 	ld	iy, #_i
 	inc	0 (iy)
 	jr	NZ,00103$
 	inc	1 (iy)
 00103$:
-;src/audio.c:116: __endasm;
+;src/audio.c:117: __endasm;
 ;;	backup Z80 state
 	push	af
 	push	bc
@@ -177,12 +177,12 @@ _effets2:
 	.db #0x07	; 7
 	.dw #0x0050
 	.db #0x04	; 4
-;src/audio.c:119: void akp_musicPlay()
+;src/audio.c:120: void akp_musicPlay()
 ;	---------------------------------
 ; Function akp_musicPlay
 ; ---------------------------------
 _akp_musicPlay::
-;src/audio.c:152: __endasm;
+;src/audio.c:153: __endasm;
 ;;	backup Z80 state
 	push	af
 	push	bc
@@ -212,12 +212,12 @@ _akp_musicPlay::
 	pop	bc
 	pop	af
 	ret
-;src/audio.c:155: void akp_sfxPlay()
+;src/audio.c:156: void akp_sfxPlay()
 ;	---------------------------------
 ; Function akp_sfxPlay
 ; ---------------------------------
 _akp_sfxPlay::
-;src/audio.c:188: __endasm;
+;src/audio.c:189: __endasm;
 ;;	backup Z80 state
 	push	af
 	push	bc

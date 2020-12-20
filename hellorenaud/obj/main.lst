@@ -34,10 +34,10 @@
                              34 	.globl _cpct_px2byteM0
                              35 	.globl _cpct_isKeyPressed
                              36 	.globl _cpct_scanKeyboard_f
-                             37 	.globl _cpct_memcpy
-                             38 	.globl _cpct_memset_f64
-                             39 	.globl _cpct_memset
-                             40 	.globl _cpct_setInterruptHandler
+                             37 	.globl _cpct_memset_f64
+                             38 	.globl _cpct_memset
+                             39 	.globl _cpct_setInterruptHandler
+                             40 	.globl _slow
                              41 	.globl _hScroll
                              42 	.globl _intCounter
                              43 	.globl _g_items_0
@@ -56,417 +56,429 @@
    0000                      56 	.ds 1
    0001                      57 _hScroll::
    0001                      58 	.ds 1
-                             59 ;--------------------------------------------------------
-                             60 ; absolute external ram data
+   0002                      59 _slow::
+   0002                      60 	.ds 1
                              61 ;--------------------------------------------------------
-                             62 	.area _DABS (ABS)
+                             62 ; absolute external ram data
                              63 ;--------------------------------------------------------
-                             64 ; global & static initialisations
+                             64 	.area _DABS (ABS)
                              65 ;--------------------------------------------------------
-                             66 	.area _HOME
-                             67 	.area _GSINIT
-                             68 	.area _GSFINAL
+                             66 ; global & static initialisations
+                             67 ;--------------------------------------------------------
+                             68 	.area _HOME
                              69 	.area _GSINIT
-                             70 ;--------------------------------------------------------
-                             71 ; Home
+                             70 	.area _GSFINAL
+                             71 	.area _GSINIT
                              72 ;--------------------------------------------------------
-                             73 	.area _HOME
-                             74 	.area _HOME
-                             75 ;--------------------------------------------------------
-                             76 ; code
+                             73 ; Home
+                             74 ;--------------------------------------------------------
+                             75 	.area _HOME
+                             76 	.area _HOME
                              77 ;--------------------------------------------------------
-                             78 	.area _CODE
-                             79 ;src/main.c:49: void monterDerniereColonne() {
-                             80 ;	---------------------------------
-                             81 ; Function monterDerniereColonne
-                             82 ; ---------------------------------
-   0000                      83 _monterDerniereColonne::
-   0000 DD E5         [15]   84 	push	ix
-   0002 DD 21 00 00   [14]   85 	ld	ix,#0
-   0006 DD 39         [15]   86 	add	ix,sp
-   0008 F5            [11]   87 	push	af
-                             88 ;src/main.c:55: for (c=0;c<4;c++) {// caractères hauteur
-   0009 01 00 00      [10]   89 	ld	bc, #0x0000
-                             90 ;src/main.c:56: for (l=0;l<8;l++) {
-   000C                      91 00109$:
-   000C 69            [ 4]   92 	ld	l, c
-   000D 60            [ 4]   93 	ld	h, b
-   000E 29            [11]   94 	add	hl, hl
-   000F 29            [11]   95 	add	hl, hl
-   0010 09            [11]   96 	add	hl, bc
-   0011 29            [11]   97 	add	hl, hl
-   0012 29            [11]   98 	add	hl, hl
-   0013 29            [11]   99 	add	hl, hl
-   0014 29            [11]  100 	add	hl, hl
-   0015 11 4F 40      [10]  101 	ld	de, #0x404f
-   0018 19            [11]  102 	add	hl, de
-   0019 E3            [19]  103 	ex	(sp), hl
-   001A 11 00 00      [10]  104 	ld	de, #0x0000
-   001D                     105 00103$:
-                            106 ;src/main.c:58: plot_column=0x4000 + l*0x800 + 80*c+79;
-   001D 7B            [ 4]  107 	ld	a, e
-   001E 07            [ 4]  108 	rlca
-   001F 07            [ 4]  109 	rlca
-   0020 07            [ 4]  110 	rlca
-   0021 E6 F8         [ 7]  111 	and	a, #0xf8
-   0023 67            [ 4]  112 	ld	h, a
-   0024 2E 00         [ 7]  113 	ld	l, #0x00
-   0026 DD 7E FE      [19]  114 	ld	a, -2 (ix)
-   0029 85            [ 4]  115 	add	a, l
-   002A 6F            [ 4]  116 	ld	l, a
-   002B DD 7E FF      [19]  117 	ld	a, -1 (ix)
-   002E 8C            [ 4]  118 	adc	a, h
-   002F 67            [ 4]  119 	ld	h, a
-                            120 ;src/main.c:59: cpct_memcpy(plot_column,plot_column,1);
-   0030 E5            [11]  121 	push	hl
-   0031 FD E1         [14]  122 	pop	iy
-   0033 C5            [11]  123 	push	bc
-   0034 D5            [11]  124 	push	de
-   0035 21 01 00      [10]  125 	ld	hl, #0x0001
-   0038 E5            [11]  126 	push	hl
-   0039 FD E5         [15]  127 	push	iy
-   003B FD E5         [15]  128 	push	iy
-   003D CDr00r00      [17]  129 	call	_cpct_memcpy
-   0040 D1            [10]  130 	pop	de
-   0041 C1            [10]  131 	pop	bc
-                            132 ;src/main.c:56: for (l=0;l<8;l++) {
-   0042 13            [ 6]  133 	inc	de
-   0043 7B            [ 4]  134 	ld	a, e
-   0044 D6 08         [ 7]  135 	sub	a, #0x08
-   0046 7A            [ 4]  136 	ld	a, d
-   0047 DE 00         [ 7]  137 	sbc	a, #0x00
-   0049 38 D2         [12]  138 	jr	C,00103$
-                            139 ;src/main.c:55: for (c=0;c<4;c++) {// caractères hauteur
-   004B 03            [ 6]  140 	inc	bc
-   004C 79            [ 4]  141 	ld	a, c
-   004D D6 04         [ 7]  142 	sub	a, #0x04
-   004F 78            [ 4]  143 	ld	a, b
-   0050 DE 00         [ 7]  144 	sbc	a, #0x00
-   0052 38 B8         [12]  145 	jr	C,00109$
-   0054 DD F9         [10]  146 	ld	sp, ix
-   0056 DD E1         [14]  147 	pop	ix
-   0058 C9            [10]  148 	ret
-   0059                     149 _g_items_0:
-   0059 05                  150 	.db #0x05	; 5
-   005A 0F                  151 	.db #0x0f	; 15
-   005B 0F                  152 	.db #0x0f	; 15
-   005C 00                  153 	.db #0x00	; 0
-   005D 0F                  154 	.db #0x0f	; 15
-   005E 0F                  155 	.db #0x0f	; 15
-   005F 0F                  156 	.db #0x0f	; 15
-   0060 0A                  157 	.db #0x0a	; 10
-   0061 0F                  158 	.db #0x0f	; 15
-   0062 0A                  159 	.db #0x0a	; 10
-   0063 05                  160 	.db #0x05	; 5
-   0064 00                  161 	.db #0x00	; 0
-   0065 0F                  162 	.db #0x0f	; 15
-   0066 0A                  163 	.db #0x0a	; 10
-   0067 05                  164 	.db #0x05	; 5
-   0068 00                  165 	.db #0x00	; 0
-   0069 05                  166 	.db #0x05	; 5
-   006A 0F                  167 	.db #0x0f	; 15
-   006B 0A                  168 	.db #0x0a	; 10
-   006C 0A                  169 	.db #0x0a	; 10
-   006D 00                  170 	.db #0x00	; 0
-   006E 0F                  171 	.db #0x0f	; 15
-   006F 0F                  172 	.db #0x0f	; 15
-   0070 0A                  173 	.db #0x0a	; 10
-   0071 00                  174 	.db #0x00	; 0
-   0072 0A                  175 	.db #0x0a	; 10
-   0073 0A                  176 	.db #0x0a	; 10
-   0074 0A                  177 	.db #0x0a	; 10
-   0075 00                  178 	.db #0x00	; 0
-   0076 00                  179 	.db #0x00	; 0
-   0077 00                  180 	.db #0x00	; 0
-   0078 00                  181 	.db #0x00	; 0
-                            182 ;src/main.c:67: void myInterruptHandler() {
-                            183 ;	---------------------------------
-                            184 ; Function myInterruptHandler
-                            185 ; ---------------------------------
-   0079                     186 _myInterruptHandler::
-                            187 ;src/main.c:68: intCounter=intCounter+1;
-   0079 FD 21r00r00   [14]  188 	ld	iy, #_intCounter
-   007D FD 34 00      [23]  189 	inc	0 (iy)
-                            190 ;src/main.c:69: if (intCounter == 6) intCounter=0;
-   0080 FD 7E 00      [19]  191 	ld	a, 0 (iy)
-   0083 D6 06         [ 7]  192 	sub	a, #0x06
-   0085 20 04         [12]  193 	jr	NZ,00102$
-   0087 FD 36 00 00   [19]  194 	ld	0 (iy), #0x00
-   008B                     195 00102$:
-                            196 ;src/main.c:71: if (intCounter == 2) {
-   008B 3Ar00r00      [13]  197 	ld	a,(#_intCounter + 0)
-   008E D6 02         [ 7]  198 	sub	a, #0x02
-   0090 20 09         [12]  199 	jr	NZ,00104$
-                            200 ;src/main.c:72: cpct_setBorder(2);
-   0092 21 10 02      [10]  201 	ld	hl, #0x0210
-   0095 E5            [11]  202 	push	hl
-   0096 CDr00r00      [17]  203 	call	_cpct_setPALColour
-   0099 18 07         [12]  204 	jr	00105$
-   009B                     205 00104$:
-                            206 ;src/main.c:74: cpct_setBorder(3);
-   009B 21 10 03      [10]  207 	ld	hl, #0x0310
-   009E E5            [11]  208 	push	hl
-   009F CDr00r00      [17]  209 	call	_cpct_setPALColour
-   00A2                     210 00105$:
-                            211 ;src/main.c:83: if (intCounter==5) {
-   00A2 3Ar00r00      [13]  212 	ld	a,(#_intCounter + 0)
-   00A5 D6 05         [ 7]  213 	sub	a, #0x05
-   00A7 20 2A         [12]  214 	jr	NZ,00109$
-                            215 ;src/main.c:84: calque4000();
-   00A9 CDr00r00      [17]  216 	call	_calque4000
-                            217 ;src/main.c:86: hScroll+=1;
-   00AC FD 21r01r00   [14]  218 	ld	iy, #_hScroll
-   00B0 FD 34 00      [23]  219 	inc	0 (iy)
-                            220 ;src/main.c:91: if (hScroll==240) {hScroll=0;}
-   00B3 FD 7E 00      [19]  221 	ld	a, 0 (iy)
-   00B6 D6 F0         [ 7]  222 	sub	a, #0xf0
-   00B8 20 04         [12]  223 	jr	NZ,00107$
-   00BA FD 36 00 00   [19]  224 	ld	0 (iy), #0x00
-   00BE                     225 00107$:
-                            226 ;src/main.c:93: cpct_setVideoMemoryOffset(hScroll);
-   00BE FD 21r01r00   [14]  227 	ld	iy, #_hScroll
-   00C2 FD 6E 00      [19]  228 	ld	l, 0 (iy)
-   00C5 CDr00r00      [17]  229 	call	_cpct_setVideoMemoryOffset
-                            230 ;src/main.c:94: killVBL();
-   00C8 CDr00r00      [17]  231 	call	_killVBL
-                            232 ;src/main.c:95: rupture(19-1);
-   00CB 3E 12         [ 7]  233 	ld	a, #0x12
+                             78 ; code
+                             79 ;--------------------------------------------------------
+                             80 	.area _CODE
+                             81 ;src/main.c:49: void monterDerniereColonne(u8 hScroll) {
+                             82 ;	---------------------------------
+                             83 ; Function monterDerniereColonne
+                             84 ; ---------------------------------
+   0000                      85 _monterDerniereColonne::
+   0000 DD E5         [15]   86 	push	ix
+   0002 DD 21 00 00   [14]   87 	ld	ix,#0
+   0006 DD 39         [15]   88 	add	ix,sp
+   0008 F5            [11]   89 	push	af
+                             90 ;src/main.c:58: for (l=0;l<8;l++) {
+   0009 3E 50         [ 7]   91 	ld	a, #0x50
+   000B F5            [11]   92 	push	af
+   000C 33            [ 6]   93 	inc	sp
+   000D DD 7E 04      [19]   94 	ld	a, 4 (ix)
+   0010 F5            [11]   95 	push	af
+   0011 33            [ 6]   96 	inc	sp
+   0012 CDr00r00      [17]   97 	call	__divuchar
+   0015 F1            [10]   98 	pop	af
+   0016 DD 75 FF      [19]   99 	ld	-1 (ix), l
+   0019 3E 50         [ 7]  100 	ld	a, #0x50
+   001B F5            [11]  101 	push	af
+   001C 33            [ 6]  102 	inc	sp
+   001D DD 7E 04      [19]  103 	ld	a, 4 (ix)
+   0020 F5            [11]  104 	push	af
+   0021 33            [ 6]  105 	inc	sp
+   0022 CDr00r00      [17]  106 	call	__moduchar
+   0025 F1            [10]  107 	pop	af
+   0026 DD 75 FE      [19]  108 	ld	-2 (ix), l
+   0029 01 00 00      [10]  109 	ld	bc, #0x0000
+   002C                     110 00102$:
+                            111 ;src/main.c:60: plot_column=(u8 *)(0x4000 + l*0x800 + 80*(c+hScroll/80)+hScroll%80);
+   002C 79            [ 4]  112 	ld	a, c
+   002D 07            [ 4]  113 	rlca
+   002E 07            [ 4]  114 	rlca
+   002F 07            [ 4]  115 	rlca
+   0030 E6 F8         [ 7]  116 	and	a, #0xf8
+   0032 57            [ 4]  117 	ld	d, a
+   0033 1E 00         [ 7]  118 	ld	e, #0x00
+   0035 21 00 40      [10]  119 	ld	hl, #0x4000
+   0038 19            [11]  120 	add	hl,de
+   0039 EB            [ 4]  121 	ex	de,hl
+   003A DD 6E FF      [19]  122 	ld	l, -1 (ix)
+   003D 26 00         [ 7]  123 	ld	h, #0x00
+   003F 23            [ 6]  124 	inc	hl
+   0040 23            [ 6]  125 	inc	hl
+   0041 23            [ 6]  126 	inc	hl
+   0042 23            [ 6]  127 	inc	hl
+   0043 D5            [11]  128 	push	de
+   0044 5D            [ 4]  129 	ld	e, l
+   0045 54            [ 4]  130 	ld	d, h
+   0046 29            [11]  131 	add	hl, hl
+   0047 29            [11]  132 	add	hl, hl
+   0048 19            [11]  133 	add	hl, de
+   0049 29            [11]  134 	add	hl, hl
+   004A 29            [11]  135 	add	hl, hl
+   004B 29            [11]  136 	add	hl, hl
+   004C 29            [11]  137 	add	hl, hl
+   004D D1            [10]  138 	pop	de
+   004E 19            [11]  139 	add	hl, de
+   004F DD 5E FE      [19]  140 	ld	e, -2 (ix)
+   0052 16 00         [ 7]  141 	ld	d, #0x00
+   0054 19            [11]  142 	add	hl, de
+                            143 ;src/main.c:62: *plot_column=0x33;
+   0055 36 33         [10]  144 	ld	(hl), #0x33
+                            145 ;src/main.c:58: for (l=0;l<8;l++) {
+   0057 03            [ 6]  146 	inc	bc
+   0058 79            [ 4]  147 	ld	a, c
+   0059 D6 08         [ 7]  148 	sub	a, #0x08
+   005B 78            [ 4]  149 	ld	a, b
+   005C DE 00         [ 7]  150 	sbc	a, #0x00
+   005E 38 CC         [12]  151 	jr	C,00102$
+   0060 DD F9         [10]  152 	ld	sp, ix
+   0062 DD E1         [14]  153 	pop	ix
+   0064 C9            [10]  154 	ret
+   0065                     155 _g_items_0:
+   0065 05                  156 	.db #0x05	; 5
+   0066 0F                  157 	.db #0x0f	; 15
+   0067 0F                  158 	.db #0x0f	; 15
+   0068 00                  159 	.db #0x00	; 0
+   0069 0F                  160 	.db #0x0f	; 15
+   006A 0F                  161 	.db #0x0f	; 15
+   006B 0F                  162 	.db #0x0f	; 15
+   006C 0A                  163 	.db #0x0a	; 10
+   006D 0F                  164 	.db #0x0f	; 15
+   006E 0A                  165 	.db #0x0a	; 10
+   006F 05                  166 	.db #0x05	; 5
+   0070 00                  167 	.db #0x00	; 0
+   0071 0F                  168 	.db #0x0f	; 15
+   0072 0A                  169 	.db #0x0a	; 10
+   0073 05                  170 	.db #0x05	; 5
+   0074 00                  171 	.db #0x00	; 0
+   0075 05                  172 	.db #0x05	; 5
+   0076 0F                  173 	.db #0x0f	; 15
+   0077 0A                  174 	.db #0x0a	; 10
+   0078 0A                  175 	.db #0x0a	; 10
+   0079 00                  176 	.db #0x00	; 0
+   007A 0F                  177 	.db #0x0f	; 15
+   007B 0F                  178 	.db #0x0f	; 15
+   007C 0A                  179 	.db #0x0a	; 10
+   007D 00                  180 	.db #0x00	; 0
+   007E 0A                  181 	.db #0x0a	; 10
+   007F 0A                  182 	.db #0x0a	; 10
+   0080 0A                  183 	.db #0x0a	; 10
+   0081 00                  184 	.db #0x00	; 0
+   0082 00                  185 	.db #0x00	; 0
+   0083 00                  186 	.db #0x00	; 0
+   0084 00                  187 	.db #0x00	; 0
+                            188 ;src/main.c:71: void myInterruptHandler() {
+                            189 ;	---------------------------------
+                            190 ; Function myInterruptHandler
+                            191 ; ---------------------------------
+   0085                     192 _myInterruptHandler::
+                            193 ;src/main.c:72: intCounter=intCounter+1;
+   0085 FD 21r00r00   [14]  194 	ld	iy, #_intCounter
+   0089 FD 34 00      [23]  195 	inc	0 (iy)
+                            196 ;src/main.c:73: if (intCounter == 6) intCounter=0;
+   008C FD 7E 00      [19]  197 	ld	a, 0 (iy)
+   008F D6 06         [ 7]  198 	sub	a, #0x06
+   0091 20 04         [12]  199 	jr	NZ,00102$
+   0093 FD 36 00 00   [19]  200 	ld	0 (iy), #0x00
+   0097                     201 00102$:
+                            202 ;src/main.c:75: if (intCounter == 2) {
+   0097 3Ar00r00      [13]  203 	ld	a,(#_intCounter + 0)
+   009A D6 02         [ 7]  204 	sub	a, #0x02
+   009C 20 09         [12]  205 	jr	NZ,00104$
+                            206 ;src/main.c:76: cpct_setBorder(2);
+   009E 21 10 02      [10]  207 	ld	hl, #0x0210
+   00A1 E5            [11]  208 	push	hl
+   00A2 CDr00r00      [17]  209 	call	_cpct_setPALColour
+   00A5 18 07         [12]  210 	jr	00105$
+   00A7                     211 00104$:
+                            212 ;src/main.c:78: cpct_setBorder(3);
+   00A7 21 10 03      [10]  213 	ld	hl, #0x0310
+   00AA E5            [11]  214 	push	hl
+   00AB CDr00r00      [17]  215 	call	_cpct_setPALColour
+   00AE                     216 00105$:
+                            217 ;src/main.c:87: if (intCounter==5) {
+   00AE 3Ar00r00      [13]  218 	ld	a,(#_intCounter + 0)
+   00B1 D6 05         [ 7]  219 	sub	a, #0x05
+   00B3 20 33         [12]  220 	jr	NZ,00109$
+                            221 ;src/main.c:88: calque4000();
+   00B5 CDr00r00      [17]  222 	call	_calque4000
+                            223 ;src/main.c:92: hScroll+=1;
+   00B8 FD 21r01r00   [14]  224 	ld	iy, #_hScroll
+   00BC FD 34 00      [23]  225 	inc	0 (iy)
+                            226 ;src/main.c:96: if (hScroll==240) {hScroll=0;}
+   00BF FD 7E 00      [19]  227 	ld	a, 0 (iy)
+   00C2 D6 F0         [ 7]  228 	sub	a, #0xf0
+   00C4 20 04         [12]  229 	jr	NZ,00107$
+   00C6 FD 36 00 00   [19]  230 	ld	0 (iy), #0x00
+   00CA                     231 00107$:
+                            232 ;src/main.c:97: monterDerniereColonne(hScroll);
+   00CA 3Ar01r00      [13]  233 	ld	a, (_hScroll)
    00CD F5            [11]  234 	push	af
    00CE 33            [ 6]  235 	inc	sp
-   00CF CDr00r00      [17]  236 	call	_rupture
+   00CF CDr00r00      [17]  236 	call	_monterDerniereColonne
    00D2 33            [ 6]  237 	inc	sp
-   00D3                     238 00109$:
-                            239 ;src/main.c:98: if (intCounter==2) {
-   00D3 3Ar00r00      [13]  240 	ld	a,(#_intCounter + 0)
-   00D6 D6 02         [ 7]  241 	sub	a, #0x02
-   00D8 20 10         [12]  242 	jr	NZ,00111$
-                            243 ;src/main.c:99: calqueC000();
-   00DA CDr00r00      [17]  244 	call	_calqueC000
-                            245 ;src/main.c:100: cpct_setVideoMemoryOffset(0);
-   00DD 2E 00         [ 7]  246 	ld	l, #0x00
-   00DF CDr00r00      [17]  247 	call	_cpct_setVideoMemoryOffset
-                            248 ;src/main.c:101: rupture(7);
-   00E2 3E 07         [ 7]  249 	ld	a, #0x07
-   00E4 F5            [11]  250 	push	af
-   00E5 33            [ 6]  251 	inc	sp
-   00E6 CDr00r00      [17]  252 	call	_rupture
-   00E9 33            [ 6]  253 	inc	sp
-   00EA                     254 00111$:
-                            255 ;src/main.c:104: if (intCounter==3) {
-   00EA 3Ar00r00      [13]  256 	ld	a,(#_intCounter + 0)
-   00ED D6 03         [ 7]  257 	sub	a, #0x03
-   00EF C0            [11]  258 	ret	NZ
-                            259 ;src/main.c:105: calqueC000();
-   00F0 CDr00r00      [17]  260 	call	_calqueC000
-                            261 ;src/main.c:106: cpct_setVideoMemoryOffset(0);
-   00F3 2E 00         [ 7]  262 	ld	l, #0x00
-   00F5 CDr00r00      [17]  263 	call	_cpct_setVideoMemoryOffset
-                            264 ;src/main.c:107: restoreVBL();
-   00F8 CDr00r00      [17]  265 	call	_restoreVBL
-                            266 ;src/main.c:108: rupture(39-19-7+1);
-   00FB 3E 0E         [ 7]  267 	ld	a, #0x0e
-   00FD F5            [11]  268 	push	af
-   00FE 33            [ 6]  269 	inc	sp
-   00FF CDr00r00      [17]  270 	call	_rupture
-   0102 33            [ 6]  271 	inc	sp
-   0103 C9            [10]  272 	ret
-                            273 ;src/main.c:113: void main(void) {
-                            274 ;	---------------------------------
-                            275 ; Function main
-                            276 ; ---------------------------------
-   0104                     277 _main::
-                            278 ;src/main.c:116: u8* sprite=g_items_0;
-                            279 ;src/main.c:132: cpct_setInterruptHandler(myInterruptHandler);
-   0104 21r79r00      [10]  280 	ld	hl, #_myInterruptHandler
-   0107 CDr00r00      [17]  281 	call	_cpct_setInterruptHandler
-                            282 ;src/main.c:136: bank4_4000();
-   010A CDr00r00      [17]  283 	call	_bank4_4000
-                            284 ;src/main.c:137: bank0123();
-   010D CDr00r00      [17]  285 	call	_bank0123
-                            286 ;src/main.c:138: calqueC000();
-   0110 CDr00r00      [17]  287 	call	_calqueC000
-                            288 ;src/main.c:141: cpct_setVideoMode(0);
-   0113 2E 00         [ 7]  289 	ld	l, #0x00
-   0115 CDr00r00      [17]  290 	call	_cpct_setVideoMode
-                            291 ;src/main.c:144: cpct_setBorder(HW_BLACK);
-   0118 21 10 14      [10]  292 	ld	hl, #0x1410
-   011B E5            [11]  293 	push	hl
-   011C CDr00r00      [17]  294 	call	_cpct_setPALColour
-                            295 ;src/main.c:145: cpct_setPalette(g_tile_palette, 6);
-   011F 21 06 00      [10]  296 	ld	hl, #0x0006
-   0122 E5            [11]  297 	push	hl
-   0123 21r00r00      [10]  298 	ld	hl, #_g_tile_palette
-   0126 E5            [11]  299 	push	hl
-   0127 CDr00r00      [17]  300 	call	_cpct_setPalette
-                            301 ;src/main.c:146: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
-   012A 21 00 40      [10]  302 	ld	hl, #0x4000
-   012D E5            [11]  303 	push	hl
-   012E AF            [ 4]  304 	xor	a, a
-   012F F5            [11]  305 	push	af
-   0130 33            [ 6]  306 	inc	sp
-   0131 26 C0         [ 7]  307 	ld	h, #0xc0
-   0133 E5            [11]  308 	push	hl
-   0134 CDr00r00      [17]  309 	call	_cpct_memset
-                            310 ;src/main.c:151: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
-   0137 21 0F 0F      [10]  311 	ld	hl, #0x0f0f
-   013A E5            [11]  312 	push	hl
-   013B 21 00 C0      [10]  313 	ld	hl, #0xc000
-   013E E5            [11]  314 	push	hl
-   013F CDr00r00      [17]  315 	call	_cpct_getScreenPtr
-                            316 ;src/main.c:152: cpct_drawSprite(sprite, p, 4, 8);
-   0142 E5            [11]  317 	push	hl
-   0143 01 04 08      [10]  318 	ld	bc, #0x0804
-   0146 C5            [11]  319 	push	bc
-   0147 E5            [11]  320 	push	hl
-   0148 01r59r00      [10]  321 	ld	bc, #_g_items_0
-   014B C5            [11]  322 	push	bc
-   014C CDr00r00      [17]  323 	call	_cpct_drawSprite
-   014F 01 00 20      [10]  324 	ld	bc, #0x2000
-   0152 C5            [11]  325 	push	bc
-   0153 01 FF FF      [10]  326 	ld	bc, #0xffff
-   0156 C5            [11]  327 	push	bc
-   0157 01 00 C0      [10]  328 	ld	bc, #0xc000
-   015A C5            [11]  329 	push	bc
-   015B CDr00r00      [17]  330 	call	_cpct_memset_f64
-   015E 01r59r00      [10]  331 	ld	bc, #_g_items_0
-   0161 C5            [11]  332 	push	bc
-   0162 01 04 08      [10]  333 	ld	bc, #0x0804
-   0165 C5            [11]  334 	push	bc
-   0166 CDr00r00      [17]  335 	call	_cpct_hflipSpriteM0
-   0169 E1            [10]  336 	pop	hl
-                            337 ;src/main.c:160: cpct_drawSprite(sprite, p, 4, 8);
-   016A 01 04 08      [10]  338 	ld	bc, #0x0804
-   016D C5            [11]  339 	push	bc
-   016E E5            [11]  340 	push	hl
-   016F 21r59r00      [10]  341 	ld	hl, #_g_items_0
-   0172 E5            [11]  342 	push	hl
-   0173 CDr00r00      [17]  343 	call	_cpct_drawSprite
-                            344 ;src/main.c:162: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
-   0176 21 0F 1F      [10]  345 	ld	hl, #0x1f0f
-   0179 E5            [11]  346 	push	hl
-   017A 21 00 C0      [10]  347 	ld	hl, #0xc000
-   017D E5            [11]  348 	push	hl
-   017E CDr00r00      [17]  349 	call	_cpct_getScreenPtr
-                            350 ;src/main.c:164: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
-   0181 E5            [11]  351 	push	hl
-   0182 21 02 03      [10]  352 	ld	hl, #0x0302
-   0185 E5            [11]  353 	push	hl
-   0186 CDr00r00      [17]  354 	call	_cpct_px2byteM0
-   0189 55            [ 4]  355 	ld	d, l
-   018A C1            [10]  356 	pop	bc
-   018B 21 0A 14      [10]  357 	ld	hl, #0x140a
+                            238 ;src/main.c:99: cpct_setVideoMemoryOffset(hScroll);
+   00D3 FD 21r01r00   [14]  239 	ld	iy, #_hScroll
+   00D7 FD 6E 00      [19]  240 	ld	l, 0 (iy)
+   00DA CDr00r00      [17]  241 	call	_cpct_setVideoMemoryOffset
+                            242 ;src/main.c:100: killVBL();
+   00DD CDr00r00      [17]  243 	call	_killVBL
+                            244 ;src/main.c:101: rupture(19-1);
+   00E0 3E 12         [ 7]  245 	ld	a, #0x12
+   00E2 F5            [11]  246 	push	af
+   00E3 33            [ 6]  247 	inc	sp
+   00E4 CDr00r00      [17]  248 	call	_rupture
+   00E7 33            [ 6]  249 	inc	sp
+   00E8                     250 00109$:
+                            251 ;src/main.c:104: if (intCounter==2) {
+   00E8 3Ar00r00      [13]  252 	ld	a,(#_intCounter + 0)
+   00EB D6 02         [ 7]  253 	sub	a, #0x02
+   00ED 20 10         [12]  254 	jr	NZ,00111$
+                            255 ;src/main.c:105: calqueC000();
+   00EF CDr00r00      [17]  256 	call	_calqueC000
+                            257 ;src/main.c:106: cpct_setVideoMemoryOffset(0);
+   00F2 2E 00         [ 7]  258 	ld	l, #0x00
+   00F4 CDr00r00      [17]  259 	call	_cpct_setVideoMemoryOffset
+                            260 ;src/main.c:107: rupture(7);
+   00F7 3E 07         [ 7]  261 	ld	a, #0x07
+   00F9 F5            [11]  262 	push	af
+   00FA 33            [ 6]  263 	inc	sp
+   00FB CDr00r00      [17]  264 	call	_rupture
+   00FE 33            [ 6]  265 	inc	sp
+   00FF                     266 00111$:
+                            267 ;src/main.c:110: if (intCounter==3) {
+   00FF 3Ar00r00      [13]  268 	ld	a,(#_intCounter + 0)
+   0102 D6 03         [ 7]  269 	sub	a, #0x03
+   0104 C0            [11]  270 	ret	NZ
+                            271 ;src/main.c:111: calqueC000();
+   0105 CDr00r00      [17]  272 	call	_calqueC000
+                            273 ;src/main.c:112: cpct_setVideoMemoryOffset(0);
+   0108 2E 00         [ 7]  274 	ld	l, #0x00
+   010A CDr00r00      [17]  275 	call	_cpct_setVideoMemoryOffset
+                            276 ;src/main.c:113: restoreVBL();
+   010D CDr00r00      [17]  277 	call	_restoreVBL
+                            278 ;src/main.c:114: rupture(39-19-7+1);
+   0110 3E 0E         [ 7]  279 	ld	a, #0x0e
+   0112 F5            [11]  280 	push	af
+   0113 33            [ 6]  281 	inc	sp
+   0114 CDr00r00      [17]  282 	call	_rupture
+   0117 33            [ 6]  283 	inc	sp
+   0118 C9            [10]  284 	ret
+                            285 ;src/main.c:119: void main(void) {
+                            286 ;	---------------------------------
+                            287 ; Function main
+                            288 ; ---------------------------------
+   0119                     289 _main::
+                            290 ;src/main.c:122: u8* sprite=g_items_0;
+                            291 ;src/main.c:138: cpct_setInterruptHandler(myInterruptHandler);
+   0119 21r85r00      [10]  292 	ld	hl, #_myInterruptHandler
+   011C CDr00r00      [17]  293 	call	_cpct_setInterruptHandler
+                            294 ;src/main.c:142: bank4_4000();
+   011F CDr00r00      [17]  295 	call	_bank4_4000
+                            296 ;src/main.c:143: bank0123();
+   0122 CDr00r00      [17]  297 	call	_bank0123
+                            298 ;src/main.c:144: calqueC000();
+   0125 CDr00r00      [17]  299 	call	_calqueC000
+                            300 ;src/main.c:147: cpct_setVideoMode(0);
+   0128 2E 00         [ 7]  301 	ld	l, #0x00
+   012A CDr00r00      [17]  302 	call	_cpct_setVideoMode
+                            303 ;src/main.c:150: cpct_setBorder(HW_BLACK);
+   012D 21 10 14      [10]  304 	ld	hl, #0x1410
+   0130 E5            [11]  305 	push	hl
+   0131 CDr00r00      [17]  306 	call	_cpct_setPALColour
+                            307 ;src/main.c:151: cpct_setPalette(g_tile_palette, 6);
+   0134 21 06 00      [10]  308 	ld	hl, #0x0006
+   0137 E5            [11]  309 	push	hl
+   0138 21r00r00      [10]  310 	ld	hl, #_g_tile_palette
+   013B E5            [11]  311 	push	hl
+   013C CDr00r00      [17]  312 	call	_cpct_setPalette
+                            313 ;src/main.c:152: cpct_memset(CPCT_VMEM_START, 0, 0x4000);
+   013F 21 00 40      [10]  314 	ld	hl, #0x4000
+   0142 E5            [11]  315 	push	hl
+   0143 AF            [ 4]  316 	xor	a, a
+   0144 F5            [11]  317 	push	af
+   0145 33            [ 6]  318 	inc	sp
+   0146 26 C0         [ 7]  319 	ld	h, #0xc0
+   0148 E5            [11]  320 	push	hl
+   0149 CDr00r00      [17]  321 	call	_cpct_memset
+                            322 ;src/main.c:157: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
+   014C 21 0F 0F      [10]  323 	ld	hl, #0x0f0f
+   014F E5            [11]  324 	push	hl
+   0150 21 00 C0      [10]  325 	ld	hl, #0xc000
+   0153 E5            [11]  326 	push	hl
+   0154 CDr00r00      [17]  327 	call	_cpct_getScreenPtr
+                            328 ;src/main.c:158: cpct_drawSprite(sprite, p, 4, 8);
+   0157 E5            [11]  329 	push	hl
+   0158 01 04 08      [10]  330 	ld	bc, #0x0804
+   015B C5            [11]  331 	push	bc
+   015C E5            [11]  332 	push	hl
+   015D 01r65r00      [10]  333 	ld	bc, #_g_items_0
+   0160 C5            [11]  334 	push	bc
+   0161 CDr00r00      [17]  335 	call	_cpct_drawSprite
+   0164 01 00 20      [10]  336 	ld	bc, #0x2000
+   0167 C5            [11]  337 	push	bc
+   0168 01 FF FF      [10]  338 	ld	bc, #0xffff
+   016B C5            [11]  339 	push	bc
+   016C 01 00 C0      [10]  340 	ld	bc, #0xc000
+   016F C5            [11]  341 	push	bc
+   0170 CDr00r00      [17]  342 	call	_cpct_memset_f64
+   0173 01r65r00      [10]  343 	ld	bc, #_g_items_0
+   0176 C5            [11]  344 	push	bc
+   0177 01 04 08      [10]  345 	ld	bc, #0x0804
+   017A C5            [11]  346 	push	bc
+   017B CDr00r00      [17]  347 	call	_cpct_hflipSpriteM0
+   017E E1            [10]  348 	pop	hl
+                            349 ;src/main.c:166: cpct_drawSprite(sprite, p, 4, 8);
+   017F 01 04 08      [10]  350 	ld	bc, #0x0804
+   0182 C5            [11]  351 	push	bc
+   0183 E5            [11]  352 	push	hl
+   0184 21r65r00      [10]  353 	ld	hl, #_g_items_0
+   0187 E5            [11]  354 	push	hl
+   0188 CDr00r00      [17]  355 	call	_cpct_drawSprite
+                            356 ;src/main.c:168: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
+   018B 21 0F 1F      [10]  357 	ld	hl, #0x1f0f
    018E E5            [11]  358 	push	hl
-   018F D5            [11]  359 	push	de
-   0190 33            [ 6]  360 	inc	sp
-   0191 C5            [11]  361 	push	bc
-   0192 CDr00r00      [17]  362 	call	_cpct_drawSolidBox
-   0195 F1            [10]  363 	pop	af
-                            364 ;src/main.c:167: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
-   0196 33            [ 6]  365 	inc	sp
-   0197 21 09 4F      [10]  366 	ld	hl,#0x4f09
-   019A E3            [19]  367 	ex	(sp),hl
-   019B 21 00 C0      [10]  368 	ld	hl, #0xc000
-   019E E5            [11]  369 	push	hl
-   019F CDr00r00      [17]  370 	call	_cpct_getScreenPtr
-                            371 ;src/main.c:168: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
-   01A2 01r00r00      [10]  372 	ld	bc, #_g_tile_schtroumpf+0
-   01A5 11 10 20      [10]  373 	ld	de, #0x2010
-   01A8 D5            [11]  374 	push	de
-   01A9 E5            [11]  375 	push	hl
-   01AA C5            [11]  376 	push	bc
-   01AB CDr00r00      [17]  377 	call	_cpct_drawSpriteMasked
-                            378 ;src/main.c:182: cpct_srand(77);
-   01AE 21 4D 00      [10]  379 	ld	hl,#0x004d
-   01B1 11 00 00      [10]  380 	ld	de,#0x0000
-   01B4 CDr00r00      [17]  381 	call	_cpct_setSeed_mxor
-   01B7 CDr00r00      [17]  382 	call	_cpct_restoreState_mxor_u8
-                            383 ;src/main.c:186: cpct_scanKeyboard_f();
-   01BA CDr00r00      [17]  384 	call	_cpct_scanKeyboard_f
-                            385 ;src/main.c:187: t=0;
-   01BD 01 00 00      [10]  386 	ld	bc, #0x0000
-                            387 ;src/main.c:188: while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
-   01C0                     388 00107$:
-   01C0 C5            [11]  389 	push	bc
-   01C1 21 80 00      [10]  390 	ld	hl, #0x0080
-   01C4 E5            [11]  391 	push	hl
-   01C5 C5            [11]  392 	push	bc
-   01C6 CDr00r00      [17]  393 	call	__modsint
-   01C9 F1            [10]  394 	pop	af
-   01CA F1            [10]  395 	pop	af
-   01CB C1            [10]  396 	pop	bc
-   01CC 7C            [ 4]  397 	ld	a, h
-   01CD B5            [ 4]  398 	or	a,l
-   01CE 20 18         [12]  399 	jr	NZ,00108$
-   01D0 C5            [11]  400 	push	bc
-   01D1 21 00 40      [10]  401 	ld	hl, #0x4000
-   01D4 CDr00r00      [17]  402 	call	_cpct_isKeyPressed
-   01D7 C1            [10]  403 	pop	bc
-   01D8 7D            [ 4]  404 	ld	a, l
-   01D9 B7            [ 4]  405 	or	a, a
-   01DA 20 48         [12]  406 	jr	NZ,00109$
-   01DC C5            [11]  407 	push	bc
-   01DD 21 02 04      [10]  408 	ld	hl, #0x0402
-   01E0 CDr00r00      [17]  409 	call	_cpct_isKeyPressed
-   01E3 C1            [10]  410 	pop	bc
-   01E4 7D            [ 4]  411 	ld	a, l
-   01E5 B7            [ 4]  412 	or	a, a
-   01E6 20 3C         [12]  413 	jr	NZ,00109$
-   01E8                     414 00108$:
-                            415 ;src/main.c:189: scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
-   01E8 C5            [11]  416 	push	bc
-   01E9 C5            [11]  417 	push	bc
-   01EA 21 6E 00      [10]  418 	ld	hl, #0x006e
-   01ED E5            [11]  419 	push	hl
-   01EE 21r31r02      [10]  420 	ld	hl, #___str_0
-   01F1 E5            [11]  421 	push	hl
-   01F2 CDr00r00      [17]  422 	call	_scroll
-   01F5 21 06 00      [10]  423 	ld	hl, #6
-   01F8 39            [11]  424 	add	hl, sp
-   01F9 F9            [ 6]  425 	ld	sp, hl
-   01FA C1            [10]  426 	pop	bc
-                            427 ;src/main.c:190: t=t+1;
-   01FB 03            [ 6]  428 	inc	bc
-                            429 ;src/main.c:191: if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
-   01FC 3E EC         [ 7]  430 	ld	a, #0xec
-   01FE B9            [ 4]  431 	cp	a, c
-   01FF 3E 04         [ 7]  432 	ld	a, #0x04
-   0201 98            [ 4]  433 	sbc	a, b
-   0202 E2r07r02      [10]  434 	jp	PO, 00139$
-   0205 EE 80         [ 7]  435 	xor	a, #0x80
-   0207                     436 00139$:
-   0207 F2r0Dr02      [10]  437 	jp	P, 00102$
-   020A 01 00 00      [10]  438 	ld	bc, #0x0000
-   020D                     439 00102$:
-                            440 ;src/main.c:192: if (t%128==0) {
-   020D C5            [11]  441 	push	bc
-   020E 21 80 00      [10]  442 	ld	hl, #0x0080
-   0211 E5            [11]  443 	push	hl
-   0212 C5            [11]  444 	push	bc
-   0213 CDr00r00      [17]  445 	call	__modsint
-   0216 F1            [10]  446 	pop	af
-   0217 F1            [10]  447 	pop	af
-   0218 C1            [10]  448 	pop	bc
-   0219 7C            [ 4]  449 	ld	a, h
-   021A B5            [ 4]  450 	or	a,l
-   021B 20 A3         [12]  451 	jr	NZ,00107$
-                            452 ;src/main.c:193: cpct_scanKeyboard_f();
-   021D C5            [11]  453 	push	bc
-   021E CDr00r00      [17]  454 	call	_cpct_scanKeyboard_f
-   0221 C1            [10]  455 	pop	bc
-   0222 18 9C         [12]  456 	jr	00107$
-   0224                     457 00109$:
-                            458 ;src/main.c:199: cpct_setVideoMemoryOffset(0);
-   0224 2E 00         [ 7]  459 	ld	l, #0x00
-   0226 CDr00r00      [17]  460 	call	_cpct_setVideoMemoryOffset
-                            461 ;src/main.c:200: calque4000();
-   0229 CDr00r00      [17]  462 	call	_calque4000
-                            463 ;src/main.c:202: while (1) {
-   022C                     464 00111$:
-                            465 ;src/main.c:203: vsync();
-   022C CDr00r00      [17]  466 	call	_vsync
-   022F 18 FB         [12]  467 	jr	00111$
-   0231                     468 ___str_0:
-   0231 57 45 20 57 49 53   469 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
+   018F 21 00 C0      [10]  359 	ld	hl, #0xc000
+   0192 E5            [11]  360 	push	hl
+   0193 CDr00r00      [17]  361 	call	_cpct_getScreenPtr
+                            362 ;src/main.c:170: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+   0196 E5            [11]  363 	push	hl
+   0197 21 02 03      [10]  364 	ld	hl, #0x0302
+   019A E5            [11]  365 	push	hl
+   019B CDr00r00      [17]  366 	call	_cpct_px2byteM0
+   019E 55            [ 4]  367 	ld	d, l
+   019F C1            [10]  368 	pop	bc
+   01A0 21 0A 14      [10]  369 	ld	hl, #0x140a
+   01A3 E5            [11]  370 	push	hl
+   01A4 D5            [11]  371 	push	de
+   01A5 33            [ 6]  372 	inc	sp
+   01A6 C5            [11]  373 	push	bc
+   01A7 CDr00r00      [17]  374 	call	_cpct_drawSolidBox
+   01AA F1            [10]  375 	pop	af
+                            376 ;src/main.c:173: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
+   01AB 33            [ 6]  377 	inc	sp
+   01AC 21 09 4F      [10]  378 	ld	hl,#0x4f09
+   01AF E3            [19]  379 	ex	(sp),hl
+   01B0 21 00 C0      [10]  380 	ld	hl, #0xc000
+   01B3 E5            [11]  381 	push	hl
+   01B4 CDr00r00      [17]  382 	call	_cpct_getScreenPtr
+                            383 ;src/main.c:174: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+   01B7 01r00r00      [10]  384 	ld	bc, #_g_tile_schtroumpf+0
+   01BA 11 10 20      [10]  385 	ld	de, #0x2010
+   01BD D5            [11]  386 	push	de
+   01BE E5            [11]  387 	push	hl
+   01BF C5            [11]  388 	push	bc
+   01C0 CDr00r00      [17]  389 	call	_cpct_drawSpriteMasked
+                            390 ;src/main.c:188: cpct_srand(77);
+   01C3 21 4D 00      [10]  391 	ld	hl,#0x004d
+   01C6 11 00 00      [10]  392 	ld	de,#0x0000
+   01C9 CDr00r00      [17]  393 	call	_cpct_setSeed_mxor
+   01CC CDr00r00      [17]  394 	call	_cpct_restoreState_mxor_u8
+                            395 ;src/main.c:192: cpct_scanKeyboard_f();
+   01CF CDr00r00      [17]  396 	call	_cpct_scanKeyboard_f
+                            397 ;src/main.c:193: t=0;
+   01D2 01 00 00      [10]  398 	ld	bc, #0x0000
+                            399 ;src/main.c:194: while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
+   01D5                     400 00107$:
+   01D5 C5            [11]  401 	push	bc
+   01D6 21 80 00      [10]  402 	ld	hl, #0x0080
+   01D9 E5            [11]  403 	push	hl
+   01DA C5            [11]  404 	push	bc
+   01DB CDr00r00      [17]  405 	call	__modsint
+   01DE F1            [10]  406 	pop	af
+   01DF F1            [10]  407 	pop	af
+   01E0 C1            [10]  408 	pop	bc
+   01E1 7C            [ 4]  409 	ld	a, h
+   01E2 B5            [ 4]  410 	or	a,l
+   01E3 20 18         [12]  411 	jr	NZ,00108$
+   01E5 C5            [11]  412 	push	bc
+   01E6 21 00 40      [10]  413 	ld	hl, #0x4000
+   01E9 CDr00r00      [17]  414 	call	_cpct_isKeyPressed
+   01EC C1            [10]  415 	pop	bc
+   01ED 7D            [ 4]  416 	ld	a, l
+   01EE B7            [ 4]  417 	or	a, a
+   01EF 20 48         [12]  418 	jr	NZ,00109$
+   01F1 C5            [11]  419 	push	bc
+   01F2 21 02 04      [10]  420 	ld	hl, #0x0402
+   01F5 CDr00r00      [17]  421 	call	_cpct_isKeyPressed
+   01F8 C1            [10]  422 	pop	bc
+   01F9 7D            [ 4]  423 	ld	a, l
+   01FA B7            [ 4]  424 	or	a, a
+   01FB 20 3C         [12]  425 	jr	NZ,00109$
+   01FD                     426 00108$:
+                            427 ;src/main.c:195: scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
+   01FD C5            [11]  428 	push	bc
+   01FE C5            [11]  429 	push	bc
+   01FF 21 6E 00      [10]  430 	ld	hl, #0x006e
+   0202 E5            [11]  431 	push	hl
+   0203 21r46r02      [10]  432 	ld	hl, #___str_0
+   0206 E5            [11]  433 	push	hl
+   0207 CDr00r00      [17]  434 	call	_scroll
+   020A 21 06 00      [10]  435 	ld	hl, #6
+   020D 39            [11]  436 	add	hl, sp
+   020E F9            [ 6]  437 	ld	sp, hl
+   020F C1            [10]  438 	pop	bc
+                            439 ;src/main.c:196: t=t+1;
+   0210 03            [ 6]  440 	inc	bc
+                            441 ;src/main.c:197: if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
+   0211 3E EC         [ 7]  442 	ld	a, #0xec
+   0213 B9            [ 4]  443 	cp	a, c
+   0214 3E 04         [ 7]  444 	ld	a, #0x04
+   0216 98            [ 4]  445 	sbc	a, b
+   0217 E2r1Cr02      [10]  446 	jp	PO, 00139$
+   021A EE 80         [ 7]  447 	xor	a, #0x80
+   021C                     448 00139$:
+   021C F2r22r02      [10]  449 	jp	P, 00102$
+   021F 01 00 00      [10]  450 	ld	bc, #0x0000
+   0222                     451 00102$:
+                            452 ;src/main.c:198: if (t%128==0) {
+   0222 C5            [11]  453 	push	bc
+   0223 21 80 00      [10]  454 	ld	hl, #0x0080
+   0226 E5            [11]  455 	push	hl
+   0227 C5            [11]  456 	push	bc
+   0228 CDr00r00      [17]  457 	call	__modsint
+   022B F1            [10]  458 	pop	af
+   022C F1            [10]  459 	pop	af
+   022D C1            [10]  460 	pop	bc
+   022E 7C            [ 4]  461 	ld	a, h
+   022F B5            [ 4]  462 	or	a,l
+   0230 20 A3         [12]  463 	jr	NZ,00107$
+                            464 ;src/main.c:199: cpct_scanKeyboard_f();
+   0232 C5            [11]  465 	push	bc
+   0233 CDr00r00      [17]  466 	call	_cpct_scanKeyboard_f
+   0236 C1            [10]  467 	pop	bc
+   0237 18 9C         [12]  468 	jr	00107$
+   0239                     469 00109$:
+                            470 ;src/main.c:205: cpct_setVideoMemoryOffset(0);
+   0239 2E 00         [ 7]  471 	ld	l, #0x00
+   023B CDr00r00      [17]  472 	call	_cpct_setVideoMemoryOffset
+                            473 ;src/main.c:206: calque4000();
+   023E CDr00r00      [17]  474 	call	_calque4000
+                            475 ;src/main.c:208: while (1) {
+   0241                     476 00111$:
+                            477 ;src/main.c:209: vsync();
+   0241 CDr00r00      [17]  478 	call	_vsync
+   0244 18 FB         [12]  479 	jr	00111$
+   0246                     480 ___str_0:
+   0246 57 45 20 57 49 53   481 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
         48 20 59 4F 55 20
         41 20 4D 45 52 52
         59 20 43 48 52 49
@@ -476,7 +488,7 @@
         41 20 4D 45 52 52
         59 20 43 48 52 49
         53 54 4D 41 53 20
-   026D 57 45 20 57 49 53   470 	.ascii "WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR"
+   0282 57 45 20 57 49 53   482 	.ascii "WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR"
         48 20 59 4F 55 20
         41 20 4D 45 52 52
         59 20 43 48 52 49
@@ -485,11 +497,13 @@
         48 41 50 50 59 20
         4E 45 57 20 59 45
         41 52
-   029F 00                  471 	.db 0x00
-                            472 	.area _CODE
-                            473 	.area _INITIALIZER
-   0000                     474 __xinit__intCounter:
-   0000 00                  475 	.db #0x00	; 0
-   0001                     476 __xinit__hScroll:
-   0001 00                  477 	.db #0x00	; 0
-                            478 	.area _CABS (ABS)
+   02B4 00                  483 	.db 0x00
+                            484 	.area _CODE
+                            485 	.area _INITIALIZER
+   0000                     486 __xinit__intCounter:
+   0000 00                  487 	.db #0x00	; 0
+   0001                     488 __xinit__hScroll:
+   0001 00                  489 	.db #0x00	; 0
+   0002                     490 __xinit__slow:
+   0002 00                  491 	.db #0x00	; 0
+                            492 	.area _CABS (ABS)

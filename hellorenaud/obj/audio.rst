@@ -23,8 +23,8 @@
                              23 ; ram data
                              24 ;--------------------------------------------------------
                              25 	.area _DATA
-   2625                      26 _i::
-   2625                      27 	.ds 2
+   2649                      26 _i::
+   2649                      27 	.ds 2
                              28 ;--------------------------------------------------------
                              29 ; ram data
                              30 ;--------------------------------------------------------
@@ -49,18 +49,18 @@
                              49 ; code
                              50 ;--------------------------------------------------------
                              51 	.area _CODE
-                             52 ;src/audio.c:64: void akp_musicInit()
+                             52 ;src/audio.c:65: void akp_musicInit()
                              53 ;	---------------------------------
                              54 ; Function akp_musicInit
                              55 ; ---------------------------------
    0288                      56 _akp_musicInit::
-                             57 ;src/audio.c:66: i=i+1;
-   0288 FD 21 25 26   [14]   58 	ld	iy, #_i
+                             57 ;src/audio.c:67: i=i+1;
+   0288 FD 21 49 26   [14]   58 	ld	iy, #_i
    028C FD 34 00      [23]   59 	inc	0 (iy)
    028F 20 03         [12]   60 	jr	NZ,00103$
    0291 FD 34 01      [23]   61 	inc	1 (iy)
    0294                      62 00103$:
-                             63 ;src/audio.c:116: __endasm;
+                             63 ;src/audio.c:117: __endasm;
                              64 ;;	backup Z80 state
    0294 F5            [11]   65 	push	af
    0295 C5            [11]   66 	push	bc
@@ -177,12 +177,12 @@
    032F 07                  177 	.db #0x07	; 7
    0330 50 00               178 	.dw #0x0050
    0332 04                  179 	.db #0x04	; 4
-                            180 ;src/audio.c:119: void akp_musicPlay()
+                            180 ;src/audio.c:120: void akp_musicPlay()
                             181 ;	---------------------------------
                             182 ; Function akp_musicPlay
                             183 ; ---------------------------------
    0333                     184 _akp_musicPlay::
-                            185 ;src/audio.c:152: __endasm;
+                            185 ;src/audio.c:153: __endasm;
                             186 ;;	backup Z80 state
    0333 F5            [11]  187 	push	af
    0334 C5            [11]  188 	push	bc
@@ -212,12 +212,12 @@
    0350 C1            [10]  212 	pop	bc
    0351 F1            [10]  213 	pop	af
    0352 C9            [10]  214 	ret
-                            215 ;src/audio.c:155: void akp_sfxPlay()
+                            215 ;src/audio.c:156: void akp_sfxPlay()
                             216 ;	---------------------------------
                             217 ; Function akp_sfxPlay
                             218 ; ---------------------------------
    0353                     219 _akp_sfxPlay::
-                            220 ;src/audio.c:188: __endasm;
+                            220 ;src/audio.c:189: __endasm;
                             221 ;;	backup Z80 state
    0353 F5            [11]  222 	push	af
    0354 C5            [11]  223 	push	bc

@@ -26,8 +26,8 @@
                              26 ; ram data
                              27 ;--------------------------------------------------------
                              28 	.area _INITIALIZED
-   2627                      29 _vblPosition::
-   2627                      30 	.ds 2
+   264B                      29 _vblPosition::
+   264B                      30 	.ds 2
                              31 ;--------------------------------------------------------
                              32 ; absolute external ram data
                              33 ;--------------------------------------------------------
@@ -97,7 +97,7 @@
    0176 21 0A 00      [10]   97 	ld	hl, #0x000a
    0179 E5            [11]   98 	push	hl
    017A C5            [11]   99 	push	bc
-   017B CD 88 25      [17]  100 	call	__divsint
+   017B CD ED 25      [17]  100 	call	__divsint
    017E F1            [10]  101 	pop	af
    017F F1            [10]  102 	pop	af
    0180 EB            [ 4]  103 	ex	de,hl
@@ -109,7 +109,7 @@
    0187 E5            [11]  109 	push	hl
    0188 C5            [11]  110 	push	bc
                             111 ;src/txt_scroll.c:29: if (mod==0) {
-   0189 CD 33 25      [17]  112 	call	__modsint
+   0189 CD 98 25      [17]  112 	call	__modsint
    018C F1            [10]  113 	pop	af
    018D F1            [10]  114 	pop	af
    018E D1            [10]  115 	pop	de
@@ -144,7 +144,7 @@
    01B5 33            [ 6]  144 	inc	sp
    01B6 21 00 C0      [10]  145 	ld	hl, #0xc000
    01B9 E5            [11]  146 	push	hl
-   01BA CD 40 25      [17]  147 	call	_cpct_getScreenPtr
+   01BA CD A5 25      [17]  147 	call	_cpct_getScreenPtr
    01BD D1            [10]  148 	pop	de
    01BE C1            [10]  149 	pop	bc
                             150 ;src/txt_scroll.c:34: cpct_drawSprite(g_tile_tileset[o], p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
@@ -152,7 +152,7 @@
    01C0 FD E1         [14]  152 	pop	iy
    01C2 EB            [ 4]  153 	ex	de,hl
    01C3 29            [11]  154 	add	hl, hl
-   01C4 11 30 0B      [10]  155 	ld	de, #_g_tile_tileset
+   01C4 11 45 0B      [10]  155 	ld	de, #_g_tile_tileset
    01C7 19            [11]  156 	add	hl, de
    01C8 5E            [ 7]  157 	ld	e, (hl)
    01C9 23            [ 6]  158 	inc	hl
@@ -162,7 +162,7 @@
    01CF E5            [11]  162 	push	hl
    01D0 FD E5         [15]  163 	push	iy
    01D2 D5            [11]  164 	push	de
-   01D3 CD 5E 22      [17]  165 	call	_cpct_drawSprite
+   01D3 CD 73 22      [17]  165 	call	_cpct_drawSprite
    01D6 C1            [10]  166 	pop	bc
    01D7                     167 00109$:
                             168 ;src/txt_scroll.c:20: for(c1=0;c1<=(SCREEN_WIDTH-G_TILE_FONTMAP20X22_00_W);c1=c1+1) {
@@ -194,7 +194,7 @@
    01FE ED 79         [12]  194 	out	(c),a
                             195 ;src/txt_scroll.c:53: vblPosition=37;
    0200 21 25 00      [10]  196 	ld	hl, #0x0025
-   0203 22 27 26      [16]  197 	ld	(_vblPosition), hl
+   0203 22 4B 26      [16]  197 	ld	(_vblPosition), hl
    0206 C9            [10]  198 	ret
                             199 ;src/txt_scroll.c:56: void restoreVBL() {
                             200 ;	---------------------------------
@@ -203,7 +203,7 @@
    0207                     203 _restoreVBL::
                             204 ;src/txt_scroll.c:63: __endasm;
    0207 01 07 BC      [10]  205 	ld	bc,#0xbc07 ; On repositionne la VBL
-   020A 3A 27 26      [13]  206 	ld	a,(_vblPosition)
+   020A 3A 4B 26      [13]  206 	ld	a,(_vblPosition)
    020D ED 49         [12]  207 	out	(c),c
    020F 04            [ 4]  208 	inc	b
    0210 ED 79         [12]  209 	out	(c),a
@@ -228,7 +228,7 @@
    0224 39            [11]  228 	add	hl, sp
    0225 4E            [ 7]  229 	ld	c, (hl)
    0226 06 00         [ 7]  230 	ld	b, #0x00
-   0228 21 27 26      [10]  231 	ld	hl, #_vblPosition
+   0228 21 4B 26      [10]  231 	ld	hl, #_vblPosition
    022B 7E            [ 7]  232 	ld	a, (hl)
    022C 91            [ 4]  233 	sub	a, c
    022D 77            [ 7]  234 	ld	(hl), a
@@ -239,6 +239,6 @@
    0232 C9            [10]  239 	ret
                             240 	.area _CODE
                             241 	.area _INITIALIZER
-   262F                     242 __xinit__vblPosition:
-   262F 00 00               243 	.dw #0x0000
+   2654                     242 __xinit__vblPosition:
+   2654 00 00               243 	.dw #0x0000
                             244 	.area _CABS (ABS)
