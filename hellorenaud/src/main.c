@@ -62,9 +62,9 @@ void monter(unsigned int c,u16 hScroll) {
 
 void monterDerniereColonne(u16 hScroll) {
 	if (hScroll/80==0) {
-		monter(4,hScroll);
-	} else if (hScroll/80==1) {
 		monter(3,hScroll);
+	} else if (hScroll/80==1) {
+		monter(4,hScroll);
 	}
 }
 
