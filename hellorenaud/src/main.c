@@ -46,26 +46,25 @@ const u8 g_items_0[4 * 8] = {
 // POKE &C000+l*&800+80*C+79
 // NEXT L
 // NEXT C
-void monterDerniereColonne(u8 hScroll) {
-	unsigned int c;
+void monter(unsigned int c,u16 hScroll,u8 couleur) {
 	unsigned int l;
 	u8* plot_column;
-	// on transert 3 lignes en haut, et celle du haut va en bas
-	// &4000  // to,from,size)
-	//for (c=0;c<4;c++) {// caractères hauteur
-	//c=3;
-	c=4;
-		for (l=0;l<8;l++) {
-			// mode 0 : deux pixels par byte
-			plot_column=(u8 *)(0x4000 + l*0x800 + 80*(c+hScroll/80)+hScroll%80);
-			//cpct_memcpy(plot_column,plot_column,1);
-			*plot_column=0x33;
-		}
-	//}
+	for (l=0;l<8;l++) {
+		// mode 0 : deux pixels par byte
+		plot_column=(u8 *)(0x4000 + l*0x800 + 80*(c-hScroll/80)+hScroll%80);
+		//cpct_memcpy(plot_column,plot_column,1);
+		*plot_column=*plot_column+0X33;
+		//plot_column=plot_column-1;
+		//*plot_column=couleur;
+	}
+}
+
+void monterDerniereColonne(u16 hScroll) {
+	monter(4,hScroll,0x33);
 }
 
 u8 intCounter=0;
-u8 hScroll=0;
+u16 hScroll=0;
 u8 slow=0;
 
 void myInterruptHandler() {
@@ -87,16 +86,10 @@ akp_musicPlay();
 	if (intCounter==5) {
 		calque4000();
 		// horizontal scroll
-		//slow++;if (slow==8) {
-		//	slow=0;
-			hScroll+=1;
-		//}
-		if (hScroll==80) {}
-		if (hScroll==160) {}
-		if (hScroll==240) {hScroll=0;}
+		hScroll+=1;
+		if (hScroll==80*3) {hScroll=0;}
 		monterDerniereColonne(hScroll);
-
-		cpct_setVideoMemoryOffset(hScroll);
+		cpct_setVideoMemoryOffset(hScroll%80);
 		killVBL();
 		rupture(19-1);
 	}
