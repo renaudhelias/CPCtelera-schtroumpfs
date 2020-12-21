@@ -51,7 +51,7 @@ void monter(unsigned int c,u16 hScroll) {
 	u8* plot_column;
 	for (l=0;l<8;l++) {
 		// mode 0 : deux pixels par byte
-		plot_column=(u8 *)(0x4000 + l*0x800 + 80*c+(hScroll/2)%80);
+		plot_column=(u8 *)(0x4000 + l*0x800 + 80*c + hScroll%80);
 		//cpct_memcpy(plot_column,plot_column,1);
 		*plot_column=*plot_column+0X33;
 		// on loupe un caractère sur 2 puis on le rattrappe
