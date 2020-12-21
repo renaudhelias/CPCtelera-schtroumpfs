@@ -23,8 +23,8 @@
                              23 ; ram data
                              24 ;--------------------------------------------------------
                              25 	.area _INITIALIZED
-   264D                      26 _nFileNameLen::
-   264D                      27 	.ds 1
+   269D                      26 _nFileNameLen::
+   269D                      27 	.ds 1
                              28 ;--------------------------------------------------------
                              29 ; absolute external ram data
                              30 ;--------------------------------------------------------
@@ -89,13 +89,13 @@
    025D E5            [11]   89 	push	hl
    025E C5            [11]   90 	push	bc
    025F E5            [11]   91 	push	hl
-   0260 CD C4 24      [17]   92 	call	_strlen
+   0260 CD FD 24      [17]   92 	call	_strlen
    0263 F1            [10]   93 	pop	af
-   0264 FD 21 4D 26   [14]   94 	ld	iy, #_nFileNameLen
+   0264 FD 21 9D 26   [14]   94 	ld	iy, #_nFileNameLen
    0268 FD 75 00      [19]   95 	ld	0 (iy), l
                              96 ;src/jdvapi_floppy.c:96: __endasm;
                              97 ;;	B = length of the filename in characters
-   026B 21 4D 26      [10]   98 	ld	hl, #_nFileNameLen;
+   026B 21 9D 26      [10]   98 	ld	hl, #_nFileNameLen;
    026E 46            [ 7]   99 	ld	b, (hl)
                             100 ;;	HL = address of the start of the filename
    026F DD 6E 04      [19]  101 	LD	L, 4 (IX) ;sFileName
@@ -120,6 +120,6 @@
    0287 C9            [10]  120 	ret
                             121 	.area _CODE
                             122 	.area _INITIALIZER
-   2656                     123 __xinit__nFileNameLen:
-   2656 00                  124 	.db #0x00	; 0
+   26A7                     123 __xinit__nFileNameLen:
+   26A7 00                  124 	.db #0x00	; 0
                             125 	.area _CABS (ABS)

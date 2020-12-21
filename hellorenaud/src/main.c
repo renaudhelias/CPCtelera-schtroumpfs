@@ -46,21 +46,26 @@ const u8 g_items_0[4 * 8] = {
 // POKE &C000+l*&800+80*C+79
 // NEXT L
 // NEXT C
-void monter(unsigned int c,u16 hScroll,u8 couleur) {
+void monter(unsigned int c,u16 hScroll) {
 	unsigned int l;
 	u8* plot_column;
 	for (l=0;l<8;l++) {
 		// mode 0 : deux pixels par byte
-		plot_column=(u8 *)(0x4000 + l*0x800 + 80*(c-hScroll/80)+hScroll%80);
+		plot_column=(u8 *)(0x4000 + l*0x800 + 80*c+(hScroll/2)%80);
 		//cpct_memcpy(plot_column,plot_column,1);
 		*plot_column=*plot_column+0X33;
-		//plot_column=plot_column-1;
-		//*plot_column=couleur;
+		// on loupe un caractère sur 2 puis on le rattrappe
+		plot_column=plot_column-1;
+		*plot_column=*plot_column+0X33;
 	}
 }
 
 void monterDerniereColonne(u16 hScroll) {
-	monter(4,hScroll,0x33);
+	if (hScroll/80==0) {
+		monter(4,hScroll);
+	} else if (hScroll/80==1) {
+		monter(3,hScroll);
+	}
 }
 
 u8 intCounter=0;
@@ -87,9 +92,9 @@ akp_musicPlay();
 		calque4000();
 		// horizontal scroll
 		hScroll+=1;
-		if (hScroll==80*3) {hScroll=0;}
+		if (hScroll==160) {hScroll=0;}
 		monterDerniereColonne(hScroll);
-		cpct_setVideoMemoryOffset(hScroll%80);
+		cpct_setVideoMemoryOffset((hScroll/2)%80);
 		killVBL();
 		rupture(19-1);
 	}
