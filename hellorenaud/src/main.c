@@ -46,6 +46,9 @@ const u8 g_items_0[4 * 8] = {
 // POKE &C000+l*&800+80*C+79
 // NEXT L
 // NEXT C
+/**
+ * hScroll 0-80
+ */
 void monter(unsigned int c,u16 hScroll) {
 	unsigned int l;
 	u8* plot_column;
@@ -60,19 +63,12 @@ void monter(unsigned int c,u16 hScroll) {
 	}
 }
 
-void monterDerniereColonne(u16 hScroll) {
-	if (hScroll/80==0) {
-		monter(3,hScroll);
-	} else if (hScroll/80==1) {
-		monter(4,hScroll);
-	}
-}
-
 u8 intCounter=0;
-u16 hScroll=0;
+u16 hOffset=0;
 u8 slow=0;
 
 void myInterruptHandler() {
+//	u8* scrLocation;
    intCounter=intCounter+1;
    if (intCounter == 6) intCounter=0;
 
@@ -91,10 +87,22 @@ akp_musicPlay();
 	if (intCounter==5) {
 		calque4000();
 		// horizontal scroll
-		hScroll+=1;
-		if (hScroll==160) {hScroll=0;}
-		monterDerniereColonne(hScroll);
-		cpct_setVideoMemoryOffset((hScroll/2)%80);
+		// FIXME 80 I do work in two images instead of one
+		hOffset=(hOffset+1)%(40*8);
+		if (hOffset/20==0) {
+			monter(4,(hOffset%40)*2);
+		} else {
+			monter(3,(hOffset%40)*2);
+		}
+		//scrLocation = cpct_getScreenPtr(0xC000+hOffset, 0, 0);
+		//*scrLocation=
+		//testScrolled();
+		// FIXME ici c'est pas bien : on influ que juste sur de début du scroll
+		// paquets de 2byte donc 40 ici en largeur
+		//cpct_setVideoMemoryOffset(hOffset%40);
+		// FIXME c'est un unsigned int, donc c'est gros.
+		
+		cpct_setVideoMemoryOffset(hOffset%(40*8));
 		killVBL();
 		rupture(19-1);
 	}
@@ -190,7 +198,7 @@ void main(void) {
    cpct_scanKeyboard_f();
    t=0;
    while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
-      scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
+      //scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
       t=t+1;
       if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
       if (t%128==0) {
