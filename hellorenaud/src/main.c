@@ -21,6 +21,7 @@
 
 #include <cpctelera.h>
 #include "schtroumpf.h"
+#include "schtroumpf4x32.h"
 #include "fontmap20x22.h"
 #include "txt_scroll.h"
 #ifndef NO_SOUND
@@ -66,9 +67,33 @@ void monter(unsigned int c,u16 hScroll) {
 u8 intCounter=0;
 u16 hOffset=0;
 u8 slow=0;
+u8* screen_location=0x1000;
+u8* screen_plot_address=0x4000+80-2;
+
+void crtc(u16 R12R13) {
+__asm
+	push	ix
+	ld	ix,#0
+	add	ix,sp
+	ld	h, 5 (ix)
+	ld	l, 4 (ix)
+ld bc,#0xbc00+12
+out (c),c
+inc b
+out (c),h
+dec b
+inc c
+out (c),c
+inc b
+out (c),l
+	pop	ix
+__endasm;
+
+}
 
 void myInterruptHandler() {
 //	u8* scrLocation;
+   u8* p;
    intCounter=intCounter+1;
    if (intCounter == 6) intCounter=0;
 
@@ -85,15 +110,21 @@ akp_musicPlay();
 #endif
 
 	if (intCounter==5) {
-		calque4000();
+		//calque4000();
+		//screen_location=0x1000;
+		//screen_location++;
+		//screen_location=((unsigned int)screen_location) & 0x13FF;
+		//crtc((u16)screen_location);
+		//crtc(0x1000);
+
 		// horizontal scroll
 		// FIXME 80 I do work in two images instead of one
-		hOffset=(hOffset+1)%(40*8);
-		if (hOffset/20==0) {
-			monter(4,(hOffset%40)*2);
-		} else {
-			monter(3,(hOffset%40)*2);
-		}
+		//hOffset=(hOffset+1)%(40*8);
+		//if (hOffset/20==0) {
+		//	monter(4,(hOffset%40)*2);
+		//} else {
+		//	monter(3,(hOffset%40)*2);
+		//}
 		//scrLocation = cpct_getScreenPtr(0xC000+hOffset, 0, 0);
 		//*scrLocation=
 		//testScrolled();
@@ -102,28 +133,32 @@ akp_musicPlay();
 		//cpct_setVideoMemoryOffset(hOffset%40);
 		// FIXME c'est un unsigned int, donc c'est gros.
 		
-		cpct_setVideoMemoryOffset(hOffset%(40*8));
-		killVBL();
-		rupture(19-1);
+		//cpct_setVideoMemoryOffset(hOffset%(40*8));
+		
+		//killVBL();
+		//rupture(19-1);
+		
+		
 	}
 
         if (intCounter==2) {
-		calqueC000();
-		cpct_setVideoMemoryOffset(0);
-		rupture(7);
+		//calqueC000();
+		//cpct_setVideoMemoryOffset(0);
+		//rupture(7);
 	}
 
 	if (intCounter==3) {
-		calqueC000();
-		cpct_setVideoMemoryOffset(0);
-		restoreVBL();
-		rupture(39-19-7+1);
+		//calqueC000();
+		//cpct_setVideoMemoryOffset(0);
+		//restoreVBL();
+		//rupture(39-19-7+1);
 	}
 
 }
 
 void main(void) {
    int t=0;
+   int s=0;
    u8* p;
    u8* sprite=g_items_0;
    int initInterruptDone;
@@ -195,24 +230,41 @@ void main(void) {
    
    
 
-   cpct_scanKeyboard_f();
-   t=0;
-   while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
-      //scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
-      t=t+1;
-      if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
-      if (t%128==0) {
-	      cpct_scanKeyboard_f();
-      }
-   }
+//   cpct_scanKeyboard_f();
+//   t=0;
+//   while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
+//      scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
+//      t=t+1;
+//      if (t>110*G_TILE_FONTMAP20X22_00_W+160) {t=0;}
+//      if (t%128==0) {
+//	      cpct_scanKeyboard_f();
+//      }
+//   }
 
  
   // horizontal scroll
-   cpct_setVideoMemoryOffset(0);
-   calque4000();
-   initInterruptDone=0;
+//   cpct_setVideoMemoryOffset(0);
+//   calque4000();
+//   initInterruptDone=0;
+
+//calque4000();
+
    while (1) {
-      vsync();
+	vsync();
+
+	screen_location++;
+	screen_location=((unsigned int)screen_location) & 0x13FF;
+	crtc((u16)screen_location);
+
+	screen_plot_address++;
+	screen_plot_address++;
+	screen_plot_address=((unsigned int)screen_plot_address) & 0x47FF;
+
+	p = cpct_getScreenPtr(screen_plot_address, 0,0);
+	s=(s+1)%32;
+//   	cpct_drawSpriteMasked(g_tile_schtroumpf4x32_tileset[s], p, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
+   cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_00_W, G_TILE_SCHTROUMPF4X32_00_H);
+
       //intCounter=0;
       //killVBL();
       //rupture(39);

@@ -7,8 +7,8 @@
 -k /home/freemac/cpctelera/cpctelera/tools/sdcc-3.6.8-r9946/share/sdcc/lib/z80
 -l /home/freemac/cpctelera/cpctelera/cpctelera.lib
 -l z80
+obj/schtroumpf4x32.rel
 obj/txt_scroll.rel
-obj/jdvapi_floppy.rel
 obj/audio.rel
 obj/main.rel
 obj/jdvapi_sync.rel
