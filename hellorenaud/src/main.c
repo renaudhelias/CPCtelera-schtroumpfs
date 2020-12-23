@@ -50,7 +50,7 @@ const u8 g_items_0[4 * 8] = {
 /**
  * hScroll 0-80
  */
-void monter(unsigned int c,u16 hScroll) {
+/*void monter(unsigned int c,u16 hScroll) {
 	unsigned int l;
 	u8* plot_column;
 	for (l=0;l<8;l++) {
@@ -62,15 +62,18 @@ void monter(unsigned int c,u16 hScroll) {
 		plot_column=plot_column-1;
 		*plot_column=*plot_column+0X33;
 	}
+}*/
+
+void wait_frame_flyback() {
+__asm
+ld b,#0xf5   ;wait frame flyback
+l1: in a,(c)
+rra
+jr nc,l1
+__endasm;
 }
 
-u8 intCounter=0;
-u16 hOffset=0;
-u8 slow=0;
-u8* screen_location=0x1000;
-u8* screen_plot_address=0x4000+80-2;
-
-void crtc(u16 R12R13) {
+void crtc(u8* R12R13) {
 __asm
 	push	ix
 	ld	ix,#0
@@ -90,6 +93,10 @@ out (c),l
 __endasm;
 
 }
+
+/*u8 intCounter=0;
+u16 hOffset=0;
+u8 slow=0;
 
 void myInterruptHandler() {
 //	u8* scrLocation;
@@ -154,14 +161,17 @@ akp_musicPlay();
 		//rupture(39-19-7+1);
 	}
 
-}
+} */
+
+u8* screen_location; //=0x1000;
+u8* screen_plot_address; //=0x4000+80-2;
 
 void main(void) {
    int t=0;
    int s=0;
    u8* p;
-   u8* sprite=g_items_0;
-   int initInterruptDone;
+//   u8* sprite=g_items_0;
+//   int initInterruptDone;
 // sdcc -mz80 -c --std-c99 --opt-code-speed --fno-omit-frame-pointer --oldralloc jdvapi_floppy.c
 //   SetupDOS();
 //	if (1==1) return;
@@ -176,43 +186,44 @@ void main(void) {
    //cpct_disableFirmware();
    //raster_halt();
    //cpct_setStackLocation(0x8000);
-   cpct_setInterruptHandler(myInterruptHandler);
+//   cpct_setInterruptHandler(myInterruptHandler);
 
 
 
-   bank4_4000();
-   bank0123();
-   calqueC000();
+//   bank4_4000();
+//   bank0123();
+//   calqueC000();
    // CLS with 0.
    //cpct_clearScreen_f64(0);
-   cpct_setVideoMode(0);
-
-
-   cpct_setBorder(HW_BLACK);
-   cpct_setPalette(g_tile_palette, 6);
-   cpct_memset(CPCT_VMEM_START, 0, 0x4000);
+//This function requires the CPC firmware to be DISABLED
+//   cpct_setVideoMode(0);
+//This function pas dans la doc
+//  cpct_setBorder(HW_BLACK);
+//This function requires the CPC firmware to be DISABLED
+//   cpct_setPalette(g_tile_palette, 6);
+//   cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
 
 
    // Draw the sprite to screen
-   p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
-   cpct_drawSprite(sprite, p, 4, 8);
+//   p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
+//   cpct_drawSprite(sprite, p, 4, 8);
 
    // efface l'ecran
    //cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x4000);
-   cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
+//   cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
 
    //cpct_hflipSpriteMaskedM0 : affichage de la tete de mort de droite à gauche (flip)
-   cpct_hflipSpriteM0(4, 8, sprite);
-   cpct_drawSprite(sprite, p, 4, 8);
+//   cpct_hflipSpriteM0(4, 8, sprite);
+//   cpct_drawSprite(sprite, p, 4, 8);
 
-   p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
+//   p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
 
-   cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+//   cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 
    // le schtroumpf est affiché devant la phrase.
-   p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
-   cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+//   p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
+//   cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
 //   p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
 //   cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
@@ -226,7 +237,7 @@ void main(void) {
 //__endasm;
 
    // Loop forever
-   cpct_srand(77);
+//   cpct_srand(77);
    
    
 
@@ -249,21 +260,40 @@ void main(void) {
 
 //calque4000();
 
+cpct_disableFirmware();
+cpct_memset_f64(0x4000,0x00,0x4000); // SCR_VMEM, 0, 0x4000
+//calqueC000();
+//cpct_scanKeyboard_f();
+//   t=0;
+//   while ((!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))) {
+//	scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
+//	t=t+1;
+//	cpct_scanKeyboard_f();
+//   }
+
+calque4000(); // faut que le AND du début match
+
+screen_location=0x1000;
+screen_plot_address=0x4000+80-2;
+
    while (1) {
-	vsync();
+	//vsync();
 
+	wait_frame_flyback();
 	screen_location++;
-	screen_location=((unsigned int)screen_location) & 0x13FF;
-	crtc((u16)screen_location);
+	screen_location=(u8 *)(((unsigned int)screen_location) & 0x13FF);
+	crtc(screen_location);
 
 	screen_plot_address++;
+	screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
 	screen_plot_address++;
-	screen_plot_address=((unsigned int)screen_plot_address) & 0x47FF;
+	screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
 
-	p = cpct_getScreenPtr(screen_plot_address, 0,0);
+
+
+	//p = cpct_getScreenPtr(screen_plot_address, 0,0);
 	s=(s+1)%32;
-//   	cpct_drawSpriteMasked(g_tile_schtroumpf4x32_tileset[s], p, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
-   cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_00_W, G_TILE_SCHTROUMPF4X32_00_H);
+	cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_00_W, G_TILE_SCHTROUMPF4X32_00_H);
 
       //intCounter=0;
       //killVBL();
