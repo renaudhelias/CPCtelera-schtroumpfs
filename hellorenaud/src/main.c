@@ -94,9 +94,14 @@ __endasm;
 
 }
 
-/*u8 intCounter=0;
+u8 intCounter=0;
 u16 hOffset=0;
 u8 slow=0;
+
+
+u8* screen_location; //=0x1000;
+u8* screen_plot_address; //=0x4000+80-2;
+
 
 void myInterruptHandler() {
 //	u8* scrLocation;
@@ -141,36 +146,55 @@ akp_musicPlay();
 		// FIXME c'est un unsigned int, donc c'est gros.
 		
 		//cpct_setVideoMemoryOffset(hOffset%(40*8));
-		
-		//killVBL();
-		//rupture(19-1);
+__asm
+ld bc,#0xbc06
+out (c),c
+ld bc,#0xbd04
+out (c),c
+__endasm;
+
+		screen_location++;
+		screen_location=(u8 *)(((unsigned int)screen_location) & 0x13FF);
+		crtc(screen_location);
+
+		screen_plot_address++;
+		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
+		screen_plot_address++;
+		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
+
+
+		killVBL();
+		rupture(19-1);
 		
 		
 	}
 
         if (intCounter==2) {
-		//calqueC000();
-		//cpct_setVideoMemoryOffset(0);
-		//rupture(7);
+__asm
+ld bc,#0xbc06
+out (c),c
+ld bc,#0xbd19
+out (c),c
+__endasm;
+		calqueC000();
+		cpct_setVideoMemoryOffset(0);
+		rupture(7);
 	}
 
 	if (intCounter==3) {
-		//calqueC000();
-		//cpct_setVideoMemoryOffset(0);
-		//restoreVBL();
-		//rupture(39-19-7+1);
+		calqueC000();
+		cpct_setVideoMemoryOffset(0);
+		restoreVBL();
+		rupture(39-19-7+1);
 	}
 
-} */
-
-u8* screen_location; //=0x1000;
-u8* screen_plot_address; //=0x4000+80-2;
+}
 
 void main(void) {
    int t=0;
    int s=0;
    u8* p;
-//   u8* sprite=g_items_0;
+   u8* sprite=g_items_0;
 //   int initInterruptDone;
 // sdcc -mz80 -c --std-c99 --opt-code-speed --fno-omit-frame-pointer --oldralloc jdvapi_floppy.c
 //   SetupDOS();
@@ -183,10 +207,10 @@ void main(void) {
 #ifndef NO_SOUND
    akp_musicInit();
 #endif
-   cpct_disableFirmware();
+//   cpct_disableFirmware();
    //raster_halt();
    //cpct_setStackLocation(0x8000);
-//   cpct_setInterruptHandler(myInterruptHandler);
+   cpct_setInterruptHandler(myInterruptHandler);
 
 
 
@@ -211,19 +235,19 @@ void main(void) {
 
    // efface l'ecran
    //cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x4000);
-//   cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
+   cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
 
    //cpct_hflipSpriteMaskedM0 : affichage de la tete de mort de droite à gauche (flip)
-//   cpct_hflipSpriteM0(4, 8, sprite);
-//   cpct_drawSprite(sprite, p, 4, 8);
+   cpct_hflipSpriteM0(4, 8, sprite);
+   cpct_drawSprite(sprite, p, 4, 8);
 
-//   p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
+   p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
 
-//   cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+   cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 
    // le schtroumpf est affiché devant la phrase.
-//   p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
-//   cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+   p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
+   cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
 //   p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,120-1);
 //   cpct_drawSprite(g_tile_fontmap20x22_00, p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
@@ -280,15 +304,7 @@ screen_plot_address=0x4000+80-2;
 	//vsync();
 
 	wait_frame_flyback();
-	screen_location++;
-	screen_location=(u8 *)(((unsigned int)screen_location) & 0x13FF);
-	crtc(screen_location);
-
-	screen_plot_address++;
-	screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
-	screen_plot_address++;
-	screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
-
+	
 
 
 	//p = cpct_getScreenPtr(screen_plot_address, 0,0);
