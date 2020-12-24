@@ -1,6 +1,6 @@
 #include "schtroumpf4x32.h"
 // Data created with Img2CPC - (c) Retroworks - 2007-2015
-u8* const g_tile_schtroumpf4x32_tileset[8] = { 
+u8* const g_tile_tileset[8] = { 
 	g_tile_schtroumpf4x32_0, g_tile_schtroumpf4x32_1, g_tile_schtroumpf4x32_2, g_tile_schtroumpf4x32_3, g_tile_schtroumpf4x32_4, g_tile_schtroumpf4x32_5, g_tile_schtroumpf4x32_6, g_tile_schtroumpf4x32_7
 };
 // Tile g_tile_schtroumpf4x32_0: 4x32 pixels, 2x32 bytes.

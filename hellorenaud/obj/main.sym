@@ -14,8 +14,12 @@ Symbol Table
     _cpct_disableFirmware                                          **** GX
     _cpct_drawSprite                                               **** GX
     _cpct_memset_f64                                               **** GX
+    _cpct_setPALColour                                             **** GX
+    _cpct_setPalette                                               **** GX
+    _cpct_setVideoMode                                             **** GX
   0 _crtc                                                          0028 GR
   0 _g_items_0                                                     0008 GR
+    _g_tile_palette                                                **** GX
     _g_tile_schtroumpf4x32_tileset                                 **** GX
   0 _main                                                          0048 GR
   2 _screen_location                                               0000 GR
@@ -29,7 +33,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size   E0   flags    0
+   0 _CODE                                      size   F7   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    4   flags    0
    3 _DABS                                      size    0   flags    8

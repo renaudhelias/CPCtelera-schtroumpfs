@@ -12,6 +12,9 @@
 	.globl _crtc
 	.globl _wait_frame_flyback
 	.globl _calque4000
+	.globl _cpct_setPALColour
+	.globl _cpct_setPalette
+	.globl _cpct_setVideoMode
 	.globl _cpct_drawSprite
 	.globl _cpct_memset_f64
 	.globl _cpct_disableFirmware
@@ -130,8 +133,21 @@ _main::
 ;src/main.c:171: int s=0;
 	ld	hl, #0x0000
 	ex	(sp), hl
-;src/main.c:263: cpct_disableFirmware();
+;src/main.c:186: cpct_disableFirmware();
 	call	_cpct_disableFirmware
+;src/main.c:199: cpct_setVideoMode(0);
+	ld	l, #0x00
+	call	_cpct_setVideoMode
+;src/main.c:201: cpct_setBorder(HW_BLACK);
+	ld	hl, #0x1410
+	push	hl
+	call	_cpct_setPALColour
+;src/main.c:203: cpct_setPalette(g_tile_palette, 6);
+	ld	hl, #0x0006
+	push	hl
+	ld	hl, #_g_tile_palette
+	push	hl
+	call	_cpct_setPalette
 ;src/main.c:264: cpct_memset_f64(0x4000,0x00,0x4000); // SCR_VMEM, 0, 0x4000
 	ld	hl, #0x4000
 	push	hl
@@ -192,11 +208,11 @@ _main::
 	and	a, #0x47
 	ld	h, a
 	ld	(_screen_plot_address), hl
-;src/main.c:295: s=(s+1)%32;
+;src/main.c:295: s=(s+1)%8;
 	pop	bc
 	push	bc
 	inc	bc
-	ld	hl, #0x0020
+	ld	hl, #0x0008
 	push	hl
 	push	bc
 	call	__modsint
@@ -205,7 +221,7 @@ _main::
 	inc	sp
 	inc	sp
 	push	hl
-;src/main.c:296: cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_00_W, G_TILE_SCHTROUMPF4X32_00_H);
+;src/main.c:296: cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
 	ld	de, (_screen_plot_address)
 	ld	bc, #_g_tile_schtroumpf4x32_tileset+0
 	pop	hl
@@ -215,7 +231,7 @@ _main::
 	ld	c, (hl)
 	inc	hl
 	ld	b, (hl)
-	ld	hl, #0x0802
+	ld	hl, #0x2002
 	push	hl
 	push	de
 	push	bc

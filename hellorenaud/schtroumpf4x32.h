@@ -3,7 +3,7 @@
 #define _SCHTROUMPF4X32_H_
 
 #include <types.h>
-extern u8* const g_tile_schtroumpf4x32_tileset[8];
+extern u8* const g_tile_tileset[8];
 
 #define G_TILE_SCHTROUMPF4X32_0_W 2
 #define G_TILE_SCHTROUMPF4X32_0_H 32

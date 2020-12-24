@@ -183,7 +183,7 @@ void main(void) {
 #ifndef NO_SOUND
    akp_musicInit();
 #endif
-   //cpct_disableFirmware();
+   cpct_disableFirmware();
    //raster_halt();
    //cpct_setStackLocation(0x8000);
 //   cpct_setInterruptHandler(myInterruptHandler);
@@ -196,11 +196,11 @@ void main(void) {
    // CLS with 0.
    //cpct_clearScreen_f64(0);
 //This function requires the CPC firmware to be DISABLED
-//   cpct_setVideoMode(0);
+   cpct_setVideoMode(0);
 //This function pas dans la doc
-//  cpct_setBorder(HW_BLACK);
+  cpct_setBorder(HW_BLACK);
 //This function requires the CPC firmware to be DISABLED
-//   cpct_setPalette(g_tile_palette, 6);
+   cpct_setPalette(g_tile_palette, 6);
 //   cpct_memset(CPCT_VMEM_START, 0, 0x4000);
 
 
@@ -260,7 +260,7 @@ void main(void) {
 
 //calque4000();
 
-cpct_disableFirmware();
+//cpct_disableFirmware();
 cpct_memset_f64(0x4000,0x00,0x4000); // SCR_VMEM, 0, 0x4000
 //calqueC000();
 //cpct_scanKeyboard_f();
@@ -292,8 +292,8 @@ screen_plot_address=0x4000+80-2;
 
 
 	//p = cpct_getScreenPtr(screen_plot_address, 0,0);
-	s=(s+1)%32;
-	cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_00_W, G_TILE_SCHTROUMPF4X32_00_H);
+	s=(s+1)%8;
+	cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
 
       //intCounter=0;
       //killVBL();

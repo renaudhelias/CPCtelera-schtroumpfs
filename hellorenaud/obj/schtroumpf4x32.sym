@@ -7,38 +7,14 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-  0 _g_tile_schtroumpf4x32_00                                      0040 GR
-  0 _g_tile_schtroumpf4x32_01                                      0050 GR
-  0 _g_tile_schtroumpf4x32_02                                      0060 GR
-  0 _g_tile_schtroumpf4x32_03                                      0070 GR
-  0 _g_tile_schtroumpf4x32_04                                      0080 GR
-  0 _g_tile_schtroumpf4x32_05                                      0090 GR
-  0 _g_tile_schtroumpf4x32_06                                      00A0 GR
-  0 _g_tile_schtroumpf4x32_07                                      00B0 GR
-  0 _g_tile_schtroumpf4x32_08                                      00C0 GR
-  0 _g_tile_schtroumpf4x32_09                                      00D0 GR
-  0 _g_tile_schtroumpf4x32_10                                      00E0 GR
-  0 _g_tile_schtroumpf4x32_11                                      00F0 GR
-  0 _g_tile_schtroumpf4x32_12                                      0100 GR
-  0 _g_tile_schtroumpf4x32_13                                      0110 GR
-  0 _g_tile_schtroumpf4x32_14                                      0120 GR
-  0 _g_tile_schtroumpf4x32_15                                      0130 GR
-  0 _g_tile_schtroumpf4x32_16                                      0140 GR
-  0 _g_tile_schtroumpf4x32_17                                      0150 GR
-  0 _g_tile_schtroumpf4x32_18                                      0160 GR
-  0 _g_tile_schtroumpf4x32_19                                      0170 GR
-  0 _g_tile_schtroumpf4x32_20                                      0180 GR
-  0 _g_tile_schtroumpf4x32_21                                      0190 GR
-  0 _g_tile_schtroumpf4x32_22                                      01A0 GR
-  0 _g_tile_schtroumpf4x32_23                                      01B0 GR
-  0 _g_tile_schtroumpf4x32_24                                      01C0 GR
-  0 _g_tile_schtroumpf4x32_25                                      01D0 GR
-  0 _g_tile_schtroumpf4x32_26                                      01E0 GR
-  0 _g_tile_schtroumpf4x32_27                                      01F0 GR
-  0 _g_tile_schtroumpf4x32_28                                      0200 GR
-  0 _g_tile_schtroumpf4x32_29                                      0210 GR
-  0 _g_tile_schtroumpf4x32_30                                      0220 GR
-  0 _g_tile_schtroumpf4x32_31                                      0230 GR
+  0 _g_tile_schtroumpf4x32_0                                       0010 GR
+  0 _g_tile_schtroumpf4x32_1                                       0050 GR
+  0 _g_tile_schtroumpf4x32_2                                       0090 GR
+  0 _g_tile_schtroumpf4x32_3                                       00D0 GR
+  0 _g_tile_schtroumpf4x32_4                                       0110 GR
+  0 _g_tile_schtroumpf4x32_5                                       0150 GR
+  0 _g_tile_schtroumpf4x32_6                                       0190 GR
+  0 _g_tile_schtroumpf4x32_7                                       01D0 GR
   0 _g_tile_schtroumpf4x32_tileset                                 0000 GR
 
 
@@ -47,7 +23,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  240   flags    0
+   0 _CODE                                      size  210   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8
