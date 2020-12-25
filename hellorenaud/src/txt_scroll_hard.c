@@ -15,7 +15,7 @@ void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address
 	int mod;
 	unsigned int o;
 	u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
-	c2=step+SCREEN_WIDTH; // on insère du vide au début de step
+	c2=step; // on insère du vide au début de step
 
 	// on cherche le caractère
 	div=c2/8;

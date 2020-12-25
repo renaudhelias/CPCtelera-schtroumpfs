@@ -326,7 +326,7 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 //   while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
       scroll_hard("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t,screen_plot_address);
       t=t+1;
-      if (t>110*G_TILE_FONTMAP32X32PLAT_000_W+160) {t=0;}
+      if (t>110*8+160) {t=0;}
 
       //intCounter=0;
       //killVBL();

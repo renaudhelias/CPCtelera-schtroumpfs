@@ -422,10 +422,10 @@
    01F6 C1            [10]  422 	pop	bc
                             423 ;src/main.c:328: t=t+1;
    01F7 03            [ 6]  424 	inc	bc
-                            425 ;src/main.c:329: if (t>110*G_TILE_FONTMAP32X32PLAT_000_W+160) {t=0;}
-   01F8 3E 7C         [ 7]  426 	ld	a, #0x7c
+                            425 ;src/main.c:329: if (t>110*8+160) {t=0;}
+   01F8 3E 10         [ 7]  426 	ld	a, #0x10
    01FA B9            [ 4]  427 	cp	a, c
-   01FB 3E 01         [ 7]  428 	ld	a, #0x01
+   01FB 3E 04         [ 7]  428 	ld	a, #0x04
    01FD 98            [ 4]  429 	sbc	a, b
    01FE E2r03r02      [10]  430 	jp	PO, 00116$
    0201 EE 80         [ 7]  431 	xor	a, #0x80

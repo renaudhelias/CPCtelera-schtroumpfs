@@ -54,13 +54,9 @@ _scroll_hard::
 ;src/txt_scroll_hard.c:17: u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
 	ld	-4 (ix), #<(_g_tile_fontmap32x32plat_000)
 	ld	-3 (ix), #>(_g_tile_fontmap32x32plat_000)
-;src/txt_scroll_hard.c:18: c2=step+SCREEN_WIDTH; // on insère du vide au début de step
-	ld	a, 8 (ix)
-	add	a, #0x50
-	ld	e, a
-	ld	a, 9 (ix)
-	adc	a, #0x00
-	ld	d, a
+;src/txt_scroll_hard.c:18: c2=step; // on insère du vide au début de step
+	ld	e,8 (ix)
+	ld	d,9 (ix)
 ;src/txt_scroll_hard.c:21: div=c2/8;
 	ld	c, e
 	ld	b, d

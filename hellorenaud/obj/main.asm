@@ -422,10 +422,10 @@ _main::
 	pop	bc
 ;src/main.c:328: t=t+1;
 	inc	bc
-;src/main.c:329: if (t>110*G_TILE_FONTMAP32X32PLAT_000_W+160) {t=0;}
-	ld	a, #0x7c
+;src/main.c:329: if (t>110*8+160) {t=0;}
+	ld	a, #0x10
 	cp	a, c
-	ld	a, #0x01
+	ld	a, #0x04
 	sbc	a, b
 	jp	PO, 00116$
 	xor	a, #0x80
