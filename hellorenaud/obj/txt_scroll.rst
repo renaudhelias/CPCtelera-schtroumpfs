@@ -91,7 +91,7 @@
    0386 21 0A 00      [10]   91 	ld	hl, #0x000a
    0389 E5            [11]   92 	push	hl
    038A C5            [11]   93 	push	bc
-   038B CD 6C 64      [17]   94 	call	__divsint
+   038B CD 23 65      [17]   94 	call	__divsint
    038E F1            [10]   95 	pop	af
    038F F1            [10]   96 	pop	af
    0390 EB            [ 4]   97 	ex	de,hl
@@ -103,7 +103,7 @@
    0397 E5            [11]  103 	push	hl
    0398 C5            [11]  104 	push	bc
                             105 ;src/txt_scroll.c:29: if (mod==0) {
-   0399 CD 3F 64      [17]  106 	call	__modsint
+   0399 CD F6 64      [17]  106 	call	__modsint
    039C F1            [10]  107 	pop	af
    039D F1            [10]  108 	pop	af
    039E D1            [10]  109 	pop	de
@@ -138,7 +138,7 @@
    03C5 33            [ 6]  138 	inc	sp
    03C6 21 00 C0      [10]  139 	ld	hl, #0xc000
    03C9 E5            [11]  140 	push	hl
-   03CA CD 4C 64      [17]  141 	call	_cpct_getScreenPtr
+   03CA CD 03 65      [17]  141 	call	_cpct_getScreenPtr
    03CD D1            [10]  142 	pop	de
    03CE C1            [10]  143 	pop	bc
                             144 ;src/txt_scroll.c:34: cpct_drawSprite(g_tile_fontmap20x22_tileset[o], p, G_TILE_FONTMAP20X22_00_W, G_TILE_FONTMAP20X22_00_H);
@@ -146,7 +146,7 @@
    03D0 FD E1         [14]  146 	pop	iy
    03D2 EB            [ 4]  147 	ex	de,hl
    03D3 29            [11]  148 	add	hl, hl
-   03D4 11 1B 4B      [10]  149 	ld	de, #_g_tile_fontmap20x22_tileset
+   03D4 11 D2 4B      [10]  149 	ld	de, #_g_tile_fontmap20x22_tileset
    03D7 19            [11]  150 	add	hl, de
    03D8 5E            [ 7]  151 	ld	e, (hl)
    03D9 23            [ 6]  152 	inc	hl
@@ -156,7 +156,7 @@
    03DF E5            [11]  156 	push	hl
    03E0 FD E5         [15]  157 	push	iy
    03E2 D5            [11]  158 	push	de
-   03E3 CD D3 61      [17]  159 	call	_cpct_drawSprite
+   03E3 CD 8A 62      [17]  159 	call	_cpct_drawSprite
    03E6 C1            [10]  160 	pop	bc
    03E7                     161 00109$:
                             162 ;src/txt_scroll.c:20: for(c1=0;c1<=(SCREEN_WIDTH-G_TILE_FONTMAP20X22_00_W);c1=c1+1) {

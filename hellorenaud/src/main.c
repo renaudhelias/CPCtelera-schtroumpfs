@@ -24,6 +24,7 @@
 #include "schtroumpf4x32.h"
 #include "fontmap32x32plat.h"
 #include "rupture.h"
+#include "txt_scroll_hard.h"
 #ifndef NO_SOUND
 #include "audio.h"
 #endif
@@ -190,11 +191,6 @@ __endasm;
 
 }
 
-void draw(char * texte, int texte_cur, int offset) {
-	u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
-	pointeur = pointeur+(texte[texte_cur]-'A')*(32*2)+2*(32*2);
-	cpct_drawSprite(pointeur+offset*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
-}
 
 void main(void) {
    int t=0;
@@ -313,7 +309,7 @@ calque8000(); // faut que le AND du début match
 
 screen_location=(u8 *)(0x2000);
 screen_plot_address=(u8 *)(0x8000+80-2);
-
+   t=0;
    while (1) {
 	//vsync();
 
@@ -342,7 +338,11 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 	//o=o+1;//(texte[texte_cur]-'?')*8+s;
 	//if (o>=8) {o=0;}
 
-	draw("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",texte_cur,s);
+//   while (t%128!=0 || (!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))){
+      scroll_hard("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t,screen_plot_address);
+      t=t+1;
+      if (t>110*G_TILE_FONTMAP32X32PLAT_000_W+160) {t=0;}
+
       //intCounter=0;
       //killVBL();
       //rupture(39);
