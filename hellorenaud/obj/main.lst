@@ -283,7 +283,7 @@
    0116 DD E5         [15]  283 	push	ix
    0118 DD 21 00 00   [14]  284 	ld	ix,#0
    011C DD 39         [15]  285 	add	ix,sp
-                            286 ;src/main.c:194: u8* pointeur=(u16)g_tile_fontmap32x32plat_000;
+                            286 ;src/main.c:194: u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
    011E 01r00r00      [10]  287 	ld	bc, #_g_tile_fontmap32x32plat_000+0
                             288 ;src/main.c:195: pointeur = pointeur+(texte[texte_cur]-'A')*(32*2)+2*(32*2);
    0121 DD 7E 04      [19]  289 	ld	a, 4 (ix)
@@ -522,7 +522,7 @@
    02A8 21 00 00      [10]  522 	ld	hl, #0x0000
    02AB E3            [19]  523 	ex	(sp), hl
    02AC                     524 00106$:
-                            525 ;src/main.c:345: draw("HELLO@LES@AMIS@@",texte_cur,s);
+                            525 ;src/main.c:345: draw("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",texte_cur,s);
    02AC C5            [11]  526 	push	bc
    02AD C5            [11]  527 	push	bc
    02AE DD 6E FE      [19]  528 	ld	l,-2 (ix)
@@ -537,10 +537,13 @@
    02C1 C1            [10]  537 	pop	bc
    02C2 C3r3Br02      [10]  538 	jp	00108$
    02C5                     539 ___str_0:
-   02C5 48 45 4C 4C 4F 40   540 	.ascii "HELLO@LES@AMIS@@"
-        4C 45 53 40 41 4D
-        49 53 40 40
-   02D5 00                  541 	.db 0x00
+   02C5 45 45 45 45 45 45   540 	.ascii "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+        45 45 45 45 45 45
+        45 45 45 45 45 45
+        45 45 45 45 45 45
+        45 45 45 45 45 45
+        45
+   02E4 00                  541 	.db 0x00
                             542 	.area _CODE
                             543 	.area _INITIALIZER
    0000                     544 __xinit__intCounter:

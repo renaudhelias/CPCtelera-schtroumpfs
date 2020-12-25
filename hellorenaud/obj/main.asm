@@ -283,7 +283,7 @@ _draw::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;src/main.c:194: u8* pointeur=(u16)g_tile_fontmap32x32plat_000;
+;src/main.c:194: u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
 	ld	bc, #_g_tile_fontmap32x32plat_000+0
 ;src/main.c:195: pointeur = pointeur+(texte[texte_cur]-'A')*(32*2)+2*(32*2);
 	ld	a, 4 (ix)
@@ -522,7 +522,7 @@ _main::
 	ld	hl, #0x0000
 	ex	(sp), hl
 00106$:
-;src/main.c:345: draw("HELLO@LES@AMIS@@",texte_cur,s);
+;src/main.c:345: draw("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",texte_cur,s);
 	push	bc
 	push	bc
 	ld	l,-2 (ix)
@@ -537,7 +537,7 @@ _main::
 	pop	bc
 	jp	00108$
 ___str_0:
-	.ascii "HELLO@LES@AMIS@@"
+	.ascii "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER

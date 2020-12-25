@@ -26,7 +26,7 @@ S _cpct_disableFirmware Ref0000
 S _cpct_drawSolidBox Ref0000
 S _g_tile_schtroumpf Ref0000
 S _cpct_getScreenPtr Ref0000
-A _CODE size 2D6 flags 0 addr 0
+A _CODE size 2E5 flags 0 addr 0
 S _main Def0163
 S _crtc Def0028
 S _draw Def0116
@@ -240,9 +240,11 @@ T BA 02 16 01 21 06 00 39 F9 C1 C3 3B 02
 R 00 00 00 00 00 02 00 00 00 0B 00 00
 T C5 02
 R 00 00 00 00
-T C5 02 48 45 4C 4C 4F 40 4C 45 53 40 41 4D 49 53
+T C5 02 45 45 45 45 45 45 45 45 45 45 45 45 45 45
 R 00 00 00 00
-T D3 02 40 40 00
+T D3 02 45 45 45 45 45 45 45 45 45 45 45 45 45 45
+R 00 00 00 00
+T E1 02 45 45 45 00
 R 00 00 00 00
 T 00 00
 R 00 00 07 00

@@ -191,7 +191,7 @@ __endasm;
 }
 
 void draw(char * texte, int texte_cur, int offset) {
-	u8* pointeur=(u16)g_tile_fontmap32x32plat_000;
+	u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
 	pointeur = pointeur+(texte[texte_cur]-'A')*(32*2)+2*(32*2);
 	cpct_drawSprite(pointeur+offset*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 }
@@ -342,7 +342,7 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 	//o=o+1;//(texte[texte_cur]-'?')*8+s;
 	//if (o>=8) {o=0;}
 
-	draw("HELLO@LES@AMIS@@",texte_cur,s);
+	draw("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",texte_cur,s);
       //intCounter=0;
       //killVBL();
       //rupture(39);
