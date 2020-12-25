@@ -220,7 +220,7 @@ void main(void) {
    cpct_setStackLocation(0x7000);
    cpct_memset_f64(0x8000, 0x0000, 0x4000);
    //raster_halt();
-//   cpct_setInterruptHandler(myInterruptHandler);
+   cpct_setInterruptHandler(myInterruptHandler);
 
 
 
@@ -316,21 +316,6 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 	wait_frame_flyback();
 	//p = cpct_getScreenPtr(screen_plot_address, 0,0);
 
-
-		screen_location++;
-		screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
-		crtc(screen_location);
-
-		screen_plot_address++;
-		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
-		screen_plot_address++;
-		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
-
-
-
-	s=s+1;
-	if (s==8) {s=0;}
-	if (s==0) {texte_cur=texte_cur+1; if (texte_cur==texte_length) {texte_cur=0;}}
 
 	//cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
 //('G'-'A')*8

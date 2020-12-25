@@ -32,6 +32,7 @@
 	.globl _cpct_setStackLocation
 	.globl _cpct_memcpy
 	.globl _cpct_memset_f64
+	.globl _cpct_setInterruptHandler
 	.globl _cpct_disableFirmware
 	.globl _slow
 	.globl _hOffset
@@ -280,19 +281,10 @@ _myInterruptHandler::
 ; Function main
 ; ---------------------------------
 _main::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-	push	af
-;src/main.c:197: int s=0;
-	ld	bc, #0x0000
 ;src/main.c:199: u8* sprite=g_items_0;
-;src/main.c:202: int texte_cur=0;
-	ld	hl, #0x0000
-	ex	(sp), hl
 ;src/main.c:218: cpct_disableFirmware();
-	push	bc
 	call	_cpct_disableFirmware
+;src/main.c:219: cpct_memcpy(0x7000,0x8000,0x1000);
 	ld	hl, #0x1000
 	push	hl
 	ld	h, #0x80
@@ -300,8 +292,10 @@ _main::
 	ld	h, #0x70
 	push	hl
 	call	_cpct_memcpy
+;src/main.c:220: cpct_setStackLocation(0x7000);
 	ld	hl, #0x7000
 	call	_cpct_setStackLocation
+;src/main.c:221: cpct_memset_f64(0x8000, 0x0000, 0x4000);
 	ld	hl, #0x4000
 	push	hl
 	ld	h, #0x00
@@ -309,88 +303,95 @@ _main::
 	ld	h, #0x80
 	push	hl
 	call	_cpct_memset_f64
+;src/main.c:223: cpct_setInterruptHandler(myInterruptHandler);
+	ld	hl, #_myInterruptHandler
+	call	_cpct_setInterruptHandler
+;src/main.c:228: bank0123();
 	call	_bank0123
+;src/main.c:233: cpct_setVideoMode(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMode
+;src/main.c:235: cpct_setBorder(HW_BLACK);
 	ld	hl, #0x1410
 	push	hl
 	call	_cpct_setPALColour
+;src/main.c:237: cpct_setPalette(g_tile_palette, 6);
 	ld	hl, #0x0006
 	push	hl
 	ld	hl, #_g_tile_palette
 	push	hl
 	call	_cpct_setPalette
+;src/main.c:243: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
 	ld	hl, #0x0f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-	pop	bc
 ;src/main.c:248: cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
 	push	hl
+	ld	bc, #0x2000
 	push	bc
-	ld	de, #0x2000
-	push	de
-	ld	de, #0xffff
-	push	de
-	ld	de, #0xc000
-	push	de
+	ld	bc, #0xffff
+	push	bc
+	ld	bc, #0xc000
+	push	bc
 	call	_cpct_memset_f64
-	ld	de, #_g_items_0
-	push	de
+	pop	hl
+;src/main.c:251: cpct_hflipSpriteM0(4, 8, sprite);
+	ld	bc, #_g_items_0
+	push	hl
+	push	bc
+	push	bc
 	ld	de, #0x0804
 	push	de
 	call	_cpct_hflipSpriteM0
 	pop	bc
 	pop	hl
 ;src/main.c:252: cpct_drawSprite(sprite, p, 4, 8);
-	push	bc
 	ld	de, #0x0804
 	push	de
 	push	hl
-	ld	hl, #_g_items_0
-	push	hl
+	push	bc
 	call	_cpct_drawSprite
+;src/main.c:254: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
 	ld	hl, #0x1f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-	pop	bc
 ;src/main.c:256: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 	push	hl
-	push	bc
-	ld	de, #0x0302
-	push	de
+	ld	hl, #0x0302
+	push	hl
 	call	_cpct_px2byteM0
 	ld	d, l
 	pop	bc
-	pop	iy
-	push	bc
 	ld	hl, #0x140a
 	push	hl
 	push	de
 	inc	sp
-	push	iy
+	push	bc
 	call	_cpct_drawSolidBox
 	pop	af
 	pop	af
 	inc	sp
+;src/main.c:259: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
 	ld	hl, #0x4f09
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-	ex	de,hl
-	ld	hl, #0x2010
-	push	hl
+;src/main.c:260: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+	ld	bc, #_g_tile_schtroumpf+0
+	ld	de, #0x2010
 	push	de
-	ld	hl, #_g_tile_schtroumpf
 	push	hl
+	push	bc
 	call	_cpct_drawSpriteMasked
+;src/main.c:299: calqueC000();
 	call	_calqueC000
+;src/main.c:308: calque8000(); // faut que le AND du début match
 	call	_calque8000
-	pop	bc
 ;src/main.c:310: screen_location=(u8 *)(0x2000);
 	ld	hl, #0x2000
 	ld	(_screen_location), hl
@@ -398,89 +399,18 @@ _main::
 	ld	hl, #0x804e
 	ld	(_screen_plot_address), hl
 ;src/main.c:312: t=0;
-	ld	de, #0x0000
+	ld	bc, #0x0000
 ;src/main.c:313: while (1) {
-00110$:
+00104$:
 ;src/main.c:316: wait_frame_flyback();
 	push	bc
-	push	de
 	call	_wait_frame_flyback
-	pop	de
 	pop	bc
-;src/main.c:320: screen_location++;
-	ld	iy, #_screen_location
-	inc	0 (iy)
-	jr	NZ,00134$
-	inc	1 (iy)
-00134$:
-;src/main.c:321: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
-	ld	hl, (_screen_location)
-	ld	a, h
-	and	a, #0x23
-	ld	h, a
-	ld	(_screen_location), hl
-;src/main.c:322: crtc(screen_location);
+;src/main.c:327: scroll_hard("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t,screen_plot_address);
 	push	bc
-	push	de
-	ld	hl, (_screen_location)
-	push	hl
-	call	_crtc
-	pop	af
-	pop	de
-	pop	bc
-;src/main.c:324: screen_plot_address++;
-	ld	iy, #_screen_plot_address
-	inc	0 (iy)
-	jr	NZ,00135$
-	inc	1 (iy)
-00135$:
-;src/main.c:325: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
-	ld	hl, (_screen_plot_address)
-	ld	a, h
-	and	a, #0x87
-	ld	h, a
-	ld	(_screen_plot_address), hl
-;src/main.c:326: screen_plot_address++;
-	inc	0 (iy)
-	jr	NZ,00136$
-	inc	1 (iy)
-00136$:
-;src/main.c:327: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
-	ld	hl, (_screen_plot_address)
-	ld	a, h
-	and	a, #0x87
-	ld	h, a
-	ld	(_screen_plot_address), hl
-;src/main.c:331: s=s+1;
-	inc	bc
-;src/main.c:332: if (s==8) {s=0;}
-	ld	a, c
-	sub	a, #0x08
-	or	a, b
-	jr	NZ,00102$
-	ld	bc, #0x0000
-00102$:
-;src/main.c:333: if (s==0) {texte_cur=texte_cur+1; if (texte_cur==texte_length) {texte_cur=0;}}
-	ld	a, b
-	or	a,c
-	jr	NZ,00106$
-	inc	-2 (ix)
-	jr	NZ,00139$
-	inc	-1 (ix)
-00139$:
-	ld	a, -2 (ix)
-	sub	a, #0x10
-	or	a, -1 (ix)
-	jr	NZ,00106$
-	ld	hl, #0x0000
-	ex	(sp), hl
-00106$:
-;src/main.c:342: scroll_hard("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t,screen_plot_address);
-	push	bc
-	push	de
 	ld	hl, (_screen_plot_address)
 	push	hl
-	push	de
+	push	bc
 	ld	hl, #0x006e
 	push	hl
 	ld	hl, #___str_0
@@ -489,21 +419,20 @@ _main::
 	ld	hl, #8
 	add	hl, sp
 	ld	sp, hl
-	pop	de
 	pop	bc
-;src/main.c:343: t=t+1;
-	inc	de
-;src/main.c:344: if (t>110*G_TILE_FONTMAP32X32PLAT_000_W+160) {t=0;}
+;src/main.c:328: t=t+1;
+	inc	bc
+;src/main.c:329: if (t>110*G_TILE_FONTMAP32X32PLAT_000_W+160) {t=0;}
 	ld	a, #0x7c
-	cp	a, e
+	cp	a, c
 	ld	a, #0x01
-	sbc	a, d
-	jp	PO, 00142$
+	sbc	a, b
+	jp	PO, 00116$
 	xor	a, #0x80
-00142$:
-	jp	P, 00110$
-	ld	de, #0x0000
-	jp	00110$
+00116$:
+	jp	P, 00104$
+	ld	bc, #0x0000
+	jr	00104$
 ___str_0:
 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
 	.ascii "WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR"

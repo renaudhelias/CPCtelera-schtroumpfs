@@ -21,7 +21,11 @@ void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address
 	div=c2/8;
 	mod=c2%8;
 	if (div<0 || div>l) {return;}
-	o=texte[div]-'?';
+	if (texte[div]==' ') {
+		o=0;
+	} else {
+		o=texte[div]-'?';
+	}
 	cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 }
 

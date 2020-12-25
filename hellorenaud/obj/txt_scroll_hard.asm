@@ -65,12 +65,12 @@ _scroll_hard::
 	ld	c, e
 	ld	b, d
 	bit	7, d
-	jr	Z,00106$
+	jr	Z,00109$
 	ld	hl, #0x0007
 	add	hl,de
 	ld	c, l
 	ld	b, h
-00106$:
+00109$:
 	sra	b
 	rr	c
 	sra	b
@@ -85,58 +85,67 @@ _scroll_hard::
 	call	__modsint
 	pop	af
 	pop	af
+	ex	de,hl
 	pop	bc
-	ld	-2 (ix), l
-	ld	-1 (ix), h
 ;src/txt_scroll_hard.c:23: if (div<0 || div>l) {return;}
 	bit	7, b
-	jr	NZ,00104$
-	ld	e, c
-	ld	d, b
+	jr	NZ,00107$
+	ld	l, c
+	ld	h, b
 	ld	a, 6 (ix)
-	sub	a, e
+	sub	a, l
 	ld	a, 7 (ix)
-	sbc	a, d
-	jr	C,00104$
-;src/txt_scroll_hard.c:24: o=texte[div]-'?';
+	sbc	a, h
+	jr	C,00107$
+;src/txt_scroll_hard.c:24: if (texte[div]==' ') {
 	ld	l,4 (ix)
 	ld	h,5 (ix)
 	add	hl, bc
 	ld	c, (hl)
+	ld	a, c
+	sub	a, #0x20
+	jr	NZ,00105$
+;src/txt_scroll_hard.c:25: o=0;
+	ld	hl, #0x0000
+	jr	00106$
+00105$:
+;src/txt_scroll_hard.c:27: o=texte[div]-'?';
 	ld	b, #0x00
 	ld	a, c
 	add	a, #0xc1
-	ld	e, a
+	ld	l, a
 	ld	a, b
 	adc	a, #0xff
-;src/txt_scroll_hard.c:25: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+00106$:
+;src/txt_scroll_hard.c:29: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 	ld	c,10 (ix)
 	ld	b,11 (ix)
-	ld	a, e
+	ld	a, l
 	add	a, a
-	ld	d, a
-	ld	e, #0x00
+	ld	l, a
+	ld	h, #0x00
 	ld	a, -4 (ix)
-	add	a, e
-	ld	e, a
+	add	a, h
+	ld	-2 (ix), a
 	ld	a, -3 (ix)
-	adc	a, d
-	ld	d, a
-	ld	l,-2 (ix)
-	ld	h,-1 (ix)
+	adc	a, l
+	ld	-1 (ix), a
+	ex	de,hl
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
+	ld	e,-2 (ix)
+	ld	d,-1 (ix)
 	add	hl, de
 	ld	de, #0x2002
 	push	de
 	push	bc
 	push	hl
 	call	_cpct_drawSprite
-00104$:
+00107$:
 	ld	sp, ix
 	pop	ix
 	ret

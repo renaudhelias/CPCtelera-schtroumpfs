@@ -65,12 +65,12 @@
    001E 4B            [ 4]   65 	ld	c, e
    001F 42            [ 4]   66 	ld	b, d
    0020 CB 7A         [ 8]   67 	bit	7, d
-   0022 28 06         [12]   68 	jr	Z,00106$
+   0022 28 06         [12]   68 	jr	Z,00109$
    0024 21 07 00      [10]   69 	ld	hl, #0x0007
    0027 19            [11]   70 	add	hl,de
    0028 4D            [ 4]   71 	ld	c, l
    0029 44            [ 4]   72 	ld	b, h
-   002A                      73 00106$:
+   002A                      73 00109$:
    002A CB 28         [ 8]   74 	sra	b
    002C CB 19         [ 8]   75 	rr	c
    002E CB 28         [ 8]   76 	sra	b
@@ -85,61 +85,70 @@
    003C CDr00r00      [17]   85 	call	__modsint
    003F F1            [10]   86 	pop	af
    0040 F1            [10]   87 	pop	af
-   0041 C1            [10]   88 	pop	bc
-   0042 DD 75 FE      [19]   89 	ld	-2 (ix), l
-   0045 DD 74 FF      [19]   90 	ld	-1 (ix), h
-                             91 ;src/txt_scroll_hard.c:23: if (div<0 || div>l) {return;}
-   0048 CB 78         [ 8]   92 	bit	7, b
-   004A 20 48         [12]   93 	jr	NZ,00104$
-   004C 59            [ 4]   94 	ld	e, c
-   004D 50            [ 4]   95 	ld	d, b
-   004E DD 7E 06      [19]   96 	ld	a, 6 (ix)
-   0051 93            [ 4]   97 	sub	a, e
-   0052 DD 7E 07      [19]   98 	ld	a, 7 (ix)
-   0055 9A            [ 4]   99 	sbc	a, d
-   0056 38 3C         [12]  100 	jr	C,00104$
-                            101 ;src/txt_scroll_hard.c:24: o=texte[div]-'?';
-   0058 DD 6E 04      [19]  102 	ld	l,4 (ix)
-   005B DD 66 05      [19]  103 	ld	h,5 (ix)
-   005E 09            [11]  104 	add	hl, bc
-   005F 4E            [ 7]  105 	ld	c, (hl)
-   0060 06 00         [ 7]  106 	ld	b, #0x00
-   0062 79            [ 4]  107 	ld	a, c
-   0063 C6 C1         [ 7]  108 	add	a, #0xc1
-   0065 5F            [ 4]  109 	ld	e, a
-   0066 78            [ 4]  110 	ld	a, b
-   0067 CE FF         [ 7]  111 	adc	a, #0xff
-                            112 ;src/txt_scroll_hard.c:25: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
-   0069 DD 4E 0A      [19]  113 	ld	c,10 (ix)
-   006C DD 46 0B      [19]  114 	ld	b,11 (ix)
-   006F 7B            [ 4]  115 	ld	a, e
-   0070 87            [ 4]  116 	add	a, a
-   0071 57            [ 4]  117 	ld	d, a
-   0072 1E 00         [ 7]  118 	ld	e, #0x00
-   0074 DD 7E FC      [19]  119 	ld	a, -4 (ix)
-   0077 83            [ 4]  120 	add	a, e
-   0078 5F            [ 4]  121 	ld	e, a
-   0079 DD 7E FD      [19]  122 	ld	a, -3 (ix)
-   007C 8A            [ 4]  123 	adc	a, d
-   007D 57            [ 4]  124 	ld	d, a
-   007E DD 6E FE      [19]  125 	ld	l,-2 (ix)
-   0081 DD 66 FF      [19]  126 	ld	h,-1 (ix)
-   0084 29            [11]  127 	add	hl, hl
-   0085 29            [11]  128 	add	hl, hl
-   0086 29            [11]  129 	add	hl, hl
-   0087 29            [11]  130 	add	hl, hl
-   0088 29            [11]  131 	add	hl, hl
-   0089 29            [11]  132 	add	hl, hl
-   008A 19            [11]  133 	add	hl, de
-   008B 11 02 20      [10]  134 	ld	de, #0x2002
-   008E D5            [11]  135 	push	de
-   008F C5            [11]  136 	push	bc
-   0090 E5            [11]  137 	push	hl
-   0091 CDr00r00      [17]  138 	call	_cpct_drawSprite
-   0094                     139 00104$:
-   0094 DD F9         [10]  140 	ld	sp, ix
-   0096 DD E1         [14]  141 	pop	ix
-   0098 C9            [10]  142 	ret
-                            143 	.area _CODE
-                            144 	.area _INITIALIZER
-                            145 	.area _CABS (ABS)
+   0041 EB            [ 4]   88 	ex	de,hl
+   0042 C1            [10]   89 	pop	bc
+                             90 ;src/txt_scroll_hard.c:23: if (div<0 || div>l) {return;}
+   0043 CB 78         [ 8]   91 	bit	7, b
+   0045 20 57         [12]   92 	jr	NZ,00107$
+   0047 69            [ 4]   93 	ld	l, c
+   0048 60            [ 4]   94 	ld	h, b
+   0049 DD 7E 06      [19]   95 	ld	a, 6 (ix)
+   004C 95            [ 4]   96 	sub	a, l
+   004D DD 7E 07      [19]   97 	ld	a, 7 (ix)
+   0050 9C            [ 4]   98 	sbc	a, h
+   0051 38 4B         [12]   99 	jr	C,00107$
+                            100 ;src/txt_scroll_hard.c:24: if (texte[div]==' ') {
+   0053 DD 6E 04      [19]  101 	ld	l,4 (ix)
+   0056 DD 66 05      [19]  102 	ld	h,5 (ix)
+   0059 09            [11]  103 	add	hl, bc
+   005A 4E            [ 7]  104 	ld	c, (hl)
+   005B 79            [ 4]  105 	ld	a, c
+   005C D6 20         [ 7]  106 	sub	a, #0x20
+   005E 20 05         [12]  107 	jr	NZ,00105$
+                            108 ;src/txt_scroll_hard.c:25: o=0;
+   0060 21 00 00      [10]  109 	ld	hl, #0x0000
+   0063 18 09         [12]  110 	jr	00106$
+   0065                     111 00105$:
+                            112 ;src/txt_scroll_hard.c:27: o=texte[div]-'?';
+   0065 06 00         [ 7]  113 	ld	b, #0x00
+   0067 79            [ 4]  114 	ld	a, c
+   0068 C6 C1         [ 7]  115 	add	a, #0xc1
+   006A 6F            [ 4]  116 	ld	l, a
+   006B 78            [ 4]  117 	ld	a, b
+   006C CE FF         [ 7]  118 	adc	a, #0xff
+   006E                     119 00106$:
+                            120 ;src/txt_scroll_hard.c:29: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+   006E DD 4E 0A      [19]  121 	ld	c,10 (ix)
+   0071 DD 46 0B      [19]  122 	ld	b,11 (ix)
+   0074 7D            [ 4]  123 	ld	a, l
+   0075 87            [ 4]  124 	add	a, a
+   0076 6F            [ 4]  125 	ld	l, a
+   0077 26 00         [ 7]  126 	ld	h, #0x00
+   0079 DD 7E FC      [19]  127 	ld	a, -4 (ix)
+   007C 84            [ 4]  128 	add	a, h
+   007D DD 77 FE      [19]  129 	ld	-2 (ix), a
+   0080 DD 7E FD      [19]  130 	ld	a, -3 (ix)
+   0083 8D            [ 4]  131 	adc	a, l
+   0084 DD 77 FF      [19]  132 	ld	-1 (ix), a
+   0087 EB            [ 4]  133 	ex	de,hl
+   0088 29            [11]  134 	add	hl, hl
+   0089 29            [11]  135 	add	hl, hl
+   008A 29            [11]  136 	add	hl, hl
+   008B 29            [11]  137 	add	hl, hl
+   008C 29            [11]  138 	add	hl, hl
+   008D 29            [11]  139 	add	hl, hl
+   008E DD 5E FE      [19]  140 	ld	e,-2 (ix)
+   0091 DD 56 FF      [19]  141 	ld	d,-1 (ix)
+   0094 19            [11]  142 	add	hl, de
+   0095 11 02 20      [10]  143 	ld	de, #0x2002
+   0098 D5            [11]  144 	push	de
+   0099 C5            [11]  145 	push	bc
+   009A E5            [11]  146 	push	hl
+   009B CDr00r00      [17]  147 	call	_cpct_drawSprite
+   009E                     148 00107$:
+   009E DD F9         [10]  149 	ld	sp, ix
+   00A0 DD E1         [14]  150 	pop	ix
+   00A2 C9            [10]  151 	ret
+                            152 	.area _CODE
+                            153 	.area _INITIALIZER
+                            154 	.area _CABS (ABS)
