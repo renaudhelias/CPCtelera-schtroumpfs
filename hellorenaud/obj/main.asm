@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _draw
 	.globl _myInterruptHandler
 	.globl _crtc
 	.globl _wait_frame_flyback
@@ -274,22 +275,47 @@ _myInterruptHandler::
 	call	_rupture
 	inc	sp
 	ret
-;src/main.c:193: void main(void) {
+;src/main.c:193: void draw(int offset) {
+;	---------------------------------
+; Function draw
+; ---------------------------------
+_draw::
+	push	ix
+	ld	ix,#0
+	add	ix,sp
+;src/main.c:194: u8* pointeur=(u16)g_tile_fontmap32x32plat_000;
+	ld	bc, #_g_tile_fontmap32x32plat_000+0
+;src/main.c:195: pointeur = pointeur+8*(32*2);
+	ld	hl, #0x0200
+	add	hl,bc
+	ex	de,hl
+;src/main.c:196: cpct_drawSprite(pointeur+offset*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+	ld	bc, (_screen_plot_address)
+	ld	l,4 (ix)
+	ld	h,5 (ix)
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+	ld	de, #0x2002
+	push	de
+	push	bc
+	push	hl
+	call	_cpct_drawSprite
+	pop	ix
+	ret
+;src/main.c:199: void main(void) {
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-	push	af
-;src/main.c:195: int s=0;
+;src/main.c:201: int s=0;
 	ld	bc, #0x0000
-;src/main.c:197: u8* sprite=g_items_0;
-;src/main.c:201: int o=0;
-	ld	hl, #0x0000
-	ex	(sp), hl
-;src/main.c:216: cpct_disableFirmware();
+;src/main.c:203: u8* sprite=g_items_0;
+;src/main.c:222: cpct_disableFirmware();
 	push	bc
 	call	_cpct_disableFirmware
 	ld	hl, #0x1000
@@ -325,7 +351,7 @@ _main::
 	push	hl
 	call	_cpct_getScreenPtr
 	pop	bc
-;src/main.c:246: cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
+;src/main.c:252: cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
 	push	hl
 	push	bc
 	ld	de, #0x2000
@@ -342,7 +368,7 @@ _main::
 	call	_cpct_hflipSpriteM0
 	pop	bc
 	pop	hl
-;src/main.c:250: cpct_drawSprite(sprite, p, 4, 8);
+;src/main.c:256: cpct_drawSprite(sprite, p, 4, 8);
 	push	bc
 	ld	de, #0x0804
 	push	de
@@ -356,7 +382,7 @@ _main::
 	push	hl
 	call	_cpct_getScreenPtr
 	pop	bc
-;src/main.c:254: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+;src/main.c:260: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 	push	hl
 	push	bc
 	ld	de, #0x0302
@@ -390,117 +416,76 @@ _main::
 	call	_calqueC000
 	call	_calque8000
 	pop	bc
-;src/main.c:308: screen_location=(u8 *)(0x2000);
+;src/main.c:314: screen_location=(u8 *)(0x2000);
 	ld	hl, #0x2000
 	ld	(_screen_location), hl
-;src/main.c:309: screen_plot_address=(u8 *)(0x8000+80-2);
+;src/main.c:315: screen_plot_address=(u8 *)(0x8000+80-2);
 	ld	hl, #0x804e
 	ld	(_screen_plot_address), hl
-;src/main.c:311: while (1) {
-00107$:
-;src/main.c:314: wait_frame_flyback();
+;src/main.c:317: while (1) {
+00104$:
+;src/main.c:320: wait_frame_flyback();
 	push	bc
 	call	_wait_frame_flyback
 	pop	bc
-;src/main.c:318: screen_location++;
+;src/main.c:324: screen_location++;
 	ld	iy, #_screen_location
 	inc	0 (iy)
-	jr	NZ,00135$
+	jr	NZ,00116$
 	inc	1 (iy)
-00135$:
-;src/main.c:319: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
+00116$:
+;src/main.c:325: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
 	ld	hl, (_screen_location)
 	ld	a, h
 	and	a, #0x23
 	ld	h, a
 	ld	(_screen_location), hl
-;src/main.c:320: crtc(screen_location);
+;src/main.c:326: crtc(screen_location);
 	push	bc
 	ld	hl, (_screen_location)
 	push	hl
 	call	_crtc
 	pop	af
 	pop	bc
-;src/main.c:322: screen_plot_address++;
+;src/main.c:328: screen_plot_address++;
 	ld	iy, #_screen_plot_address
 	inc	0 (iy)
-	jr	NZ,00136$
+	jr	NZ,00117$
 	inc	1 (iy)
-00136$:
-;src/main.c:323: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+00117$:
+;src/main.c:329: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
 	and	a, #0x87
 	ld	h, a
 	ld	(_screen_plot_address), hl
-;src/main.c:324: screen_plot_address++;
+;src/main.c:330: screen_plot_address++;
 	inc	0 (iy)
-	jr	NZ,00137$
+	jr	NZ,00118$
 	inc	1 (iy)
-00137$:
-;src/main.c:325: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+00118$:
+;src/main.c:331: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
 	and	a, #0x87
 	ld	h, a
 	ld	(_screen_plot_address), hl
-;src/main.c:329: s=s+1;
+;src/main.c:335: s=s+1;
 	inc	bc
-;src/main.c:330: if (s==8) {s=0;}
+;src/main.c:336: if (s==8) {s=0;}
 	ld	a, c
 	sub	a, #0x08
 	or	a, b
 	jr	NZ,00102$
 	ld	bc, #0x0000
 00102$:
-;src/main.c:336: o=o+1;//(texte[texte_cur]-'?')*8+s;
-	inc	-2 (ix)
-	jr	NZ,00140$
-	inc	-1 (ix)
-00140$:
-;src/main.c:337: if (o==8) {o=0;}
-	ld	a, -2 (ix)
-	sub	a, #0x08
-	or	a, -1 (ix)
-	jr	NZ,00104$
-	ld	hl, #0x0000
-	ex	(sp), hl
-00104$:
-;src/main.c:339: pointeur=(u8 *)g_tile_fontmap32x32plat_000;
-;src/main.c:340: pointeur=pointeur+8*(32*2);
-	ld	de, #_g_tile_fontmap32x32plat_000 + 512
-;src/main.c:341: for (oc=0;oc<o;oc++) {
-	ld	hl, #0x0000
-00110$:
-	ld	a, l
-	sub	a, -2 (ix)
-	ld	a, h
-	sbc	a, -1 (ix)
-	jp	PO, 00143$
-	xor	a, #0x80
-00143$:
-	jp	P, 00119$
-;src/main.c:342: pointeur=pointeur+(32*2);
-	ld	a, e
-	add	a, #0x40
-	ld	e, a
-	ld	a, d
-	adc	a, #0x00
-	ld	d, a
-;src/main.c:341: for (oc=0;oc<o;oc++) {
-	inc	hl
-	jr	00110$
-00119$:
-;src/main.c:344: cpct_drawSprite(pointeur, screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
-	ld	iy, (_screen_plot_address)
+;src/main.c:345: draw(s);
 	push	bc
-	ld	hl, #0x2002
-	push	hl
-	push	iy
-	push	de
-	call	_cpct_drawSprite
+	push	bc
+	call	_draw
+	pop	af
 	pop	bc
-	jp	00107$
+	jr	00104$
 ___str_0:
 	.ascii "HELLO@LES@AMIS@@"
 	.db 0x00

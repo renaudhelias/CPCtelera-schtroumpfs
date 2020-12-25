@@ -190,6 +190,12 @@ __endasm;
 
 }
 
+void draw(int offset) {
+	u8* pointeur=(u16)g_tile_fontmap32x32plat_000;
+	pointeur = pointeur+8*(32*2);
+	cpct_drawSprite(pointeur+offset*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+}
+
 void main(void) {
    int t=0;
    int s=0;
@@ -200,7 +206,7 @@ void main(void) {
    int texte_cur=0;
    int o=0;
    int oc=0;
-   u8* pointeur;
+//   u16 p2;
 //   int initInterruptDone;
 // sdcc -mz80 -c --std-c99 --opt-code-speed --fno-omit-frame-pointer --oldralloc jdvapi_floppy.c
 //   SetupDOS();
@@ -333,15 +339,10 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 	//cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
 //('G'-'A')*8
 // 240/8=30
-	o=o+1;//(texte[texte_cur]-'?')*8+s;
-	if (o==8) {o=0;}
-	//o=240-16-1+s;
-	pointeur=(u8 *)g_tile_fontmap32x32plat_000;
-	pointeur=pointeur+8*(32*2);
-	for (oc=0;oc<o;oc++) {
-		pointeur=pointeur+(32*2);
-	}
-	cpct_drawSprite(pointeur, screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+	//o=o+1;//(texte[texte_cur]-'?')*8+s;
+	//if (o>=8) {o=0;}
+
+	draw(s);
       //intCounter=0;
       //killVBL();
       //rupture(39);
