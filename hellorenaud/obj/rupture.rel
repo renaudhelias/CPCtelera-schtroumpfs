@@ -1,0 +1,44 @@
+XL2
+H 9 areas 5 global symbols
+M rupture
+O -mz80
+S .__.ABS. Def0000
+A _CODE size 3D flags 0 addr 0
+S _restoreVBL Def0011
+S _killVBL Def0000
+S _rupture Def001D
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 2 flags 0 addr 0
+S _vblPosition Def0000
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 2 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00
+R 00 00 02 00
+T 00 00
+R 00 00 02 00
+T 00 00
+R 00 00 00 00
+T 00 00 01 07 BC 3E 7F ED 49 04 ED 79 21 25 00 22
+R 00 00 00 00
+T 0E 00 00 00 C9
+R 00 00 00 00 00 02 02 00
+T 11 00
+R 00 00 00 00
+T 11 00 01 07 BC 3A 00 00 ED 49 04 ED 79 C9
+R 00 00 00 00 00 06 02 00
+T 1D 00
+R 00 00 00 00
+T 1D 00 01 04 BC 21 02 00 39 7E 3D ED 49 04 ED 79
+R 00 00 00 00
+T 2B 00 21 02 00 39 4E 06 00 21 00 00 7E 91 77 23
+R 00 00 00 00 00 0A 02 00
+T 39 00 7E 98 77 C9
+R 00 00 00 00
+T 00 00
+R 00 00 07 00
+T 00 00 00 00
+R 00 00 07 00

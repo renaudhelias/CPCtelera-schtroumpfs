@@ -162,6 +162,16 @@ void calqueC000()
   __endasm;
 }
 
+void calque8000()
+{
+  __asm
+    ld bc,#0xBC00+12 ; On met la valeur 32 dans
+    out (c),c      ; le registre 12 du CRTC
+    ld bc,#0xBD00+32
+    out (c),c
+  __endasm;
+}
+
 void calque4000()
 {
   __asm

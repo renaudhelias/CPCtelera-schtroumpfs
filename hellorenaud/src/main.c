@@ -22,8 +22,8 @@
 #include <cpctelera.h>
 #include "schtroumpf.h"
 #include "schtroumpf4x32.h"
-#include "fontmap20x22.h"
-#include "txt_scroll.h"
+#include "fontmap32x32plat.h"
+#include "rupture.h"
 #ifndef NO_SOUND
 #include "audio.h"
 #endif
@@ -105,7 +105,7 @@ u8* screen_plot_address; //=0x4000+80-2;
 
 void myInterruptHandler() {
 //	u8* scrLocation;
-   u8* p;
+   //u8* p;
    intCounter=intCounter+1;
    if (intCounter == 6) intCounter=0;
 
@@ -154,13 +154,13 @@ out (c),c
 __endasm;
 
 		screen_location++;
-		screen_location=(u8 *)(((unsigned int)screen_location) & 0x13FF);
+		screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
 		crtc(screen_location);
 
 		screen_plot_address++;
-		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
+		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
 		screen_plot_address++;
-		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
+		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
 
 
 		killVBL();
@@ -195,6 +195,12 @@ void main(void) {
    int s=0;
    u8* p;
    u8* sprite=g_items_0;
+   char * texte="HELLO@LES@AMIS@@";
+   int texte_length=16;
+   int texte_cur=0;
+   int o=0;
+   int oc=0;
+   u8* pointeur;
 //   int initInterruptDone;
 // sdcc -mz80 -c --std-c99 --opt-code-speed --fno-omit-frame-pointer --oldralloc jdvapi_floppy.c
 //   SetupDOS();
@@ -207,15 +213,17 @@ void main(void) {
 #ifndef NO_SOUND
    akp_musicInit();
 #endif
-//   cpct_disableFirmware();
+   cpct_disableFirmware();
+   cpct_memcpy(0x7000,0x8000,0x1000);
+   cpct_setStackLocation(0x7000);
+   cpct_memset_f64(0x8000, 0x0000, 0x4000);
    //raster_halt();
-   //cpct_setStackLocation(0x8000);
-   cpct_setInterruptHandler(myInterruptHandler);
+//   cpct_setInterruptHandler(myInterruptHandler);
 
 
 
 //   bank4_4000();
-//   bank0123();
+   bank0123();
 //   calqueC000();
    // CLS with 0.
    //cpct_clearScreen_f64(0);
@@ -230,7 +238,7 @@ void main(void) {
 
 
    // Draw the sprite to screen
-//   p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
+   p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,16-1);
 //   cpct_drawSprite(sprite, p, 4, 8);
 
    // efface l'ecran
@@ -285,32 +293,55 @@ void main(void) {
 //calque4000();
 
 //cpct_disableFirmware();
-cpct_memset_f64(0x4000,0x00,0x4000); // SCR_VMEM, 0, 0x4000
-//calqueC000();
+//cpct_memset_f64(0x4000,0x00,0x4000); // SCR_VMEM, 0, 0x4000
+calqueC000();
 //cpct_scanKeyboard_f();
+
 //   t=0;
 //   while ((!cpct_isKeyPressed(Key_Enter) && !cpct_isKeyPressed(Key_Return))) {
 //	scroll("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR", 110, t);
 //	t=t+1;
 //	cpct_scanKeyboard_f();
 //   }
+calque8000(); // faut que le AND du début match
 
-calque4000(); // faut que le AND du début match
-
-screen_location=0x1000;
-screen_plot_address=0x4000+80-2;
+screen_location=(u8 *)(0x2000);
+screen_plot_address=(u8 *)(0x8000+80-2);
 
    while (1) {
 	//vsync();
 
 	wait_frame_flyback();
-	
-
-
 	//p = cpct_getScreenPtr(screen_plot_address, 0,0);
-	s=(s+1)%8;
-	cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
 
+
+		screen_location++;
+		screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
+		crtc(screen_location);
+
+		screen_plot_address++;
+		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+		screen_plot_address++;
+		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+
+
+
+	s=s+1;
+	if (s==8) {s=0;}
+//	if (s==0) {texte_cur=(texte_cur+1)%texte_length;}
+
+	//cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
+//('G'-'A')*8
+// 240/8=30
+	o=o+1;//(texte[texte_cur]-'?')*8+s;
+	if (o==8) {o=0;}
+	//o=240-16-1+s;
+	pointeur=(u8 *)g_tile_fontmap32x32plat_000;
+	pointeur=pointeur+8*(32*2);
+	for (oc=0;oc<o;oc++) {
+		pointeur=pointeur+(32*2);
+	}
+	cpct_drawSprite(pointeur, screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
       //intCounter=0;
       //killVBL();
       //rupture(39);

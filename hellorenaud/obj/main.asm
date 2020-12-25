@@ -12,7 +12,8 @@
 	.globl _myInterruptHandler
 	.globl _crtc
 	.globl _wait_frame_flyback
-	.globl _calque4000
+	.globl _bank0123
+	.globl _calque8000
 	.globl _calqueC000
 	.globl _rupture
 	.globl _restoreVBL
@@ -27,8 +28,10 @@
 	.globl _cpct_drawSpriteMasked
 	.globl _cpct_drawSprite
 	.globl _cpct_px2byteM0
+	.globl _cpct_setStackLocation
+	.globl _cpct_memcpy
 	.globl _cpct_memset_f64
-	.globl _cpct_setInterruptHandler
+	.globl _cpct_disableFirmware
 	.globl _slow
 	.globl _hOffset
 	.globl _intCounter
@@ -188,10 +191,10 @@ _myInterruptHandler::
 	jr	NZ,00140$
 	inc	1 (iy)
 00140$:
-;src/main.c:157: screen_location=(u8 *)(((unsigned int)screen_location) & 0x13FF);
+;src/main.c:157: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
 	ld	hl, (_screen_location)
 	ld	a, h
-	and	a, #0x13
+	and	a, #0x23
 	ld	h, a
 	ld	(_screen_location), hl
 ;src/main.c:158: crtc(screen_location);
@@ -205,10 +208,10 @@ _myInterruptHandler::
 	jr	NZ,00141$
 	inc	1 (iy)
 00141$:
-;src/main.c:161: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
+;src/main.c:161: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
-	and	a, #0x47
+	and	a, #0x87
 	ld	h, a
 	ld	(_screen_plot_address), hl
 ;src/main.c:162: screen_plot_address++;
@@ -216,10 +219,10 @@ _myInterruptHandler::
 	jr	NZ,00142$
 	inc	1 (iy)
 00142$:
-;src/main.c:163: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x47FF);
+;src/main.c:163: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
-	and	a, #0x47
+	and	a, #0x87
 	ld	h, a
 	ld	(_screen_plot_address), hl
 ;src/main.c:166: killVBL();
@@ -280,139 +283,227 @@ _main::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-	push	af
 ;src/main.c:195: int s=0;
-	ld	-2 (ix), #0x00
-	ld	-1 (ix), #0x00
+	ld	bc, #0x0000
 ;src/main.c:197: u8* sprite=g_items_0;
-;src/main.c:213: cpct_setInterruptHandler(myInterruptHandler);
-	ld	hl, #_myInterruptHandler
-	call	_cpct_setInterruptHandler
-;src/main.c:223: cpct_setVideoMode(0);
+;src/main.c:201: int o=0;
+	ld	hl, #0x0000
+	ex	(sp), hl
+;src/main.c:216: cpct_disableFirmware();
+	push	bc
+	call	_cpct_disableFirmware
+	ld	hl, #0x1000
+	push	hl
+	ld	h, #0x80
+	push	hl
+	ld	h, #0x70
+	push	hl
+	call	_cpct_memcpy
+	ld	hl, #0x7000
+	call	_cpct_setStackLocation
+	ld	hl, #0x4000
+	push	hl
+	ld	h, #0x00
+	push	hl
+	ld	h, #0x80
+	push	hl
+	call	_cpct_memset_f64
+	call	_bank0123
 	ld	l, #0x00
 	call	_cpct_setVideoMode
-;src/main.c:225: cpct_setBorder(HW_BLACK);
 	ld	hl, #0x1410
 	push	hl
 	call	_cpct_setPALColour
-;src/main.c:227: cpct_setPalette(g_tile_palette, 6);
 	ld	hl, #0x0006
 	push	hl
 	ld	hl, #_g_tile_palette
 	push	hl
 	call	_cpct_setPalette
-;src/main.c:238: cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
-	ld	hl, #0x2000
-	push	hl
-	ld	hl, #0xffff
+	ld	hl, #0x0f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
-	call	_cpct_memset_f64
-;src/main.c:241: cpct_hflipSpriteM0(4, 8, sprite);
-	ld	bc, #_g_items_0
-	push	bc
-	push	bc
-	ld	hl, #0x0804
+	call	_cpct_getScreenPtr
+	pop	bc
+;src/main.c:246: cpct_memset_f64(CPCT_VMEM_START, 0xFFFF, 0x2000);
 	push	hl
+	push	bc
+	ld	de, #0x2000
+	push	de
+	ld	de, #0xffff
+	push	de
+	ld	de, #0xc000
+	push	de
+	call	_cpct_memset_f64
+	ld	de, #_g_items_0
+	push	de
+	ld	de, #0x0804
+	push	de
 	call	_cpct_hflipSpriteM0
 	pop	bc
-;src/main.c:242: cpct_drawSprite(sprite, p, 4, 8);
-	pop	de
-	push	de
-	ld	hl, #0x0804
-	push	hl
-	push	de
+	pop	hl
+;src/main.c:250: cpct_drawSprite(sprite, p, 4, 8);
 	push	bc
+	ld	de, #0x0804
+	push	de
+	push	hl
+	ld	hl, #_g_items_0
+	push	hl
 	call	_cpct_drawSprite
-;src/main.c:244: p = cpct_getScreenPtr(CPCT_VMEM_START, 16-1,32-1);
 	ld	hl, #0x1f0f
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:246: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
+	pop	bc
+;src/main.c:254: cpct_drawSolidBox(p, cpct_px2byteM0(2, 3), 10, 20);
 	push	hl
-	ld	hl, #0x0302
-	push	hl
+	push	bc
+	ld	de, #0x0302
+	push	de
 	call	_cpct_px2byteM0
 	ld	d, l
 	pop	bc
+	pop	iy
+	push	bc
 	ld	hl, #0x140a
 	push	hl
 	push	de
 	inc	sp
-	push	bc
+	push	iy
 	call	_cpct_drawSolidBox
 	pop	af
 	pop	af
 	inc	sp
-;src/main.c:249: p = cpct_getScreenPtr(CPCT_VMEM_START, 10-1,80-1);
 	ld	hl, #0x4f09
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-	inc	sp
-	inc	sp
-;src/main.c:250: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
-	ld	c, l
-	ld	b, h
-	push	bc
+	ex	de,hl
 	ld	hl, #0x2010
 	push	hl
-	push	bc
+	push	de
 	ld	hl, #_g_tile_schtroumpf
 	push	hl
 	call	_cpct_drawSpriteMasked
-;src/main.c:288: cpct_memset_f64(0x4000,0x00,0x4000); // SCR_VMEM, 0, 0x4000
-	ld	hl, #0x4000
-	push	hl
-	ld	h, #0x00
-	push	hl
-	ld	h, #0x40
-	push	hl
-	call	_cpct_memset_f64
-;src/main.c:298: calque4000(); // faut que le AND du début match
-	call	_calque4000
-;src/main.c:300: screen_location=0x1000;
-	ld	hl, #0x1000
+	call	_calqueC000
+	call	_calque8000
+	pop	bc
+;src/main.c:308: screen_location=(u8 *)(0x2000);
+	ld	hl, #0x2000
 	ld	(_screen_location), hl
-;src/main.c:301: screen_plot_address=0x4000+80-2;
-	ld	hl, #0x404e
+;src/main.c:309: screen_plot_address=(u8 *)(0x8000+80-2);
+	ld	hl, #0x804e
 	ld	(_screen_plot_address), hl
-;src/main.c:303: while (1) {
-00102$:
-;src/main.c:306: wait_frame_flyback();
-	call	_wait_frame_flyback
-;src/main.c:311: s=(s+1)%8;
-	ld	c,-2 (ix)
-	ld	b,-1 (ix)
-	inc	bc
-	ld	hl, #0x0008
-	push	hl
+;src/main.c:311: while (1) {
+00107$:
+;src/main.c:314: wait_frame_flyback();
 	push	bc
-	call	__modsint
+	call	_wait_frame_flyback
+	pop	bc
+;src/main.c:318: screen_location++;
+	ld	iy, #_screen_location
+	inc	0 (iy)
+	jr	NZ,00135$
+	inc	1 (iy)
+00135$:
+;src/main.c:319: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
+	ld	hl, (_screen_location)
+	ld	a, h
+	and	a, #0x23
+	ld	h, a
+	ld	(_screen_location), hl
+;src/main.c:320: crtc(screen_location);
+	push	bc
+	ld	hl, (_screen_location)
+	push	hl
+	call	_crtc
 	pop	af
-	pop	af
-	ld	-2 (ix), l
-	ld	-1 (ix), h
-;src/main.c:312: cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
-	ld	de, (_screen_plot_address)
-	ld	bc, #_g_tile_schtroumpf4x32_tileset+0
-	ld	l,-2 (ix)
-	ld	h,-1 (ix)
-	add	hl, hl
-	add	hl, bc
-	ld	c, (hl)
+	pop	bc
+;src/main.c:322: screen_plot_address++;
+	ld	iy, #_screen_plot_address
+	inc	0 (iy)
+	jr	NZ,00136$
+	inc	1 (iy)
+00136$:
+;src/main.c:323: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+	ld	hl, (_screen_plot_address)
+	ld	a, h
+	and	a, #0x87
+	ld	h, a
+	ld	(_screen_plot_address), hl
+;src/main.c:324: screen_plot_address++;
+	inc	0 (iy)
+	jr	NZ,00137$
+	inc	1 (iy)
+00137$:
+;src/main.c:325: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+	ld	hl, (_screen_plot_address)
+	ld	a, h
+	and	a, #0x87
+	ld	h, a
+	ld	(_screen_plot_address), hl
+;src/main.c:329: s=s+1;
+	inc	bc
+;src/main.c:330: if (s==8) {s=0;}
+	ld	a, c
+	sub	a, #0x08
+	or	a, b
+	jr	NZ,00102$
+	ld	bc, #0x0000
+00102$:
+;src/main.c:336: o=o+1;//(texte[texte_cur]-'?')*8+s;
+	inc	-2 (ix)
+	jr	NZ,00140$
+	inc	-1 (ix)
+00140$:
+;src/main.c:337: if (o==8) {o=0;}
+	ld	a, -2 (ix)
+	sub	a, #0x08
+	or	a, -1 (ix)
+	jr	NZ,00104$
+	ld	hl, #0x0000
+	ex	(sp), hl
+00104$:
+;src/main.c:339: pointeur=(u8 *)g_tile_fontmap32x32plat_000;
+;src/main.c:340: pointeur=pointeur+8*(32*2);
+	ld	de, #_g_tile_fontmap32x32plat_000 + 512
+;src/main.c:341: for (oc=0;oc<o;oc++) {
+	ld	hl, #0x0000
+00110$:
+	ld	a, l
+	sub	a, -2 (ix)
+	ld	a, h
+	sbc	a, -1 (ix)
+	jp	PO, 00143$
+	xor	a, #0x80
+00143$:
+	jp	P, 00119$
+;src/main.c:342: pointeur=pointeur+(32*2);
+	ld	a, e
+	add	a, #0x40
+	ld	e, a
+	ld	a, d
+	adc	a, #0x00
+	ld	d, a
+;src/main.c:341: for (oc=0;oc<o;oc++) {
 	inc	hl
-	ld	b, (hl)
+	jr	00110$
+00119$:
+;src/main.c:344: cpct_drawSprite(pointeur, screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+	ld	iy, (_screen_plot_address)
+	push	bc
 	ld	hl, #0x2002
 	push	hl
+	push	iy
 	push	de
-	push	bc
 	call	_cpct_drawSprite
-	jr	00102$
+	pop	bc
+	jp	00107$
+___str_0:
+	.ascii "HELLO@LES@AMIS@@"
+	.db 0x00
 	.area _CODE
 	.area _INITIALIZER
 __xinit__intCounter:

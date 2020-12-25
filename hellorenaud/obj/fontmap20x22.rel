@@ -25,12 +25,12 @@ S _g_tile_fontmap20x22_24 Def14D4
 S _g_tile_fontmap20x22_07 Def0638
 S _g_tile_fontmap20x22_16 Def0DF4
 S _g_tile_fontmap20x22_25 Def15B0
-S _g_tile_tileset Def0000
 S _g_tile_fontmap20x22_08 Def0714
 S _g_tile_fontmap20x22_17 Def0ED0
 S _g_tile_fontmap20x22_09 Def07F0
 S _g_tile_fontmap20x22_18 Def0FAC
 S _g_tile_fontmap20x22_19 Def1088
+S _g_tile_fontmap20x22_tileset Def0000
 A _DATA size 0 flags 0 addr 0
 A _INITIALIZED size 0 flags 0 addr 0
 A _DABS size 0 flags 8 addr 0

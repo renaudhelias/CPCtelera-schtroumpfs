@@ -34,7 +34,7 @@
 	.globl _g_tile_fontmap20x22_02
 	.globl _g_tile_fontmap20x22_01
 	.globl _g_tile_fontmap20x22_00
-	.globl _g_tile_tileset
+	.globl _g_tile_fontmap20x22_tileset
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -67,7 +67,7 @@
 ;--------------------------------------------------------
 	.area _CODE
 	.area _CODE
-_g_tile_tileset:
+_g_tile_fontmap20x22_tileset:
 	.dw _g_tile_fontmap20x22_00
 	.dw _g_tile_fontmap20x22_01
 	.dw _g_tile_fontmap20x22_02

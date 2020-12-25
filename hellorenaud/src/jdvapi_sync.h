@@ -20,6 +20,8 @@ void halt();
 
 // VRAM en &C000-&FFFF
 void calqueC000();
+// VRAM en &8000-&BFFF
+void calque8000();
 // VRAM en &4000-&7FFF
 void calque4000();
 // RAM rétablie

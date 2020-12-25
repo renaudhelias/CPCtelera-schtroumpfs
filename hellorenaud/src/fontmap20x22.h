@@ -3,7 +3,7 @@
 #define _FONTMAP20X22_H_
 
 #include <types.h>
-extern u8* const g_tile_tileset[26];
+extern u8* const g_tile_fontmap20x22_tileset[26];
 
 #define G_TILE_FONTMAP20X22_00_W 10
 #define G_TILE_FONTMAP20X22_00_H 22

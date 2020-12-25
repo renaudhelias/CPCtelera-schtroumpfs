@@ -33,7 +33,7 @@ Symbol Table
   0 _g_tile_fontmap20x22_23                                        13F8 GR
   0 _g_tile_fontmap20x22_24                                        14D4 GR
   0 _g_tile_fontmap20x22_25                                        15B0 GR
-  0 _g_tile_tileset                                                0000 GR
+  0 _g_tile_fontmap20x22_tileset                                   0000 GR
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.

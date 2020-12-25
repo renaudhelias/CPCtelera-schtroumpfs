@@ -12,34 +12,34 @@ Symbol Table
   7 __xinit__aFunction                                             0001 R
   7 __xinit__callback_counter                                      0000 R
   2 _aFunction                                                     0001 GR
-  0 _bank0123                                                      00A1 GR
-  0 _bank4_4000                                                    00AD GR
-  0 _bank5_4000                                                    00B3 GR
-  0 _bank6_4000                                                    00B9 GR
-  0 _bank7_4000                                                    00BF GR
-  0 _bank7_C000                                                    00A7 GR
+  0 _bank0123                                                      00AC GR
+  0 _bank4_4000                                                    00B8 GR
+  0 _bank5_4000                                                    00BE GR
+  0 _bank6_4000                                                    00C4 GR
+  0 _bank7_4000                                                    00CA GR
+  0 _bank7_C000                                                    00B2 GR
   0 _callback                                                      0017 GR
   2 _callback_counter                                              0000 GR
-  0 _calque4000                                                    008B GR
-  0 _calque4C00                                                    0096 GR
+  0 _calque4000                                                    0096 GR
+  0 _calque4C00                                                    00A1 GR
+  0 _calque8000                                                    008B GR
   0 _calqueC000                                                    0080 GR
   0 _halt                                                          007E GR
   0 _handle_raster                                                 006D GR
-  0 _overscanH                                                     00C5 GR
+  0 _overscanH                                                     00D0 GR
   0 _raster                                                        005E GR
   0 _raster_halt                                                   000E GR
   0 _raster_handler                                                001B GR
-  0 _scan                                                          00EE GR
+  0 _scan                                                          00F9 GR
   0 _vsync                                                         0000 GR
   0 _wait_vsync                                                    0002 R
-
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  117   flags    0
+   0 _CODE                                      size  122   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    3   flags    0
    3 _DABS                                      size    0   flags    8

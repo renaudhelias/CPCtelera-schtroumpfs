@@ -9,9 +9,11 @@
 -l z80
 obj/schtroumpf4x32.rel
 obj/txt_scroll.rel
+obj/fontmap32x32plat.rel
 obj/audio.rel
 obj/main.rel
 obj/jdvapi_sync.rel
+obj/rupture.rel
 obj/schtroumpf.rel
 obj/fontmap20x22.rel
 

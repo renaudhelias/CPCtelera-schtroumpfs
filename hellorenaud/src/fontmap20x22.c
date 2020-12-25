@@ -1,6 +1,6 @@
 #include "fontmap20x22.h"
 // Data created with Img2CPC - (c) Retroworks - 2007-2015
-u8* const g_tile_tileset[26] = { 
+u8* const g_tile_fontmap20x22_tileset[26] = { 
 	g_tile_fontmap20x22_00, g_tile_fontmap20x22_01, g_tile_fontmap20x22_02, g_tile_fontmap20x22_03, g_tile_fontmap20x22_04, g_tile_fontmap20x22_05, g_tile_fontmap20x22_06, g_tile_fontmap20x22_07, g_tile_fontmap20x22_08, g_tile_fontmap20x22_09, g_tile_fontmap20x22_10, g_tile_fontmap20x22_11, g_tile_fontmap20x22_12, g_tile_fontmap20x22_13, g_tile_fontmap20x22_14, g_tile_fontmap20x22_15, g_tile_fontmap20x22_16, g_tile_fontmap20x22_17, g_tile_fontmap20x22_18, g_tile_fontmap20x22_19, g_tile_fontmap20x22_20, g_tile_fontmap20x22_21, g_tile_fontmap20x22_22, g_tile_fontmap20x22_23, g_tile_fontmap20x22_24, g_tile_fontmap20x22_25
 };
 // Tile g_tile_fontmap20x22_00: 20x22 pixels, 10x22 bytes.

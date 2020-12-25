@@ -18,6 +18,7 @@
 	.globl _bank0123
 	.globl _calque4C00
 	.globl _calque4000
+	.globl _calque8000
 	.globl _calqueC000
 	.globl _halt
 	.globl _handle_raster
@@ -202,88 +203,99 @@ _calqueC000::
 	ld	bc,#0xBD00+48
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:165: void calque4000()
+;src/jdvapi_sync.c:165: void calque8000()
+;	---------------------------------
+; Function calque8000
+; ---------------------------------
+_calque8000::
+;src/jdvapi_sync.c:172: __endasm;
+	ld	bc,#0xBC00+12 ; On met la valeur 32 dans
+	out	(c),c ; le registre 12 du CRTC
+	ld	bc,#0xBD00+32
+	out	(c),c
+	ret
+;src/jdvapi_sync.c:175: void calque4000()
 ;	---------------------------------
 ; Function calque4000
 ; ---------------------------------
 _calque4000::
-;src/jdvapi_sync.c:172: __endasm;
+;src/jdvapi_sync.c:182: __endasm;
 	ld	bc,#0xBC00+12 ; On met la valeur 16 dans
 	out	(c),c ; le registre 12 du CRTC
 	ld	bc,#0xBD00+16
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:175: void calque4C00()
+;src/jdvapi_sync.c:185: void calque4C00()
 ;	---------------------------------
 ; Function calque4C00
 ; ---------------------------------
 _calque4C00::
-;src/jdvapi_sync.c:182: __endasm;
+;src/jdvapi_sync.c:192: __endasm;
 	ld	bc,#0xBC00+12 ; On met la valeur 28 dans
 	out	(c),c ; le registre 12 du CRTC
 	ld	bc,#0xBD00+28
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:185: void bank0123()
+;src/jdvapi_sync.c:195: void bank0123()
 ;	---------------------------------
 ; Function bank0123
 ; ---------------------------------
 _bank0123::
-;src/jdvapi_sync.c:190: __endasm;
+;src/jdvapi_sync.c:200: __endasm;
 	ld	bc,#0x7FC0+0 ; RAM rétablie
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:193: void bank7_C000()
+;src/jdvapi_sync.c:203: void bank7_C000()
 ;	---------------------------------
 ; Function bank7_C000
 ; ---------------------------------
 _bank7_C000::
-;src/jdvapi_sync.c:198: __endasm;
+;src/jdvapi_sync.c:208: __endasm;
 	ld	bc,#0x7FC0+1 ; RAM_7 sur &C000-&FFFF
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:201: void bank4_4000()
+;src/jdvapi_sync.c:211: void bank4_4000()
 ;	---------------------------------
 ; Function bank4_4000
 ; ---------------------------------
 _bank4_4000::
-;src/jdvapi_sync.c:206: __endasm;
+;src/jdvapi_sync.c:216: __endasm;
 	ld	bc,#0x7FC0+4 ; RAM_4 sur &4000-&7FFF
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:209: void bank5_4000()
+;src/jdvapi_sync.c:219: void bank5_4000()
 ;	---------------------------------
 ; Function bank5_4000
 ; ---------------------------------
 _bank5_4000::
-;src/jdvapi_sync.c:214: __endasm;
+;src/jdvapi_sync.c:224: __endasm;
 	ld	bc,#0x7FC0+5 ; RAM_5 sur &4000-&7FFF
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:217: void bank6_4000()
+;src/jdvapi_sync.c:227: void bank6_4000()
 ;	---------------------------------
 ; Function bank6_4000
 ; ---------------------------------
 _bank6_4000::
-;src/jdvapi_sync.c:222: __endasm;
+;src/jdvapi_sync.c:232: __endasm;
 	ld	bc,#0x7FC0+6 ; RAM_6 sur &4000-&7FFF
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:225: void bank7_4000()
+;src/jdvapi_sync.c:235: void bank7_4000()
 ;	---------------------------------
 ; Function bank7_4000
 ; ---------------------------------
 _bank7_4000::
-;src/jdvapi_sync.c:230: __endasm;
+;src/jdvapi_sync.c:240: __endasm;
 	ld	bc,#0x7FC0+7 ; RAM_7 sur &4000-&7FFF
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:267: void overscanH()
+;src/jdvapi_sync.c:277: void overscanH()
 ;	---------------------------------
 ; Function overscanH
 ; ---------------------------------
 _overscanH::
-;src/jdvapi_sync.c:287: __endasm;
+;src/jdvapi_sync.c:297: __endasm;
 	ld	bc,#0xBC00+1 ; On met la valeur 48 dans
 	out	(c),c ; le registre 1 du CRTC -- RHdisp
 	ld	bc,#0xBD00+48
@@ -301,12 +313,12 @@ _overscanH::
 	ld	bc,#0xBD00+29
 	out	(c),c
 	ret
-;src/jdvapi_sync.c:313: void scan()
+;src/jdvapi_sync.c:323: void scan()
 ;	---------------------------------
 ; Function scan
 ; ---------------------------------
 _scan::
-;src/jdvapi_sync.c:332: __endasm;
+;src/jdvapi_sync.c:342: __endasm;
 	ld	bc,#0xBC00+1 ; On remet la valeur 40 dans
 	out	(c),c ; le registre 1 du CRTC -- RHdisp
 	ld	bc,#0xBD00+40

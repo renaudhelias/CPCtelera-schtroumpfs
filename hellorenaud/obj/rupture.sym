@@ -7,26 +7,24 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-    __divsint                                                      **** GX
-    __modsint                                                      **** GX
-    _cpct_drawSprite                                               **** GX
-    _cpct_getScreenPtr                                             **** GX
-    _g_tile_fontmap20x22_tileset                                   **** GX
-  0 _scroll                                                        0000 GR
-
+  7 __xinit__vblPosition                                           0000 R
+  0 _killVBL                                                       0000 GR
+  0 _restoreVBL                                                    0011 GR
+  0 _rupture                                                       001D GR
+  2 _vblPosition                                                   0000 GR
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size   BE   flags    0
+   0 _CODE                                      size   3D   flags    0
    1 _DATA                                      size    0   flags    0
-   2 _INITIALIZED                               size    0   flags    0
+   2 _INITIALIZED                               size    2   flags    0
    3 _DABS                                      size    0   flags    8
    4 _HOME                                      size    0   flags    0
    5 _GSINIT                                    size    0   flags    0
    6 _GSFINAL                                   size    0   flags    0
-   7 _INITIALIZER                               size    0   flags    0
+   7 _INITIALIZER                               size    2   flags    0
    8 _CABS                                      size    0   flags    8
 
