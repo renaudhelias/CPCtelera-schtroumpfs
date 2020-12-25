@@ -190,9 +190,9 @@ __endasm;
 
 }
 
-void draw(int offset) {
+void draw(char * texte, int texte_cur, int offset) {
 	u8* pointeur=(u16)g_tile_fontmap32x32plat_000;
-	pointeur = pointeur+8*(32*2);
+	pointeur = pointeur+(texte[texte_cur]-'A')*(32*2)+2*(32*2);
 	cpct_drawSprite(pointeur+offset*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 }
 
@@ -201,7 +201,7 @@ void main(void) {
    int s=0;
    u8* p;
    u8* sprite=g_items_0;
-   char * texte="HELLO@LES@AMIS@@";
+   //char * texte="HELLO@LES@AMIS@@";
    int texte_length=16;
    int texte_cur=0;
    int o=0;
@@ -334,7 +334,7 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 
 	s=s+1;
 	if (s==8) {s=0;}
-//	if (s==0) {texte_cur=(texte_cur+1)%texte_length;}
+	if (s==0) {texte_cur=texte_cur+1; if (texte_cur==texte_length) {texte_cur=0;}}
 
 	//cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
 //('G'-'A')*8
@@ -342,7 +342,7 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 	//o=o+1;//(texte[texte_cur]-'?')*8+s;
 	//if (o>=8) {o=0;}
 
-	draw(s);
+	draw("HELLO@LES@AMIS@@",texte_cur,s);
       //intCounter=0;
       //killVBL();
       //rupture(39);

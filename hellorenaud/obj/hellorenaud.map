@@ -19,20 +19,20 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000009  l__INITIALIZED                  
      00000009  l__INITIALIZER                  
      00000138  s__CODE                         
-     00006367  l__CODE                         
-     0000649F  s__DATA                         
-     000064A5  s__INITIALIZED                  
-     000064AE  s__GSFINAL                      
-     000064AE  s__GSINIT                       
-     000064AE  s__HOME                         
-     000064AE  s__INITIALIZER                  
+     000063BE  l__CODE                         
+     000064F6  s__DATA                         
+     000064FC  s__INITIALIZED                  
+     00006505  s__GSFINAL                      
+     00006505  s__GSINIT                       
+     00006505  s__HOME                         
+     00006505  s__INITIALIZER                  
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00006367 =       25447. bytes (REL,CON)
+_CODE                               00000138    000063BE =       25534. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -91,7 +91,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00006367 =       25447. bytes (REL,CON)
+_CODE                               00000138    000063BE =       25534. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -151,7 +151,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00006367 =       25447. bytes (REL,CON)
+_CODE                               00000138    000063BE =       25534. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -211,7 +211,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00006367 =       25447. bytes (REL,CON)
+_CODE                               00000138    000063BE =       25534. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -271,7 +271,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00006367 =       25447. bytes (REL,CON)
+_CODE                               00000138    000063BE =       25534. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -331,7 +331,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00006367 =       25447. bytes (REL,CON)
+_CODE                               00000138    000063BE =       25534. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -344,135 +344,135 @@ _CODE                               00000138    00006367 =       25447. bytes (R
      000042F9  _crtc                              main
      00004319  _myInterruptHandler                main
      000043E7  _draw                              main
-     00004414  _main                              main
-     00004550  _vsync                             jdvapi_sync
-     0000455E  _raster_halt                       jdvapi_sync
-     00004567  _callback                          jdvapi_sync
-     0000456B  _raster_handler                    jdvapi_sync
-     000045AE  _raster                            jdvapi_sync
-     000045BD  _handle_raster                     jdvapi_sync
-     000045CE  _halt                              jdvapi_sync
-     000045D0  _calqueC000                        jdvapi_sync
-     000045DB  _calque8000                        jdvapi_sync
-     000045E6  _calque4000                        jdvapi_sync
-     000045F1  _calque4C00                        jdvapi_sync
-     000045FC  _bank0123                          jdvapi_sync
-     00004602  _bank7_C000                        jdvapi_sync
-     00004608  _bank4_4000                        jdvapi_sync
-     0000460E  _bank5_4000                        jdvapi_sync
-     00004614  _bank6_4000                        jdvapi_sync
-     0000461A  _bank7_4000                        jdvapi_sync
-     00004620  _overscanH                         jdvapi_sync
-     00004649  _scan                              jdvapi_sync
-     00004672  _killVBL                           rupture
-     00004683  _restoreVBL                        rupture
-     0000468F  _rupture                           rupture
-     000046AF  _g_tile_palette                    schtroumpf
-     000046B5  _g_tile_schtroumpf                 schtroumpf
-     00004AB5  _g_tile_fontmap20x22_tileset       fontmap20x22
-     00004AE9  _g_tile_fontmap20x22_00            fontmap20x22
-     00004BC5  _g_tile_fontmap20x22_01            fontmap20x22
-     00004CA1  _g_tile_fontmap20x22_02            fontmap20x22
-     00004D7D  _g_tile_fontmap20x22_03            fontmap20x22
-     00004E59  _g_tile_fontmap20x22_04            fontmap20x22
-     00004F35  _g_tile_fontmap20x22_05            fontmap20x22
-     00005011  _g_tile_fontmap20x22_06            fontmap20x22
-     000050ED  _g_tile_fontmap20x22_07            fontmap20x22
-     000051C9  _g_tile_fontmap20x22_08            fontmap20x22
-     000052A5  _g_tile_fontmap20x22_09            fontmap20x22
-     00005381  _g_tile_fontmap20x22_10            fontmap20x22
-     0000545D  _g_tile_fontmap20x22_11            fontmap20x22
-     00005539  _g_tile_fontmap20x22_12            fontmap20x22
-     00005615  _g_tile_fontmap20x22_13            fontmap20x22
-     000056F1  _g_tile_fontmap20x22_14            fontmap20x22
-     000057CD  _g_tile_fontmap20x22_15            fontmap20x22
+     00004434  _main                              main
+     000045A7  _vsync                             jdvapi_sync
+     000045B5  _raster_halt                       jdvapi_sync
+     000045BE  _callback                          jdvapi_sync
+     000045C2  _raster_handler                    jdvapi_sync
+     00004605  _raster                            jdvapi_sync
+     00004614  _handle_raster                     jdvapi_sync
+     00004625  _halt                              jdvapi_sync
+     00004627  _calqueC000                        jdvapi_sync
+     00004632  _calque8000                        jdvapi_sync
+     0000463D  _calque4000                        jdvapi_sync
+     00004648  _calque4C00                        jdvapi_sync
+     00004653  _bank0123                          jdvapi_sync
+     00004659  _bank7_C000                        jdvapi_sync
+     0000465F  _bank4_4000                        jdvapi_sync
+     00004665  _bank5_4000                        jdvapi_sync
+     0000466B  _bank6_4000                        jdvapi_sync
+     00004671  _bank7_4000                        jdvapi_sync
+     00004677  _overscanH                         jdvapi_sync
+     000046A0  _scan                              jdvapi_sync
+     000046C9  _killVBL                           rupture
+     000046DA  _restoreVBL                        rupture
+     000046E6  _rupture                           rupture
+     00004706  _g_tile_palette                    schtroumpf
+     0000470C  _g_tile_schtroumpf                 schtroumpf
+     00004B0C  _g_tile_fontmap20x22_tileset       fontmap20x22
+     00004B40  _g_tile_fontmap20x22_00            fontmap20x22
+     00004C1C  _g_tile_fontmap20x22_01            fontmap20x22
+     00004CF8  _g_tile_fontmap20x22_02            fontmap20x22
+     00004DD4  _g_tile_fontmap20x22_03            fontmap20x22
+     00004EB0  _g_tile_fontmap20x22_04            fontmap20x22
+     00004F8C  _g_tile_fontmap20x22_05            fontmap20x22
+     00005068  _g_tile_fontmap20x22_06            fontmap20x22
+     00005144  _g_tile_fontmap20x22_07            fontmap20x22
+     00005220  _g_tile_fontmap20x22_08            fontmap20x22
+     000052FC  _g_tile_fontmap20x22_09            fontmap20x22
+     000053D8  _g_tile_fontmap20x22_10            fontmap20x22
+     000054B4  _g_tile_fontmap20x22_11            fontmap20x22
+     00005590  _g_tile_fontmap20x22_12            fontmap20x22
+     0000566C  _g_tile_fontmap20x22_13            fontmap20x22
+     00005748  _g_tile_fontmap20x22_14            fontmap20x22
+     00005824  _g_tile_fontmap20x22_15            fontmap20x22
 ASxxxx Linker V03.00 + NoICE + sdld,  page 8.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00006367 =       25447. bytes (REL,CON)
+_CODE                               00000138    000063BE =       25534. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000058A9  _g_tile_fontmap20x22_16            fontmap20x22
-     00005985  _g_tile_fontmap20x22_17            fontmap20x22
-     00005A61  _g_tile_fontmap20x22_18            fontmap20x22
-     00005B3D  _g_tile_fontmap20x22_19            fontmap20x22
-     00005C19  _g_tile_fontmap20x22_20            fontmap20x22
-     00005CF5  _g_tile_fontmap20x22_21            fontmap20x22
-     00005DD1  _g_tile_fontmap20x22_22            fontmap20x22
-     00005EAD  _g_tile_fontmap20x22_23            fontmap20x22
-     00005F89  _g_tile_fontmap20x22_24            fontmap20x22
-     00006065  _g_tile_fontmap20x22_25            fontmap20x22
-     00006141  _cpct_setPalette                   cpct_video
-     00006158  _cpct_setPALColour                 cpct_video
-     00006164  _cpct_setVideoMemoryOffset         cpct_video
-     00006164  cpct_setVideoMemoryOffset_asm      cpct_video
-     0000616D  _cpct_drawSprite                   cpct_sprites
-     00006212  _cpct_drawSpriteMasked             cpct_sprites
-     00006241  _cpct_memset_f64                   cpct_memutils
-     00006289  _cpct_setStackLocation             cpct_memutils
-     00006289  cpct_setStackLocation_asm          cpct_memutils
-     0000628D  ___sdcc_call_hl                    
-     0000628E  _cpct_hflipSpriteM0                cpct_sprites
-     000062D2  _cpct_setVideoMode                 cpct_video
-     000062E0  _cpct_px2byteM0                    cpct_sprites
-     000062FC  _cpct_memcpy                       cpct_memutils
-     00006304  _cpct_disableFirmware              cpct_firmware
-     00006304  _cpct_removeInterruptHandler       cpct_firmware
-     00006304  cpct_disableFirmware_asm           cpct_firmware
-     00006304  cpct_removeInterruptHandler_asm    cpct_firmware
-     00006314  _cpct_drawSolidBox                 cpct_sprites
-     000063CC  __modschar                         
-     000063D9  __modsint                          
-     000063E5  _cpct_mode_rom_status              cpct_firmware
-     000063E6  _cpct_getScreenPtr                 cpct_video
-     00006406  __divsint                          
-     0000640F  __divschar                         
-     00006416  __div8                             
-     0000641A  __div_signexte                     
-     0000641E  __div16                            
-     00006444  __get_remainder                    
-     0000644E  __divuint                          
-     00006456  __divuchar                         
-     0000645D  __divu8                            
-     00006460  __divu16                           
-     0000648F  dc_mode0_ct                        cpct_strings
+     00005900  _g_tile_fontmap20x22_16            fontmap20x22
+     000059DC  _g_tile_fontmap20x22_17            fontmap20x22
+     00005AB8  _g_tile_fontmap20x22_18            fontmap20x22
+     00005B94  _g_tile_fontmap20x22_19            fontmap20x22
+     00005C70  _g_tile_fontmap20x22_20            fontmap20x22
+     00005D4C  _g_tile_fontmap20x22_21            fontmap20x22
+     00005E28  _g_tile_fontmap20x22_22            fontmap20x22
+     00005F04  _g_tile_fontmap20x22_23            fontmap20x22
+     00005FE0  _g_tile_fontmap20x22_24            fontmap20x22
+     000060BC  _g_tile_fontmap20x22_25            fontmap20x22
+     00006198  _cpct_setPalette                   cpct_video
+     000061AF  _cpct_setPALColour                 cpct_video
+     000061BB  _cpct_setVideoMemoryOffset         cpct_video
+     000061BB  cpct_setVideoMemoryOffset_asm      cpct_video
+     000061C4  _cpct_drawSprite                   cpct_sprites
+     00006269  _cpct_drawSpriteMasked             cpct_sprites
+     00006298  _cpct_memset_f64                   cpct_memutils
+     000062E0  _cpct_setStackLocation             cpct_memutils
+     000062E0  cpct_setStackLocation_asm          cpct_memutils
+     000062E4  ___sdcc_call_hl                    
+     000062E5  _cpct_hflipSpriteM0                cpct_sprites
+     00006329  _cpct_setVideoMode                 cpct_video
+     00006337  _cpct_px2byteM0                    cpct_sprites
+     00006353  _cpct_memcpy                       cpct_memutils
+     0000635B  _cpct_disableFirmware              cpct_firmware
+     0000635B  _cpct_removeInterruptHandler       cpct_firmware
+     0000635B  cpct_disableFirmware_asm           cpct_firmware
+     0000635B  cpct_removeInterruptHandler_asm    cpct_firmware
+     0000636B  _cpct_drawSolidBox                 cpct_sprites
+     00006423  __modschar                         
+     00006430  __modsint                          
+     0000643C  _cpct_mode_rom_status              cpct_firmware
+     0000643D  _cpct_getScreenPtr                 cpct_video
+     0000645D  __divsint                          
+     00006466  __divschar                         
+     0000646D  __div8                             
+     00006471  __div_signexte                     
+     00006475  __div16                            
+     0000649B  __get_remainder                    
+     000064A5  __divuint                          
+     000064AD  __divuchar                         
+     000064B4  __divu8                            
+     000064B7  __divu16                           
+     000064E6  dc_mode0_ct                        cpct_strings
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 9.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_DATA                               0000649F    00000006 =           6. bytes (REL,CON)
+_DATA                               000064F6    00000006 =           6. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000649F  _i                                 audio
-     000064A1  _screen_location                   main
-     000064A3  _screen_plot_address               main
+     000064F6  _i                                 audio
+     000064F8  _screen_location                   main
+     000064FA  _screen_plot_address               main
 ASxxxx Linker V03.00 + NoICE + sdld,  page 10.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZED                        000064A5    00000009 =           9. bytes (REL,CON)
+_INITIALIZED                        000064FC    00000009 =           9. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000064A5  _intCounter                        main
-     000064A6  _hOffset                           main
-     000064A8  _slow                              main
-     000064A9  _callback_counter                  jdvapi_sync
-     000064AA  _aFunction                         jdvapi_sync
-     000064AC  _vblPosition                       rupture
+     000064FC  _intCounter                        main
+     000064FD  _hOffset                           main
+     000064FF  _slow                              main
+     00006500  _callback_counter                  jdvapi_sync
+     00006501  _aFunction                         jdvapi_sync
+     00006503  _vblPosition                       rupture
 ASxxxx Linker V03.00 + NoICE + sdld,  page 11.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZER                        000064AE    00000009 =           9. bytes (REL,CON)
+_INITIALIZER                        00006505    00000009 =           9. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------

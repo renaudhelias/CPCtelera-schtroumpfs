@@ -275,7 +275,7 @@ _myInterruptHandler::
 	call	_rupture
 	inc	sp
 	ret
-;src/main.c:193: void draw(int offset) {
+;src/main.c:193: void draw(char * texte, int texte_cur, int offset) {
 ;	---------------------------------
 ; Function draw
 ; ---------------------------------
@@ -285,14 +285,35 @@ _draw::
 	add	ix,sp
 ;src/main.c:194: u8* pointeur=(u16)g_tile_fontmap32x32plat_000;
 	ld	bc, #_g_tile_fontmap32x32plat_000+0
-;src/main.c:195: pointeur = pointeur+8*(32*2);
-	ld	hl, #0x0200
+;src/main.c:195: pointeur = pointeur+(texte[texte_cur]-'A')*(32*2)+2*(32*2);
+	ld	a, 4 (ix)
+	add	a, 6 (ix)
+	ld	l, a
+	ld	a, 5 (ix)
+	adc	a, 7 (ix)
+	ld	h, a
+	ld	e, (hl)
+	ld	d, #0x00
+	ld	a, e
+	add	a, #0xbf
+	ld	l, a
+	ld	a, d
+	adc	a, #0xff
+	ld	h, a
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl,bc
+	ld	bc,#0x0080
 	add	hl,bc
 	ex	de,hl
 ;src/main.c:196: cpct_drawSprite(pointeur+offset*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 	ld	bc, (_screen_plot_address)
-	ld	l,4 (ix)
-	ld	h,5 (ix)
+	ld	l,8 (ix)
+	ld	h,9 (ix)
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
@@ -312,9 +333,16 @@ _draw::
 ; Function main
 ; ---------------------------------
 _main::
+	push	ix
+	ld	ix,#0
+	add	ix,sp
+	push	af
 ;src/main.c:201: int s=0;
 	ld	bc, #0x0000
 ;src/main.c:203: u8* sprite=g_items_0;
+;src/main.c:206: int texte_cur=0;
+	ld	hl, #0x0000
+	ex	(sp), hl
 ;src/main.c:222: cpct_disableFirmware();
 	push	bc
 	call	_cpct_disableFirmware
@@ -423,7 +451,7 @@ _main::
 	ld	hl, #0x804e
 	ld	(_screen_plot_address), hl
 ;src/main.c:317: while (1) {
-00104$:
+00108$:
 ;src/main.c:320: wait_frame_flyback();
 	push	bc
 	call	_wait_frame_flyback
@@ -431,9 +459,9 @@ _main::
 ;src/main.c:324: screen_location++;
 	ld	iy, #_screen_location
 	inc	0 (iy)
-	jr	NZ,00116$
+	jr	NZ,00128$
 	inc	1 (iy)
-00116$:
+00128$:
 ;src/main.c:325: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
 	ld	hl, (_screen_location)
 	ld	a, h
@@ -450,9 +478,9 @@ _main::
 ;src/main.c:328: screen_plot_address++;
 	ld	iy, #_screen_plot_address
 	inc	0 (iy)
-	jr	NZ,00117$
+	jr	NZ,00129$
 	inc	1 (iy)
-00117$:
+00129$:
 ;src/main.c:329: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
@@ -461,9 +489,9 @@ _main::
 	ld	(_screen_plot_address), hl
 ;src/main.c:330: screen_plot_address++;
 	inc	0 (iy)
-	jr	NZ,00118$
+	jr	NZ,00130$
 	inc	1 (iy)
-00118$:
+00130$:
 ;src/main.c:331: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
@@ -479,13 +507,35 @@ _main::
 	jr	NZ,00102$
 	ld	bc, #0x0000
 00102$:
-;src/main.c:345: draw(s);
+;src/main.c:337: if (s==0) {texte_cur=texte_cur+1; if (texte_cur==texte_length) {texte_cur=0;}}
+	ld	a, b
+	or	a,c
+	jr	NZ,00106$
+	inc	-2 (ix)
+	jr	NZ,00133$
+	inc	-1 (ix)
+00133$:
+	ld	a, -2 (ix)
+	sub	a, #0x10
+	or	a, -1 (ix)
+	jr	NZ,00106$
+	ld	hl, #0x0000
+	ex	(sp), hl
+00106$:
+;src/main.c:345: draw("HELLO@LES@AMIS@@",texte_cur,s);
 	push	bc
 	push	bc
+	ld	l,-2 (ix)
+	ld	h,-1 (ix)
+	push	hl
+	ld	hl, #___str_0
+	push	hl
 	call	_draw
-	pop	af
+	ld	hl, #6
+	add	hl, sp
+	ld	sp, hl
 	pop	bc
-	jr	00104$
+	jp	00108$
 ___str_0:
 	.ascii "HELLO@LES@AMIS@@"
 	.db 0x00
