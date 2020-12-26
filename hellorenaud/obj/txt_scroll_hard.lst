@@ -41,7 +41,7 @@
                              41 ; code
                              42 ;--------------------------------------------------------
                              43 	.area _CODE
-                             44 ;src/txt_scroll_hard.c:11: void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address) {
+                             44 ;src/txt_scroll_hard.c:12: void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address) {
                              45 ;	---------------------------------
                              46 ; Function scroll_hard
                              47 ; ---------------------------------
@@ -51,10 +51,10 @@
    0006 DD 39         [15]   51 	add	ix,sp
    0008 F5            [11]   52 	push	af
    0009 F5            [11]   53 	push	af
-                             54 ;src/txt_scroll_hard.c:15: u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
+                             54 ;src/txt_scroll_hard.c:16: u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
    000A DD 36 FCr00   [19]   55 	ld	-4 (ix), #<(_g_tile_fontmap32x32plat_000)
    000E DD 36 FDs00   [19]   56 	ld	-3 (ix), #>(_g_tile_fontmap32x32plat_000)
-                             57 ;src/txt_scroll_hard.c:18: div=step/8;
+                             57 ;src/txt_scroll_hard.c:19: div=step/8;
    0012 DD 4E 08      [19]   58 	ld	c,8 (ix)
    0015 DD 46 09      [19]   59 	ld	b,9 (ix)
    0018 CB 78         [ 8]   60 	bit	7, b
@@ -70,7 +70,7 @@
    0028 CB 19         [ 8]   70 	rr	c
    002A CB 28         [ 8]   71 	sra	b
    002C CB 19         [ 8]   72 	rr	c
-                             73 ;src/txt_scroll_hard.c:19: mod=step%8;
+                             73 ;src/txt_scroll_hard.c:20: mod=step%8;
    002E C5            [11]   74 	push	bc
    002F 21 08 00      [10]   75 	ld	hl, #0x0008
    0032 E5            [11]   76 	push	hl
@@ -82,7 +82,7 @@
    003E F1            [10]   82 	pop	af
    003F EB            [ 4]   83 	ex	de,hl
    0040 C1            [10]   84 	pop	bc
-                             85 ;src/txt_scroll_hard.c:20: if (div<0 || div>l) {return;}
+                             85 ;src/txt_scroll_hard.c:21: if (div<0 || div>l) {return;}
    0041 CB 78         [ 8]   86 	bit	7, b
    0043 20 57         [12]   87 	jr	NZ,00107$
    0045 69            [ 4]   88 	ld	l, c
@@ -92,7 +92,7 @@
    004B DD 7E 07      [19]   92 	ld	a, 7 (ix)
    004E 9C            [ 4]   93 	sbc	a, h
    004F 38 4B         [12]   94 	jr	C,00107$
-                             95 ;src/txt_scroll_hard.c:21: if (texte[div]==' ') {
+                             95 ;src/txt_scroll_hard.c:22: if (texte[div]==' ') {
    0051 DD 6E 04      [19]   96 	ld	l,4 (ix)
    0054 DD 66 05      [19]   97 	ld	h,5 (ix)
    0057 09            [11]   98 	add	hl, bc
@@ -100,11 +100,11 @@
    0059 79            [ 4]  100 	ld	a, c
    005A D6 20         [ 7]  101 	sub	a, #0x20
    005C 20 05         [12]  102 	jr	NZ,00105$
-                            103 ;src/txt_scroll_hard.c:22: o=0;
+                            103 ;src/txt_scroll_hard.c:23: o=0;
    005E 21 00 00      [10]  104 	ld	hl, #0x0000
    0061 18 09         [12]  105 	jr	00106$
    0063                     106 00105$:
-                            107 ;src/txt_scroll_hard.c:24: o=texte[div]-'?';
+                            107 ;src/txt_scroll_hard.c:25: o=texte[div]-'?';
    0063 06 00         [ 7]  108 	ld	b, #0x00
    0065 79            [ 4]  109 	ld	a, c
    0066 C6 C1         [ 7]  110 	add	a, #0xc1
@@ -112,7 +112,7 @@
    0069 78            [ 4]  112 	ld	a, b
    006A CE FF         [ 7]  113 	adc	a, #0xff
    006C                     114 00106$:
-                            115 ;src/txt_scroll_hard.c:26: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+                            115 ;src/txt_scroll_hard.c:30: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
    006C DD 4E 0A      [19]  116 	ld	c,10 (ix)
    006F DD 46 0B      [19]  117 	ld	b,11 (ix)
    0072 7D            [ 4]  118 	ld	a, l

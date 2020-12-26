@@ -19,20 +19,20 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000009  l__INITIALIZED                  
      00000009  l__INITIALIZER                  
      00000138  s__CODE                         
-     0000497F  l__CODE                         
-     00004AB7  s__DATA                         
-     00004ABB  s__INITIALIZED                  
-     00004AC4  s__GSFINAL                      
-     00004AC4  s__GSINIT                       
-     00004AC4  s__HOME                         
-     00004AC4  s__INITIALIZER                  
+     000048B2  l__CODE                         
+     000049EA  s__DATA                         
+     000049EE  s__INITIALIZED                  
+     000049F7  s__GSFINAL                      
+     000049F7  s__GSINIT                       
+     000049F7  s__HOME                         
+     000049F7  s__INITIALIZER                  
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000497F =       18815. bytes (REL,CON)
+_CODE                               00000138    000048B2 =       18610. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -91,7 +91,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000497F =       18815. bytes (REL,CON)
+_CODE                               00000138    000048B2 =       18610. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -151,7 +151,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000497F =       18815. bytes (REL,CON)
+_CODE                               00000138    000048B2 =       18610. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -211,7 +211,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000497F =       18815. bytes (REL,CON)
+_CODE                               00000138    000048B2 =       18610. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -271,7 +271,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000497F =       18815. bytes (REL,CON)
+_CODE                               00000138    000048B2 =       18610. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -331,116 +331,110 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000497F =       18815. bytes (REL,CON)
+_CODE                               00000138    000048B2 =       18610. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      0000406C  _g_items_0                         main
-     0000408C  _myInterruptHandler                main
-     0000416A  _main                              main
-     000042A8  _vsync                             jdvapi_sync
-     000042B6  _raster_halt                       jdvapi_sync
-     000042BF  _callback                          jdvapi_sync
-     000042C3  _raster_handler                    jdvapi_sync
-     00004306  _raster                            jdvapi_sync
-     00004315  _handle_raster                     jdvapi_sync
-     00004326  _halt                              jdvapi_sync
-     00004328  _calqueC000                        jdvapi_sync
-     00004333  _calque8000                        jdvapi_sync
-     0000433E  _calque4000                        jdvapi_sync
-     00004349  _calque4C00                        jdvapi_sync
-     00004354  _bank0123                          jdvapi_sync
-     0000435A  _bank7_C000                        jdvapi_sync
-     00004360  _bank4_4000                        jdvapi_sync
-     00004366  _bank5_4000                        jdvapi_sync
-     0000436C  _bank6_4000                        jdvapi_sync
-     00004372  _bank7_4000                        jdvapi_sync
-     00004378  _overscanH                         jdvapi_sync
-     000043A1  _scan                              jdvapi_sync
-     000043CA  _killVBL                           rupture
-     000043DB  _restoreVBL                        rupture
-     000043E7  _rupture                           rupture
-     00004407  _g_tile_palette                    schtroumpf
-     0000440D  _g_tile_schtroumpf                 schtroumpf
-     0000480D  _cpct_setPalette                   cpct_video
-     00004824  _cpct_setPALColour                 cpct_video
-     00004830  _cpct_setVideoMemoryOffset         cpct_video
-     00004830  cpct_setVideoMemoryOffset_asm      cpct_video
-     00004839  _cpct_drawSprite                   cpct_sprites
-     000048DE  _cpct_drawSpriteMasked             cpct_sprites
-     0000490D  _cpct_memset_f64                   cpct_memutils
-     00004955  _cpct_setStackLocation             cpct_memutils
-     00004955  cpct_setStackLocation_asm          cpct_memutils
-     00004959  ___sdcc_call_hl                    
-     0000495A  _cpct_hflipSpriteM0                cpct_sprites
-     0000499E  _cpct_waitVSYNC                    cpct_video
-     0000499E  cpct_waitVSYNC_asm                 cpct_video
-     000049A6  _cpct_setVideoMode                 cpct_video
-     000049B4  _cpct_memcpy                       cpct_memutils
-     000049BC  _cpct_disableFirmware              cpct_firmware
-     000049BC  _cpct_removeInterruptHandler       cpct_firmware
-     000049BC  cpct_disableFirmware_asm           cpct_firmware
-     000049BC  cpct_removeInterruptHandler_asm    cpct_firmware
-     000049CC  __modschar                         
-     000049D9  __modsint                          
-     000049E5  _cpct_mode_rom_status              cpct_firmware
-     000049E6  _cpct_getScreenPtr                 cpct_video
-     00004A06  _cpct_setInterruptHandler          cpct_firmware
+     0000408C  _main                              main
+     0000420C  _vsync                             jdvapi_sync
+     0000421A  _raster_halt                       jdvapi_sync
+     00004223  _callback                          jdvapi_sync
+     00004227  _raster_handler                    jdvapi_sync
+     0000426A  _raster                            jdvapi_sync
+     00004279  _handle_raster                     jdvapi_sync
+     0000428A  _halt                              jdvapi_sync
+     0000428C  _calqueC000                        jdvapi_sync
+     00004297  _calque8000                        jdvapi_sync
+     000042A2  _calque4000                        jdvapi_sync
+     000042AD  _calque4C00                        jdvapi_sync
+     000042B8  _bank0123                          jdvapi_sync
+     000042BE  _bank7_C000                        jdvapi_sync
+     000042C4  _bank4_4000                        jdvapi_sync
+     000042CA  _bank5_4000                        jdvapi_sync
+     000042D0  _bank6_4000                        jdvapi_sync
+     000042D6  _bank7_4000                        jdvapi_sync
+     000042DC  _overscanH                         jdvapi_sync
+     00004305  _scan                              jdvapi_sync
+     0000432E  _killVBL                           rupture
+     0000433F  _restoreVBL                        rupture
+     0000434B  _rupture                           rupture
+     0000436B  _g_tile_palette                    schtroumpf
+     00004371  _g_tile_schtroumpf                 schtroumpf
+     00004771  _cpct_setPalette                   cpct_video
+     00004788  _cpct_setPALColour                 cpct_video
+     00004794  _cpct_drawSprite                   cpct_sprites
+     00004839  _cpct_drawSpriteMasked             cpct_sprites
+     00004868  _cpct_memset_f64                   cpct_memutils
+     000048B0  _cpct_setStackLocation             cpct_memutils
+     000048B0  cpct_setStackLocation_asm          cpct_memutils
+     000048B4  ___sdcc_call_hl                    
+     000048B5  _cpct_hflipSpriteM0                cpct_sprites
+     000048F9  _cpct_waitVSYNC                    cpct_video
+     000048F9  cpct_waitVSYNC_asm                 cpct_video
+     00004901  _cpct_setVideoMode                 cpct_video
+     0000490F  _cpct_memcpy                       cpct_memutils
+     00004917  _cpct_disableFirmware              cpct_firmware
+     00004917  _cpct_removeInterruptHandler       cpct_firmware
+     00004917  cpct_disableFirmware_asm           cpct_firmware
+     00004917  cpct_removeInterruptHandler_asm    cpct_firmware
+     00004927  __modschar                         
+     00004934  __modsint                          
+     00004940  _cpct_mode_rom_status              cpct_firmware
+     00004941  _cpct_getScreenPtr                 cpct_video
+     00004961  __divsint                          
+     0000496A  __divschar                         
+     00004971  __div8                             
+     00004975  __div_signexte                     
 ASxxxx Linker V03.00 + NoICE + sdld,  page 8.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    0000497F =       18815. bytes (REL,CON)
+_CODE                               00000138    000048B2 =       18610. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004A06  cpct_setInterruptHandler_asm       cpct_firmware
-     00004A17  cpct_safeInterruptHandlerHook      cpct_firmware
-     00004A2E  __divsint                          
-     00004A37  __divschar                         
-     00004A3E  __div8                             
-     00004A42  __div_signexte                     
-     00004A46  __div16                            
-     00004A6C  __get_remainder                    
-     00004A76  __divuint                          
-     00004A7E  __divuchar                         
-     00004A85  __divu8                            
-     00004A88  __divu16                           
+     00004979  __div16                            
+     0000499F  __get_remainder                    
+     000049A9  __divuint                          
+     000049B1  __divuchar                         
+     000049B8  __divu8                            
+     000049BB  __divu16                           
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 9.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_DATA                               00004AB7    00000004 =           4. bytes (REL,CON)
+_DATA                               000049EA    00000004 =           4. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004AB7  _screen_location                   main
-     00004AB9  _screen_plot_address               main
+     000049EA  _screen_location                   main
+     000049EC  _screen_plot_address               main
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 10.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZED                        00004ABB    00000009 =           9. bytes (REL,CON)
+_INITIALIZED                        000049EE    00000009 =           9. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004ABB  _intCounter                        main
-     00004ABC  _hOffset                           main
-     00004ABE  _slow                              main
-     00004ABF  _callback_counter                  jdvapi_sync
-     00004AC0  _aFunction                         jdvapi_sync
-     00004AC2  _vblPosition                       rupture
+     000049EE  _intCounter                        main
+     000049EF  _hOffset                           main
+     000049F1  _slow                              main
+     000049F2  _callback_counter                  jdvapi_sync
+     000049F3  _aFunction                         jdvapi_sync
+     000049F5  _vblPosition                       rupture
 ASxxxx Linker V03.00 + NoICE + sdld,  page 11.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZER                        00004AC4    00000009 =           9. bytes (REL,CON)
+_INITIALIZER                        000049F7    00000009 =           9. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -464,8 +458,6 @@ Libraries Linked                          [ object file ]
                                           [ cpct_setPalette_cbindings.rel ]
 /home/freemac/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_setPALColour_cbindings.rel ]
-/home/freemac/cpctelera/cpctelera/cpctelera.lib
-                                          [ cpct_setVideoMemoryOffset.rel ]
 /home/freemac/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_drawSprite_cbindings.rel ]
 /home/freemac/cpctelera/cpctelera/cpctelera.lib
@@ -492,8 +484,6 @@ Libraries Linked                          [ object file ]
                                           [ cpc_mode_rom_status.rel ]
 /home/freemac/cpctelera/cpctelera/cpctelera.lib
                                           [ cpct_getScreenPtr_cbindings.rel ]
-/home/freemac/cpctelera/cpctelera/cpctelera.lib
-                                          [ cpct_setInterruptHandler.rel ]
 /home/freemac/cpctelera/cpctelera/tools/sdcc-3.6.8-r9946/bin/../share/sdcc/lib/z80/z80.lib
                                           [ divsigned.rel ]
 /home/freemac/cpctelera/cpctelera/tools/sdcc-3.6.8-r9946/bin/../share/sdcc/lib/z80/z80.lib

@@ -41,7 +41,7 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/txt_scroll_hard.c:11: void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address) {
+;src/txt_scroll_hard.c:12: void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address) {
 ;	---------------------------------
 ; Function scroll_hard
 ; ---------------------------------
@@ -51,10 +51,10 @@ _scroll_hard::
 	add	ix,sp
 	push	af
 	push	af
-;src/txt_scroll_hard.c:15: u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
+;src/txt_scroll_hard.c:16: u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
 	ld	-4 (ix), #<(_g_tile_fontmap32x32plat_000)
 	ld	-3 (ix), #>(_g_tile_fontmap32x32plat_000)
-;src/txt_scroll_hard.c:18: div=step/8;
+;src/txt_scroll_hard.c:19: div=step/8;
 	ld	c,8 (ix)
 	ld	b,9 (ix)
 	bit	7, b
@@ -70,7 +70,7 @@ _scroll_hard::
 	rr	c
 	sra	b
 	rr	c
-;src/txt_scroll_hard.c:19: mod=step%8;
+;src/txt_scroll_hard.c:20: mod=step%8;
 	push	bc
 	ld	hl, #0x0008
 	push	hl
@@ -82,7 +82,7 @@ _scroll_hard::
 	pop	af
 	ex	de,hl
 	pop	bc
-;src/txt_scroll_hard.c:20: if (div<0 || div>l) {return;}
+;src/txt_scroll_hard.c:21: if (div<0 || div>l) {return;}
 	bit	7, b
 	jr	NZ,00107$
 	ld	l, c
@@ -92,7 +92,7 @@ _scroll_hard::
 	ld	a, 7 (ix)
 	sbc	a, h
 	jr	C,00107$
-;src/txt_scroll_hard.c:21: if (texte[div]==' ') {
+;src/txt_scroll_hard.c:22: if (texte[div]==' ') {
 	ld	l,4 (ix)
 	ld	h,5 (ix)
 	add	hl, bc
@@ -100,11 +100,11 @@ _scroll_hard::
 	ld	a, c
 	sub	a, #0x20
 	jr	NZ,00105$
-;src/txt_scroll_hard.c:22: o=0;
+;src/txt_scroll_hard.c:23: o=0;
 	ld	hl, #0x0000
 	jr	00106$
 00105$:
-;src/txt_scroll_hard.c:24: o=texte[div]-'?';
+;src/txt_scroll_hard.c:25: o=texte[div]-'?';
 	ld	b, #0x00
 	ld	a, c
 	add	a, #0xc1
@@ -112,7 +112,7 @@ _scroll_hard::
 	ld	a, b
 	adc	a, #0xff
 00106$:
-;src/txt_scroll_hard.c:26: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+;src/txt_scroll_hard.c:30: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 	ld	c,10 (ix)
 	ld	b,11 (ix)
 	ld	a, l

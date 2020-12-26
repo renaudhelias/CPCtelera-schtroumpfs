@@ -1,5 +1,6 @@
 #include <cpctelera.h>
 #include "fontmap32x32plat.h"
+//#include "jdvapi_frame.h"
 
 #define SCREEN_WIDTH 160/2
 
@@ -23,6 +24,9 @@ void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address
 	} else {
 		o=texte[div]-'?';
 	}
+//put_frame(screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H, pointeur+o*8*(32*2)+mod*(32*2));
+
+
 	cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 }
 

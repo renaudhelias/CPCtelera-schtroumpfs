@@ -156,8 +156,8 @@ void main(void) {
 #endif
    // prepare 0x8000
    cpct_disableFirmware();
-   cpct_memcpy(0x7000,0x5000,0x3000);
-   cpct_setStackLocation(0x5000);
+   cpct_memcpy(0x6000,0x8000,0x2000);
+   cpct_setStackLocation(0x6000);
    cpct_memset_f64(0x8000, 0x0000, 0x4000);
    //cpct_setInterruptHandler(myInterruptHandler);
 
