@@ -9,17 +9,14 @@
  * step : le pas de l'animation, de 0 à N, N peu importe.
  */
 void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address) {
-	int c1;
-	int c2;
 	int div;
 	int mod;
 	unsigned int o;
 	u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
-	c2=step; // on insère du vide au début de step
 
 	// on cherche le caractère
-	div=c2/8;
-	mod=c2%8;
+	div=step/8;
+	mod=step%8;
 	if (div<0 || div>l) {return;}
 	if (texte[div]==' ') {
 		o=0;

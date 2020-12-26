@@ -3,8 +3,6 @@
 #define _FONTMAP32X32PLAT_H_
 
 #include <types.h>
-extern u8* const g_tile_tileset[240];
-
 #define G_TILE_FONTMAP32X32PLAT_000_W 2
 #define G_TILE_FONTMAP32X32PLAT_000_H 32
 extern const u8 g_tile_fontmap32x32plat_000[2 * 32];

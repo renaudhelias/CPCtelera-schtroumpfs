@@ -7,45 +7,45 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-  0 ___str_0                                                       020B R
+  0 ___str_0                                                       01E3 R
   7 __xinit__hOffset                                               0001 R
   7 __xinit__intCounter                                            0000 R
   7 __xinit__slow                                                  0003 R
+    _akp_musicInit                                                 **** GX
+    _akp_musicPlay                                                 **** GX
     _bank0123                                                      **** GX
+    _bank7_C000                                                    **** GX
     _calque8000                                                    **** GX
     _calqueC000                                                    **** GX
     _cpct_disableFirmware                                          **** GX
-    _cpct_drawSolidBox                                             **** GX
     _cpct_drawSprite                                               **** GX
     _cpct_drawSpriteMasked                                         **** GX
     _cpct_getScreenPtr                                             **** GX
     _cpct_hflipSpriteM0                                            **** GX
     _cpct_memcpy                                                   **** GX
     _cpct_memset_f64                                               **** GX
-    _cpct_px2byteM0                                                **** GX
     _cpct_setInterruptHandler                                      **** GX
     _cpct_setPALColour                                             **** GX
     _cpct_setPalette                                               **** GX
     _cpct_setStackLocation                                         **** GX
     _cpct_setVideoMemoryOffset                                     **** GX
     _cpct_setVideoMode                                             **** GX
-  0 _crtc                                                          0028 GR
-  0 _g_items_0                                                     0008 GR
+    _cpct_waitVSYNC                                                **** GX
+  0 _crtc                                                          0000 GR
+  0 _g_items_0                                                     0020 GR
     _g_tile_palette                                                **** GX
     _g_tile_schtroumpf                                             **** GX
   2 _hOffset                                                       0001 GR
   2 _intCounter                                                    0000 GR
     _killVBL                                                       **** GX
-  0 _main                                                          0116 GR
-  0 _myInterruptHandler                                            0048 GR
+  0 _main                                                          011E GR
+  0 _myInterruptHandler                                            0040 GR
     _restoreVBL                                                    **** GX
     _rupture                                                       **** GX
   1 _screen_location                                               0000 GR
   1 _screen_plot_address                                           0002 GR
     _scroll_hard                                                   **** GX
   2 _slow                                                          0003 GR
-  0 _wait_frame_flyback                                            0000 GR
-  0 l1                                                             0002 R
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
@@ -53,7 +53,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  27A   flags    0
+   0 _CODE                                      size  25C   flags    0
    1 _DATA                                      size    4   flags    0
    2 _INITIALIZED                               size    4   flags    0
    3 _DABS                                      size    0   flags    8
