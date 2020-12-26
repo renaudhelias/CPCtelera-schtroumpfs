@@ -16,7 +16,7 @@
 		
 LAST_SOUND_EFFECT_INDEX: equ 2                 ;Index of the last sound effect.
 
-        org #6000
+        org #C000
 		jp Start
 		jp StartMusic
 		;;jp StopMusic
