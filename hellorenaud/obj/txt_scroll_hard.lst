@@ -83,7 +83,7 @@
    0040 4D            [ 4]   83 	ld	c, l
    0041 44            [ 4]   84 	ld	b, h
    0042 E1            [10]   85 	pop	hl
-                             86 ;src/txt_scroll_hard.c:25: div=div%128;
+                             86 ;src/txt_scroll_hard.c:24: div=div%128;
    0043 C5            [11]   87 	push	bc
    0044 11 80 00      [10]   88 	ld	de, #0x0080
    0047 D5            [11]   89 	push	de
@@ -92,18 +92,18 @@
    004C F1            [10]   92 	pop	af
    004D F1            [10]   93 	pop	af
    004E C1            [10]   94 	pop	bc
-                             95 ;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
+                             95 ;src/txt_scroll_hard.c:25: if (texte[div]==' ') {
    004F 11r8Ar00      [10]   96 	ld	de, #_texte+0
    0052 19            [11]   97 	add	hl, de
    0053 5E            [ 7]   98 	ld	e, (hl)
    0054 7B            [ 4]   99 	ld	a, e
    0055 D6 20         [ 7]  100 	sub	a, #0x20
    0057 20 05         [12]  101 	jr	NZ,00102$
-                            102 ;src/txt_scroll_hard.c:27: o=0;
+                            102 ;src/txt_scroll_hard.c:26: o=0;
    0059 11 00 00      [10]  103 	ld	de, #0x0000
    005C 18 09         [12]  104 	jr	00103$
    005E                     105 00102$:
-                            106 ;src/txt_scroll_hard.c:29: o=texte[div]-'?';
+                            106 ;src/txt_scroll_hard.c:28: o=texte[div]-'?';
    005E 16 00         [ 7]  107 	ld	d, #0x00
    0060 7B            [ 4]  108 	ld	a, e
    0061 C6 C1         [ 7]  109 	add	a, #0xc1
@@ -111,7 +111,7 @@
    0064 7A            [ 4]  111 	ld	a, d
    0065 CE FF         [ 7]  112 	adc	a, #0xff
    0067                     113 00103$:
-                            114 ;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+                            114 ;src/txt_scroll_hard.c:31: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
    0067 21r00r00      [10]  115 	ld	hl, #_g_tile_fontmap32x32plat_000
    006A 7B            [ 4]  116 	ld	a, e
    006B 87            [ 4]  117 	add	a, a
@@ -128,7 +128,7 @@
    0077 29            [11]  128 	add	hl, hl
    0078 29            [11]  129 	add	hl, hl
    0079 19            [11]  130 	add	hl, de
-                            131 ;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+                            131 ;src/txt_scroll_hard.c:33: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
    007A C1            [10]  132 	pop	bc
    007B C5            [11]  133 	push	bc
    007C 11 02 20      [10]  134 	ld	de, #0x2002

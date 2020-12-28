@@ -42,12 +42,12 @@
                              42 ; code
                              43 ;--------------------------------------------------------
                              44 	.area _CODE
-                             45 ;src/audio.c:8: void akp_musicInit()
+                             45 ;src/audio.c:10: void akp_musicInit()
                              46 ;	---------------------------------
                              47 ; Function akp_musicInit
                              48 ; ---------------------------------
    0000                      49 _akp_musicInit::
-                             50 ;src/audio.c:48: __endasm;
+                             50 ;src/audio.c:50: __endasm;
                              51 ;;	backup Z80 state
    0000 F5            [11]   52 	push	af
    0001 C5            [11]   53 	push	bc
@@ -78,12 +78,12 @@
    0020 C1            [10]   78 	pop	bc
    0021 F1            [10]   79 	pop	af
    0022 C9            [10]   80 	ret
-                             81 ;src/audio.c:51: void akp_musicPlay()
+                             81 ;src/audio.c:53: void akp_musicPlay()
                              82 ;	---------------------------------
                              83 ; Function akp_musicPlay
                              84 ; ---------------------------------
    0023                      85 _akp_musicPlay::
-                             86 ;src/audio.c:84: __endasm;
+                             86 ;src/audio.c:86: __endasm;
                              87 ;;	backup Z80 state
    0023 F5            [11]   88 	push	af
    0024 C5            [11]   89 	push	bc
@@ -113,12 +113,12 @@
    0040 C1            [10]  113 	pop	bc
    0041 F1            [10]  114 	pop	af
    0042 C9            [10]  115 	ret
-                            116 ;src/audio.c:87: void akp_sfxPlay()
+                            116 ;src/audio.c:89: void akp_sfxPlay()
                             117 ;	---------------------------------
                             118 ; Function akp_sfxPlay
                             119 ; ---------------------------------
    0043                     120 _akp_sfxPlay::
-                            121 ;src/audio.c:120: __endasm;
+                            121 ;src/audio.c:122: __endasm;
                             122 ;;	backup Z80 state
    0043 F5            [11]  123 	push	af
    0044 C5            [11]  124 	push	bc

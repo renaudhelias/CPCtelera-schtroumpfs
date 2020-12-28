@@ -77,33 +77,33 @@
    037C DD 4E 04      [19]   77 	ld	c,4 (ix)
    037F DD 46 05      [19]   78 	ld	b,5 (ix)
    0382 C5            [11]   79 	push	bc
-   0383 CD B6 49      [17]   80 	call	__modsint
+   0383 CD B1 49      [17]   80 	call	__modsint
    0386 F1            [10]   81 	pop	af
    0387 F1            [10]   82 	pop	af
    0388 4D            [ 4]   83 	ld	c, l
    0389 44            [ 4]   84 	ld	b, h
    038A E1            [10]   85 	pop	hl
-                             86 ;src/txt_scroll_hard.c:25: div=div%128;
+                             86 ;src/txt_scroll_hard.c:24: div=div%128;
    038B C5            [11]   87 	push	bc
    038C 11 80 00      [10]   88 	ld	de, #0x0080
    038F D5            [11]   89 	push	de
    0390 E5            [11]   90 	push	hl
-   0391 CD B6 49      [17]   91 	call	__modsint
+   0391 CD B1 49      [17]   91 	call	__modsint
    0394 F1            [10]   92 	pop	af
    0395 F1            [10]   93 	pop	af
    0396 C1            [10]   94 	pop	bc
-                             95 ;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
+                             95 ;src/txt_scroll_hard.c:25: if (texte[div]==' ') {
    0397 11 D2 03      [10]   96 	ld	de, #_texte+0
    039A 19            [11]   97 	add	hl, de
    039B 5E            [ 7]   98 	ld	e, (hl)
    039C 7B            [ 4]   99 	ld	a, e
    039D D6 20         [ 7]  100 	sub	a, #0x20
    039F 20 05         [12]  101 	jr	NZ,00102$
-                            102 ;src/txt_scroll_hard.c:27: o=0;
+                            102 ;src/txt_scroll_hard.c:26: o=0;
    03A1 11 00 00      [10]  103 	ld	de, #0x0000
    03A4 18 09         [12]  104 	jr	00103$
    03A6                     105 00102$:
-                            106 ;src/txt_scroll_hard.c:29: o=texte[div]-'?';
+                            106 ;src/txt_scroll_hard.c:28: o=texte[div]-'?';
    03A6 16 00         [ 7]  107 	ld	d, #0x00
    03A8 7B            [ 4]  108 	ld	a, e
    03A9 C6 C1         [ 7]  109 	add	a, #0xc1
@@ -111,7 +111,7 @@
    03AC 7A            [ 4]  111 	ld	a, d
    03AD CE FF         [ 7]  112 	adc	a, #0xff
    03AF                     113 00103$:
-                            114 ;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+                            114 ;src/txt_scroll_hard.c:31: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
    03AF 21 53 04      [10]  115 	ld	hl, #_g_tile_fontmap32x32plat_000
    03B2 7B            [ 4]  116 	ld	a, e
    03B3 87            [ 4]  117 	add	a, a
@@ -128,14 +128,14 @@
    03BF 29            [11]  128 	add	hl, hl
    03C0 29            [11]  129 	add	hl, hl
    03C1 19            [11]  130 	add	hl, de
-                            131 ;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+                            131 ;src/txt_scroll_hard.c:33: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
    03C2 C1            [10]  132 	pop	bc
    03C3 C5            [11]  133 	push	bc
    03C4 11 02 20      [10]  134 	ld	de, #0x2002
    03C7 D5            [11]  135 	push	de
    03C8 C5            [11]  136 	push	bc
    03C9 E5            [11]  137 	push	hl
-   03CA CD F1 47      [17]  138 	call	_cpct_drawSprite
+   03CA CD 11 48      [17]  138 	call	_cpct_drawSprite
    03CD DD F9         [10]  139 	ld	sp, ix
    03CF DD E1         [14]  140 	pop	ix
    03D1 C9            [10]  141 	ret

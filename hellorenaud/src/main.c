@@ -64,14 +64,11 @@ __endasm;
 }
 
 u8 intCounter=0;
-u16 hOffset=0;
-u8 slow=0;
-
 
 u8* screen_location; //=0x1000;
 u8* screen_plot_address; //=0x4000+80-2;
 
-/*
+
 void myInterruptHandler() {
 //	u8* scrLocation;
    //u8* p;
@@ -135,7 +132,7 @@ if (intCounter==4) {
 }
 #endif
 
-}*/
+}
 
 
 void main(void) {
@@ -143,9 +140,6 @@ void main(void) {
    int s=0;
    u8* p;
    u8* sprite=g_items_0;
-   //char * texte="HELLO@LES@AMIS@@";
-   int texte_length=16;
-   int texte_cur=0;
    int o=0;
    int oc=0;
 
@@ -159,7 +153,7 @@ void main(void) {
    cpct_memcpy(0x6000,0x8000,0x2000);
    cpct_setStackLocation(0x6000);
    cpct_memset_f64(0x8000, 0x0000, 0x4000);
-   //cpct_setInterruptHandler(myInterruptHandler);
+   cpct_setInterruptHandler(myInterruptHandler);
 
    bank0123();
    cpct_setVideoMode(0);
@@ -183,16 +177,6 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 	cpct_waitVSYNC();
 
 
-		screen_location++;
-		screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
-		crtc(screen_location);
-
-		screen_plot_address++;
-		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
-		screen_plot_address++;
-		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
-
-
 	//p = cpct_getScreenPtr(screen_plot_address, 0,0);
 	//cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
       scroll_hard(t,screen_plot_address);
@@ -200,10 +184,10 @@ screen_plot_address=(u8 *)(0x8000+80-2);
       t=t+1;
 //      if (t==110*8) {t=0;}
 
-cpct_scanKeyboard_f();
-if (cpct_isAnyKeyPressed_f()){
-	cpct_memset_f64(0x8000, 0x0000, 0x4000);
-}
+//cpct_scanKeyboard_f();
+//if (cpct_isAnyKeyPressed_f()){
+//	cpct_memset_f64(0x8000, 0x0000, 0x4000);
+//}
 
       //intCounter=0;
       //killVBL();

@@ -42,12 +42,12 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/audio.c:8: void akp_musicInit()
+;src/audio.c:10: void akp_musicInit()
 ;	---------------------------------
 ; Function akp_musicInit
 ; ---------------------------------
 _akp_musicInit::
-;src/audio.c:48: __endasm;
+;src/audio.c:50: __endasm;
 ;;	backup Z80 state
 	push	af
 	push	bc
@@ -78,12 +78,12 @@ _akp_musicInit::
 	pop	bc
 	pop	af
 	ret
-;src/audio.c:51: void akp_musicPlay()
+;src/audio.c:53: void akp_musicPlay()
 ;	---------------------------------
 ; Function akp_musicPlay
 ; ---------------------------------
 _akp_musicPlay::
-;src/audio.c:84: __endasm;
+;src/audio.c:86: __endasm;
 ;;	backup Z80 state
 	push	af
 	push	bc
@@ -113,12 +113,12 @@ _akp_musicPlay::
 	pop	bc
 	pop	af
 	ret
-;src/audio.c:87: void akp_sfxPlay()
+;src/audio.c:89: void akp_sfxPlay()
 ;	---------------------------------
 ; Function akp_sfxPlay
 ; ---------------------------------
 _akp_sfxPlay::
-;src/audio.c:120: __endasm;
+;src/audio.c:122: __endasm;
 ;;	backup Z80 state
 	push	af
 	push	bc

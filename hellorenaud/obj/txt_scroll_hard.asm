@@ -83,7 +83,7 @@ _scroll_hard::
 	ld	c, l
 	ld	b, h
 	pop	hl
-;src/txt_scroll_hard.c:25: div=div%128;
+;src/txt_scroll_hard.c:24: div=div%128;
 	push	bc
 	ld	de, #0x0080
 	push	de
@@ -92,18 +92,18 @@ _scroll_hard::
 	pop	af
 	pop	af
 	pop	bc
-;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
+;src/txt_scroll_hard.c:25: if (texte[div]==' ') {
 	ld	de, #_texte+0
 	add	hl, de
 	ld	e, (hl)
 	ld	a, e
 	sub	a, #0x20
 	jr	NZ,00102$
-;src/txt_scroll_hard.c:27: o=0;
+;src/txt_scroll_hard.c:26: o=0;
 	ld	de, #0x0000
 	jr	00103$
 00102$:
-;src/txt_scroll_hard.c:29: o=texte[div]-'?';
+;src/txt_scroll_hard.c:28: o=texte[div]-'?';
 	ld	d, #0x00
 	ld	a, e
 	add	a, #0xc1
@@ -111,7 +111,7 @@ _scroll_hard::
 	ld	a, d
 	adc	a, #0xff
 00103$:
-;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+;src/txt_scroll_hard.c:31: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
 	ld	hl, #_g_tile_fontmap32x32plat_000
 	ld	a, e
 	add	a, a
@@ -128,7 +128,7 @@ _scroll_hard::
 	add	hl, hl
 	add	hl, hl
 	add	hl, de
-;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+;src/txt_scroll_hard.c:33: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 	pop	bc
 	push	bc
 	ld	de, #0x2002

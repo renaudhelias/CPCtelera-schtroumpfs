@@ -6,6 +6,7 @@
 //.include /SoundEffects.asm/
 //__endasm;
 
+
 void akp_musicInit()
 {
 	__asm
