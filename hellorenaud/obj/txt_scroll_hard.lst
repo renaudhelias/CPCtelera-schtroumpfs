@@ -10,140 +10,159 @@
                              10 ;--------------------------------------------------------
                              11 	.globl _scroll_hard
                              12 	.globl _cpct_drawSprite
-                             13 ;--------------------------------------------------------
-                             14 ; special function registers
-                             15 ;--------------------------------------------------------
+                             13 	.globl _texte
+                             14 ;--------------------------------------------------------
+                             15 ; special function registers
                              16 ;--------------------------------------------------------
-                             17 ; ram data
-                             18 ;--------------------------------------------------------
-                             19 	.area _DATA
-                             20 ;--------------------------------------------------------
-                             21 ; ram data
-                             22 ;--------------------------------------------------------
-                             23 	.area _INITIALIZED
-                             24 ;--------------------------------------------------------
-                             25 ; absolute external ram data
-                             26 ;--------------------------------------------------------
-                             27 	.area _DABS (ABS)
-                             28 ;--------------------------------------------------------
-                             29 ; global & static initialisations
-                             30 ;--------------------------------------------------------
-                             31 	.area _HOME
-                             32 	.area _GSINIT
-                             33 	.area _GSFINAL
-                             34 	.area _GSINIT
-                             35 ;--------------------------------------------------------
-                             36 ; Home
-                             37 ;--------------------------------------------------------
-                             38 	.area _HOME
+                             17 ;--------------------------------------------------------
+                             18 ; ram data
+                             19 ;--------------------------------------------------------
+                             20 	.area _DATA
+                             21 ;--------------------------------------------------------
+                             22 ; ram data
+                             23 ;--------------------------------------------------------
+                             24 	.area _INITIALIZED
+                             25 ;--------------------------------------------------------
+                             26 ; absolute external ram data
+                             27 ;--------------------------------------------------------
+                             28 	.area _DABS (ABS)
+                             29 ;--------------------------------------------------------
+                             30 ; global & static initialisations
+                             31 ;--------------------------------------------------------
+                             32 	.area _HOME
+                             33 	.area _GSINIT
+                             34 	.area _GSFINAL
+                             35 	.area _GSINIT
+                             36 ;--------------------------------------------------------
+                             37 ; Home
+                             38 ;--------------------------------------------------------
                              39 	.area _HOME
-                             40 ;--------------------------------------------------------
-                             41 ; code
-                             42 ;--------------------------------------------------------
-                             43 	.area _CODE
-                             44 ;src/txt_scroll_hard.c:12: void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address) {
-                             45 ;	---------------------------------
-                             46 ; Function scroll_hard
-                             47 ; ---------------------------------
-   0000                      48 _scroll_hard::
-   0000 DD E5         [15]   49 	push	ix
-   0002 DD 21 00 00   [14]   50 	ld	ix,#0
-   0006 DD 39         [15]   51 	add	ix,sp
-   0008 F5            [11]   52 	push	af
-   0009 F5            [11]   53 	push	af
-                             54 ;src/txt_scroll_hard.c:16: u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
-   000A DD 36 FCr00   [19]   55 	ld	-4 (ix), #<(_g_tile_fontmap32x32plat_000)
-   000E DD 36 FDs00   [19]   56 	ld	-3 (ix), #>(_g_tile_fontmap32x32plat_000)
-                             57 ;src/txt_scroll_hard.c:19: div=step/8;
-   0012 DD 4E 08      [19]   58 	ld	c,8 (ix)
-   0015 DD 46 09      [19]   59 	ld	b,9 (ix)
-   0018 CB 78         [ 8]   60 	bit	7, b
-   001A 28 06         [12]   61 	jr	Z,00109$
-   001C 21 07 00      [10]   62 	ld	hl, #0x0007
-   001F 09            [11]   63 	add	hl,bc
-   0020 4D            [ 4]   64 	ld	c, l
-   0021 44            [ 4]   65 	ld	b, h
-   0022                      66 00109$:
-   0022 CB 28         [ 8]   67 	sra	b
-   0024 CB 19         [ 8]   68 	rr	c
-   0026 CB 28         [ 8]   69 	sra	b
-   0028 CB 19         [ 8]   70 	rr	c
-   002A CB 28         [ 8]   71 	sra	b
-   002C CB 19         [ 8]   72 	rr	c
-                             73 ;src/txt_scroll_hard.c:20: mod=step%8;
-   002E C5            [11]   74 	push	bc
-   002F 21 08 00      [10]   75 	ld	hl, #0x0008
-   0032 E5            [11]   76 	push	hl
-   0033 DD 6E 08      [19]   77 	ld	l,8 (ix)
-   0036 DD 66 09      [19]   78 	ld	h,9 (ix)
-   0039 E5            [11]   79 	push	hl
-   003A CDr00r00      [17]   80 	call	__modsint
-   003D F1            [10]   81 	pop	af
-   003E F1            [10]   82 	pop	af
-   003F EB            [ 4]   83 	ex	de,hl
-   0040 C1            [10]   84 	pop	bc
-                             85 ;src/txt_scroll_hard.c:21: if (div<0 || div>l) {return;}
-   0041 CB 78         [ 8]   86 	bit	7, b
-   0043 20 57         [12]   87 	jr	NZ,00107$
-   0045 69            [ 4]   88 	ld	l, c
-   0046 60            [ 4]   89 	ld	h, b
-   0047 DD 7E 06      [19]   90 	ld	a, 6 (ix)
-   004A 95            [ 4]   91 	sub	a, l
-   004B DD 7E 07      [19]   92 	ld	a, 7 (ix)
-   004E 9C            [ 4]   93 	sbc	a, h
-   004F 38 4B         [12]   94 	jr	C,00107$
-                             95 ;src/txt_scroll_hard.c:22: if (texte[div]==' ') {
-   0051 DD 6E 04      [19]   96 	ld	l,4 (ix)
-   0054 DD 66 05      [19]   97 	ld	h,5 (ix)
-   0057 09            [11]   98 	add	hl, bc
-   0058 4E            [ 7]   99 	ld	c, (hl)
-   0059 79            [ 4]  100 	ld	a, c
-   005A D6 20         [ 7]  101 	sub	a, #0x20
-   005C 20 05         [12]  102 	jr	NZ,00105$
-                            103 ;src/txt_scroll_hard.c:23: o=0;
-   005E 21 00 00      [10]  104 	ld	hl, #0x0000
-   0061 18 09         [12]  105 	jr	00106$
-   0063                     106 00105$:
-                            107 ;src/txt_scroll_hard.c:25: o=texte[div]-'?';
-   0063 06 00         [ 7]  108 	ld	b, #0x00
-   0065 79            [ 4]  109 	ld	a, c
-   0066 C6 C1         [ 7]  110 	add	a, #0xc1
-   0068 6F            [ 4]  111 	ld	l, a
-   0069 78            [ 4]  112 	ld	a, b
-   006A CE FF         [ 7]  113 	adc	a, #0xff
-   006C                     114 00106$:
-                            115 ;src/txt_scroll_hard.c:30: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
-   006C DD 4E 0A      [19]  116 	ld	c,10 (ix)
-   006F DD 46 0B      [19]  117 	ld	b,11 (ix)
-   0072 7D            [ 4]  118 	ld	a, l
-   0073 87            [ 4]  119 	add	a, a
-   0074 6F            [ 4]  120 	ld	l, a
-   0075 26 00         [ 7]  121 	ld	h, #0x00
-   0077 DD 7E FC      [19]  122 	ld	a, -4 (ix)
-   007A 84            [ 4]  123 	add	a, h
-   007B DD 77 FE      [19]  124 	ld	-2 (ix), a
-   007E DD 7E FD      [19]  125 	ld	a, -3 (ix)
-   0081 8D            [ 4]  126 	adc	a, l
-   0082 DD 77 FF      [19]  127 	ld	-1 (ix), a
-   0085 EB            [ 4]  128 	ex	de,hl
-   0086 29            [11]  129 	add	hl, hl
-   0087 29            [11]  130 	add	hl, hl
-   0088 29            [11]  131 	add	hl, hl
-   0089 29            [11]  132 	add	hl, hl
-   008A 29            [11]  133 	add	hl, hl
-   008B 29            [11]  134 	add	hl, hl
-   008C DD 5E FE      [19]  135 	ld	e,-2 (ix)
-   008F DD 56 FF      [19]  136 	ld	d,-1 (ix)
-   0092 19            [11]  137 	add	hl, de
-   0093 11 02 20      [10]  138 	ld	de, #0x2002
-   0096 D5            [11]  139 	push	de
-   0097 C5            [11]  140 	push	bc
-   0098 E5            [11]  141 	push	hl
-   0099 CDr00r00      [17]  142 	call	_cpct_drawSprite
-   009C                     143 00107$:
-   009C DD F9         [10]  144 	ld	sp, ix
-   009E DD E1         [14]  145 	pop	ix
-   00A0 C9            [10]  146 	ret
+                             40 	.area _HOME
+                             41 ;--------------------------------------------------------
+                             42 ; code
+                             43 ;--------------------------------------------------------
+                             44 	.area _CODE
+                             45 ;src/txt_scroll_hard.c:14: void scroll_hard(int step, u8* screen_plot_address) {
+                             46 ;	---------------------------------
+                             47 ; Function scroll_hard
+                             48 ; ---------------------------------
+   0000                      49 _scroll_hard::
+   0000 DD E5         [15]   50 	push	ix
+   0002 DD 21 00 00   [14]   51 	ld	ix,#0
+   0006 DD 39         [15]   52 	add	ix,sp
+   0008 F5            [11]   53 	push	af
+                             54 ;src/txt_scroll_hard.c:19: u8* plot=screen_plot_address;
+   0009 DD 7E 06      [19]   55 	ld	a, 6 (ix)
+   000C DD 77 FE      [19]   56 	ld	-2 (ix), a
+   000F DD 7E 07      [19]   57 	ld	a, 7 (ix)
+   0012 DD 77 FF      [19]   58 	ld	-1 (ix), a
+                             59 ;src/txt_scroll_hard.c:22: div=step/8;
+   0015 DD 6E 04      [19]   60 	ld	l,4 (ix)
+   0018 DD 66 05      [19]   61 	ld	h,5 (ix)
+   001B CB 7C         [ 8]   62 	bit	7, h
+   001D 28 04         [12]   63 	jr	Z,00106$
+   001F 01 07 00      [10]   64 	ld	bc, #0x0007
+   0022 09            [11]   65 	add	hl, bc
+   0023                      66 00106$:
+   0023 CB 2C         [ 8]   67 	sra	h
+   0025 CB 1D         [ 8]   68 	rr	l
+   0027 CB 2C         [ 8]   69 	sra	h
+   0029 CB 1D         [ 8]   70 	rr	l
+   002B CB 2C         [ 8]   71 	sra	h
+   002D CB 1D         [ 8]   72 	rr	l
+                             73 ;src/txt_scroll_hard.c:23: mod=step%8;
+   002F E5            [11]   74 	push	hl
+   0030 01 08 00      [10]   75 	ld	bc, #0x0008
+   0033 C5            [11]   76 	push	bc
+   0034 DD 4E 04      [19]   77 	ld	c,4 (ix)
+   0037 DD 46 05      [19]   78 	ld	b,5 (ix)
+   003A C5            [11]   79 	push	bc
+   003B CDr00r00      [17]   80 	call	__modsint
+   003E F1            [10]   81 	pop	af
+   003F F1            [10]   82 	pop	af
+   0040 4D            [ 4]   83 	ld	c, l
+   0041 44            [ 4]   84 	ld	b, h
+   0042 E1            [10]   85 	pop	hl
+                             86 ;src/txt_scroll_hard.c:25: div=div%128;
+   0043 C5            [11]   87 	push	bc
+   0044 11 80 00      [10]   88 	ld	de, #0x0080
+   0047 D5            [11]   89 	push	de
+   0048 E5            [11]   90 	push	hl
+   0049 CDr00r00      [17]   91 	call	__modsint
+   004C F1            [10]   92 	pop	af
+   004D F1            [10]   93 	pop	af
+   004E C1            [10]   94 	pop	bc
+                             95 ;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
+   004F 11r8Ar00      [10]   96 	ld	de, #_texte+0
+   0052 19            [11]   97 	add	hl, de
+   0053 5E            [ 7]   98 	ld	e, (hl)
+   0054 7B            [ 4]   99 	ld	a, e
+   0055 D6 20         [ 7]  100 	sub	a, #0x20
+   0057 20 05         [12]  101 	jr	NZ,00102$
+                            102 ;src/txt_scroll_hard.c:27: o=0;
+   0059 11 00 00      [10]  103 	ld	de, #0x0000
+   005C 18 09         [12]  104 	jr	00103$
+   005E                     105 00102$:
+                            106 ;src/txt_scroll_hard.c:29: o=texte[div]-'?';
+   005E 16 00         [ 7]  107 	ld	d, #0x00
+   0060 7B            [ 4]  108 	ld	a, e
+   0061 C6 C1         [ 7]  109 	add	a, #0xc1
+   0063 5F            [ 4]  110 	ld	e, a
+   0064 7A            [ 4]  111 	ld	a, d
+   0065 CE FF         [ 7]  112 	adc	a, #0xff
+   0067                     113 00103$:
+                            114 ;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+   0067 21r00r00      [10]  115 	ld	hl, #_g_tile_fontmap32x32plat_000
+   006A 7B            [ 4]  116 	ld	a, e
+   006B 87            [ 4]  117 	add	a, a
+   006C 57            [ 4]  118 	ld	d, a
+   006D 1E 00         [ 7]  119 	ld	e, #0x00
+   006F 19            [11]  120 	add	hl,de
+   0070 EB            [ 4]  121 	ex	de,hl
+   0071 69            [ 4]  122 	ld	l, c
+   0072 60            [ 4]  123 	ld	h, b
+   0073 29            [11]  124 	add	hl, hl
+   0074 29            [11]  125 	add	hl, hl
+   0075 29            [11]  126 	add	hl, hl
+   0076 29            [11]  127 	add	hl, hl
+   0077 29            [11]  128 	add	hl, hl
+   0078 29            [11]  129 	add	hl, hl
+   0079 19            [11]  130 	add	hl, de
+                            131 ;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+   007A C1            [10]  132 	pop	bc
+   007B C5            [11]  133 	push	bc
+   007C 11 02 20      [10]  134 	ld	de, #0x2002
+   007F D5            [11]  135 	push	de
+   0080 C5            [11]  136 	push	bc
+   0081 E5            [11]  137 	push	hl
+   0082 CDr00r00      [17]  138 	call	_cpct_drawSprite
+   0085 DD F9         [10]  139 	ld	sp, ix
+   0087 DD E1         [14]  140 	pop	ix
+   0089 C9            [10]  141 	ret
+   008A                     142 _texte:
+   008A 57 45 20 57 49 53   143 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
+        48 20 59 4F 55 20
+        41 20 4D 45 52 52
+        59 20 43 48 52 49
+        53 54 4D 41 53 20
+        57 45 20 57 49 53
+        48 20 59 4F 55 20
+        41 20 4D 45 52 52
+        59 20 43 48 52 49
+        53 54 4D 41 53 20
+   00C6 41 4E 44 20 41 20   144 	.ascii "AND A HAPPY NEW YEAR                                        "
+        48 41 50 50 59 20
+        4E 45 57 20 59 45
+        41 52 20 20 20 20
+        20 20 20 20 20 20
+        20 20 20 20 20 20
+        20 20 20 20 20 20
+        20 20 20 20 20 20
+        20 20 20 20 20 20
+        20 20 20 20 20 20
+   0102 20 20 20 20 20 20   145 	.ascii "        "
+        20 20
+   010A 00                  146 	.db 0x00
                             147 	.area _CODE
                             148 	.area _INITIALIZER
                             149 	.area _CABS (ABS)

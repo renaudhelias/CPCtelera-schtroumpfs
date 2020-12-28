@@ -195,9 +195,15 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 
 	//p = cpct_getScreenPtr(screen_plot_address, 0,0);
 	//cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
-      scroll_hard("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR          ", 120, t,screen_plot_address);
+      scroll_hard(t,screen_plot_address);
+      // size of texte
       t=t+1;
-      if (t>=120*8) {t=0;}
+//      if (t==110*8) {t=0;}
+
+cpct_scanKeyboard_f();
+if (cpct_isAnyKeyPressed_f()){
+	cpct_memset_f64(0x8000, 0x0000, 0x4000);
+}
 
       //intCounter=0;
       //killVBL();

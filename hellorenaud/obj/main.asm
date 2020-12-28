@@ -23,6 +23,8 @@
 	.globl _cpct_hflipSpriteM0
 	.globl _cpct_drawSpriteMasked
 	.globl _cpct_drawSprite
+	.globl _cpct_isAnyKeyPressed_f
+	.globl _cpct_scanKeyboard_f
 	.globl _cpct_setStackLocation
 	.globl _cpct_memcpy
 	.globl _cpct_memset_f64
@@ -220,9 +222,8 @@ _main::
 ;src/main.c:180: screen_plot_address=(u8 *)(0x8000+80-2);
 	ld	hl, #0x804e
 	ld	(_screen_plot_address), hl
-;src/main.c:181: t=0;
-	ld	bc, #0x0000
 ;src/main.c:182: while (1) {
+	ld	bc, #0x0000
 00104$:
 ;src/main.c:183: cpct_waitVSYNC();
 	push	bc
@@ -270,37 +271,36 @@ _main::
 	and	a, #0x87
 	ld	h, a
 	ld	(_screen_plot_address), hl
-;src/main.c:198: scroll_hard("WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR          ", 120, t,screen_plot_address);
+;src/main.c:198: scroll_hard(t,screen_plot_address);
 	push	bc
 	ld	hl, (_screen_plot_address)
 	push	hl
 	push	bc
-	ld	hl, #0x0078
-	push	hl
-	ld	hl, #___str_0
-	push	hl
 	call	_scroll_hard
-	ld	hl, #8
-	add	hl, sp
-	ld	sp, hl
+	pop	af
+	pop	af
 	pop	bc
-;src/main.c:199: t=t+1;
+;src/main.c:200: t=t+1;
 	inc	bc
-;src/main.c:200: if (t>=120*8) {t=0;}
-	ld	a, c
-	sub	a, #0xc0
-	ld	a, b
-	rla
-	ccf
-	rra
-	sbc	a, #0x83
-	jr	C,00104$
-	ld	bc, #0x0000
+;src/main.c:203: cpct_scanKeyboard_f();
+	push	bc
+	call	_cpct_scanKeyboard_f
+	call	_cpct_isAnyKeyPressed_f
+	pop	bc
+	ld	a, l
+	or	a, a
+	jr	Z,00104$
+;src/main.c:205: cpct_memset_f64(0x8000, 0x0000, 0x4000);
+	push	bc
+	ld	hl, #0x4000
+	push	hl
+	ld	h, #0x00
+	push	hl
+	ld	h, #0x80
+	push	hl
+	call	_cpct_memset_f64
+	pop	bc
 	jr	00104$
-___str_0:
-	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
-	.ascii "WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR          "
-	.db 0x00
 	.area _CODE
 	.area _INITIALIZER
 __xinit__intCounter:

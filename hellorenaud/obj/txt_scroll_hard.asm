@@ -10,6 +10,7 @@
 ;--------------------------------------------------------
 	.globl _scroll_hard
 	.globl _cpct_drawSprite
+	.globl _texte
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -41,7 +42,7 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/txt_scroll_hard.c:12: void scroll_hard(char * texte, unsigned int l, int step, u8* screen_plot_address) {
+;src/txt_scroll_hard.c:14: void scroll_hard(int step, u8* screen_plot_address) {
 ;	---------------------------------
 ; Function scroll_hard
 ; ---------------------------------
@@ -50,100 +51,99 @@ _scroll_hard::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-	push	af
-;src/txt_scroll_hard.c:16: u16 pointeur=(u16)g_tile_fontmap32x32plat_000;
-	ld	-4 (ix), #<(_g_tile_fontmap32x32plat_000)
-	ld	-3 (ix), #>(_g_tile_fontmap32x32plat_000)
-;src/txt_scroll_hard.c:19: div=step/8;
-	ld	c,8 (ix)
-	ld	b,9 (ix)
-	bit	7, b
-	jr	Z,00109$
-	ld	hl, #0x0007
-	add	hl,bc
+;src/txt_scroll_hard.c:19: u8* plot=screen_plot_address;
+	ld	a, 6 (ix)
+	ld	-2 (ix), a
+	ld	a, 7 (ix)
+	ld	-1 (ix), a
+;src/txt_scroll_hard.c:22: div=step/8;
+	ld	l,4 (ix)
+	ld	h,5 (ix)
+	bit	7, h
+	jr	Z,00106$
+	ld	bc, #0x0007
+	add	hl, bc
+00106$:
+	sra	h
+	rr	l
+	sra	h
+	rr	l
+	sra	h
+	rr	l
+;src/txt_scroll_hard.c:23: mod=step%8;
+	push	hl
+	ld	bc, #0x0008
+	push	bc
+	ld	c,4 (ix)
+	ld	b,5 (ix)
+	push	bc
+	call	__modsint
+	pop	af
+	pop	af
 	ld	c, l
 	ld	b, h
-00109$:
-	sra	b
-	rr	c
-	sra	b
-	rr	c
-	sra	b
-	rr	c
-;src/txt_scroll_hard.c:20: mod=step%8;
+	pop	hl
+;src/txt_scroll_hard.c:25: div=div%128;
 	push	bc
-	ld	hl, #0x0008
-	push	hl
-	ld	l,8 (ix)
-	ld	h,9 (ix)
+	ld	de, #0x0080
+	push	de
 	push	hl
 	call	__modsint
 	pop	af
 	pop	af
-	ex	de,hl
 	pop	bc
-;src/txt_scroll_hard.c:21: if (div<0 || div>l) {return;}
-	bit	7, b
-	jr	NZ,00107$
+;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
+	ld	de, #_texte+0
+	add	hl, de
+	ld	e, (hl)
+	ld	a, e
+	sub	a, #0x20
+	jr	NZ,00102$
+;src/txt_scroll_hard.c:27: o=0;
+	ld	de, #0x0000
+	jr	00103$
+00102$:
+;src/txt_scroll_hard.c:29: o=texte[div]-'?';
+	ld	d, #0x00
+	ld	a, e
+	add	a, #0xc1
+	ld	e, a
+	ld	a, d
+	adc	a, #0xff
+00103$:
+;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+	ld	hl, #_g_tile_fontmap32x32plat_000
+	ld	a, e
+	add	a, a
+	ld	d, a
+	ld	e, #0x00
+	add	hl,de
+	ex	de,hl
 	ld	l, c
 	ld	h, b
-	ld	a, 6 (ix)
-	sub	a, l
-	ld	a, 7 (ix)
-	sbc	a, h
-	jr	C,00107$
-;src/txt_scroll_hard.c:22: if (texte[div]==' ') {
-	ld	l,4 (ix)
-	ld	h,5 (ix)
-	add	hl, bc
-	ld	c, (hl)
-	ld	a, c
-	sub	a, #0x20
-	jr	NZ,00105$
-;src/txt_scroll_hard.c:23: o=0;
-	ld	hl, #0x0000
-	jr	00106$
-00105$:
-;src/txt_scroll_hard.c:25: o=texte[div]-'?';
-	ld	b, #0x00
-	ld	a, c
-	add	a, #0xc1
-	ld	l, a
-	ld	a, b
-	adc	a, #0xff
-00106$:
-;src/txt_scroll_hard.c:30: cpct_drawSprite(pointeur+o*8*(32*2)+mod*(32*2), screen_plot_address, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
-	ld	c,10 (ix)
-	ld	b,11 (ix)
-	ld	a, l
-	add	a, a
-	ld	l, a
-	ld	h, #0x00
-	ld	a, -4 (ix)
-	add	a, h
-	ld	-2 (ix), a
-	ld	a, -3 (ix)
-	adc	a, l
-	ld	-1 (ix), a
-	ex	de,hl
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
-	ld	e,-2 (ix)
-	ld	d,-1 (ix)
 	add	hl, de
+;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+	pop	bc
+	push	bc
 	ld	de, #0x2002
 	push	de
 	push	bc
 	push	hl
 	call	_cpct_drawSprite
-00107$:
 	ld	sp, ix
 	pop	ix
 	ret
+_texte:
+	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
+	.ascii "AND A HAPPY NEW YEAR                                        "
+	.ascii "        "
+	.db 0x00
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)

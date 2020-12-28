@@ -1,8 +1,9 @@
 
 #ifndef NO_SOUND
 
+// FIXME
 //__asm
-//#include "SoundEffects.asm"
+//.include /SoundEffects.asm/
 //__endasm;
 
 void akp_musicInit()
