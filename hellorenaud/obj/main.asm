@@ -131,41 +131,41 @@ _g_items_0:
 	.db #0x00	; 0
 	.db #0x00	; 0
 	.db #0x00	; 0
-;src/main.c:72: void myInterruptHandler() {
+;src/main.c:73: void myInterruptHandler() {
 ;	---------------------------------
 ; Function myInterruptHandler
 ; ---------------------------------
 _myInterruptHandler::
-;src/main.c:75: intCounter=intCounter+1;
+;src/main.c:76: intCounter=intCounter+1;
 	ld	iy, #_intCounter
 	inc	0 (iy)
-;src/main.c:76: if (intCounter == 6) intCounter=0;
+;src/main.c:77: if (intCounter == 6) intCounter=0;
 	ld	a, 0 (iy)
 	sub	a, #0x06
 	jr	NZ,00102$
 	ld	0 (iy), #0x00
 00102$:
-;src/main.c:78: if (intCounter == 2) {
+;src/main.c:79: if (intCounter == 2) {
 	ld	a,(#_intCounter + 0)
 	sub	a, #0x02
 	jr	NZ,00104$
-;src/main.c:79: cpct_setBorder(2);
+;src/main.c:80: cpct_setBorder(2);
 	ld	hl, #0x0210
 	push	hl
 	call	_cpct_setPALColour
 	jr	00105$
 00104$:
-;src/main.c:81: cpct_setBorder(3);
+;src/main.c:82: cpct_setBorder(3);
 	ld	hl, #0x0310
 	push	hl
 	call	_cpct_setPALColour
 00105$:
-;src/main.c:84: if (intCounter==5) {
+;src/main.c:85: if (intCounter==5) {
 	ld	iy, #_intCounter
 	ld	a, 0 (iy)
 	sub	a, #0x05
 	jr	NZ,00107$
-;src/main.c:90: __endasm;
+;src/main.c:91: __endasm;
 	ld	bc,#0xbc06
 	out	(c),c
 	ld	bc,#0xbd04

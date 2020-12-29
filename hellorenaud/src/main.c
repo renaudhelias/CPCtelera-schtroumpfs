@@ -163,7 +163,7 @@ void main(void) {
 calque8000();
 
 screen_location=(u8 *)(0x2000);
-screen_plot_address=(u8 *)(0x8000+80-4);
+screen_plot_address=(u8 *)(0x8000+80-2);
 
    cpct_setInterruptHandler(myInterruptHandler);
    t=0;

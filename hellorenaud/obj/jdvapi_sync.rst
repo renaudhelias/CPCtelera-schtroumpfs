@@ -40,10 +40,10 @@
                              40 ; ram data
                              41 ;--------------------------------------------------------
                              42 	.area _INITIALIZED
-   4AF0                      43 _callback_counter::
-   4AF0                      44 	.ds 1
-   4AF1                      45 _aFunction::
-   4AF1                      46 	.ds 2
+   4A7A                      43 _callback_counter::
+   4A7A                      44 	.ds 1
+   4A7B                      45 _aFunction::
+   4A7B                      46 	.ds 2
                              47 ;--------------------------------------------------------
                              48 ; absolute external ram data
                              49 ;--------------------------------------------------------
@@ -68,278 +68,278 @@
                              68 ;	---------------------------------
                              69 ; Function vsync
                              70 ; ---------------------------------
-   42C5                      71 _vsync::
+   4266                      71 _vsync::
                              72 ;src/jdvapi_sync.c:13: __endasm;
-   42C5 06 F5         [ 7]   73 	ld	b,#0xf5 ;; PPI port B input
-   42C7                      74 	    _wait_vsync:
-   42C7 ED 78         [12]   75 	in	a,(c) ;; [4] read PPI port B input
+   4266 06 F5         [ 7]   73 	ld	b,#0xf5 ;; PPI port B input
+   4268                      74 	    _wait_vsync:
+   4268 ED 78         [12]   75 	in	a,(c) ;; [4] read PPI port B input
                              76 ;;	(bit 0 = "1" if vsync is active,
                              77 ;;	or bit 0 = "0" if vsync is in-active)
-   42C9 1F            [ 4]   78 	rra	;; [1] put bit 0 into carry flag
-   42CA D2 C7 42      [10]   79 	jp	nc,_wait_vsync ;; [3] if carry not set, loop, otherwise continue
+   426A 1F            [ 4]   78 	rra	;; [1] put bit 0 into carry flag
+   426B D2 68 42      [10]   79 	jp	nc,_wait_vsync ;; [3] if carry not set, loop, otherwise continue
                              80 ;src/jdvapi_sync.c:14: callback_counter=0;
-   42CD 21 F0 4A      [10]   81 	ld	hl,#_callback_counter + 0
-   42D0 36 00         [10]   82 	ld	(hl), #0x00
-   42D2 C9            [10]   83 	ret
+   426E 21 7A 4A      [10]   81 	ld	hl,#_callback_counter + 0
+   4271 36 00         [10]   82 	ld	(hl), #0x00
+   4273 C9            [10]   83 	ret
                              84 ;src/jdvapi_sync.c:17: void raster_halt()
                              85 ;	---------------------------------
                              86 ; Function raster_halt
                              87 ; ---------------------------------
-   42D3                      88 _raster_halt::
+   4274                      88 _raster_halt::
                              89 ;src/jdvapi_sync.c:25: __endasm;
-   42D3 F3            [ 4]   90 	di
-   42D4 21 FB C9      [10]   91 	LD	HL,#0xC9FB ;; deux instructions : EI RET
-   42D7 22 38 00      [16]   92 	LD	(#0x38),HL
-   42DA FB            [ 4]   93 	ei
-   42DB C9            [10]   94 	ret
+   4274 F3            [ 4]   90 	di
+   4275 21 FB C9      [10]   91 	LD	HL,#0xC9FB ;; deux instructions : EI RET
+   4278 22 38 00      [16]   92 	LD	(#0x38),HL
+   427B FB            [ 4]   93 	ei
+   427C C9            [10]   94 	ret
                              95 ;src/jdvapi_sync.c:45: void callback(unsigned char counter){
                              96 ;	---------------------------------
                              97 ; Function callback
                              98 ; ---------------------------------
-   42DC                      99 _callback::
+   427D                      99 _callback::
                             100 ;src/jdvapi_sync.c:49: __endasm;
-   42DC CD 00 00      [17]  101 	call	0
-   42DF C9            [10]  102 	ret
+   427D CD 00 00      [17]  101 	call	0
+   4280 C9            [10]  102 	ret
                             103 ;src/jdvapi_sync.c:54: void raster_handler()
                             104 ;	---------------------------------
                             105 ; Function raster_handler
                             106 ; ---------------------------------
-   42E0                     107 _raster_handler::
+   4281                     107 _raster_handler::
                             108 ;src/jdvapi_sync.c:73: __endasm;
                             109 ;;	backup Z80 state
-   42E0 F5            [11]  110 	push	af
-   42E1 C5            [11]  111 	push	bc
-   42E2 D5            [11]  112 	push	de
-   42E3 E5            [11]  113 	push	hl
-   42E4 DD E5         [15]  114 	push	ix
-   42E6 FD E5         [15]  115 	push	iy
-   42E8 D9            [ 4]  116 	exx
-   42E9 08            [ 4]  117 	ex	af, af' ; '
-   42EA F5            [11]  118 	push	af
-   42EB C5            [11]  119 	push	bc
-   42EC D5            [11]  120 	push	de
-   42ED E5            [11]  121 	push	hl
+   4281 F5            [11]  110 	push	af
+   4282 C5            [11]  111 	push	bc
+   4283 D5            [11]  112 	push	de
+   4284 E5            [11]  113 	push	hl
+   4285 DD E5         [15]  114 	push	ix
+   4287 FD E5         [15]  115 	push	iy
+   4289 D9            [ 4]  116 	exx
+   428A 08            [ 4]  117 	ex	af, af' ; '
+   428B F5            [11]  118 	push	af
+   428C C5            [11]  119 	push	bc
+   428D D5            [11]  120 	push	de
+   428E E5            [11]  121 	push	hl
                             122 ;;	here we do custom code..
                             123 ;src/jdvapi_sync.c:75: callback_counter=(callback_counter+1)%6;
-   42EE 21 F0 4A      [10]  124 	ld	hl,#_callback_counter + 0
-   42F1 4E            [ 7]  125 	ld	c, (hl)
-   42F2 06 00         [ 7]  126 	ld	b, #0x00
-   42F4 03            [ 6]  127 	inc	bc
-   42F5 21 06 00      [10]  128 	ld	hl, #0x0006
-   42F8 E5            [11]  129 	push	hl
-   42F9 C5            [11]  130 	push	bc
-   42FA CD 0D 4A      [17]  131 	call	__modsint
-   42FD F1            [10]  132 	pop	af
-   42FE F1            [10]  133 	pop	af
-   42FF FD 21 F0 4A   [14]  134 	ld	iy, #_callback_counter
-   4303 FD 75 00      [19]  135 	ld	0 (iy), l
+   428F 21 7A 4A      [10]  124 	ld	hl,#_callback_counter + 0
+   4292 4E            [ 7]  125 	ld	c, (hl)
+   4293 06 00         [ 7]  126 	ld	b, #0x00
+   4295 03            [ 6]  127 	inc	bc
+   4296 21 06 00      [10]  128 	ld	hl, #0x0006
+   4299 E5            [11]  129 	push	hl
+   429A C5            [11]  130 	push	bc
+   429B CD 97 49      [17]  131 	call	__modsint
+   429E F1            [10]  132 	pop	af
+   429F F1            [10]  133 	pop	af
+   42A0 FD 21 7A 4A   [14]  134 	ld	iy, #_callback_counter
+   42A4 FD 75 00      [19]  135 	ld	0 (iy), l
                             136 ;src/jdvapi_sync.c:76: aFunction(callback_counter);
-   4306 3A F0 4A      [13]  137 	ld	a, (_callback_counter)
-   4309 F5            [11]  138 	push	af
-   430A 33            [ 6]  139 	inc	sp
-   430B 2A F1 4A      [16]  140 	ld	hl, (_aFunction)
-   430E CD 76 49      [17]  141 	call	___sdcc_call_hl
-   4311 33            [ 6]  142 	inc	sp
+   42A7 3A 7A 4A      [13]  137 	ld	a, (_callback_counter)
+   42AA F5            [11]  138 	push	af
+   42AB 33            [ 6]  139 	inc	sp
+   42AC 2A 7B 4A      [16]  140 	ld	hl, (_aFunction)
+   42AF CD 17 49      [17]  141 	call	___sdcc_call_hl
+   42B2 33            [ 6]  142 	inc	sp
                             143 ;src/jdvapi_sync.c:95: __endasm;
                             144 ;;	restore Z80 state
-   4312 E1            [10]  145 	pop	hl
-   4313 D1            [10]  146 	pop	de
-   4314 C1            [10]  147 	pop	bc
-   4315 F1            [10]  148 	pop	af
-   4316 08            [ 4]  149 	ex	af, af' ; '
-   4317 D9            [ 4]  150 	exx
-   4318 FD E1         [14]  151 	pop	iy
-   431A DD E1         [14]  152 	pop	ix
-   431C E1            [10]  153 	pop	hl
-   431D D1            [10]  154 	pop	de
-   431E C1            [10]  155 	pop	bc
-   431F F1            [10]  156 	pop	af
-   4320 FB            [ 4]  157 	ei
-   4321 C9            [10]  158 	ret
-   4322 C9            [10]  159 	ret
+   42B3 E1            [10]  145 	pop	hl
+   42B4 D1            [10]  146 	pop	de
+   42B5 C1            [10]  147 	pop	bc
+   42B6 F1            [10]  148 	pop	af
+   42B7 08            [ 4]  149 	ex	af, af' ; '
+   42B8 D9            [ 4]  150 	exx
+   42B9 FD E1         [14]  151 	pop	iy
+   42BB DD E1         [14]  152 	pop	ix
+   42BD E1            [10]  153 	pop	hl
+   42BE D1            [10]  154 	pop	de
+   42BF C1            [10]  155 	pop	bc
+   42C0 F1            [10]  156 	pop	af
+   42C1 FB            [ 4]  157 	ei
+   42C2 C9            [10]  158 	ret
+   42C3 C9            [10]  159 	ret
                             160 ;src/jdvapi_sync.c:99: void raster()
                             161 ;	---------------------------------
                             162 ; Function raster
                             163 ; ---------------------------------
-   4323                     164 _raster::
+   42C4                     164 _raster::
                             165 ;src/jdvapi_sync.c:108: __endasm;
-   4323 F3            [ 4]  166 	di
-   4324 FD 21 39 00   [14]  167 	ld	iy,#0x39
-   4328 FD 36 00 E0   [19]  168 	ld	0 (iy),#<(_raster_handler)
-   432C FD 36 01 42   [19]  169 	ld	1 (iy),#>(_raster_handler)
-   4330 FB            [ 4]  170 	ei
-   4331 C9            [10]  171 	ret
+   42C4 F3            [ 4]  166 	di
+   42C5 FD 21 39 00   [14]  167 	ld	iy,#0x39
+   42C9 FD 36 00 81   [19]  168 	ld	0 (iy),#<(_raster_handler)
+   42CD FD 36 01 42   [19]  169 	ld	1 (iy),#>(_raster_handler)
+   42D1 FB            [ 4]  170 	ei
+   42D2 C9            [10]  171 	ret
                             172 ;src/jdvapi_sync.c:143: void handle_raster(MyFunctionReturningVoid callback) {
                             173 ;	---------------------------------
                             174 ; Function handle_raster
                             175 ; ---------------------------------
-   4332                     176 _handle_raster::
+   42D3                     176 _handle_raster::
                             177 ;src/jdvapi_sync.c:145: aFunction=callback;
-   4332 21 02 00      [10]  178 	ld	hl, #2+0
-   4335 39            [11]  179 	add	hl, sp
-   4336 7E            [ 7]  180 	ld	a, (hl)
-   4337 32 F1 4A      [13]  181 	ld	(#_aFunction + 0),a
-   433A 21 03 00      [10]  182 	ld	hl, #2+1
-   433D 39            [11]  183 	add	hl, sp
-   433E 7E            [ 7]  184 	ld	a, (hl)
-   433F 32 F2 4A      [13]  185 	ld	(#_aFunction + 1),a
-   4342 C9            [10]  186 	ret
+   42D3 21 02 00      [10]  178 	ld	hl, #2+0
+   42D6 39            [11]  179 	add	hl, sp
+   42D7 7E            [ 7]  180 	ld	a, (hl)
+   42D8 32 7B 4A      [13]  181 	ld	(#_aFunction + 0),a
+   42DB 21 03 00      [10]  182 	ld	hl, #2+1
+   42DE 39            [11]  183 	add	hl, sp
+   42DF 7E            [ 7]  184 	ld	a, (hl)
+   42E0 32 7C 4A      [13]  185 	ld	(#_aFunction + 1),a
+   42E3 C9            [10]  186 	ret
                             187 ;src/jdvapi_sync.c:148: void halt()
                             188 ;	---------------------------------
                             189 ; Function halt
                             190 ; ---------------------------------
-   4343                     191 _halt::
+   42E4                     191 _halt::
                             192 ;src/jdvapi_sync.c:152: __endasm;
-   4343 76            [ 4]  193 	halt
-   4344 C9            [10]  194 	ret
+   42E4 76            [ 4]  193 	halt
+   42E5 C9            [10]  194 	ret
                             195 ;src/jdvapi_sync.c:155: void calqueC000()
                             196 ;	---------------------------------
                             197 ; Function calqueC000
                             198 ; ---------------------------------
-   4345                     199 _calqueC000::
+   42E6                     199 _calqueC000::
                             200 ;src/jdvapi_sync.c:162: __endasm;
-   4345 01 0C BC      [10]  201 	ld	bc,#0xBC00+12 ; On met la valeur 48 dans
-   4348 ED 49         [12]  202 	out	(c),c ; le registre 12 du CRTC
-   434A 01 30 BD      [10]  203 	ld	bc,#0xBD00+48
-   434D ED 49         [12]  204 	out	(c),c
-   434F C9            [10]  205 	ret
+   42E6 01 0C BC      [10]  201 	ld	bc,#0xBC00+12 ; On met la valeur 48 dans
+   42E9 ED 49         [12]  202 	out	(c),c ; le registre 12 du CRTC
+   42EB 01 30 BD      [10]  203 	ld	bc,#0xBD00+48
+   42EE ED 49         [12]  204 	out	(c),c
+   42F0 C9            [10]  205 	ret
                             206 ;src/jdvapi_sync.c:165: void calque8000()
                             207 ;	---------------------------------
                             208 ; Function calque8000
                             209 ; ---------------------------------
-   4350                     210 _calque8000::
+   42F1                     210 _calque8000::
                             211 ;src/jdvapi_sync.c:172: __endasm;
-   4350 01 0C BC      [10]  212 	ld	bc,#0xBC00+12 ; On met la valeur 32 dans
-   4353 ED 49         [12]  213 	out	(c),c ; le registre 12 du CRTC
-   4355 01 20 BD      [10]  214 	ld	bc,#0xBD00+32
-   4358 ED 49         [12]  215 	out	(c),c
-   435A C9            [10]  216 	ret
+   42F1 01 0C BC      [10]  212 	ld	bc,#0xBC00+12 ; On met la valeur 32 dans
+   42F4 ED 49         [12]  213 	out	(c),c ; le registre 12 du CRTC
+   42F6 01 20 BD      [10]  214 	ld	bc,#0xBD00+32
+   42F9 ED 49         [12]  215 	out	(c),c
+   42FB C9            [10]  216 	ret
                             217 ;src/jdvapi_sync.c:175: void calque4000()
                             218 ;	---------------------------------
                             219 ; Function calque4000
                             220 ; ---------------------------------
-   435B                     221 _calque4000::
+   42FC                     221 _calque4000::
                             222 ;src/jdvapi_sync.c:182: __endasm;
-   435B 01 0C BC      [10]  223 	ld	bc,#0xBC00+12 ; On met la valeur 16 dans
-   435E ED 49         [12]  224 	out	(c),c ; le registre 12 du CRTC
-   4360 01 10 BD      [10]  225 	ld	bc,#0xBD00+16
-   4363 ED 49         [12]  226 	out	(c),c
-   4365 C9            [10]  227 	ret
+   42FC 01 0C BC      [10]  223 	ld	bc,#0xBC00+12 ; On met la valeur 16 dans
+   42FF ED 49         [12]  224 	out	(c),c ; le registre 12 du CRTC
+   4301 01 10 BD      [10]  225 	ld	bc,#0xBD00+16
+   4304 ED 49         [12]  226 	out	(c),c
+   4306 C9            [10]  227 	ret
                             228 ;src/jdvapi_sync.c:185: void calque4C00()
                             229 ;	---------------------------------
                             230 ; Function calque4C00
                             231 ; ---------------------------------
-   4366                     232 _calque4C00::
+   4307                     232 _calque4C00::
                             233 ;src/jdvapi_sync.c:192: __endasm;
-   4366 01 0C BC      [10]  234 	ld	bc,#0xBC00+12 ; On met la valeur 28 dans
-   4369 ED 49         [12]  235 	out	(c),c ; le registre 12 du CRTC
-   436B 01 1C BD      [10]  236 	ld	bc,#0xBD00+28
-   436E ED 49         [12]  237 	out	(c),c
-   4370 C9            [10]  238 	ret
+   4307 01 0C BC      [10]  234 	ld	bc,#0xBC00+12 ; On met la valeur 28 dans
+   430A ED 49         [12]  235 	out	(c),c ; le registre 12 du CRTC
+   430C 01 1C BD      [10]  236 	ld	bc,#0xBD00+28
+   430F ED 49         [12]  237 	out	(c),c
+   4311 C9            [10]  238 	ret
                             239 ;src/jdvapi_sync.c:195: void bank0123()
                             240 ;	---------------------------------
                             241 ; Function bank0123
                             242 ; ---------------------------------
-   4371                     243 _bank0123::
+   4312                     243 _bank0123::
                             244 ;src/jdvapi_sync.c:200: __endasm;
-   4371 01 C0 7F      [10]  245 	ld	bc,#0x7FC0+0 ; RAM rétablie
-   4374 ED 49         [12]  246 	out	(c),c
-   4376 C9            [10]  247 	ret
+   4312 01 C0 7F      [10]  245 	ld	bc,#0x7FC0+0 ; RAM rétablie
+   4315 ED 49         [12]  246 	out	(c),c
+   4317 C9            [10]  247 	ret
                             248 ;src/jdvapi_sync.c:203: void bank7_C000()
                             249 ;	---------------------------------
                             250 ; Function bank7_C000
                             251 ; ---------------------------------
-   4377                     252 _bank7_C000::
+   4318                     252 _bank7_C000::
                             253 ;src/jdvapi_sync.c:208: __endasm;
-   4377 01 C1 7F      [10]  254 	ld	bc,#0x7FC0+1 ; RAM_7 sur &C000-&FFFF
-   437A ED 49         [12]  255 	out	(c),c
-   437C C9            [10]  256 	ret
+   4318 01 C1 7F      [10]  254 	ld	bc,#0x7FC0+1 ; RAM_7 sur &C000-&FFFF
+   431B ED 49         [12]  255 	out	(c),c
+   431D C9            [10]  256 	ret
                             257 ;src/jdvapi_sync.c:211: void bank4_4000()
                             258 ;	---------------------------------
                             259 ; Function bank4_4000
                             260 ; ---------------------------------
-   437D                     261 _bank4_4000::
+   431E                     261 _bank4_4000::
                             262 ;src/jdvapi_sync.c:216: __endasm;
-   437D 01 C4 7F      [10]  263 	ld	bc,#0x7FC0+4 ; RAM_4 sur &4000-&7FFF
-   4380 ED 49         [12]  264 	out	(c),c
-   4382 C9            [10]  265 	ret
+   431E 01 C4 7F      [10]  263 	ld	bc,#0x7FC0+4 ; RAM_4 sur &4000-&7FFF
+   4321 ED 49         [12]  264 	out	(c),c
+   4323 C9            [10]  265 	ret
                             266 ;src/jdvapi_sync.c:219: void bank5_4000()
                             267 ;	---------------------------------
                             268 ; Function bank5_4000
                             269 ; ---------------------------------
-   4383                     270 _bank5_4000::
+   4324                     270 _bank5_4000::
                             271 ;src/jdvapi_sync.c:224: __endasm;
-   4383 01 C5 7F      [10]  272 	ld	bc,#0x7FC0+5 ; RAM_5 sur &4000-&7FFF
-   4386 ED 49         [12]  273 	out	(c),c
-   4388 C9            [10]  274 	ret
+   4324 01 C5 7F      [10]  272 	ld	bc,#0x7FC0+5 ; RAM_5 sur &4000-&7FFF
+   4327 ED 49         [12]  273 	out	(c),c
+   4329 C9            [10]  274 	ret
                             275 ;src/jdvapi_sync.c:227: void bank6_4000()
                             276 ;	---------------------------------
                             277 ; Function bank6_4000
                             278 ; ---------------------------------
-   4389                     279 _bank6_4000::
+   432A                     279 _bank6_4000::
                             280 ;src/jdvapi_sync.c:232: __endasm;
-   4389 01 C6 7F      [10]  281 	ld	bc,#0x7FC0+6 ; RAM_6 sur &4000-&7FFF
-   438C ED 49         [12]  282 	out	(c),c
-   438E C9            [10]  283 	ret
+   432A 01 C6 7F      [10]  281 	ld	bc,#0x7FC0+6 ; RAM_6 sur &4000-&7FFF
+   432D ED 49         [12]  282 	out	(c),c
+   432F C9            [10]  283 	ret
                             284 ;src/jdvapi_sync.c:235: void bank7_4000()
                             285 ;	---------------------------------
                             286 ; Function bank7_4000
                             287 ; ---------------------------------
-   438F                     288 _bank7_4000::
+   4330                     288 _bank7_4000::
                             289 ;src/jdvapi_sync.c:240: __endasm;
-   438F 01 C7 7F      [10]  290 	ld	bc,#0x7FC0+7 ; RAM_7 sur &4000-&7FFF
-   4392 ED 49         [12]  291 	out	(c),c
-   4394 C9            [10]  292 	ret
+   4330 01 C7 7F      [10]  290 	ld	bc,#0x7FC0+7 ; RAM_7 sur &4000-&7FFF
+   4333 ED 49         [12]  291 	out	(c),c
+   4335 C9            [10]  292 	ret
                             293 ;src/jdvapi_sync.c:277: void overscanH()
                             294 ;	---------------------------------
                             295 ; Function overscanH
                             296 ; ---------------------------------
-   4395                     297 _overscanH::
+   4336                     297 _overscanH::
                             298 ;src/jdvapi_sync.c:297: __endasm;
-   4395 01 01 BC      [10]  299 	ld	bc,#0xBC00+1 ; On met la valeur 48 dans
-   4398 ED 49         [12]  300 	out	(c),c ; le registre 1 du CRTC -- RHdisp
-   439A 01 30 BD      [10]  301 	ld	bc,#0xBD00+48
-   439D ED 49         [12]  302 	out	(c),c
-   439F 01 02 BC      [10]  303 	ld	bc,#0xBC00+2 ; On met la valeur 50 dans
-   43A2 ED 49         [12]  304 	out	(c),c ; le registre 2 du CRTC -- RHsyncpos
-   43A4 01 32 BD      [10]  305 	ld	bc,#0xBD00+50
-   43A7 ED 49         [12]  306 	out	(c),c
-   43A9 01 06 BC      [10]  307 	ld	bc,#0xBC00+6 ; On remet la valeur 25 dans
-   43AC ED 49         [12]  308 	out	(c),c ; le registre 6 du CRTC -- RVdisp
-   43AE 01 15 BD      [10]  309 	ld	bc,#0xBD00+21
-   43B1 ED 49         [12]  310 	out	(c),c
-   43B3 01 07 BC      [10]  311 	ld	bc,#0xBC00+7 ; On remet la valeur 43 dans
-   43B6 ED 49         [12]  312 	out	(c),c ; le registre 7 du CRTC -- RVsyncpos
-   43B8 01 1D BD      [10]  313 	ld	bc,#0xBD00+29
-   43BB ED 49         [12]  314 	out	(c),c
-   43BD C9            [10]  315 	ret
+   4336 01 01 BC      [10]  299 	ld	bc,#0xBC00+1 ; On met la valeur 48 dans
+   4339 ED 49         [12]  300 	out	(c),c ; le registre 1 du CRTC -- RHdisp
+   433B 01 30 BD      [10]  301 	ld	bc,#0xBD00+48
+   433E ED 49         [12]  302 	out	(c),c
+   4340 01 02 BC      [10]  303 	ld	bc,#0xBC00+2 ; On met la valeur 50 dans
+   4343 ED 49         [12]  304 	out	(c),c ; le registre 2 du CRTC -- RHsyncpos
+   4345 01 32 BD      [10]  305 	ld	bc,#0xBD00+50
+   4348 ED 49         [12]  306 	out	(c),c
+   434A 01 06 BC      [10]  307 	ld	bc,#0xBC00+6 ; On remet la valeur 25 dans
+   434D ED 49         [12]  308 	out	(c),c ; le registre 6 du CRTC -- RVdisp
+   434F 01 15 BD      [10]  309 	ld	bc,#0xBD00+21
+   4352 ED 49         [12]  310 	out	(c),c
+   4354 01 07 BC      [10]  311 	ld	bc,#0xBC00+7 ; On remet la valeur 43 dans
+   4357 ED 49         [12]  312 	out	(c),c ; le registre 7 du CRTC -- RVsyncpos
+   4359 01 1D BD      [10]  313 	ld	bc,#0xBD00+29
+   435C ED 49         [12]  314 	out	(c),c
+   435E C9            [10]  315 	ret
                             316 ;src/jdvapi_sync.c:323: void scan()
                             317 ;	---------------------------------
                             318 ; Function scan
                             319 ; ---------------------------------
-   43BE                     320 _scan::
+   435F                     320 _scan::
                             321 ;src/jdvapi_sync.c:342: __endasm;
-   43BE 01 01 BC      [10]  322 	ld	bc,#0xBC00+1 ; On remet la valeur 40 dans
-   43C1 ED 49         [12]  323 	out	(c),c ; le registre 1 du CRTC -- RHdisp
-   43C3 01 28 BD      [10]  324 	ld	bc,#0xBD00+40
-   43C6 ED 49         [12]  325 	out	(c),c
-   43C8 01 02 BC      [10]  326 	ld	bc,#0xBC00+2 ; On remet la valeur 46 dans
-   43CB ED 49         [12]  327 	out	(c),c ; le registre 2 du CRTC -- RHsyncpos
-   43CD 01 2E BD      [10]  328 	ld	bc,#0xBD00+46
-   43D0 ED 49         [12]  329 	out	(c),c
-   43D2 01 06 BC      [10]  330 	ld	bc,#0xBC00+6 ; On remet la valeur 25 dans
-   43D5 ED 49         [12]  331 	out	(c),c ; le registre 6 du CRTC -- RVdisp
-   43D7 01 19 BD      [10]  332 	ld	bc,#0xBD00+25
-   43DA ED 49         [12]  333 	out	(c),c
-   43DC 01 07 BC      [10]  334 	ld	bc,#0xBC00+7 ; On remet la valeur 30 dans
-   43DF ED 49         [12]  335 	out	(c),c ; le registre 7 du CRTC -- RVsyncpos
-   43E1 01 1E BD      [10]  336 	ld	bc,#0xBD00+30
-   43E4 ED 49         [12]  337 	out	(c),c
-   43E6 C9            [10]  338 	ret
+   435F 01 01 BC      [10]  322 	ld	bc,#0xBC00+1 ; On remet la valeur 40 dans
+   4362 ED 49         [12]  323 	out	(c),c ; le registre 1 du CRTC -- RHdisp
+   4364 01 28 BD      [10]  324 	ld	bc,#0xBD00+40
+   4367 ED 49         [12]  325 	out	(c),c
+   4369 01 02 BC      [10]  326 	ld	bc,#0xBC00+2 ; On remet la valeur 46 dans
+   436C ED 49         [12]  327 	out	(c),c ; le registre 2 du CRTC -- RHsyncpos
+   436E 01 2E BD      [10]  328 	ld	bc,#0xBD00+46
+   4371 ED 49         [12]  329 	out	(c),c
+   4373 01 06 BC      [10]  330 	ld	bc,#0xBC00+6 ; On remet la valeur 25 dans
+   4376 ED 49         [12]  331 	out	(c),c ; le registre 6 du CRTC -- RVdisp
+   4378 01 19 BD      [10]  332 	ld	bc,#0xBD00+25
+   437B ED 49         [12]  333 	out	(c),c
+   437D 01 07 BC      [10]  334 	ld	bc,#0xBC00+7 ; On remet la valeur 30 dans
+   4380 ED 49         [12]  335 	out	(c),c ; le registre 7 du CRTC -- RVsyncpos
+   4382 01 1E BD      [10]  336 	ld	bc,#0xBD00+30
+   4385 ED 49         [12]  337 	out	(c),c
+   4387 C9            [10]  338 	ret
                             339 	.area _CODE
                             340 	.area _INITIALIZER
-   4AF6                     341 __xinit__callback_counter:
-   4AF6 00                  342 	.db #0x00	; 0
-   4AF7                     343 __xinit__aFunction:
-   4AF7 DC 42               344 	.dw _callback
+   4A80                     341 __xinit__callback_counter:
+   4A80 00                  342 	.db #0x00	; 0
+   4A81                     343 __xinit__aFunction:
+   4A81 7D 42               344 	.dw _callback
                             345 	.area _CABS (ABS)

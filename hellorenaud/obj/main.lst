@@ -131,41 +131,41 @@
    003D 00                  131 	.db #0x00	; 0
    003E 00                  132 	.db #0x00	; 0
    003F 00                  133 	.db #0x00	; 0
-                            134 ;src/main.c:72: void myInterruptHandler() {
+                            134 ;src/main.c:73: void myInterruptHandler() {
                             135 ;	---------------------------------
                             136 ; Function myInterruptHandler
                             137 ; ---------------------------------
    0040                     138 _myInterruptHandler::
-                            139 ;src/main.c:75: intCounter=intCounter+1;
+                            139 ;src/main.c:76: intCounter=intCounter+1;
    0040 FD 21r00r00   [14]  140 	ld	iy, #_intCounter
    0044 FD 34 00      [23]  141 	inc	0 (iy)
-                            142 ;src/main.c:76: if (intCounter == 6) intCounter=0;
+                            142 ;src/main.c:77: if (intCounter == 6) intCounter=0;
    0047 FD 7E 00      [19]  143 	ld	a, 0 (iy)
    004A D6 06         [ 7]  144 	sub	a, #0x06
    004C 20 04         [12]  145 	jr	NZ,00102$
    004E FD 36 00 00   [19]  146 	ld	0 (iy), #0x00
    0052                     147 00102$:
-                            148 ;src/main.c:78: if (intCounter == 2) {
+                            148 ;src/main.c:79: if (intCounter == 2) {
    0052 3Ar00r00      [13]  149 	ld	a,(#_intCounter + 0)
    0055 D6 02         [ 7]  150 	sub	a, #0x02
    0057 20 09         [12]  151 	jr	NZ,00104$
-                            152 ;src/main.c:79: cpct_setBorder(2);
+                            152 ;src/main.c:80: cpct_setBorder(2);
    0059 21 10 02      [10]  153 	ld	hl, #0x0210
    005C E5            [11]  154 	push	hl
    005D CDr00r00      [17]  155 	call	_cpct_setPALColour
    0060 18 07         [12]  156 	jr	00105$
    0062                     157 00104$:
-                            158 ;src/main.c:81: cpct_setBorder(3);
+                            158 ;src/main.c:82: cpct_setBorder(3);
    0062 21 10 03      [10]  159 	ld	hl, #0x0310
    0065 E5            [11]  160 	push	hl
    0066 CDr00r00      [17]  161 	call	_cpct_setPALColour
    0069                     162 00105$:
-                            163 ;src/main.c:84: if (intCounter==5) {
+                            163 ;src/main.c:85: if (intCounter==5) {
    0069 FD 21r00r00   [14]  164 	ld	iy, #_intCounter
    006D FD 7E 00      [19]  165 	ld	a, 0 (iy)
    0070 D6 05         [ 7]  166 	sub	a, #0x05
    0072 20 1D         [12]  167 	jr	NZ,00107$
-                            168 ;src/main.c:90: __endasm;
+                            168 ;src/main.c:91: __endasm;
    0074 01 06 BC      [10]  169 	ld	bc,#0xbc06
    0077 ED 49         [12]  170 	out	(c),c
    0079 01 04 BD      [10]  171 	ld	bc,#0xbd04
