@@ -4,7 +4,7 @@
 
 #define SCREEN_WIDTH 160/2
 
-const char texte []="WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR FROM THSF AND TETALAB   AZERTYUIOPQSDFGH       ";
+const char texte []="WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQSDFG     \0";
 
 /**
  * texte : le texte
@@ -31,7 +31,9 @@ void scroll_hard(int step, u8* screen_plot_address) {
 
 	pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
 
-	cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+	//cpct_drawSolidBox(plot,0xFF,2,32);
+	cpct_drawSprite((u8*)pointeur, plot, 2, 32);
+
 	//cpct_drawSpriteBlended(plot, G_TILE_FONTMAP32X32PLAT_000_H, G_TILE_FONTMAP32X32PLAT_000_W, (u8*)pointeur);
 	// FIXME, c'est pire sans _f
 	//p = cpct_getScreenPtr(plot, 0,0);

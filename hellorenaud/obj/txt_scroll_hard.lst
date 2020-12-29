@@ -122,7 +122,7 @@
    006F 29            [11]  122 	add	hl, hl
    0070 29            [11]  123 	add	hl, hl
    0071 19            [11]  124 	add	hl, de
-                            125 ;src/txt_scroll_hard.c:34: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+                            125 ;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, 2, 32);
    0072 C1            [10]  126 	pop	bc
    0073 C5            [11]  127 	push	bc
    0074 11 02 20      [10]  128 	ld	de, #0x2002
@@ -144,19 +144,20 @@
         41 20 4D 45 52 52
         59 20 43 48 52 49
         53 54 4D 41 53 20
-   00BE 41 4E 44 20 41 20   138 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB   AZERTYUIOPQSDFG"
+   00BE 41 4E 44 20 41 20   138 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQS"
         48 41 50 50 59 20
         4E 45 57 20 59 45
         41 52 20 46 52 4F
         4D 20 54 48 53 46
         20 41 4E 44 20 54
         45 54 41 4C 41 42
-        20 20 20 41 5A 45
-        52 54 59 55 49 4F
-        50 51 53 44 46 47
-   00FA 48 20 20 20 20 20   139 	.ascii "H       "
+        20 20 20 20 20 20
+        41 5A 45 52 54 59
+        55 49 4F 50 51 53
+   00FA 44 46 47 20 20 20   139 	.ascii "DFG     "
         20 20
    0102 00                  140 	.db 0x00
-                            141 	.area _CODE
-                            142 	.area _INITIALIZER
-                            143 	.area _CABS (ABS)
+   0103 00                  141 	.db 0x00
+                            142 	.area _CODE
+                            143 	.area _INITIALIZER
+                            144 	.area _CABS (ABS)

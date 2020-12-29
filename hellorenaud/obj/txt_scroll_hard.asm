@@ -122,7 +122,7 @@ _scroll_hard::
 	add	hl, hl
 	add	hl, hl
 	add	hl, de
-;src/txt_scroll_hard.c:34: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, 2, 32);
 	pop	bc
 	push	bc
 	ld	de, #0x2002
@@ -135,8 +135,9 @@ _scroll_hard::
 	ret
 _texte:
 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
-	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB   AZERTYUIOPQSDFG"
-	.ascii "H       "
+	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQS"
+	.ascii "DFG     "
+	.db 0x00
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER

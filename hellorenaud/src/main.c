@@ -17,7 +17,7 @@
 //
 //------------------------------------------------------------------------------
 
-//#define NO_SOUND
+#define NO_SOUND
 
 #include <cpctelera.h>
 #include "schtroumpf.h"
@@ -142,9 +142,9 @@ void main(void) {
 #endif
    // prepare 0x8000
    cpct_disableFirmware();
-   cpct_memcpy(0x6000,0x8000,0x2000);
+   cpct_memcpy(0x6000,0x8000,0x2000);// la pile peut etre négative...
    cpct_setStackLocation(0x6000);
-   cpct_memset_f64(0x8000, 0x0000, 0x4000);
+   cpct_memset_f64(0x8000, 0xFFFF, 0x4000);
 
    bank0123();
    cpct_setVideoMode(0);
@@ -159,6 +159,9 @@ void main(void) {
    // le schtroumpf
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10,96);
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+
+//cpct_memset_f64(0xC000, 0x0000, 0x4000);
+//cpct_setStackLocation(0xE000);
 
 calque8000();
 

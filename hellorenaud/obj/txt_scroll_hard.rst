@@ -77,7 +77,7 @@
    037C DD 4E 04      [19]   77 	ld	c,4 (ix)
    037F DD 46 05      [19]   78 	ld	b,5 (ix)
    0382 C5            [11]   79 	push	bc
-   0383 CD 97 49      [17]   80 	call	__modsint
+   0383 CD 81 49      [17]   80 	call	__modsint
    0386 F1            [10]   81 	pop	af
    0387 F1            [10]   82 	pop	af
    0388 4D            [ 4]   83 	ld	c, l
@@ -106,7 +106,7 @@
    03A5 CE FF         [ 7]  106 	adc	a, #0xff
    03A7                     107 00103$:
                             108 ;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
-   03A7 21 4B 04      [10]  109 	ld	hl, #_g_tile_fontmap32x32plat_000
+   03A7 21 4C 04      [10]  109 	ld	hl, #_g_tile_fontmap32x32plat_000
    03AA 7B            [ 4]  110 	ld	a, e
    03AB 87            [ 4]  111 	add	a, a
    03AC 57            [ 4]  112 	ld	d, a
@@ -122,14 +122,14 @@
    03B7 29            [11]  122 	add	hl, hl
    03B8 29            [11]  123 	add	hl, hl
    03B9 19            [11]  124 	add	hl, de
-                            125 ;src/txt_scroll_hard.c:34: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+                            125 ;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, 2, 32);
    03BA C1            [10]  126 	pop	bc
    03BB C5            [11]  127 	push	bc
    03BC 11 02 20      [10]  128 	ld	de, #0x2002
    03BF D5            [11]  129 	push	de
    03C0 C5            [11]  130 	push	bc
    03C1 E5            [11]  131 	push	hl
-   03C2 CD F7 47      [17]  132 	call	_cpct_drawSprite
+   03C2 CD E1 47      [17]  132 	call	_cpct_drawSprite
    03C5 DD F9         [10]  133 	ld	sp, ix
    03C7 DD E1         [14]  134 	pop	ix
    03C9 C9            [10]  135 	ret
@@ -144,19 +144,20 @@
         41 20 4D 45 52 52
         59 20 43 48 52 49
         53 54 4D 41 53 20
-   0406 41 4E 44 20 41 20   138 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB   AZERTYUIOPQSDFG"
+   0406 41 4E 44 20 41 20   138 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQS"
         48 41 50 50 59 20
         4E 45 57 20 59 45
         41 52 20 46 52 4F
         4D 20 54 48 53 46
         20 41 4E 44 20 54
         45 54 41 4C 41 42
-        20 20 20 41 5A 45
-        52 54 59 55 49 4F
-        50 51 53 44 46 47
-   0442 48 20 20 20 20 20   139 	.ascii "H       "
+        20 20 20 20 20 20
+        41 5A 45 52 54 59
+        55 49 4F 50 51 53
+   0442 44 46 47 20 20 20   139 	.ascii "DFG     "
         20 20
    044A 00                  140 	.db 0x00
-                            141 	.area _CODE
-                            142 	.area _INITIALIZER
-                            143 	.area _CABS (ABS)
+   044B 00                  141 	.db 0x00
+                            142 	.area _CODE
+                            143 	.area _INITIALIZER
+                            144 	.area _CABS (ABS)
