@@ -11,9 +11,12 @@
 	.globl _main
 	.globl _myInterruptHandler
 	.globl _crtc
+	.globl _bank7_C000
 	.globl _bank0123
 	.globl _calque8000
 	.globl _calqueC000
+	.globl _akp_musicPlay
+	.globl _akp_musicInit
 	.globl _scroll_hard
 	.globl _rupture
 	.globl _restoreVBL
@@ -206,7 +209,7 @@ _myInterruptHandler::
 ;src/main.c:112: if (intCounter==3) {
 	ld	a,(#_intCounter + 0)
 	sub	a, #0x03
-	ret	NZ
+	jr	NZ,00111$
 ;src/main.c:113: calqueC000();
 	call	_calqueC000
 ;src/main.c:114: cpct_setVideoMemoryOffset(0);
@@ -220,6 +223,17 @@ _myInterruptHandler::
 	inc	sp
 	call	_rupture
 	inc	sp
+00111$:
+;src/main.c:120: if (intCounter==4) {
+	ld	a,(#_intCounter + 0)
+	sub	a, #0x04
+	ret	NZ
+;src/main.c:121: bank7_C000();
+	call	_bank7_C000
+;src/main.c:122: akp_musicPlay();
+	call	_akp_musicPlay
+;src/main.c:123: bank0123();
+	call	_bank0123
 	ret
 ;src/main.c:130: void main(void) {
 ;	---------------------------------
@@ -227,6 +241,12 @@ _myInterruptHandler::
 ; ---------------------------------
 _main::
 ;src/main.c:134: u8* sprite=g_items_0;
+;src/main.c:139: bank7_C000();
+	call	_bank7_C000
+;src/main.c:140: akp_musicInit();
+	call	_akp_musicInit
+;src/main.c:141: bank0123();
+	call	_bank0123
 ;src/main.c:144: cpct_disableFirmware();
 	call	_cpct_disableFirmware
 ;src/main.c:145: cpct_memcpy(0x6000,0x8000,0x2000);// la pile peut etre négative...

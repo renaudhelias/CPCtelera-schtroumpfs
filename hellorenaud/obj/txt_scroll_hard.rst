@@ -77,7 +77,7 @@
    037C DD 4E 04      [19]   77 	ld	c,4 (ix)
    037F DD 46 05      [19]   78 	ld	b,5 (ix)
    0382 C5            [11]   79 	push	bc
-   0383 CD 81 49      [17]   80 	call	__modsint
+   0383 CD 9A 49      [17]   80 	call	__modsint
    0386 F1            [10]   81 	pop	af
    0387 F1            [10]   82 	pop	af
    0388 4D            [ 4]   83 	ld	c, l
@@ -129,7 +129,7 @@
    03BF D5            [11]  129 	push	de
    03C0 C5            [11]  130 	push	bc
    03C1 E5            [11]  131 	push	hl
-   03C2 CD E1 47      [17]  132 	call	_cpct_drawSprite
+   03C2 CD FA 47      [17]  132 	call	_cpct_drawSprite
    03C5 DD F9         [10]  133 	ld	sp, ix
    03C7 DD E1         [14]  134 	pop	ix
    03C9 C9            [10]  135 	ret

@@ -8,7 +8,10 @@ Symbol Table
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
   7 __xinit__intCounter                                            0000 R
+    _akp_musicInit                                                 **** GX
+    _akp_musicPlay                                                 **** GX
     _bank0123                                                      **** GX
+    _bank7_C000                                                    **** GX
     _calque8000                                                    **** GX
     _calqueC000                                                    **** GX
     _cpct_disableFirmware                                          **** GX
@@ -31,7 +34,7 @@ Symbol Table
     _g_tile_schtroumpf                                             **** GX
   2 _intCounter                                                    0000 GR
     _killVBL                                                       **** GX
-  0 _main                                                          00D0 GR
+  0 _main                                                          00E0 GR
   0 _myInterruptHandler                                            0040 GR
     _restoreVBL                                                    **** GX
     _rupture                                                       **** GX
@@ -45,7 +48,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  1A1   flags    0
+   0 _CODE                                      size  1BA   flags    0
    1 _DATA                                      size    4   flags    0
    2 _INITIALIZED                               size    1   flags    0
    3 _DABS                                      size    0   flags    8
