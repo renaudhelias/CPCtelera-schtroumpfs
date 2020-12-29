@@ -167,6 +167,7 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 
    cpct_setInterruptHandler(myInterruptHandler);
    t=0;
+   //cpct_setBlendMode(CPCT_BLEND_LDI);
    while (1) {
 	cpct_waitVSYNC();
 

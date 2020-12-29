@@ -51,12 +51,12 @@
    0002 DD 21 00 00   [14]   51 	ld	ix,#0
    0006 DD 39         [15]   52 	add	ix,sp
    0008 F5            [11]   53 	push	af
-                             54 ;src/txt_scroll_hard.c:19: u8* plot=screen_plot_address;
+                             54 ;src/txt_scroll_hard.c:20: u8* plot=screen_plot_address;
    0009 DD 7E 06      [19]   55 	ld	a, 6 (ix)
    000C DD 77 FE      [19]   56 	ld	-2 (ix), a
    000F DD 7E 07      [19]   57 	ld	a, 7 (ix)
    0012 DD 77 FF      [19]   58 	ld	-1 (ix), a
-                             59 ;src/txt_scroll_hard.c:22: div=step/8;
+                             59 ;src/txt_scroll_hard.c:23: div=step/8;
    0015 DD 6E 04      [19]   60 	ld	l,4 (ix)
    0018 DD 66 05      [19]   61 	ld	h,5 (ix)
    001B CB 7C         [ 8]   62 	bit	7, h
@@ -70,7 +70,7 @@
    0029 CB 1D         [ 8]   70 	rr	l
    002B CB 3C         [ 8]   71 	srl	h
    002D CB 1D         [ 8]   72 	rr	l
-                             73 ;src/txt_scroll_hard.c:23: mod=step%8;
+                             73 ;src/txt_scroll_hard.c:24: mod=step%8;
    002F E5            [11]   74 	push	hl
    0030 01 08 00      [10]   75 	ld	bc, #0x0008
    0033 C5            [11]   76 	push	bc
@@ -83,21 +83,21 @@
    0040 4D            [ 4]   83 	ld	c, l
    0041 44            [ 4]   84 	ld	b, h
    0042 E1            [10]   85 	pop	hl
-                             86 ;src/txt_scroll_hard.c:24: div=div%128;
+                             86 ;src/txt_scroll_hard.c:25: div=div%128;
    0043 CB BD         [ 8]   87 	res	7, l
    0045 26 00         [ 7]   88 	ld	h, #0x00
-                             89 ;src/txt_scroll_hard.c:25: if (texte[div]==' ') {
+                             89 ;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
    0047 11r82r00      [10]   90 	ld	de, #_texte+0
    004A 19            [11]   91 	add	hl, de
    004B 5E            [ 7]   92 	ld	e, (hl)
    004C 7B            [ 4]   93 	ld	a, e
    004D D6 20         [ 7]   94 	sub	a, #0x20
    004F 20 05         [12]   95 	jr	NZ,00102$
-                             96 ;src/txt_scroll_hard.c:26: o=0;
+                             96 ;src/txt_scroll_hard.c:27: o=0;
    0051 11 00 00      [10]   97 	ld	de, #0x0000
    0054 18 09         [12]   98 	jr	00103$
    0056                      99 00102$:
-                            100 ;src/txt_scroll_hard.c:28: o=texte[div]-'?';
+                            100 ;src/txt_scroll_hard.c:29: o=texte[div]-'?';
    0056 16 00         [ 7]  101 	ld	d, #0x00
    0058 7B            [ 4]  102 	ld	a, e
    0059 C6 C1         [ 7]  103 	add	a, #0xc1
@@ -105,7 +105,7 @@
    005C 7A            [ 4]  105 	ld	a, d
    005D CE FF         [ 7]  106 	adc	a, #0xff
    005F                     107 00103$:
-                            108 ;src/txt_scroll_hard.c:31: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+                            108 ;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
    005F 21r00r00      [10]  109 	ld	hl, #_g_tile_fontmap32x32plat_000
    0062 7B            [ 4]  110 	ld	a, e
    0063 87            [ 4]  111 	add	a, a
@@ -122,7 +122,7 @@
    006F 29            [11]  122 	add	hl, hl
    0070 29            [11]  123 	add	hl, hl
    0071 19            [11]  124 	add	hl, de
-                            125 ;src/txt_scroll_hard.c:33: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+                            125 ;src/txt_scroll_hard.c:34: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
    0072 C1            [10]  126 	pop	bc
    0073 C5            [11]  127 	push	bc
    0074 11 02 20      [10]  128 	ld	de, #0x2002
@@ -144,19 +144,18 @@
         41 20 4D 45 52 52
         59 20 43 48 52 49
         53 54 4D 41 53 20
-   00BE 41 4E 44 20 41 20   138 	.ascii "AND A HAPPY NEW YEAR                           AZERTYUIOPQSD"
+   00BE 41 4E 44 20 41 20   138 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB   AZERTYUIOPQSDFG"
         48 41 50 50 59 20
         4E 45 57 20 59 45
-        41 52 20 20 20 20
-        20 20 20 20 20 20
-        20 20 20 20 20 20
-        20 20 20 20 20 20
-        20 20 20 20 20 41
-        5A 45 52 54 59 55
-        49 4F 50 51 53 44
-   00FA 46 47 48 20 20 20   139 	.ascii "FGH     "
-        20 20
-   0102 00                  140 	.db 0x00
+        41 52 20 46 52 4F
+        4D 20 54 48 53 46
+        20 41 4E 44 20 54
+        45 54 41 4C 41 42
+        20 20 20 41 5A 45
+        52 54 59 55 49 4F
+        50 51 53 44 46 47
+   00FA 48 20 20 20 20 20   139 	.ascii "H     "
+   0100 00                  140 	.db 0x00
                             141 	.area _CODE
                             142 	.area _INITIALIZER
                             143 	.area _CABS (ABS)

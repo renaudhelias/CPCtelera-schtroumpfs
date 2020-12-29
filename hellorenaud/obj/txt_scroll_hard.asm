@@ -51,12 +51,12 @@ _scroll_hard::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;src/txt_scroll_hard.c:19: u8* plot=screen_plot_address;
+;src/txt_scroll_hard.c:20: u8* plot=screen_plot_address;
 	ld	a, 6 (ix)
 	ld	-2 (ix), a
 	ld	a, 7 (ix)
 	ld	-1 (ix), a
-;src/txt_scroll_hard.c:22: div=step/8;
+;src/txt_scroll_hard.c:23: div=step/8;
 	ld	l,4 (ix)
 	ld	h,5 (ix)
 	bit	7, h
@@ -70,7 +70,7 @@ _scroll_hard::
 	rr	l
 	srl	h
 	rr	l
-;src/txt_scroll_hard.c:23: mod=step%8;
+;src/txt_scroll_hard.c:24: mod=step%8;
 	push	hl
 	ld	bc, #0x0008
 	push	bc
@@ -83,21 +83,21 @@ _scroll_hard::
 	ld	c, l
 	ld	b, h
 	pop	hl
-;src/txt_scroll_hard.c:24: div=div%128;
+;src/txt_scroll_hard.c:25: div=div%128;
 	res	7, l
 	ld	h, #0x00
-;src/txt_scroll_hard.c:25: if (texte[div]==' ') {
+;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
 	ld	de, #_texte+0
 	add	hl, de
 	ld	e, (hl)
 	ld	a, e
 	sub	a, #0x20
 	jr	NZ,00102$
-;src/txt_scroll_hard.c:26: o=0;
+;src/txt_scroll_hard.c:27: o=0;
 	ld	de, #0x0000
 	jr	00103$
 00102$:
-;src/txt_scroll_hard.c:28: o=texte[div]-'?';
+;src/txt_scroll_hard.c:29: o=texte[div]-'?';
 	ld	d, #0x00
 	ld	a, e
 	add	a, #0xc1
@@ -105,7 +105,7 @@ _scroll_hard::
 	ld	a, d
 	adc	a, #0xff
 00103$:
-;src/txt_scroll_hard.c:31: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
 	ld	hl, #_g_tile_fontmap32x32plat_000
 	ld	a, e
 	add	a, a
@@ -122,7 +122,7 @@ _scroll_hard::
 	add	hl, hl
 	add	hl, hl
 	add	hl, de
-;src/txt_scroll_hard.c:33: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+;src/txt_scroll_hard.c:34: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 	pop	bc
 	push	bc
 	ld	de, #0x2002
@@ -135,8 +135,8 @@ _scroll_hard::
 	ret
 _texte:
 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
-	.ascii "AND A HAPPY NEW YEAR                           AZERTYUIOPQSD"
-	.ascii "FGH     "
+	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB   AZERTYUIOPQSDFG"
+	.ascii "H     "
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER

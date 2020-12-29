@@ -329,26 +329,26 @@ _main::
 ;src/main.c:168: cpct_setInterruptHandler(myInterruptHandler);
 	ld	hl, #_myInterruptHandler
 	call	_cpct_setInterruptHandler
-;src/main.c:170: while (1) {
+;src/main.c:171: while (1) {
 	ld	bc, #0x0000
 00102$:
-;src/main.c:171: cpct_waitVSYNC();
+;src/main.c:172: cpct_waitVSYNC();
 	push	bc
 	call	_cpct_waitVSYNC
 	pop	bc
-;src/main.c:173: screen_location++;
+;src/main.c:174: screen_location++;
 	ld	iy, #_screen_location
 	inc	0 (iy)
 	jr	NZ,00110$
 	inc	1 (iy)
 00110$:
-;src/main.c:174: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
+;src/main.c:175: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
 	ld	hl, (_screen_location)
 	ld	a, h
 	and	a, #0x23
 	ld	h, a
 	ld	(_screen_location), hl
-;src/main.c:175: screen_plot_address+=2;
+;src/main.c:176: screen_plot_address+=2;
 	ld	hl, #_screen_plot_address
 	ld	a, (hl)
 	add	a, #0x02
@@ -357,13 +357,13 @@ _main::
 	ld	a, (hl)
 	adc	a, #0x00
 	ld	(hl), a
-;src/main.c:176: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+;src/main.c:177: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
 	and	a, #0x87
 	ld	h, a
 	ld	(_screen_plot_address), hl
-;src/main.c:181: scroll_hard(t,screen_plot_address);
+;src/main.c:182: scroll_hard(t,screen_plot_address);
 	push	bc
 	ld	hl, (_screen_plot_address)
 	push	hl
@@ -372,7 +372,7 @@ _main::
 	pop	af
 	pop	af
 	pop	bc
-;src/main.c:183: t=t+1;
+;src/main.c:184: t=t+1;
 	inc	bc
 	jr	00102$
 	.area _CODE

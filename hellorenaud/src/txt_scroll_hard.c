@@ -4,7 +4,7 @@
 
 #define SCREEN_WIDTH 160/2
 
-const char texte []="WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR                           AZERTYUIOPQSDFGH     ";
+const char texte []="WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR FROM THSF AND TETALAB   AZERTYUIOPQSDFGH     ";
 
 /**
  * texte : le texte
@@ -15,6 +15,7 @@ void scroll_hard(int step, u8* screen_plot_address) {
 	unsigned int div;
 	unsigned int mod;
 	unsigned int o;
+	//u8* p;
 	u16 pointeur;
 	u8* plot=screen_plot_address;
 
@@ -31,5 +32,14 @@ void scroll_hard(int step, u8* screen_plot_address) {
 	pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
 
 	cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+	//cpct_drawSpriteBlended(plot, G_TILE_FONTMAP32X32PLAT_000_H, G_TILE_FONTMAP32X32PLAT_000_W, (u8*)pointeur);
+	//p = cpct_getScreenPtr(plot, 0,0);
+	//cpct_drawTileAligned2x8_f((u8*)pointeur, p);
+	//p = cpct_getScreenPtr(plot, 0,8);
+	//cpct_drawTileAligned2x8_f((u8*)pointeur+(2*8), p);
+	//p = cpct_getScreenPtr(plot, 0,16);
+	//cpct_drawTileAligned2x8_f((u8*)pointeur+(4*8), p);
+	//p = cpct_getScreenPtr(plot, 0,24);
+	//cpct_drawTileAligned2x8_f((u8*)pointeur+(6*8), p);
 }
 
