@@ -104,13 +104,13 @@ out (c),c
 ld bc,#0xbd19
 out (c),c
 __endasm;
-		calqueC000();
+		cpct_setVideoMemoryPage(cpct_pageC0);
 		cpct_setVideoMemoryOffset(0);
 		rupture(7);
 	}
 
 	if (intCounter==3) {
-		calqueC000();
+		cpct_setVideoMemoryPage(cpct_pageC0);
 		cpct_setVideoMemoryOffset(0);
 		restoreVBL();
 		rupture(39-19-7+1);

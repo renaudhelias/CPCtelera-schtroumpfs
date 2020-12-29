@@ -14,7 +14,6 @@
 	.globl _bank7_C000
 	.globl _bank0123
 	.globl _calque8000
-	.globl _calqueC000
 	.globl _akp_musicPlay
 	.globl _akp_musicInit
 	.globl _scroll_hard
@@ -23,6 +22,7 @@
 	.globl _killVBL
 	.globl _cpct_getScreenPtr
 	.globl _cpct_setVideoMemoryOffset
+	.globl _cpct_setVideoMemoryPage
 	.globl _cpct_setPALColour
 	.globl _cpct_setPalette
 	.globl _cpct_waitVSYNC
@@ -194,8 +194,9 @@ _myInterruptHandler::
 	out	(c),c
 	ld	bc,#0xbd19
 	out	(c),c
-;src/main.c:107: calqueC000();
-	call	_calqueC000
+;src/main.c:107: cpct_setVideoMemoryPage(cpct_pageC0);
+	ld	l, #0x30
+	call	_cpct_setVideoMemoryPage
 ;src/main.c:108: cpct_setVideoMemoryOffset(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMemoryOffset
@@ -210,8 +211,9 @@ _myInterruptHandler::
 	ld	a,(#_intCounter + 0)
 	sub	a, #0x03
 	jr	NZ,00111$
-;src/main.c:113: calqueC000();
-	call	_calqueC000
+;src/main.c:113: cpct_setVideoMemoryPage(cpct_pageC0);
+	ld	l, #0x30
+	call	_cpct_setVideoMemoryPage
 ;src/main.c:114: cpct_setVideoMemoryOffset(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMemoryOffset

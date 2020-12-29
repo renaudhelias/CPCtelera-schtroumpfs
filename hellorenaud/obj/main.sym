@@ -13,7 +13,6 @@ Symbol Table
     _bank0123                                                      **** GX
     _bank7_C000                                                    **** GX
     _calque8000                                                    **** GX
-    _calqueC000                                                    **** GX
     _cpct_disableFirmware                                          **** GX
     _cpct_drawSprite                                               **** GX
     _cpct_drawSpriteMasked                                         **** GX
@@ -26,6 +25,7 @@ Symbol Table
     _cpct_setPalette                                               **** GX
     _cpct_setStackLocation                                         **** GX
     _cpct_setVideoMemoryOffset                                     **** GX
+    _cpct_setVideoMemoryPage                                       **** GX
     _cpct_setVideoMode                                             **** GX
     _cpct_waitVSYNC                                                **** GX
   0 _crtc                                                          0000 GR
@@ -34,7 +34,7 @@ Symbol Table
     _g_tile_schtroumpf                                             **** GX
   2 _intCounter                                                    0000 GR
     _killVBL                                                       **** GX
-  0 _main                                                          00E0 GR
+  0 _main                                                          00E4 GR
   0 _myInterruptHandler                                            0040 GR
     _restoreVBL                                                    **** GX
     _rupture                                                       **** GX
@@ -48,7 +48,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  1BA   flags    0
+   0 _CODE                                      size  1BE   flags    0
    1 _DATA                                      size    4   flags    0
    2 _INITIALIZED                               size    1   flags    0
    3 _DABS                                      size    0   flags    8

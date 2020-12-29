@@ -112,7 +112,7 @@
    03A7 D5            [11]  112 	push	de
    03A8 C5            [11]  113 	push	bc
    03A9 E5            [11]  114 	push	hl
-   03AA CD DD 47      [17]  115 	call	_cpct_drawSprite
+   03AA CD E1 47      [17]  115 	call	_cpct_drawSprite
    03AD DD F9         [10]  116 	ld	sp, ix
    03AF DD E1         [14]  117 	pop	ix
    03B1 C9            [10]  118 	ret
