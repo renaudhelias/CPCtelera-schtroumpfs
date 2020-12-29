@@ -9,7 +9,8 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _scroll_hard
-	.globl _cpct_drawSprite
+	.globl _cpct_getScreenPtr
+	.globl _cpct_drawTileAligned2x8
 	.globl _texte
 ;--------------------------------------------------------
 ; special function registers
@@ -83,15 +84,9 @@ _scroll_hard::
 	ld	c, l
 	ld	b, h
 	pop	hl
-;src/txt_scroll_hard.c:25: div=div%105;
-	push	bc
-	ld	de, #0x0069
-	push	de
-	push	hl
-	call	__moduint
-	pop	af
-	pop	af
-	pop	bc
+;src/txt_scroll_hard.c:25: div=div%128;
+	res	7, l
+	ld	h, #0x00
 ;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
 	ld	de, #_texte+0
 	add	hl, de
@@ -127,15 +122,84 @@ _scroll_hard::
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
-	add	hl, de
-;src/txt_scroll_hard.c:34: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+	add	hl,de
+	ex	de,hl
+;src/txt_scroll_hard.c:36: p = cpct_getScreenPtr(plot, 0,0);
 	pop	bc
 	push	bc
-	ld	de, #0x2002
+	push	bc
 	push	de
+	ld	hl, #0x0000
+	push	hl
+	push	bc
+	call	_cpct_getScreenPtr
+	pop	de
+	pop	bc
+;src/txt_scroll_hard.c:37: cpct_drawTileAligned2x8((u8*)pointeur, p);
+	push	de
+	pop	iy
+	push	bc
+	push	de
+	push	hl
+	push	iy
+	call	_cpct_drawTileAligned2x8
+	pop	de
+	pop	bc
+;src/txt_scroll_hard.c:38: p = cpct_getScreenPtr(plot, 0,8);
+	push	bc
+	push	de
+	ld	hl, #0x0800
+	push	hl
+	push	bc
+	call	_cpct_getScreenPtr
+	pop	de
+	pop	bc
+;src/txt_scroll_hard.c:39: cpct_drawTileAligned2x8((u8*)pointeur+(2*8), p);
+	ld	iy, #0x0010
+	add	iy, de
+	push	bc
+	push	de
+	push	hl
+	push	iy
+	call	_cpct_drawTileAligned2x8
+	pop	de
+	pop	bc
+;src/txt_scroll_hard.c:40: p = cpct_getScreenPtr(plot, 0,16);
+	push	bc
+	push	de
+	ld	hl, #0x1000
+	push	hl
+	push	bc
+	call	_cpct_getScreenPtr
+	pop	de
+	pop	bc
+;src/txt_scroll_hard.c:41: cpct_drawTileAligned2x8((u8*)pointeur+(4*8), p);
+	push	hl
+	pop	iy
+	ld	hl, #0x0020
+	add	hl, de
+	push	bc
+	push	de
+	push	iy
+	push	hl
+	call	_cpct_drawTileAligned2x8
+	pop	de
+	pop	bc
+;src/txt_scroll_hard.c:42: p = cpct_getScreenPtr(plot, 0,24);
+	push	de
+	ld	hl, #0x1800
+	push	hl
+	push	bc
+	call	_cpct_getScreenPtr
+	ld	c, l
+	ld	b, h
+	pop	de
+;src/txt_scroll_hard.c:43: cpct_drawTileAligned2x8((u8*)pointeur+(6*8), p);
+	ld	hl, #0x0030
+	add	hl, de
 	push	bc
 	push	hl
-	call	_cpct_drawSprite
+	call	_cpct_drawTileAligned2x8
 	ld	sp, ix
 	pop	ix
 	ret

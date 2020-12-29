@@ -33,6 +33,7 @@ void scroll_hard(int step, u8* screen_plot_address) {
 
 	cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
 	//cpct_drawSpriteBlended(plot, G_TILE_FONTMAP32X32PLAT_000_H, G_TILE_FONTMAP32X32PLAT_000_W, (u8*)pointeur);
+	// FIXME, c'est pire sans _f
 	//p = cpct_getScreenPtr(plot, 0,0);
 	//cpct_drawTileAligned2x8_f((u8*)pointeur, p);
 	//p = cpct_getScreenPtr(plot, 0,8);
