@@ -1,4 +1,5 @@
-unsigned char callback_counter=0;
+
+unsigned int callback_counter=0;
 
 void vsync()
 {

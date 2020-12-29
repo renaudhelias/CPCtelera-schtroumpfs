@@ -42,7 +42,7 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/txt_scroll_hard.c:14: void scroll_hard(int step, u8* screen_plot_address) {
+;src/txt_scroll_hard.c:14: void scroll_hard(u16 step, u8* screen_plot_address) {
 ;	---------------------------------
 ; Function scroll_hard
 ; ---------------------------------
@@ -52,42 +52,27 @@ _scroll_hard::
 	add	ix,sp
 	push	af
 ;src/txt_scroll_hard.c:20: u8* plot=screen_plot_address;
-	ld	a, 6 (ix)
-	ld	-2 (ix), a
-	ld	a, 7 (ix)
-	ld	-1 (ix), a
+	ld	c,6 (ix)
+	ld	b,7 (ix)
 ;src/txt_scroll_hard.c:23: div=step/8;
-	ld	l,4 (ix)
-	ld	h,5 (ix)
-	bit	7, h
-	jr	Z,00106$
-	ld	bc, #0x0007
-	add	hl, bc
-00106$:
-	srl	h
-	rr	l
-	srl	h
-	rr	l
-	srl	h
-	rr	l
+	ld	e,4 (ix)
+	ld	d,5 (ix)
+	srl	d
+	rr	e
+	srl	d
+	rr	e
+	srl	d
+	rr	e
 ;src/txt_scroll_hard.c:24: mod=step%8;
-	push	hl
-	ld	bc, #0x0008
-	push	bc
-	ld	c,4 (ix)
-	ld	b,5 (ix)
-	push	bc
-	call	__modsint
-	pop	af
-	pop	af
-	ld	c, l
-	ld	b, h
-	pop	hl
+	ld	a, 4 (ix)
+	and	a, #0x07
+	ld	-2 (ix), a
+	ld	-1 (ix), #0x00
 ;src/txt_scroll_hard.c:25: div=div%128;
-	res	7, l
-	ld	h, #0x00
+	res	7, e
+	ld	d, #0x00
 ;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
-	ld	de, #_texte+0
+	ld	hl, #_texte+0
 	add	hl, de
 	ld	e, (hl)
 	ld	a, e
@@ -113,8 +98,8 @@ _scroll_hard::
 	ld	e, #0x00
 	add	hl,de
 	ex	de,hl
-	ld	l, c
-	ld	h, b
+	pop	hl
+	push	hl
 	add	hl, hl
 	add	hl, hl
 	add	hl, hl
@@ -123,8 +108,6 @@ _scroll_hard::
 	add	hl, hl
 	add	hl, de
 ;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, 2, 32);
-	pop	bc
-	push	bc
 	ld	de, #0x2002
 	push	de
 	push	bc

@@ -14,7 +14,7 @@ nolist
 .screen_location  equ &1000 
                          ;address to send to CRTC6845 screen chip
 
-.screen_plot_address equ &4000+screen_wide-2 
+.screen_plot_address equ &4000+screen_wide 
                          ;screen address to plot column of character
 
 .character_height equ 32 ;height of a character in the font in lines

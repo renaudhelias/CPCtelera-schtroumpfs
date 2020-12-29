@@ -241,15 +241,15 @@ _myInterruptHandler::
 ; ---------------------------------
 _main::
 ;src/main.c:134: u8* sprite=g_items_0;
-;src/main.c:139: bank7_C000();
+;src/main.c:137: bank7_C000();
 	call	_bank7_C000
-;src/main.c:140: akp_musicInit();
+;src/main.c:138: akp_musicInit();
 	call	_akp_musicInit
-;src/main.c:141: bank0123();
+;src/main.c:139: bank0123();
 	call	_bank0123
-;src/main.c:144: cpct_disableFirmware();
+;src/main.c:142: cpct_disableFirmware();
 	call	_cpct_disableFirmware
-;src/main.c:145: cpct_memcpy(0x6000,0x8000,0x2000);// la pile peut etre négative...
+;src/main.c:143: cpct_memcpy(0x6000,0x8000,0x2000);// la pile peut etre négative...
 	ld	hl, #0x2000
 	push	hl
 	ld	h, #0x80
@@ -257,10 +257,10 @@ _main::
 	ld	h, #0x60
 	push	hl
 	call	_cpct_memcpy
-;src/main.c:146: cpct_setStackLocation(0x6000);
+;src/main.c:144: cpct_setStackLocation(0x6000);
 	ld	hl, #0x6000
 	call	_cpct_setStackLocation
-;src/main.c:147: cpct_memset_f64(0x8000, 0xFFFF, 0x4000);
+;src/main.c:145: cpct_memset_f64(0x8000, 0xFFFF, 0x4000);
 	ld	hl, #0x4000
 	push	hl
 	ld	hl, #0xffff
@@ -268,28 +268,28 @@ _main::
 	ld	hl, #0x8000
 	push	hl
 	call	_cpct_memset_f64
-;src/main.c:149: bank0123();
+;src/main.c:147: bank0123();
 	call	_bank0123
-;src/main.c:150: cpct_setVideoMode(0);
+;src/main.c:148: cpct_setVideoMode(0);
 	ld	l, #0x00
 	call	_cpct_setVideoMode
-;src/main.c:151: cpct_setBorder(HW_BLACK);
+;src/main.c:149: cpct_setBorder(HW_BLACK);
 	ld	hl, #0x1410
 	push	hl
 	call	_cpct_setPALColour
-;src/main.c:152: cpct_setPalette(g_tile_palette, 6);
+;src/main.c:150: cpct_setPalette(g_tile_palette, 6);
 	ld	hl, #0x0006
 	push	hl
 	ld	hl, #_g_tile_palette
 	push	hl
 	call	_cpct_setPalette
-;src/main.c:155: p = cpct_getScreenPtr(CPCT_VMEM_START, 9,110);
+;src/main.c:153: p = cpct_getScreenPtr(CPCT_VMEM_START, 9,110);
 	ld	hl, #0x6e09
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:156: cpct_hflipSpriteM0(4, 8, sprite);
+;src/main.c:154: cpct_hflipSpriteM0(4, 8, sprite);
 	ld	bc, #_g_items_0
 	push	hl
 	push	bc
@@ -299,56 +299,56 @@ _main::
 	call	_cpct_hflipSpriteM0
 	pop	bc
 	pop	hl
-;src/main.c:157: cpct_drawSprite(sprite, p, 4, 8);
+;src/main.c:155: cpct_drawSprite(sprite, p, 4, 8);
 	ld	de, #0x0804
 	push	de
 	push	hl
 	push	bc
 	call	_cpct_drawSprite
-;src/main.c:160: p = cpct_getScreenPtr(CPCT_VMEM_START, 10,96);
+;src/main.c:158: p = cpct_getScreenPtr(CPCT_VMEM_START, 10,96);
 	ld	hl, #0x600a
 	push	hl
 	ld	hl, #0xc000
 	push	hl
 	call	_cpct_getScreenPtr
-;src/main.c:161: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+;src/main.c:159: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 	ld	bc, #_g_tile_schtroumpf+0
 	ld	de, #0x2010
 	push	de
 	push	hl
 	push	bc
 	call	_cpct_drawSpriteMasked
-;src/main.c:166: calque8000();
+;src/main.c:164: calque8000();
 	call	_calque8000
-;src/main.c:168: screen_location=(u8 *)(0x2000);
+;src/main.c:166: screen_location=(u8 *)(0x2000);
 	ld	hl, #0x2000
 	ld	(_screen_location), hl
-;src/main.c:169: screen_plot_address=(u8 *)(0x8000+80-2);
+;src/main.c:167: screen_plot_address=(u8 *)(0x8000+80-2);
 	ld	hl, #0x804e
 	ld	(_screen_plot_address), hl
-;src/main.c:171: cpct_setInterruptHandler(myInterruptHandler);
+;src/main.c:169: cpct_setInterruptHandler(myInterruptHandler);
 	ld	hl, #_myInterruptHandler
 	call	_cpct_setInterruptHandler
-;src/main.c:174: while (1) {
+;src/main.c:172: while (1) {
 	ld	bc, #0x0000
 00102$:
-;src/main.c:175: cpct_waitVSYNC();
+;src/main.c:173: cpct_waitVSYNC();
 	push	bc
 	call	_cpct_waitVSYNC
 	pop	bc
-;src/main.c:177: screen_location++;
+;src/main.c:175: screen_location++;
 	ld	iy, #_screen_location
 	inc	0 (iy)
 	jr	NZ,00110$
 	inc	1 (iy)
 00110$:
-;src/main.c:178: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
+;src/main.c:176: screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
 	ld	hl, (_screen_location)
 	ld	a, h
 	and	a, #0x23
 	ld	h, a
 	ld	(_screen_location), hl
-;src/main.c:179: screen_plot_address+=2;
+;src/main.c:177: screen_plot_address+=2;
 	ld	hl, #_screen_plot_address
 	ld	a, (hl)
 	add	a, #0x02
@@ -357,13 +357,13 @@ _main::
 	ld	a, (hl)
 	adc	a, #0x00
 	ld	(hl), a
-;src/main.c:180: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+;src/main.c:178: screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
 	and	a, #0x87
 	ld	h, a
 	ld	(_screen_plot_address), hl
-;src/main.c:185: scroll_hard(t,screen_plot_address);
+;src/main.c:184: scroll_hard(t,screen_plot_address);
 	push	bc
 	ld	hl, (_screen_plot_address)
 	push	hl
@@ -372,7 +372,7 @@ _main::
 	pop	af
 	pop	af
 	pop	bc
-;src/main.c:187: t=t+1;
+;src/main.c:186: t=t+1;
 	inc	bc
 	jr	00102$
 	.area _CODE

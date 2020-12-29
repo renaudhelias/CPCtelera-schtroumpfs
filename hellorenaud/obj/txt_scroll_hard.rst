@@ -42,7 +42,7 @@
                              42 ; code
                              43 ;--------------------------------------------------------
                              44 	.area _CODE
-                             45 ;src/txt_scroll_hard.c:14: void scroll_hard(int step, u8* screen_plot_address) {
+                             45 ;src/txt_scroll_hard.c:14: void scroll_hard(u16 step, u8* screen_plot_address) {
                              46 ;	---------------------------------
                              47 ; Function scroll_hard
                              48 ; ---------------------------------
@@ -52,89 +52,72 @@
    034E DD 39         [15]   52 	add	ix,sp
    0350 F5            [11]   53 	push	af
                              54 ;src/txt_scroll_hard.c:20: u8* plot=screen_plot_address;
-   0351 DD 7E 06      [19]   55 	ld	a, 6 (ix)
-   0354 DD 77 FE      [19]   56 	ld	-2 (ix), a
-   0357 DD 7E 07      [19]   57 	ld	a, 7 (ix)
-   035A DD 77 FF      [19]   58 	ld	-1 (ix), a
-                             59 ;src/txt_scroll_hard.c:23: div=step/8;
-   035D DD 6E 04      [19]   60 	ld	l,4 (ix)
-   0360 DD 66 05      [19]   61 	ld	h,5 (ix)
-   0363 CB 7C         [ 8]   62 	bit	7, h
-   0365 28 04         [12]   63 	jr	Z,00106$
-   0367 01 07 00      [10]   64 	ld	bc, #0x0007
-   036A 09            [11]   65 	add	hl, bc
-   036B                      66 00106$:
-   036B CB 3C         [ 8]   67 	srl	h
-   036D CB 1D         [ 8]   68 	rr	l
-   036F CB 3C         [ 8]   69 	srl	h
-   0371 CB 1D         [ 8]   70 	rr	l
-   0373 CB 3C         [ 8]   71 	srl	h
-   0375 CB 1D         [ 8]   72 	rr	l
-                             73 ;src/txt_scroll_hard.c:24: mod=step%8;
-   0377 E5            [11]   74 	push	hl
-   0378 01 08 00      [10]   75 	ld	bc, #0x0008
-   037B C5            [11]   76 	push	bc
-   037C DD 4E 04      [19]   77 	ld	c,4 (ix)
-   037F DD 46 05      [19]   78 	ld	b,5 (ix)
-   0382 C5            [11]   79 	push	bc
-   0383 CD 9A 49      [17]   80 	call	__modsint
-   0386 F1            [10]   81 	pop	af
-   0387 F1            [10]   82 	pop	af
-   0388 4D            [ 4]   83 	ld	c, l
-   0389 44            [ 4]   84 	ld	b, h
-   038A E1            [10]   85 	pop	hl
-                             86 ;src/txt_scroll_hard.c:25: div=div%128;
-   038B CB BD         [ 8]   87 	res	7, l
-   038D 26 00         [ 7]   88 	ld	h, #0x00
-                             89 ;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
-   038F 11 CA 03      [10]   90 	ld	de, #_texte+0
-   0392 19            [11]   91 	add	hl, de
-   0393 5E            [ 7]   92 	ld	e, (hl)
-   0394 7B            [ 4]   93 	ld	a, e
-   0395 D6 20         [ 7]   94 	sub	a, #0x20
-   0397 20 05         [12]   95 	jr	NZ,00102$
-                             96 ;src/txt_scroll_hard.c:27: o=0;
-   0399 11 00 00      [10]   97 	ld	de, #0x0000
-   039C 18 09         [12]   98 	jr	00103$
-   039E                      99 00102$:
-                            100 ;src/txt_scroll_hard.c:29: o=texte[div]-'?';
-   039E 16 00         [ 7]  101 	ld	d, #0x00
-   03A0 7B            [ 4]  102 	ld	a, e
-   03A1 C6 C1         [ 7]  103 	add	a, #0xc1
-   03A3 5F            [ 4]  104 	ld	e, a
-   03A4 7A            [ 4]  105 	ld	a, d
-   03A5 CE FF         [ 7]  106 	adc	a, #0xff
-   03A7                     107 00103$:
-                            108 ;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
-   03A7 21 4C 04      [10]  109 	ld	hl, #_g_tile_fontmap32x32plat_000
-   03AA 7B            [ 4]  110 	ld	a, e
-   03AB 87            [ 4]  111 	add	a, a
-   03AC 57            [ 4]  112 	ld	d, a
-   03AD 1E 00         [ 7]  113 	ld	e, #0x00
-   03AF 19            [11]  114 	add	hl,de
-   03B0 EB            [ 4]  115 	ex	de,hl
-   03B1 69            [ 4]  116 	ld	l, c
-   03B2 60            [ 4]  117 	ld	h, b
-   03B3 29            [11]  118 	add	hl, hl
-   03B4 29            [11]  119 	add	hl, hl
-   03B5 29            [11]  120 	add	hl, hl
-   03B6 29            [11]  121 	add	hl, hl
-   03B7 29            [11]  122 	add	hl, hl
-   03B8 29            [11]  123 	add	hl, hl
-   03B9 19            [11]  124 	add	hl, de
-                            125 ;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, 2, 32);
-   03BA C1            [10]  126 	pop	bc
-   03BB C5            [11]  127 	push	bc
-   03BC 11 02 20      [10]  128 	ld	de, #0x2002
-   03BF D5            [11]  129 	push	de
-   03C0 C5            [11]  130 	push	bc
-   03C1 E5            [11]  131 	push	hl
-   03C2 CD FA 47      [17]  132 	call	_cpct_drawSprite
-   03C5 DD F9         [10]  133 	ld	sp, ix
-   03C7 DD E1         [14]  134 	pop	ix
-   03C9 C9            [10]  135 	ret
-   03CA                     136 _texte:
-   03CA 57 45 20 57 49 53   137 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
+   0351 DD 4E 06      [19]   55 	ld	c,6 (ix)
+   0354 DD 46 07      [19]   56 	ld	b,7 (ix)
+                             57 ;src/txt_scroll_hard.c:23: div=step/8;
+   0357 DD 5E 04      [19]   58 	ld	e,4 (ix)
+   035A DD 56 05      [19]   59 	ld	d,5 (ix)
+   035D CB 3A         [ 8]   60 	srl	d
+   035F CB 1B         [ 8]   61 	rr	e
+   0361 CB 3A         [ 8]   62 	srl	d
+   0363 CB 1B         [ 8]   63 	rr	e
+   0365 CB 3A         [ 8]   64 	srl	d
+   0367 CB 1B         [ 8]   65 	rr	e
+                             66 ;src/txt_scroll_hard.c:24: mod=step%8;
+   0369 DD 7E 04      [19]   67 	ld	a, 4 (ix)
+   036C E6 07         [ 7]   68 	and	a, #0x07
+   036E DD 77 FE      [19]   69 	ld	-2 (ix), a
+   0371 DD 36 FF 00   [19]   70 	ld	-1 (ix), #0x00
+                             71 ;src/txt_scroll_hard.c:25: div=div%128;
+   0375 CB BB         [ 8]   72 	res	7, e
+   0377 16 00         [ 7]   73 	ld	d, #0x00
+                             74 ;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
+   0379 21 B2 03      [10]   75 	ld	hl, #_texte+0
+   037C 19            [11]   76 	add	hl, de
+   037D 5E            [ 7]   77 	ld	e, (hl)
+   037E 7B            [ 4]   78 	ld	a, e
+   037F D6 20         [ 7]   79 	sub	a, #0x20
+   0381 20 05         [12]   80 	jr	NZ,00102$
+                             81 ;src/txt_scroll_hard.c:27: o=0;
+   0383 11 00 00      [10]   82 	ld	de, #0x0000
+   0386 18 09         [12]   83 	jr	00103$
+   0388                      84 00102$:
+                             85 ;src/txt_scroll_hard.c:29: o=texte[div]-'?';
+   0388 16 00         [ 7]   86 	ld	d, #0x00
+   038A 7B            [ 4]   87 	ld	a, e
+   038B C6 C1         [ 7]   88 	add	a, #0xc1
+   038D 5F            [ 4]   89 	ld	e, a
+   038E 7A            [ 4]   90 	ld	a, d
+   038F CE FF         [ 7]   91 	adc	a, #0xff
+   0391                      92 00103$:
+                             93 ;src/txt_scroll_hard.c:32: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+   0391 21 34 04      [10]   94 	ld	hl, #_g_tile_fontmap32x32plat_000
+   0394 7B            [ 4]   95 	ld	a, e
+   0395 87            [ 4]   96 	add	a, a
+   0396 57            [ 4]   97 	ld	d, a
+   0397 1E 00         [ 7]   98 	ld	e, #0x00
+   0399 19            [11]   99 	add	hl,de
+   039A EB            [ 4]  100 	ex	de,hl
+   039B E1            [10]  101 	pop	hl
+   039C E5            [11]  102 	push	hl
+   039D 29            [11]  103 	add	hl, hl
+   039E 29            [11]  104 	add	hl, hl
+   039F 29            [11]  105 	add	hl, hl
+   03A0 29            [11]  106 	add	hl, hl
+   03A1 29            [11]  107 	add	hl, hl
+   03A2 29            [11]  108 	add	hl, hl
+   03A3 19            [11]  109 	add	hl, de
+                            110 ;src/txt_scroll_hard.c:35: cpct_drawSprite((u8*)pointeur, plot, 2, 32);
+   03A4 11 02 20      [10]  111 	ld	de, #0x2002
+   03A7 D5            [11]  112 	push	de
+   03A8 C5            [11]  113 	push	bc
+   03A9 E5            [11]  114 	push	hl
+   03AA CD DD 47      [17]  115 	call	_cpct_drawSprite
+   03AD DD F9         [10]  116 	ld	sp, ix
+   03AF DD E1         [14]  117 	pop	ix
+   03B1 C9            [10]  118 	ret
+   03B2                     119 _texte:
+   03B2 57 45 20 57 49 53   120 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
         48 20 59 4F 55 20
         41 20 4D 45 52 52
         59 20 43 48 52 49
@@ -144,7 +127,7 @@
         41 20 4D 45 52 52
         59 20 43 48 52 49
         53 54 4D 41 53 20
-   0406 41 4E 44 20 41 20   138 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQS"
+   03EE 41 4E 44 20 41 20   121 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQS"
         48 41 50 50 59 20
         4E 45 57 20 59 45
         41 52 20 46 52 4F
@@ -154,10 +137,10 @@
         20 20 20 20 20 20
         41 5A 45 52 54 59
         55 49 4F 50 51 53
-   0442 44 46 47 20 20 20   139 	.ascii "DFG     "
+   042A 44 46 47 20 20 20   122 	.ascii "DFG     "
         20 20
-   044A 00                  140 	.db 0x00
-   044B 00                  141 	.db 0x00
-                            142 	.area _CODE
-                            143 	.area _INITIALIZER
-                            144 	.area _CABS (ABS)
+   0432 00                  123 	.db 0x00
+   0433 00                  124 	.db 0x00
+                            125 	.area _CODE
+                            126 	.area _INITIALIZER
+                            127 	.area _CABS (ABS)

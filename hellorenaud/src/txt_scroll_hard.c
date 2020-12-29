@@ -11,10 +11,10 @@ const char texte []="WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS
  * l : la longueur du texte
  * step : le pas de l'animation, de 0 à N, N peu importe.
  */
-void scroll_hard(int step, u8* screen_plot_address) {
-	unsigned int div;
-	unsigned int mod;
-	unsigned int o;
+void scroll_hard(u16 step, u8* screen_plot_address) {
+	u16 div;
+	u16 mod;
+	u16 o;
 	//u8* p;
 	u16 pointeur;
 	u8* plot=screen_plot_address;

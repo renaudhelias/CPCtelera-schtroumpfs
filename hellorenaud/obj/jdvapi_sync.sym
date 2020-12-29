@@ -8,29 +8,29 @@ Symbol Table
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
     ___sdcc_call_hl                                                **** GX
-    __modsint                                                      **** GX
-  7 __xinit__aFunction                                             0001 R
+    __moduint                                                      **** GX
+  7 __xinit__aFunction                                             0002 R
   7 __xinit__callback_counter                                      0000 R
-  2 _aFunction                                                     0001 GR
-  0 _bank0123                                                      00AC GR
-  0 _bank4_4000                                                    00B8 GR
-  0 _bank5_4000                                                    00BE GR
-  0 _bank6_4000                                                    00C4 GR
-  0 _bank7_4000                                                    00CA GR
-  0 _bank7_C000                                                    00B2 GR
-  0 _callback                                                      0017 GR
+  2 _aFunction                                                     0002 GR
+  0 _bank0123                                                      00A7 GR
+  0 _bank4_4000                                                    00B3 GR
+  0 _bank5_4000                                                    00B9 GR
+  0 _bank6_4000                                                    00BF GR
+  0 _bank7_4000                                                    00C5 GR
+  0 _bank7_C000                                                    00AD GR
+  0 _callback                                                      0018 GR
   2 _callback_counter                                              0000 GR
-  0 _calque4000                                                    0096 GR
-  0 _calque4C00                                                    00A1 GR
-  0 _calque8000                                                    008B GR
-  0 _calqueC000                                                    0080 GR
-  0 _halt                                                          007E GR
-  0 _handle_raster                                                 006D GR
-  0 _overscanH                                                     00D0 GR
-  0 _raster                                                        005E GR
-  0 _raster_halt                                                   000E GR
-  0 _raster_handler                                                001B GR
-  0 _scan                                                          00F9 GR
+  0 _calque4000                                                    0091 GR
+  0 _calque4C00                                                    009C GR
+  0 _calque8000                                                    0086 GR
+  0 _calqueC000                                                    007B GR
+  0 _halt                                                          0079 GR
+  0 _handle_raster                                                 0068 GR
+  0 _overscanH                                                     00CB GR
+  0 _raster                                                        0059 GR
+  0 _raster_halt                                                   000F GR
+  0 _raster_handler                                                001C GR
+  0 _scan                                                          00F4 GR
   0 _vsync                                                         0000 GR
   0 _wait_vsync                                                    0002 R
 
@@ -39,13 +39,13 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  122   flags    0
+   0 _CODE                                      size  11D   flags    0
    1 _DATA                                      size    0   flags    0
-   2 _INITIALIZED                               size    3   flags    0
+   2 _INITIALIZED                               size    4   flags    0
    3 _DABS                                      size    0   flags    8
    4 _HOME                                      size    0   flags    0
    5 _GSINIT                                    size    0   flags    0
    6 _GSFINAL                                   size    0   flags    0
-   7 _INITIALIZER                               size    3   flags    0
+   7 _INITIALIZER                               size    4   flags    0
    8 _CABS                                      size    0   flags    8
 

@@ -241,15 +241,15 @@
                             241 ; ---------------------------------
    00E0                     242 _main::
                             243 ;src/main.c:134: u8* sprite=g_items_0;
-                            244 ;src/main.c:139: bank7_C000();
+                            244 ;src/main.c:137: bank7_C000();
    00E0 CDr00r00      [17]  245 	call	_bank7_C000
-                            246 ;src/main.c:140: akp_musicInit();
+                            246 ;src/main.c:138: akp_musicInit();
    00E3 CDr00r00      [17]  247 	call	_akp_musicInit
-                            248 ;src/main.c:141: bank0123();
+                            248 ;src/main.c:139: bank0123();
    00E6 CDr00r00      [17]  249 	call	_bank0123
-                            250 ;src/main.c:144: cpct_disableFirmware();
+                            250 ;src/main.c:142: cpct_disableFirmware();
    00E9 CDr00r00      [17]  251 	call	_cpct_disableFirmware
-                            252 ;src/main.c:145: cpct_memcpy(0x6000,0x8000,0x2000);// la pile peut etre négative...
+                            252 ;src/main.c:143: cpct_memcpy(0x6000,0x8000,0x2000);// la pile peut etre négative...
    00EC 21 00 20      [10]  253 	ld	hl, #0x2000
    00EF E5            [11]  254 	push	hl
    00F0 26 80         [ 7]  255 	ld	h, #0x80
@@ -257,10 +257,10 @@
    00F3 26 60         [ 7]  257 	ld	h, #0x60
    00F5 E5            [11]  258 	push	hl
    00F6 CDr00r00      [17]  259 	call	_cpct_memcpy
-                            260 ;src/main.c:146: cpct_setStackLocation(0x6000);
+                            260 ;src/main.c:144: cpct_setStackLocation(0x6000);
    00F9 21 00 60      [10]  261 	ld	hl, #0x6000
    00FC CDr00r00      [17]  262 	call	_cpct_setStackLocation
-                            263 ;src/main.c:147: cpct_memset_f64(0x8000, 0xFFFF, 0x4000);
+                            263 ;src/main.c:145: cpct_memset_f64(0x8000, 0xFFFF, 0x4000);
    00FF 21 00 40      [10]  264 	ld	hl, #0x4000
    0102 E5            [11]  265 	push	hl
    0103 21 FF FF      [10]  266 	ld	hl, #0xffff
@@ -268,28 +268,28 @@
    0107 21 00 80      [10]  268 	ld	hl, #0x8000
    010A E5            [11]  269 	push	hl
    010B CDr00r00      [17]  270 	call	_cpct_memset_f64
-                            271 ;src/main.c:149: bank0123();
+                            271 ;src/main.c:147: bank0123();
    010E CDr00r00      [17]  272 	call	_bank0123
-                            273 ;src/main.c:150: cpct_setVideoMode(0);
+                            273 ;src/main.c:148: cpct_setVideoMode(0);
    0111 2E 00         [ 7]  274 	ld	l, #0x00
    0113 CDr00r00      [17]  275 	call	_cpct_setVideoMode
-                            276 ;src/main.c:151: cpct_setBorder(HW_BLACK);
+                            276 ;src/main.c:149: cpct_setBorder(HW_BLACK);
    0116 21 10 14      [10]  277 	ld	hl, #0x1410
    0119 E5            [11]  278 	push	hl
    011A CDr00r00      [17]  279 	call	_cpct_setPALColour
-                            280 ;src/main.c:152: cpct_setPalette(g_tile_palette, 6);
+                            280 ;src/main.c:150: cpct_setPalette(g_tile_palette, 6);
    011D 21 06 00      [10]  281 	ld	hl, #0x0006
    0120 E5            [11]  282 	push	hl
    0121 21r00r00      [10]  283 	ld	hl, #_g_tile_palette
    0124 E5            [11]  284 	push	hl
    0125 CDr00r00      [17]  285 	call	_cpct_setPalette
-                            286 ;src/main.c:155: p = cpct_getScreenPtr(CPCT_VMEM_START, 9,110);
+                            286 ;src/main.c:153: p = cpct_getScreenPtr(CPCT_VMEM_START, 9,110);
    0128 21 09 6E      [10]  287 	ld	hl, #0x6e09
    012B E5            [11]  288 	push	hl
    012C 21 00 C0      [10]  289 	ld	hl, #0xc000
    012F E5            [11]  290 	push	hl
    0130 CDr00r00      [17]  291 	call	_cpct_getScreenPtr
-                            292 ;src/main.c:156: cpct_hflipSpriteM0(4, 8, sprite);
+                            292 ;src/main.c:154: cpct_hflipSpriteM0(4, 8, sprite);
    0133 01r20r00      [10]  293 	ld	bc, #_g_items_0
    0136 E5            [11]  294 	push	hl
    0137 C5            [11]  295 	push	bc
@@ -299,56 +299,56 @@
    013D CDr00r00      [17]  299 	call	_cpct_hflipSpriteM0
    0140 C1            [10]  300 	pop	bc
    0141 E1            [10]  301 	pop	hl
-                            302 ;src/main.c:157: cpct_drawSprite(sprite, p, 4, 8);
+                            302 ;src/main.c:155: cpct_drawSprite(sprite, p, 4, 8);
    0142 11 04 08      [10]  303 	ld	de, #0x0804
    0145 D5            [11]  304 	push	de
    0146 E5            [11]  305 	push	hl
    0147 C5            [11]  306 	push	bc
    0148 CDr00r00      [17]  307 	call	_cpct_drawSprite
-                            308 ;src/main.c:160: p = cpct_getScreenPtr(CPCT_VMEM_START, 10,96);
+                            308 ;src/main.c:158: p = cpct_getScreenPtr(CPCT_VMEM_START, 10,96);
    014B 21 0A 60      [10]  309 	ld	hl, #0x600a
    014E E5            [11]  310 	push	hl
    014F 21 00 C0      [10]  311 	ld	hl, #0xc000
    0152 E5            [11]  312 	push	hl
    0153 CDr00r00      [17]  313 	call	_cpct_getScreenPtr
-                            314 ;src/main.c:161: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+                            314 ;src/main.c:159: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
    0156 01r00r00      [10]  315 	ld	bc, #_g_tile_schtroumpf+0
    0159 11 10 20      [10]  316 	ld	de, #0x2010
    015C D5            [11]  317 	push	de
    015D E5            [11]  318 	push	hl
    015E C5            [11]  319 	push	bc
    015F CDr00r00      [17]  320 	call	_cpct_drawSpriteMasked
-                            321 ;src/main.c:166: calque8000();
+                            321 ;src/main.c:164: calque8000();
    0162 CDr00r00      [17]  322 	call	_calque8000
-                            323 ;src/main.c:168: screen_location=(u8 *)(0x2000);
+                            323 ;src/main.c:166: screen_location=(u8 *)(0x2000);
    0165 21 00 20      [10]  324 	ld	hl, #0x2000
    0168 22r00r00      [16]  325 	ld	(_screen_location), hl
-                            326 ;src/main.c:169: screen_plot_address=(u8 *)(0x8000+80-2);
+                            326 ;src/main.c:167: screen_plot_address=(u8 *)(0x8000+80-2);
    016B 21 4E 80      [10]  327 	ld	hl, #0x804e
    016E 22r02r00      [16]  328 	ld	(_screen_plot_address), hl
-                            329 ;src/main.c:171: cpct_setInterruptHandler(myInterruptHandler);
+                            329 ;src/main.c:169: cpct_setInterruptHandler(myInterruptHandler);
    0171 21r40r00      [10]  330 	ld	hl, #_myInterruptHandler
    0174 CDr00r00      [17]  331 	call	_cpct_setInterruptHandler
-                            332 ;src/main.c:174: while (1) {
+                            332 ;src/main.c:172: while (1) {
    0177 01 00 00      [10]  333 	ld	bc, #0x0000
    017A                     334 00102$:
-                            335 ;src/main.c:175: cpct_waitVSYNC();
+                            335 ;src/main.c:173: cpct_waitVSYNC();
    017A C5            [11]  336 	push	bc
    017B CDr00r00      [17]  337 	call	_cpct_waitVSYNC
    017E C1            [10]  338 	pop	bc
-                            339 ;src/main.c:177: screen_location++;
+                            339 ;src/main.c:175: screen_location++;
    017F FD 21r00r00   [14]  340 	ld	iy, #_screen_location
    0183 FD 34 00      [23]  341 	inc	0 (iy)
    0186 20 03         [12]  342 	jr	NZ,00110$
    0188 FD 34 01      [23]  343 	inc	1 (iy)
    018B                     344 00110$:
-                            345 ;src/main.c:178: screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
+                            345 ;src/main.c:176: screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
    018B 2Ar00r00      [16]  346 	ld	hl, (_screen_location)
    018E 7C            [ 4]  347 	ld	a, h
    018F E6 23         [ 7]  348 	and	a, #0x23
    0191 67            [ 4]  349 	ld	h, a
    0192 22r00r00      [16]  350 	ld	(_screen_location), hl
-                            351 ;src/main.c:179: screen_plot_address+=2;
+                            351 ;src/main.c:177: screen_plot_address+=2;
    0195 21r02r00      [10]  352 	ld	hl, #_screen_plot_address
    0198 7E            [ 7]  353 	ld	a, (hl)
    0199 C6 02         [ 7]  354 	add	a, #0x02
@@ -357,13 +357,13 @@
    019D 7E            [ 7]  357 	ld	a, (hl)
    019E CE 00         [ 7]  358 	adc	a, #0x00
    01A0 77            [ 7]  359 	ld	(hl), a
-                            360 ;src/main.c:180: screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+                            360 ;src/main.c:178: screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
    01A1 2Ar02r00      [16]  361 	ld	hl, (_screen_plot_address)
    01A4 7C            [ 4]  362 	ld	a, h
    01A5 E6 87         [ 7]  363 	and	a, #0x87
    01A7 67            [ 4]  364 	ld	h, a
    01A8 22r02r00      [16]  365 	ld	(_screen_plot_address), hl
-                            366 ;src/main.c:185: scroll_hard(t,screen_plot_address);
+                            366 ;src/main.c:184: scroll_hard(t,screen_plot_address);
    01AB C5            [11]  367 	push	bc
    01AC 2Ar02r00      [16]  368 	ld	hl, (_screen_plot_address)
    01AF E5            [11]  369 	push	hl
@@ -372,7 +372,7 @@
    01B4 F1            [10]  372 	pop	af
    01B5 F1            [10]  373 	pop	af
    01B6 C1            [10]  374 	pop	bc
-                            375 ;src/main.c:187: t=t+1;
+                            375 ;src/main.c:186: t=t+1;
    01B7 03            [ 6]  376 	inc	bc
    01B8 18 C0         [12]  377 	jr	00102$
                             378 	.area _CODE

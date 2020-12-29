@@ -128,12 +128,10 @@ if (intCounter==4) {
 
 
 void main(void) {
-   int t=0;
-   int s=0;
+   u16 t=0;
+   //u8 s=0;
    u8* p;
    u8* sprite=g_items_0;
-   int o=0;
-   int oc=0;
 
 #ifndef NO_SOUND
    bank7_C000();
@@ -175,11 +173,12 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 	cpct_waitVSYNC();
 
 	screen_location++;
-	screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
+	screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
 	screen_plot_address+=2;
-	screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+	screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
 	
 	//p = cpct_getScreenPtr(screen_plot_address, 0,0);
+	//s=(s+1)%8;
 	//cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
 
       scroll_hard(t,screen_plot_address);
