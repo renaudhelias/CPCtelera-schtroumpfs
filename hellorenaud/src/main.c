@@ -43,7 +43,6 @@ const u8 g_items_0[4 * 8] = {
 };
 
 void crtc(u8* R12R13) {
-//FIXME cpct_setVideoMemoryOffset((unsigned char)(((unsigned int)R12R13)>>2));
 __asm
 	push	ix
 	ld	ix,#0
@@ -61,6 +60,8 @@ inc b
 out (c),l
 	pop	ix
 __endasm;
+//cpct_setVideoMemoryPage(cpct_page80);
+//cpct_setVideoMemoryOffset((unsigned char)(((unsigned int)R12R13)>>2));
 }
 
 u8 intCounter=0;
@@ -162,7 +163,7 @@ void main(void) {
 calque8000();
 
 screen_location=(u8 *)(0x2000);
-screen_plot_address=(u8 *)(0x8000+80-2);
+screen_plot_address=(u8 *)(0x8000+80-4);
 
    cpct_setInterruptHandler(myInterruptHandler);
    t=0;
