@@ -89,19 +89,11 @@ ld bc,#0xbd04
 out (c),c
 __endasm;
 
-		screen_location++;
-		screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
+
 		crtc(screen_location);
-
-		screen_plot_address++;
-		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
-		screen_plot_address++;
-		screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
-
 
 		killVBL();
 		rupture(19-1);
-		
 		
 	}
 
@@ -153,7 +145,6 @@ void main(void) {
    cpct_memcpy(0x6000,0x8000,0x2000);
    cpct_setStackLocation(0x6000);
    cpct_memset_f64(0x8000, 0x0000, 0x4000);
-   cpct_setInterruptHandler(myInterruptHandler);
 
    bank0123();
    cpct_setVideoMode(0);
@@ -170,15 +161,23 @@ void main(void) {
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
 calque8000();
+
 screen_location=(u8 *)(0x2000);
 screen_plot_address=(u8 *)(0x8000+80-2);
+
+   cpct_setInterruptHandler(myInterruptHandler);
    t=0;
    while (1) {
 	cpct_waitVSYNC();
 
-
+	screen_location++;
+	screen_location=(u8 *)(((unsigned int)screen_location) & 0x23FF);
+	screen_plot_address+=2;
+	screen_plot_address=(u8 *)(((unsigned int)screen_plot_address) & 0x87FF);
+	
 	//p = cpct_getScreenPtr(screen_plot_address, 0,0);
 	//cpct_drawSprite(g_tile_schtroumpf4x32_tileset[s], screen_plot_address, G_TILE_SCHTROUMPF4X32_0_W, G_TILE_SCHTROUMPF4X32_0_H);
+
       scroll_hard(t,screen_plot_address);
       // size of texte
       t=t+1;

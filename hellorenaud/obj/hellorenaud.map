@@ -19,20 +19,20 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000006  l__INITIALIZED                  
      00000006  l__INITIALIZER                  
      00000138  s__CODE                         
-     00004957  l__CODE                         
-     00004A8F  s__DATA                         
-     00004A93  s__INITIALIZED                  
-     00004A99  s__GSFINAL                      
-     00004A99  s__GSINIT                       
-     00004A99  s__HOME                         
-     00004A99  s__INITIALIZER                  
+     0000493D  l__CODE                         
+     00004A75  s__DATA                         
+     00004A79  s__INITIALIZED                  
+     00004A7F  s__GSFINAL                      
+     00004A7F  s__GSINIT                       
+     00004A7F  s__HOME                         
+     00004A7F  s__INITIALIZER                  
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00004957 =       18775. bytes (REL,CON)
+_CODE                               00000138    0000493D =       18749. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -46,400 +46,400 @@ _CODE                               00000138    00004957 =       18775. bytes (R
      000002C8  _g_tile_schtroumpf4x32_6           schtroumpf4x32
      00000308  _g_tile_schtroumpf4x32_7           schtroumpf4x32
      00000348  _scroll_hard                       txt_scroll_hard
-     000003D2  _texte                             txt_scroll_hard
-     00000453  _g_tile_fontmap32x32plat_000       fontmap32x32plat
-     00000493  _g_tile_fontmap32x32plat_001       fontmap32x32plat
-     000004D3  _g_tile_fontmap32x32plat_002       fontmap32x32plat
-     00000513  _g_tile_fontmap32x32plat_003       fontmap32x32plat
-     00000553  _g_tile_fontmap32x32plat_004       fontmap32x32plat
-     00000593  _g_tile_fontmap32x32plat_005       fontmap32x32plat
-     000005D3  _g_tile_fontmap32x32plat_006       fontmap32x32plat
-     00000613  _g_tile_fontmap32x32plat_007       fontmap32x32plat
-     00000653  _g_tile_fontmap32x32plat_008       fontmap32x32plat
-     00000693  _g_tile_fontmap32x32plat_009       fontmap32x32plat
-     000006D3  _g_tile_fontmap32x32plat_010       fontmap32x32plat
-     00000713  _g_tile_fontmap32x32plat_011       fontmap32x32plat
-     00000753  _g_tile_fontmap32x32plat_012       fontmap32x32plat
-     00000793  _g_tile_fontmap32x32plat_013       fontmap32x32plat
-     000007D3  _g_tile_fontmap32x32plat_014       fontmap32x32plat
-     00000813  _g_tile_fontmap32x32plat_015       fontmap32x32plat
-     00000853  _g_tile_fontmap32x32plat_016       fontmap32x32plat
-     00000893  _g_tile_fontmap32x32plat_017       fontmap32x32plat
-     000008D3  _g_tile_fontmap32x32plat_018       fontmap32x32plat
-     00000913  _g_tile_fontmap32x32plat_019       fontmap32x32plat
-     00000953  _g_tile_fontmap32x32plat_020       fontmap32x32plat
-     00000993  _g_tile_fontmap32x32plat_021       fontmap32x32plat
-     000009D3  _g_tile_fontmap32x32plat_022       fontmap32x32plat
-     00000A13  _g_tile_fontmap32x32plat_023       fontmap32x32plat
-     00000A53  _g_tile_fontmap32x32plat_024       fontmap32x32plat
-     00000A93  _g_tile_fontmap32x32plat_025       fontmap32x32plat
-     00000AD3  _g_tile_fontmap32x32plat_026       fontmap32x32plat
-     00000B13  _g_tile_fontmap32x32plat_027       fontmap32x32plat
-     00000B53  _g_tile_fontmap32x32plat_028       fontmap32x32plat
-     00000B93  _g_tile_fontmap32x32plat_029       fontmap32x32plat
-     00000BD3  _g_tile_fontmap32x32plat_030       fontmap32x32plat
-     00000C13  _g_tile_fontmap32x32plat_031       fontmap32x32plat
-     00000C53  _g_tile_fontmap32x32plat_032       fontmap32x32plat
-     00000C93  _g_tile_fontmap32x32plat_033       fontmap32x32plat
-     00000CD3  _g_tile_fontmap32x32plat_034       fontmap32x32plat
-     00000D13  _g_tile_fontmap32x32plat_035       fontmap32x32plat
-     00000D53  _g_tile_fontmap32x32plat_036       fontmap32x32plat
-     00000D93  _g_tile_fontmap32x32plat_037       fontmap32x32plat
-     00000DD3  _g_tile_fontmap32x32plat_038       fontmap32x32plat
+     000003CA  _texte                             txt_scroll_hard
+     0000044B  _g_tile_fontmap32x32plat_000       fontmap32x32plat
+     0000048B  _g_tile_fontmap32x32plat_001       fontmap32x32plat
+     000004CB  _g_tile_fontmap32x32plat_002       fontmap32x32plat
+     0000050B  _g_tile_fontmap32x32plat_003       fontmap32x32plat
+     0000054B  _g_tile_fontmap32x32plat_004       fontmap32x32plat
+     0000058B  _g_tile_fontmap32x32plat_005       fontmap32x32plat
+     000005CB  _g_tile_fontmap32x32plat_006       fontmap32x32plat
+     0000060B  _g_tile_fontmap32x32plat_007       fontmap32x32plat
+     0000064B  _g_tile_fontmap32x32plat_008       fontmap32x32plat
+     0000068B  _g_tile_fontmap32x32plat_009       fontmap32x32plat
+     000006CB  _g_tile_fontmap32x32plat_010       fontmap32x32plat
+     0000070B  _g_tile_fontmap32x32plat_011       fontmap32x32plat
+     0000074B  _g_tile_fontmap32x32plat_012       fontmap32x32plat
+     0000078B  _g_tile_fontmap32x32plat_013       fontmap32x32plat
+     000007CB  _g_tile_fontmap32x32plat_014       fontmap32x32plat
+     0000080B  _g_tile_fontmap32x32plat_015       fontmap32x32plat
+     0000084B  _g_tile_fontmap32x32plat_016       fontmap32x32plat
+     0000088B  _g_tile_fontmap32x32plat_017       fontmap32x32plat
+     000008CB  _g_tile_fontmap32x32plat_018       fontmap32x32plat
+     0000090B  _g_tile_fontmap32x32plat_019       fontmap32x32plat
+     0000094B  _g_tile_fontmap32x32plat_020       fontmap32x32plat
+     0000098B  _g_tile_fontmap32x32plat_021       fontmap32x32plat
+     000009CB  _g_tile_fontmap32x32plat_022       fontmap32x32plat
+     00000A0B  _g_tile_fontmap32x32plat_023       fontmap32x32plat
+     00000A4B  _g_tile_fontmap32x32plat_024       fontmap32x32plat
+     00000A8B  _g_tile_fontmap32x32plat_025       fontmap32x32plat
+     00000ACB  _g_tile_fontmap32x32plat_026       fontmap32x32plat
+     00000B0B  _g_tile_fontmap32x32plat_027       fontmap32x32plat
+     00000B4B  _g_tile_fontmap32x32plat_028       fontmap32x32plat
+     00000B8B  _g_tile_fontmap32x32plat_029       fontmap32x32plat
+     00000BCB  _g_tile_fontmap32x32plat_030       fontmap32x32plat
+     00000C0B  _g_tile_fontmap32x32plat_031       fontmap32x32plat
+     00000C4B  _g_tile_fontmap32x32plat_032       fontmap32x32plat
+     00000C8B  _g_tile_fontmap32x32plat_033       fontmap32x32plat
+     00000CCB  _g_tile_fontmap32x32plat_034       fontmap32x32plat
+     00000D0B  _g_tile_fontmap32x32plat_035       fontmap32x32plat
+     00000D4B  _g_tile_fontmap32x32plat_036       fontmap32x32plat
+     00000D8B  _g_tile_fontmap32x32plat_037       fontmap32x32plat
+     00000DCB  _g_tile_fontmap32x32plat_038       fontmap32x32plat
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00004957 =       18775. bytes (REL,CON)
+_CODE                               00000138    0000493D =       18749. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000E13  _g_tile_fontmap32x32plat_039       fontmap32x32plat
-     00000E53  _g_tile_fontmap32x32plat_040       fontmap32x32plat
-     00000E93  _g_tile_fontmap32x32plat_041       fontmap32x32plat
-     00000ED3  _g_tile_fontmap32x32plat_042       fontmap32x32plat
-     00000F13  _g_tile_fontmap32x32plat_043       fontmap32x32plat
-     00000F53  _g_tile_fontmap32x32plat_044       fontmap32x32plat
-     00000F93  _g_tile_fontmap32x32plat_045       fontmap32x32plat
-     00000FD3  _g_tile_fontmap32x32plat_046       fontmap32x32plat
-     00001013  _g_tile_fontmap32x32plat_047       fontmap32x32plat
-     00001053  _g_tile_fontmap32x32plat_048       fontmap32x32plat
-     00001093  _g_tile_fontmap32x32plat_049       fontmap32x32plat
-     000010D3  _g_tile_fontmap32x32plat_050       fontmap32x32plat
-     00001113  _g_tile_fontmap32x32plat_051       fontmap32x32plat
-     00001153  _g_tile_fontmap32x32plat_052       fontmap32x32plat
-     00001193  _g_tile_fontmap32x32plat_053       fontmap32x32plat
-     000011D3  _g_tile_fontmap32x32plat_054       fontmap32x32plat
-     00001213  _g_tile_fontmap32x32plat_055       fontmap32x32plat
-     00001253  _g_tile_fontmap32x32plat_056       fontmap32x32plat
-     00001293  _g_tile_fontmap32x32plat_057       fontmap32x32plat
-     000012D3  _g_tile_fontmap32x32plat_058       fontmap32x32plat
-     00001313  _g_tile_fontmap32x32plat_059       fontmap32x32plat
-     00001353  _g_tile_fontmap32x32plat_060       fontmap32x32plat
-     00001393  _g_tile_fontmap32x32plat_061       fontmap32x32plat
-     000013D3  _g_tile_fontmap32x32plat_062       fontmap32x32plat
-     00001413  _g_tile_fontmap32x32plat_063       fontmap32x32plat
-     00001453  _g_tile_fontmap32x32plat_064       fontmap32x32plat
-     00001493  _g_tile_fontmap32x32plat_065       fontmap32x32plat
-     000014D3  _g_tile_fontmap32x32plat_066       fontmap32x32plat
-     00001513  _g_tile_fontmap32x32plat_067       fontmap32x32plat
-     00001553  _g_tile_fontmap32x32plat_068       fontmap32x32plat
-     00001593  _g_tile_fontmap32x32plat_069       fontmap32x32plat
-     000015D3  _g_tile_fontmap32x32plat_070       fontmap32x32plat
-     00001613  _g_tile_fontmap32x32plat_071       fontmap32x32plat
-     00001653  _g_tile_fontmap32x32plat_072       fontmap32x32plat
-     00001693  _g_tile_fontmap32x32plat_073       fontmap32x32plat
-     000016D3  _g_tile_fontmap32x32plat_074       fontmap32x32plat
-     00001713  _g_tile_fontmap32x32plat_075       fontmap32x32plat
-     00001753  _g_tile_fontmap32x32plat_076       fontmap32x32plat
-     00001793  _g_tile_fontmap32x32plat_077       fontmap32x32plat
-     000017D3  _g_tile_fontmap32x32plat_078       fontmap32x32plat
-     00001813  _g_tile_fontmap32x32plat_079       fontmap32x32plat
-     00001853  _g_tile_fontmap32x32plat_080       fontmap32x32plat
-     00001893  _g_tile_fontmap32x32plat_081       fontmap32x32plat
-     000018D3  _g_tile_fontmap32x32plat_082       fontmap32x32plat
-     00001913  _g_tile_fontmap32x32plat_083       fontmap32x32plat
-     00001953  _g_tile_fontmap32x32plat_084       fontmap32x32plat
-     00001993  _g_tile_fontmap32x32plat_085       fontmap32x32plat
-     000019D3  _g_tile_fontmap32x32plat_086       fontmap32x32plat
-     00001A13  _g_tile_fontmap32x32plat_087       fontmap32x32plat
-     00001A53  _g_tile_fontmap32x32plat_088       fontmap32x32plat
-     00001A93  _g_tile_fontmap32x32plat_089       fontmap32x32plat
+     00000E0B  _g_tile_fontmap32x32plat_039       fontmap32x32plat
+     00000E4B  _g_tile_fontmap32x32plat_040       fontmap32x32plat
+     00000E8B  _g_tile_fontmap32x32plat_041       fontmap32x32plat
+     00000ECB  _g_tile_fontmap32x32plat_042       fontmap32x32plat
+     00000F0B  _g_tile_fontmap32x32plat_043       fontmap32x32plat
+     00000F4B  _g_tile_fontmap32x32plat_044       fontmap32x32plat
+     00000F8B  _g_tile_fontmap32x32plat_045       fontmap32x32plat
+     00000FCB  _g_tile_fontmap32x32plat_046       fontmap32x32plat
+     0000100B  _g_tile_fontmap32x32plat_047       fontmap32x32plat
+     0000104B  _g_tile_fontmap32x32plat_048       fontmap32x32plat
+     0000108B  _g_tile_fontmap32x32plat_049       fontmap32x32plat
+     000010CB  _g_tile_fontmap32x32plat_050       fontmap32x32plat
+     0000110B  _g_tile_fontmap32x32plat_051       fontmap32x32plat
+     0000114B  _g_tile_fontmap32x32plat_052       fontmap32x32plat
+     0000118B  _g_tile_fontmap32x32plat_053       fontmap32x32plat
+     000011CB  _g_tile_fontmap32x32plat_054       fontmap32x32plat
+     0000120B  _g_tile_fontmap32x32plat_055       fontmap32x32plat
+     0000124B  _g_tile_fontmap32x32plat_056       fontmap32x32plat
+     0000128B  _g_tile_fontmap32x32plat_057       fontmap32x32plat
+     000012CB  _g_tile_fontmap32x32plat_058       fontmap32x32plat
+     0000130B  _g_tile_fontmap32x32plat_059       fontmap32x32plat
+     0000134B  _g_tile_fontmap32x32plat_060       fontmap32x32plat
+     0000138B  _g_tile_fontmap32x32plat_061       fontmap32x32plat
+     000013CB  _g_tile_fontmap32x32plat_062       fontmap32x32plat
+     0000140B  _g_tile_fontmap32x32plat_063       fontmap32x32plat
+     0000144B  _g_tile_fontmap32x32plat_064       fontmap32x32plat
+     0000148B  _g_tile_fontmap32x32plat_065       fontmap32x32plat
+     000014CB  _g_tile_fontmap32x32plat_066       fontmap32x32plat
+     0000150B  _g_tile_fontmap32x32plat_067       fontmap32x32plat
+     0000154B  _g_tile_fontmap32x32plat_068       fontmap32x32plat
+     0000158B  _g_tile_fontmap32x32plat_069       fontmap32x32plat
+     000015CB  _g_tile_fontmap32x32plat_070       fontmap32x32plat
+     0000160B  _g_tile_fontmap32x32plat_071       fontmap32x32plat
+     0000164B  _g_tile_fontmap32x32plat_072       fontmap32x32plat
+     0000168B  _g_tile_fontmap32x32plat_073       fontmap32x32plat
+     000016CB  _g_tile_fontmap32x32plat_074       fontmap32x32plat
+     0000170B  _g_tile_fontmap32x32plat_075       fontmap32x32plat
+     0000174B  _g_tile_fontmap32x32plat_076       fontmap32x32plat
+     0000178B  _g_tile_fontmap32x32plat_077       fontmap32x32plat
+     000017CB  _g_tile_fontmap32x32plat_078       fontmap32x32plat
+     0000180B  _g_tile_fontmap32x32plat_079       fontmap32x32plat
+     0000184B  _g_tile_fontmap32x32plat_080       fontmap32x32plat
+     0000188B  _g_tile_fontmap32x32plat_081       fontmap32x32plat
+     000018CB  _g_tile_fontmap32x32plat_082       fontmap32x32plat
+     0000190B  _g_tile_fontmap32x32plat_083       fontmap32x32plat
+     0000194B  _g_tile_fontmap32x32plat_084       fontmap32x32plat
+     0000198B  _g_tile_fontmap32x32plat_085       fontmap32x32plat
+     000019CB  _g_tile_fontmap32x32plat_086       fontmap32x32plat
+     00001A0B  _g_tile_fontmap32x32plat_087       fontmap32x32plat
+     00001A4B  _g_tile_fontmap32x32plat_088       fontmap32x32plat
+     00001A8B  _g_tile_fontmap32x32plat_089       fontmap32x32plat
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00004957 =       18775. bytes (REL,CON)
+_CODE                               00000138    0000493D =       18749. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00001AD3  _g_tile_fontmap32x32plat_090       fontmap32x32plat
-     00001B13  _g_tile_fontmap32x32plat_091       fontmap32x32plat
-     00001B53  _g_tile_fontmap32x32plat_092       fontmap32x32plat
-     00001B93  _g_tile_fontmap32x32plat_093       fontmap32x32plat
-     00001BD3  _g_tile_fontmap32x32plat_094       fontmap32x32plat
-     00001C13  _g_tile_fontmap32x32plat_095       fontmap32x32plat
-     00001C53  _g_tile_fontmap32x32plat_096       fontmap32x32plat
-     00001C93  _g_tile_fontmap32x32plat_097       fontmap32x32plat
-     00001CD3  _g_tile_fontmap32x32plat_098       fontmap32x32plat
-     00001D13  _g_tile_fontmap32x32plat_099       fontmap32x32plat
-     00001D53  _g_tile_fontmap32x32plat_100       fontmap32x32plat
-     00001D93  _g_tile_fontmap32x32plat_101       fontmap32x32plat
-     00001DD3  _g_tile_fontmap32x32plat_102       fontmap32x32plat
-     00001E13  _g_tile_fontmap32x32plat_103       fontmap32x32plat
-     00001E53  _g_tile_fontmap32x32plat_104       fontmap32x32plat
-     00001E93  _g_tile_fontmap32x32plat_105       fontmap32x32plat
-     00001ED3  _g_tile_fontmap32x32plat_106       fontmap32x32plat
-     00001F13  _g_tile_fontmap32x32plat_107       fontmap32x32plat
-     00001F53  _g_tile_fontmap32x32plat_108       fontmap32x32plat
-     00001F93  _g_tile_fontmap32x32plat_109       fontmap32x32plat
-     00001FD3  _g_tile_fontmap32x32plat_110       fontmap32x32plat
-     00002013  _g_tile_fontmap32x32plat_111       fontmap32x32plat
-     00002053  _g_tile_fontmap32x32plat_112       fontmap32x32plat
-     00002093  _g_tile_fontmap32x32plat_113       fontmap32x32plat
-     000020D3  _g_tile_fontmap32x32plat_114       fontmap32x32plat
-     00002113  _g_tile_fontmap32x32plat_115       fontmap32x32plat
-     00002153  _g_tile_fontmap32x32plat_116       fontmap32x32plat
-     00002193  _g_tile_fontmap32x32plat_117       fontmap32x32plat
-     000021D3  _g_tile_fontmap32x32plat_118       fontmap32x32plat
-     00002213  _g_tile_fontmap32x32plat_119       fontmap32x32plat
-     00002253  _g_tile_fontmap32x32plat_120       fontmap32x32plat
-     00002293  _g_tile_fontmap32x32plat_121       fontmap32x32plat
-     000022D3  _g_tile_fontmap32x32plat_122       fontmap32x32plat
-     00002313  _g_tile_fontmap32x32plat_123       fontmap32x32plat
-     00002353  _g_tile_fontmap32x32plat_124       fontmap32x32plat
-     00002393  _g_tile_fontmap32x32plat_125       fontmap32x32plat
-     000023D3  _g_tile_fontmap32x32plat_126       fontmap32x32plat
-     00002413  _g_tile_fontmap32x32plat_127       fontmap32x32plat
-     00002453  _g_tile_fontmap32x32plat_128       fontmap32x32plat
-     00002493  _g_tile_fontmap32x32plat_129       fontmap32x32plat
-     000024D3  _g_tile_fontmap32x32plat_130       fontmap32x32plat
-     00002513  _g_tile_fontmap32x32plat_131       fontmap32x32plat
-     00002553  _g_tile_fontmap32x32plat_132       fontmap32x32plat
-     00002593  _g_tile_fontmap32x32plat_133       fontmap32x32plat
-     000025D3  _g_tile_fontmap32x32plat_134       fontmap32x32plat
-     00002613  _g_tile_fontmap32x32plat_135       fontmap32x32plat
-     00002653  _g_tile_fontmap32x32plat_136       fontmap32x32plat
-     00002693  _g_tile_fontmap32x32plat_137       fontmap32x32plat
-     000026D3  _g_tile_fontmap32x32plat_138       fontmap32x32plat
-     00002713  _g_tile_fontmap32x32plat_139       fontmap32x32plat
-     00002753  _g_tile_fontmap32x32plat_140       fontmap32x32plat
+     00001ACB  _g_tile_fontmap32x32plat_090       fontmap32x32plat
+     00001B0B  _g_tile_fontmap32x32plat_091       fontmap32x32plat
+     00001B4B  _g_tile_fontmap32x32plat_092       fontmap32x32plat
+     00001B8B  _g_tile_fontmap32x32plat_093       fontmap32x32plat
+     00001BCB  _g_tile_fontmap32x32plat_094       fontmap32x32plat
+     00001C0B  _g_tile_fontmap32x32plat_095       fontmap32x32plat
+     00001C4B  _g_tile_fontmap32x32plat_096       fontmap32x32plat
+     00001C8B  _g_tile_fontmap32x32plat_097       fontmap32x32plat
+     00001CCB  _g_tile_fontmap32x32plat_098       fontmap32x32plat
+     00001D0B  _g_tile_fontmap32x32plat_099       fontmap32x32plat
+     00001D4B  _g_tile_fontmap32x32plat_100       fontmap32x32plat
+     00001D8B  _g_tile_fontmap32x32plat_101       fontmap32x32plat
+     00001DCB  _g_tile_fontmap32x32plat_102       fontmap32x32plat
+     00001E0B  _g_tile_fontmap32x32plat_103       fontmap32x32plat
+     00001E4B  _g_tile_fontmap32x32plat_104       fontmap32x32plat
+     00001E8B  _g_tile_fontmap32x32plat_105       fontmap32x32plat
+     00001ECB  _g_tile_fontmap32x32plat_106       fontmap32x32plat
+     00001F0B  _g_tile_fontmap32x32plat_107       fontmap32x32plat
+     00001F4B  _g_tile_fontmap32x32plat_108       fontmap32x32plat
+     00001F8B  _g_tile_fontmap32x32plat_109       fontmap32x32plat
+     00001FCB  _g_tile_fontmap32x32plat_110       fontmap32x32plat
+     0000200B  _g_tile_fontmap32x32plat_111       fontmap32x32plat
+     0000204B  _g_tile_fontmap32x32plat_112       fontmap32x32plat
+     0000208B  _g_tile_fontmap32x32plat_113       fontmap32x32plat
+     000020CB  _g_tile_fontmap32x32plat_114       fontmap32x32plat
+     0000210B  _g_tile_fontmap32x32plat_115       fontmap32x32plat
+     0000214B  _g_tile_fontmap32x32plat_116       fontmap32x32plat
+     0000218B  _g_tile_fontmap32x32plat_117       fontmap32x32plat
+     000021CB  _g_tile_fontmap32x32plat_118       fontmap32x32plat
+     0000220B  _g_tile_fontmap32x32plat_119       fontmap32x32plat
+     0000224B  _g_tile_fontmap32x32plat_120       fontmap32x32plat
+     0000228B  _g_tile_fontmap32x32plat_121       fontmap32x32plat
+     000022CB  _g_tile_fontmap32x32plat_122       fontmap32x32plat
+     0000230B  _g_tile_fontmap32x32plat_123       fontmap32x32plat
+     0000234B  _g_tile_fontmap32x32plat_124       fontmap32x32plat
+     0000238B  _g_tile_fontmap32x32plat_125       fontmap32x32plat
+     000023CB  _g_tile_fontmap32x32plat_126       fontmap32x32plat
+     0000240B  _g_tile_fontmap32x32plat_127       fontmap32x32plat
+     0000244B  _g_tile_fontmap32x32plat_128       fontmap32x32plat
+     0000248B  _g_tile_fontmap32x32plat_129       fontmap32x32plat
+     000024CB  _g_tile_fontmap32x32plat_130       fontmap32x32plat
+     0000250B  _g_tile_fontmap32x32plat_131       fontmap32x32plat
+     0000254B  _g_tile_fontmap32x32plat_132       fontmap32x32plat
+     0000258B  _g_tile_fontmap32x32plat_133       fontmap32x32plat
+     000025CB  _g_tile_fontmap32x32plat_134       fontmap32x32plat
+     0000260B  _g_tile_fontmap32x32plat_135       fontmap32x32plat
+     0000264B  _g_tile_fontmap32x32plat_136       fontmap32x32plat
+     0000268B  _g_tile_fontmap32x32plat_137       fontmap32x32plat
+     000026CB  _g_tile_fontmap32x32plat_138       fontmap32x32plat
+     0000270B  _g_tile_fontmap32x32plat_139       fontmap32x32plat
+     0000274B  _g_tile_fontmap32x32plat_140       fontmap32x32plat
 ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00004957 =       18775. bytes (REL,CON)
+_CODE                               00000138    0000493D =       18749. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00002793  _g_tile_fontmap32x32plat_141       fontmap32x32plat
-     000027D3  _g_tile_fontmap32x32plat_142       fontmap32x32plat
-     00002813  _g_tile_fontmap32x32plat_143       fontmap32x32plat
-     00002853  _g_tile_fontmap32x32plat_144       fontmap32x32plat
-     00002893  _g_tile_fontmap32x32plat_145       fontmap32x32plat
-     000028D3  _g_tile_fontmap32x32plat_146       fontmap32x32plat
-     00002913  _g_tile_fontmap32x32plat_147       fontmap32x32plat
-     00002953  _g_tile_fontmap32x32plat_148       fontmap32x32plat
-     00002993  _g_tile_fontmap32x32plat_149       fontmap32x32plat
-     000029D3  _g_tile_fontmap32x32plat_150       fontmap32x32plat
-     00002A13  _g_tile_fontmap32x32plat_151       fontmap32x32plat
-     00002A53  _g_tile_fontmap32x32plat_152       fontmap32x32plat
-     00002A93  _g_tile_fontmap32x32plat_153       fontmap32x32plat
-     00002AD3  _g_tile_fontmap32x32plat_154       fontmap32x32plat
-     00002B13  _g_tile_fontmap32x32plat_155       fontmap32x32plat
-     00002B53  _g_tile_fontmap32x32plat_156       fontmap32x32plat
-     00002B93  _g_tile_fontmap32x32plat_157       fontmap32x32plat
-     00002BD3  _g_tile_fontmap32x32plat_158       fontmap32x32plat
-     00002C13  _g_tile_fontmap32x32plat_159       fontmap32x32plat
-     00002C53  _g_tile_fontmap32x32plat_160       fontmap32x32plat
-     00002C93  _g_tile_fontmap32x32plat_161       fontmap32x32plat
-     00002CD3  _g_tile_fontmap32x32plat_162       fontmap32x32plat
-     00002D13  _g_tile_fontmap32x32plat_163       fontmap32x32plat
-     00002D53  _g_tile_fontmap32x32plat_164       fontmap32x32plat
-     00002D93  _g_tile_fontmap32x32plat_165       fontmap32x32plat
-     00002DD3  _g_tile_fontmap32x32plat_166       fontmap32x32plat
-     00002E13  _g_tile_fontmap32x32plat_167       fontmap32x32plat
-     00002E53  _g_tile_fontmap32x32plat_168       fontmap32x32plat
-     00002E93  _g_tile_fontmap32x32plat_169       fontmap32x32plat
-     00002ED3  _g_tile_fontmap32x32plat_170       fontmap32x32plat
-     00002F13  _g_tile_fontmap32x32plat_171       fontmap32x32plat
-     00002F53  _g_tile_fontmap32x32plat_172       fontmap32x32plat
-     00002F93  _g_tile_fontmap32x32plat_173       fontmap32x32plat
-     00002FD3  _g_tile_fontmap32x32plat_174       fontmap32x32plat
-     00003013  _g_tile_fontmap32x32plat_175       fontmap32x32plat
-     00003053  _g_tile_fontmap32x32plat_176       fontmap32x32plat
-     00003093  _g_tile_fontmap32x32plat_177       fontmap32x32plat
-     000030D3  _g_tile_fontmap32x32plat_178       fontmap32x32plat
-     00003113  _g_tile_fontmap32x32plat_179       fontmap32x32plat
-     00003153  _g_tile_fontmap32x32plat_180       fontmap32x32plat
-     00003193  _g_tile_fontmap32x32plat_181       fontmap32x32plat
-     000031D3  _g_tile_fontmap32x32plat_182       fontmap32x32plat
-     00003213  _g_tile_fontmap32x32plat_183       fontmap32x32plat
-     00003253  _g_tile_fontmap32x32plat_184       fontmap32x32plat
-     00003293  _g_tile_fontmap32x32plat_185       fontmap32x32plat
-     000032D3  _g_tile_fontmap32x32plat_186       fontmap32x32plat
-     00003313  _g_tile_fontmap32x32plat_187       fontmap32x32plat
-     00003353  _g_tile_fontmap32x32plat_188       fontmap32x32plat
-     00003393  _g_tile_fontmap32x32plat_189       fontmap32x32plat
-     000033D3  _g_tile_fontmap32x32plat_190       fontmap32x32plat
-     00003413  _g_tile_fontmap32x32plat_191       fontmap32x32plat
+     0000278B  _g_tile_fontmap32x32plat_141       fontmap32x32plat
+     000027CB  _g_tile_fontmap32x32plat_142       fontmap32x32plat
+     0000280B  _g_tile_fontmap32x32plat_143       fontmap32x32plat
+     0000284B  _g_tile_fontmap32x32plat_144       fontmap32x32plat
+     0000288B  _g_tile_fontmap32x32plat_145       fontmap32x32plat
+     000028CB  _g_tile_fontmap32x32plat_146       fontmap32x32plat
+     0000290B  _g_tile_fontmap32x32plat_147       fontmap32x32plat
+     0000294B  _g_tile_fontmap32x32plat_148       fontmap32x32plat
+     0000298B  _g_tile_fontmap32x32plat_149       fontmap32x32plat
+     000029CB  _g_tile_fontmap32x32plat_150       fontmap32x32plat
+     00002A0B  _g_tile_fontmap32x32plat_151       fontmap32x32plat
+     00002A4B  _g_tile_fontmap32x32plat_152       fontmap32x32plat
+     00002A8B  _g_tile_fontmap32x32plat_153       fontmap32x32plat
+     00002ACB  _g_tile_fontmap32x32plat_154       fontmap32x32plat
+     00002B0B  _g_tile_fontmap32x32plat_155       fontmap32x32plat
+     00002B4B  _g_tile_fontmap32x32plat_156       fontmap32x32plat
+     00002B8B  _g_tile_fontmap32x32plat_157       fontmap32x32plat
+     00002BCB  _g_tile_fontmap32x32plat_158       fontmap32x32plat
+     00002C0B  _g_tile_fontmap32x32plat_159       fontmap32x32plat
+     00002C4B  _g_tile_fontmap32x32plat_160       fontmap32x32plat
+     00002C8B  _g_tile_fontmap32x32plat_161       fontmap32x32plat
+     00002CCB  _g_tile_fontmap32x32plat_162       fontmap32x32plat
+     00002D0B  _g_tile_fontmap32x32plat_163       fontmap32x32plat
+     00002D4B  _g_tile_fontmap32x32plat_164       fontmap32x32plat
+     00002D8B  _g_tile_fontmap32x32plat_165       fontmap32x32plat
+     00002DCB  _g_tile_fontmap32x32plat_166       fontmap32x32plat
+     00002E0B  _g_tile_fontmap32x32plat_167       fontmap32x32plat
+     00002E4B  _g_tile_fontmap32x32plat_168       fontmap32x32plat
+     00002E8B  _g_tile_fontmap32x32plat_169       fontmap32x32plat
+     00002ECB  _g_tile_fontmap32x32plat_170       fontmap32x32plat
+     00002F0B  _g_tile_fontmap32x32plat_171       fontmap32x32plat
+     00002F4B  _g_tile_fontmap32x32plat_172       fontmap32x32plat
+     00002F8B  _g_tile_fontmap32x32plat_173       fontmap32x32plat
+     00002FCB  _g_tile_fontmap32x32plat_174       fontmap32x32plat
+     0000300B  _g_tile_fontmap32x32plat_175       fontmap32x32plat
+     0000304B  _g_tile_fontmap32x32plat_176       fontmap32x32plat
+     0000308B  _g_tile_fontmap32x32plat_177       fontmap32x32plat
+     000030CB  _g_tile_fontmap32x32plat_178       fontmap32x32plat
+     0000310B  _g_tile_fontmap32x32plat_179       fontmap32x32plat
+     0000314B  _g_tile_fontmap32x32plat_180       fontmap32x32plat
+     0000318B  _g_tile_fontmap32x32plat_181       fontmap32x32plat
+     000031CB  _g_tile_fontmap32x32plat_182       fontmap32x32plat
+     0000320B  _g_tile_fontmap32x32plat_183       fontmap32x32plat
+     0000324B  _g_tile_fontmap32x32plat_184       fontmap32x32plat
+     0000328B  _g_tile_fontmap32x32plat_185       fontmap32x32plat
+     000032CB  _g_tile_fontmap32x32plat_186       fontmap32x32plat
+     0000330B  _g_tile_fontmap32x32plat_187       fontmap32x32plat
+     0000334B  _g_tile_fontmap32x32plat_188       fontmap32x32plat
+     0000338B  _g_tile_fontmap32x32plat_189       fontmap32x32plat
+     000033CB  _g_tile_fontmap32x32plat_190       fontmap32x32plat
+     0000340B  _g_tile_fontmap32x32plat_191       fontmap32x32plat
 ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00004957 =       18775. bytes (REL,CON)
+_CODE                               00000138    0000493D =       18749. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00003453  _g_tile_fontmap32x32plat_192       fontmap32x32plat
-     00003493  _g_tile_fontmap32x32plat_193       fontmap32x32plat
-     000034D3  _g_tile_fontmap32x32plat_194       fontmap32x32plat
-     00003513  _g_tile_fontmap32x32plat_195       fontmap32x32plat
-     00003553  _g_tile_fontmap32x32plat_196       fontmap32x32plat
-     00003593  _g_tile_fontmap32x32plat_197       fontmap32x32plat
-     000035D3  _g_tile_fontmap32x32plat_198       fontmap32x32plat
-     00003613  _g_tile_fontmap32x32plat_199       fontmap32x32plat
-     00003653  _g_tile_fontmap32x32plat_200       fontmap32x32plat
-     00003693  _g_tile_fontmap32x32plat_201       fontmap32x32plat
-     000036D3  _g_tile_fontmap32x32plat_202       fontmap32x32plat
-     00003713  _g_tile_fontmap32x32plat_203       fontmap32x32plat
-     00003753  _g_tile_fontmap32x32plat_204       fontmap32x32plat
-     00003793  _g_tile_fontmap32x32plat_205       fontmap32x32plat
-     000037D3  _g_tile_fontmap32x32plat_206       fontmap32x32plat
-     00003813  _g_tile_fontmap32x32plat_207       fontmap32x32plat
-     00003853  _g_tile_fontmap32x32plat_208       fontmap32x32plat
-     00003893  _g_tile_fontmap32x32plat_209       fontmap32x32plat
-     000038D3  _g_tile_fontmap32x32plat_210       fontmap32x32plat
-     00003913  _g_tile_fontmap32x32plat_211       fontmap32x32plat
-     00003953  _g_tile_fontmap32x32plat_212       fontmap32x32plat
-     00003993  _g_tile_fontmap32x32plat_213       fontmap32x32plat
-     000039D3  _g_tile_fontmap32x32plat_214       fontmap32x32plat
-     00003A13  _g_tile_fontmap32x32plat_215       fontmap32x32plat
-     00003A53  _g_tile_fontmap32x32plat_216       fontmap32x32plat
-     00003A93  _g_tile_fontmap32x32plat_217       fontmap32x32plat
-     00003AD3  _g_tile_fontmap32x32plat_218       fontmap32x32plat
-     00003B13  _g_tile_fontmap32x32plat_219       fontmap32x32plat
-     00003B53  _g_tile_fontmap32x32plat_220       fontmap32x32plat
-     00003B93  _g_tile_fontmap32x32plat_221       fontmap32x32plat
-     00003BD3  _g_tile_fontmap32x32plat_222       fontmap32x32plat
-     00003C13  _g_tile_fontmap32x32plat_223       fontmap32x32plat
-     00003C53  _g_tile_fontmap32x32plat_224       fontmap32x32plat
-     00003C93  _g_tile_fontmap32x32plat_225       fontmap32x32plat
-     00003CD3  _g_tile_fontmap32x32plat_226       fontmap32x32plat
-     00003D13  _g_tile_fontmap32x32plat_227       fontmap32x32plat
-     00003D53  _g_tile_fontmap32x32plat_228       fontmap32x32plat
-     00003D93  _g_tile_fontmap32x32plat_229       fontmap32x32plat
-     00003DD3  _g_tile_fontmap32x32plat_230       fontmap32x32plat
-     00003E13  _g_tile_fontmap32x32plat_231       fontmap32x32plat
-     00003E53  _g_tile_fontmap32x32plat_232       fontmap32x32plat
-     00003E93  _g_tile_fontmap32x32plat_233       fontmap32x32plat
-     00003ED3  _g_tile_fontmap32x32plat_234       fontmap32x32plat
-     00003F13  _g_tile_fontmap32x32plat_235       fontmap32x32plat
-     00003F53  _g_tile_fontmap32x32plat_236       fontmap32x32plat
-     00003F93  _g_tile_fontmap32x32plat_237       fontmap32x32plat
-     00003FD3  _g_tile_fontmap32x32plat_238       fontmap32x32plat
-     00004013  _g_tile_fontmap32x32plat_239       fontmap32x32plat
-     00004053  _akp_musicInit                     audio
-     00004076  _akp_musicPlay                     audio
-     00004096  _akp_sfxPlay                       audio
+     0000344B  _g_tile_fontmap32x32plat_192       fontmap32x32plat
+     0000348B  _g_tile_fontmap32x32plat_193       fontmap32x32plat
+     000034CB  _g_tile_fontmap32x32plat_194       fontmap32x32plat
+     0000350B  _g_tile_fontmap32x32plat_195       fontmap32x32plat
+     0000354B  _g_tile_fontmap32x32plat_196       fontmap32x32plat
+     0000358B  _g_tile_fontmap32x32plat_197       fontmap32x32plat
+     000035CB  _g_tile_fontmap32x32plat_198       fontmap32x32plat
+     0000360B  _g_tile_fontmap32x32plat_199       fontmap32x32plat
+     0000364B  _g_tile_fontmap32x32plat_200       fontmap32x32plat
+     0000368B  _g_tile_fontmap32x32plat_201       fontmap32x32plat
+     000036CB  _g_tile_fontmap32x32plat_202       fontmap32x32plat
+     0000370B  _g_tile_fontmap32x32plat_203       fontmap32x32plat
+     0000374B  _g_tile_fontmap32x32plat_204       fontmap32x32plat
+     0000378B  _g_tile_fontmap32x32plat_205       fontmap32x32plat
+     000037CB  _g_tile_fontmap32x32plat_206       fontmap32x32plat
+     0000380B  _g_tile_fontmap32x32plat_207       fontmap32x32plat
+     0000384B  _g_tile_fontmap32x32plat_208       fontmap32x32plat
+     0000388B  _g_tile_fontmap32x32plat_209       fontmap32x32plat
+     000038CB  _g_tile_fontmap32x32plat_210       fontmap32x32plat
+     0000390B  _g_tile_fontmap32x32plat_211       fontmap32x32plat
+     0000394B  _g_tile_fontmap32x32plat_212       fontmap32x32plat
+     0000398B  _g_tile_fontmap32x32plat_213       fontmap32x32plat
+     000039CB  _g_tile_fontmap32x32plat_214       fontmap32x32plat
+     00003A0B  _g_tile_fontmap32x32plat_215       fontmap32x32plat
+     00003A4B  _g_tile_fontmap32x32plat_216       fontmap32x32plat
+     00003A8B  _g_tile_fontmap32x32plat_217       fontmap32x32plat
+     00003ACB  _g_tile_fontmap32x32plat_218       fontmap32x32plat
+     00003B0B  _g_tile_fontmap32x32plat_219       fontmap32x32plat
+     00003B4B  _g_tile_fontmap32x32plat_220       fontmap32x32plat
+     00003B8B  _g_tile_fontmap32x32plat_221       fontmap32x32plat
+     00003BCB  _g_tile_fontmap32x32plat_222       fontmap32x32plat
+     00003C0B  _g_tile_fontmap32x32plat_223       fontmap32x32plat
+     00003C4B  _g_tile_fontmap32x32plat_224       fontmap32x32plat
+     00003C8B  _g_tile_fontmap32x32plat_225       fontmap32x32plat
+     00003CCB  _g_tile_fontmap32x32plat_226       fontmap32x32plat
+     00003D0B  _g_tile_fontmap32x32plat_227       fontmap32x32plat
+     00003D4B  _g_tile_fontmap32x32plat_228       fontmap32x32plat
+     00003D8B  _g_tile_fontmap32x32plat_229       fontmap32x32plat
+     00003DCB  _g_tile_fontmap32x32plat_230       fontmap32x32plat
+     00003E0B  _g_tile_fontmap32x32plat_231       fontmap32x32plat
+     00003E4B  _g_tile_fontmap32x32plat_232       fontmap32x32plat
+     00003E8B  _g_tile_fontmap32x32plat_233       fontmap32x32plat
+     00003ECB  _g_tile_fontmap32x32plat_234       fontmap32x32plat
+     00003F0B  _g_tile_fontmap32x32plat_235       fontmap32x32plat
+     00003F4B  _g_tile_fontmap32x32plat_236       fontmap32x32plat
+     00003F8B  _g_tile_fontmap32x32plat_237       fontmap32x32plat
+     00003FCB  _g_tile_fontmap32x32plat_238       fontmap32x32plat
+     0000400B  _g_tile_fontmap32x32plat_239       fontmap32x32plat
+     0000404B  _akp_musicInit                     audio
+     0000406E  _akp_musicPlay                     audio
+     0000408E  _akp_sfxPlay                       audio
 ASxxxx Linker V03.00 + NoICE + sdld,  page 7.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00004957 =       18775. bytes (REL,CON)
+_CODE                               00000138    0000493D =       18749. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000040B6  _crtc                              main
-     000040D6  _g_items_0                         main
-     000040F6  _myInterruptHandler                main
-     000041D4  _main                              main
-     00004280  _vsync                             jdvapi_sync
-     0000428E  _raster_halt                       jdvapi_sync
-     00004297  _callback                          jdvapi_sync
-     0000429B  _raster_handler                    jdvapi_sync
-     000042DE  _raster                            jdvapi_sync
-     000042ED  _handle_raster                     jdvapi_sync
-     000042FE  _halt                              jdvapi_sync
-     00004300  _calqueC000                        jdvapi_sync
-     0000430B  _calque8000                        jdvapi_sync
-     00004316  _calque4000                        jdvapi_sync
-     00004321  _calque4C00                        jdvapi_sync
-     0000432C  _bank0123                          jdvapi_sync
-     00004332  _bank7_C000                        jdvapi_sync
-     00004338  _bank4_4000                        jdvapi_sync
-     0000433E  _bank5_4000                        jdvapi_sync
-     00004344  _bank6_4000                        jdvapi_sync
-     0000434A  _bank7_4000                        jdvapi_sync
-     00004350  _overscanH                         jdvapi_sync
-     00004379  _scan                              jdvapi_sync
-     000043A2  _killVBL                           rupture
-     000043B3  _restoreVBL                        rupture
-     000043BF  _rupture                           rupture
-     000043DF  _g_tile_palette                    schtroumpf
-     000043E5  _g_tile_schtroumpf                 schtroumpf
-     000047E5  _cpct_setPalette                   cpct_video
-     000047FC  _cpct_setPALColour                 cpct_video
-     00004808  _cpct_setVideoMemoryOffset         cpct_video
-     00004808  cpct_setVideoMemoryOffset_asm      cpct_video
-     00004811  _cpct_drawSprite                   cpct_sprites
-     000048B6  _cpct_drawSpriteMasked             cpct_sprites
-     000048E5  _cpct_memset_f64                   cpct_memutils
-     0000492D  _cpct_setStackLocation             cpct_memutils
-     0000492D  cpct_setStackLocation_asm          cpct_memutils
-     00004931  ___sdcc_call_hl                    
-     00004932  _cpct_hflipSpriteM0                cpct_sprites
-     00004976  _cpct_waitVSYNC                    cpct_video
-     00004976  cpct_waitVSYNC_asm                 cpct_video
-     0000497E  _cpct_setVideoMode                 cpct_video
-     0000498C  _cpct_memcpy                       cpct_memutils
-     00004994  _cpct_disableFirmware              cpct_firmware
-     00004994  _cpct_removeInterruptHandler       cpct_firmware
-     00004994  cpct_disableFirmware_asm           cpct_firmware
-     00004994  cpct_removeInterruptHandler_asm    cpct_firmware
-     000049A4  __modschar                         
-     000049B1  __modsint                          
-     000049BD  _cpct_mode_rom_status              cpct_firmware
-     000049BE  _cpct_getScreenPtr                 cpct_video
+     000040AE  _crtc                              main
+     000040CE  _g_items_0                         main
+     000040EE  _myInterruptHandler                main
+     0000418E  _main                              main
+     00004266  _vsync                             jdvapi_sync
+     00004274  _raster_halt                       jdvapi_sync
+     0000427D  _callback                          jdvapi_sync
+     00004281  _raster_handler                    jdvapi_sync
+     000042C4  _raster                            jdvapi_sync
+     000042D3  _handle_raster                     jdvapi_sync
+     000042E4  _halt                              jdvapi_sync
+     000042E6  _calqueC000                        jdvapi_sync
+     000042F1  _calque8000                        jdvapi_sync
+     000042FC  _calque4000                        jdvapi_sync
+     00004307  _calque4C00                        jdvapi_sync
+     00004312  _bank0123                          jdvapi_sync
+     00004318  _bank7_C000                        jdvapi_sync
+     0000431E  _bank4_4000                        jdvapi_sync
+     00004324  _bank5_4000                        jdvapi_sync
+     0000432A  _bank6_4000                        jdvapi_sync
+     00004330  _bank7_4000                        jdvapi_sync
+     00004336  _overscanH                         jdvapi_sync
+     0000435F  _scan                              jdvapi_sync
+     00004388  _killVBL                           rupture
+     00004399  _restoreVBL                        rupture
+     000043A5  _rupture                           rupture
+     000043C5  _g_tile_palette                    schtroumpf
+     000043CB  _g_tile_schtroumpf                 schtroumpf
+     000047CB  _cpct_setPalette                   cpct_video
+     000047E2  _cpct_setPALColour                 cpct_video
+     000047EE  _cpct_setVideoMemoryOffset         cpct_video
+     000047EE  cpct_setVideoMemoryOffset_asm      cpct_video
+     000047F7  _cpct_drawSprite                   cpct_sprites
+     0000489C  _cpct_drawSpriteMasked             cpct_sprites
+     000048CB  _cpct_memset_f64                   cpct_memutils
+     00004913  _cpct_setStackLocation             cpct_memutils
+     00004913  cpct_setStackLocation_asm          cpct_memutils
+     00004917  ___sdcc_call_hl                    
+     00004918  _cpct_hflipSpriteM0                cpct_sprites
+     0000495C  _cpct_waitVSYNC                    cpct_video
+     0000495C  cpct_waitVSYNC_asm                 cpct_video
+     00004964  _cpct_setVideoMode                 cpct_video
+     00004972  _cpct_memcpy                       cpct_memutils
+     0000497A  _cpct_disableFirmware              cpct_firmware
+     0000497A  _cpct_removeInterruptHandler       cpct_firmware
+     0000497A  cpct_disableFirmware_asm           cpct_firmware
+     0000497A  cpct_removeInterruptHandler_asm    cpct_firmware
+     0000498A  __modschar                         
+     00004997  __modsint                          
+     000049A3  _cpct_mode_rom_status              cpct_firmware
+     000049A4  _cpct_getScreenPtr                 cpct_video
 ASxxxx Linker V03.00 + NoICE + sdld,  page 8.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00000138    00004957 =       18775. bytes (REL,CON)
+_CODE                               00000138    0000493D =       18749. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000049DE  _cpct_setInterruptHandler          cpct_firmware
-     000049DE  cpct_setInterruptHandler_asm       cpct_firmware
-     000049EF  cpct_safeInterruptHandlerHook      cpct_firmware
-     00004A06  __divsint                          
-     00004A0F  __divschar                         
-     00004A16  __div8                             
-     00004A1A  __div_signexte                     
-     00004A1E  __div16                            
-     00004A44  __get_remainder                    
-     00004A4E  __divuint                          
-     00004A56  __divuchar                         
-     00004A5D  __divu8                            
-     00004A60  __divu16                           
+     000049C4  _cpct_setInterruptHandler          cpct_firmware
+     000049C4  cpct_setInterruptHandler_asm       cpct_firmware
+     000049D5  cpct_safeInterruptHandlerHook      cpct_firmware
+     000049EC  __divsint                          
+     000049F5  __divschar                         
+     000049FC  __div8                             
+     00004A00  __div_signexte                     
+     00004A04  __div16                            
+     00004A2A  __get_remainder                    
+     00004A34  __divuint                          
+     00004A3C  __divuchar                         
+     00004A43  __divu8                            
+     00004A46  __divu16                           
 ASxxxx Linker V03.00 + NoICE + sdld,  page 9.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_DATA                               00004A8F    00000004 =           4. bytes (REL,CON)
+_DATA                               00004A75    00000004 =           4. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004A8F  _screen_location                   main
-     00004A91  _screen_plot_address               main
+     00004A75  _screen_location                   main
+     00004A77  _screen_plot_address               main
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 10.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZED                        00004A93    00000006 =           6. bytes (REL,CON)
+_INITIALIZED                        00004A79    00000006 =           6. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004A93  _intCounter                        main
-     00004A94  _callback_counter                  jdvapi_sync
-     00004A95  _aFunction                         jdvapi_sync
-     00004A97  _vblPosition                       rupture
+     00004A79  _intCounter                        main
+     00004A7A  _callback_counter                  jdvapi_sync
+     00004A7B  _aFunction                         jdvapi_sync
+     00004A7D  _vblPosition                       rupture
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 11.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_INITIALIZER                        00004A99    00000006 =           6. bytes (REL,CON)
+_INITIALIZER                        00004A7F    00000006 =           6. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------

@@ -64,11 +64,11 @@ _scroll_hard::
 	ld	bc, #0x0007
 	add	hl, bc
 00106$:
-	sra	h
+	srl	h
 	rr	l
-	sra	h
+	srl	h
 	rr	l
-	sra	h
+	srl	h
 	rr	l
 ;src/txt_scroll_hard.c:23: mod=step%8;
 	push	hl
@@ -84,14 +84,8 @@ _scroll_hard::
 	ld	b, h
 	pop	hl
 ;src/txt_scroll_hard.c:24: div=div%128;
-	push	bc
-	ld	de, #0x0080
-	push	de
-	push	hl
-	call	__modsint
-	pop	af
-	pop	af
-	pop	bc
+	res	7, l
+	ld	h, #0x00
 ;src/txt_scroll_hard.c:25: if (texte[div]==' ') {
 	ld	de, #_texte+0
 	add	hl, de
@@ -141,8 +135,8 @@ _scroll_hard::
 	ret
 _texte:
 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
-	.ascii "AND A HAPPY NEW YEAR                                        "
-	.ascii "        "
+	.ascii "AND A HAPPY NEW YEAR                           AZERTYUIOPQSD"
+	.ascii "FGH     "
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER

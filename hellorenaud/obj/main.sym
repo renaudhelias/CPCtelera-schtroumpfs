@@ -34,7 +34,7 @@ Symbol Table
     _g_tile_schtroumpf                                             **** GX
   2 _intCounter                                                    0000 GR
     _killVBL                                                       **** GX
-  0 _main                                                          011E GR
+  0 _main                                                          00E0 GR
   0 _myInterruptHandler                                            0040 GR
     _restoreVBL                                                    **** GX
     _rupture                                                       **** GX
@@ -48,7 +48,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  1CA   flags    0
+   0 _CODE                                      size  1B8   flags    0
    1 _DATA                                      size    4   flags    0
    2 _INITIALIZED                               size    1   flags    0
    3 _DABS                                      size    0   flags    8

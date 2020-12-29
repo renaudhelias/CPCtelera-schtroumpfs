@@ -64,11 +64,11 @@
    001F 01 07 00      [10]   64 	ld	bc, #0x0007
    0022 09            [11]   65 	add	hl, bc
    0023                      66 00106$:
-   0023 CB 2C         [ 8]   67 	sra	h
+   0023 CB 3C         [ 8]   67 	srl	h
    0025 CB 1D         [ 8]   68 	rr	l
-   0027 CB 2C         [ 8]   69 	sra	h
+   0027 CB 3C         [ 8]   69 	srl	h
    0029 CB 1D         [ 8]   70 	rr	l
-   002B CB 2C         [ 8]   71 	sra	h
+   002B CB 3C         [ 8]   71 	srl	h
    002D CB 1D         [ 8]   72 	rr	l
                              73 ;src/txt_scroll_hard.c:23: mod=step%8;
    002F E5            [11]   74 	push	hl
@@ -84,63 +84,57 @@
    0041 44            [ 4]   84 	ld	b, h
    0042 E1            [10]   85 	pop	hl
                              86 ;src/txt_scroll_hard.c:24: div=div%128;
-   0043 C5            [11]   87 	push	bc
-   0044 11 80 00      [10]   88 	ld	de, #0x0080
-   0047 D5            [11]   89 	push	de
-   0048 E5            [11]   90 	push	hl
-   0049 CDr00r00      [17]   91 	call	__modsint
-   004C F1            [10]   92 	pop	af
-   004D F1            [10]   93 	pop	af
-   004E C1            [10]   94 	pop	bc
-                             95 ;src/txt_scroll_hard.c:25: if (texte[div]==' ') {
-   004F 11r8Ar00      [10]   96 	ld	de, #_texte+0
-   0052 19            [11]   97 	add	hl, de
-   0053 5E            [ 7]   98 	ld	e, (hl)
-   0054 7B            [ 4]   99 	ld	a, e
-   0055 D6 20         [ 7]  100 	sub	a, #0x20
-   0057 20 05         [12]  101 	jr	NZ,00102$
-                            102 ;src/txt_scroll_hard.c:26: o=0;
-   0059 11 00 00      [10]  103 	ld	de, #0x0000
-   005C 18 09         [12]  104 	jr	00103$
-   005E                     105 00102$:
-                            106 ;src/txt_scroll_hard.c:28: o=texte[div]-'?';
-   005E 16 00         [ 7]  107 	ld	d, #0x00
-   0060 7B            [ 4]  108 	ld	a, e
-   0061 C6 C1         [ 7]  109 	add	a, #0xc1
-   0063 5F            [ 4]  110 	ld	e, a
-   0064 7A            [ 4]  111 	ld	a, d
-   0065 CE FF         [ 7]  112 	adc	a, #0xff
-   0067                     113 00103$:
-                            114 ;src/txt_scroll_hard.c:31: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
-   0067 21r00r00      [10]  115 	ld	hl, #_g_tile_fontmap32x32plat_000
-   006A 7B            [ 4]  116 	ld	a, e
-   006B 87            [ 4]  117 	add	a, a
-   006C 57            [ 4]  118 	ld	d, a
-   006D 1E 00         [ 7]  119 	ld	e, #0x00
-   006F 19            [11]  120 	add	hl,de
-   0070 EB            [ 4]  121 	ex	de,hl
-   0071 69            [ 4]  122 	ld	l, c
-   0072 60            [ 4]  123 	ld	h, b
-   0073 29            [11]  124 	add	hl, hl
-   0074 29            [11]  125 	add	hl, hl
-   0075 29            [11]  126 	add	hl, hl
-   0076 29            [11]  127 	add	hl, hl
-   0077 29            [11]  128 	add	hl, hl
-   0078 29            [11]  129 	add	hl, hl
-   0079 19            [11]  130 	add	hl, de
-                            131 ;src/txt_scroll_hard.c:33: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
-   007A C1            [10]  132 	pop	bc
-   007B C5            [11]  133 	push	bc
-   007C 11 02 20      [10]  134 	ld	de, #0x2002
-   007F D5            [11]  135 	push	de
-   0080 C5            [11]  136 	push	bc
-   0081 E5            [11]  137 	push	hl
-   0082 CDr00r00      [17]  138 	call	_cpct_drawSprite
-   0085 DD F9         [10]  139 	ld	sp, ix
-   0087 DD E1         [14]  140 	pop	ix
-   0089 C9            [10]  141 	ret
-   008A                     142 _texte:
-   008A 57 45 20 57 49 53   143 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
+   0043 CB BD         [ 8]   87 	res	7, l
+   0045 26 00         [ 7]   88 	ld	h, #0x00
+                             89 ;src/txt_scroll_hard.c:25: if (texte[div]==' ') {
+   0047 11r82r00      [10]   90 	ld	de, #_texte+0
+   004A 19            [11]   91 	add	hl, de
+   004B 5E            [ 7]   92 	ld	e, (hl)
+   004C 7B            [ 4]   93 	ld	a, e
+   004D D6 20         [ 7]   94 	sub	a, #0x20
+   004F 20 05         [12]   95 	jr	NZ,00102$
+                             96 ;src/txt_scroll_hard.c:26: o=0;
+   0051 11 00 00      [10]   97 	ld	de, #0x0000
+   0054 18 09         [12]   98 	jr	00103$
+   0056                      99 00102$:
+                            100 ;src/txt_scroll_hard.c:28: o=texte[div]-'?';
+   0056 16 00         [ 7]  101 	ld	d, #0x00
+   0058 7B            [ 4]  102 	ld	a, e
+   0059 C6 C1         [ 7]  103 	add	a, #0xc1
+   005B 5F            [ 4]  104 	ld	e, a
+   005C 7A            [ 4]  105 	ld	a, d
+   005D CE FF         [ 7]  106 	adc	a, #0xff
+   005F                     107 00103$:
+                            108 ;src/txt_scroll_hard.c:31: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+   005F 21r00r00      [10]  109 	ld	hl, #_g_tile_fontmap32x32plat_000
+   0062 7B            [ 4]  110 	ld	a, e
+   0063 87            [ 4]  111 	add	a, a
+   0064 57            [ 4]  112 	ld	d, a
+   0065 1E 00         [ 7]  113 	ld	e, #0x00
+   0067 19            [11]  114 	add	hl,de
+   0068 EB            [ 4]  115 	ex	de,hl
+   0069 69            [ 4]  116 	ld	l, c
+   006A 60            [ 4]  117 	ld	h, b
+   006B 29            [11]  118 	add	hl, hl
+   006C 29            [11]  119 	add	hl, hl
+   006D 29            [11]  120 	add	hl, hl
+   006E 29            [11]  121 	add	hl, hl
+   006F 29            [11]  122 	add	hl, hl
+   0070 29            [11]  123 	add	hl, hl
+   0071 19            [11]  124 	add	hl, de
+                            125 ;src/txt_scroll_hard.c:33: cpct_drawSprite((u8*)pointeur, plot, G_TILE_FONTMAP32X32PLAT_000_W, G_TILE_FONTMAP32X32PLAT_000_H);
+   0072 C1            [10]  126 	pop	bc
+   0073 C5            [11]  127 	push	bc
+   0074 11 02 20      [10]  128 	ld	de, #0x2002
+   0077 D5            [11]  129 	push	de
+   0078 C5            [11]  130 	push	bc
+   0079 E5            [11]  131 	push	hl
+   007A CDr00r00      [17]  132 	call	_cpct_drawSprite
+   007D DD F9         [10]  133 	ld	sp, ix
+   007F DD E1         [14]  134 	pop	ix
+   0081 C9            [10]  135 	ret
+   0082                     136 _texte:
+   0082 57 45 20 57 49 53   137 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
         48 20 59 4F 55 20
         41 20 4D 45 52 52
         59 20 43 48 52 49
@@ -150,19 +144,19 @@
         41 20 4D 45 52 52
         59 20 43 48 52 49
         53 54 4D 41 53 20
-   00C6 41 4E 44 20 41 20   144 	.ascii "AND A HAPPY NEW YEAR                                        "
+   00BE 41 4E 44 20 41 20   138 	.ascii "AND A HAPPY NEW YEAR                           AZERTYUIOPQSD"
         48 41 50 50 59 20
         4E 45 57 20 59 45
         41 52 20 20 20 20
         20 20 20 20 20 20
         20 20 20 20 20 20
         20 20 20 20 20 20
-        20 20 20 20 20 20
-        20 20 20 20 20 20
-        20 20 20 20 20 20
-   0102 20 20 20 20 20 20   145 	.ascii "        "
+        20 20 20 20 20 41
+        5A 45 52 54 59 55
+        49 4F 50 51 53 44
+   00FA 46 47 48 20 20 20   139 	.ascii "FGH     "
         20 20
-   010A 00                  146 	.db 0x00
-                            147 	.area _CODE
-                            148 	.area _INITIALIZER
-                            149 	.area _CABS (ABS)
+   0102 00                  140 	.db 0x00
+                            141 	.area _CODE
+                            142 	.area _INITIALIZER
+                            143 	.area _CABS (ABS)
