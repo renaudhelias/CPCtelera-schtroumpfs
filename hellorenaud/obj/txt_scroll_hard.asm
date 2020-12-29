@@ -83,9 +83,15 @@ _scroll_hard::
 	ld	c, l
 	ld	b, h
 	pop	hl
-;src/txt_scroll_hard.c:25: div=div%128;
-	res	7, l
-	ld	h, #0x00
+;src/txt_scroll_hard.c:25: div=div%105;
+	push	bc
+	ld	de, #0x0069
+	push	de
+	push	hl
+	call	__moduint
+	pop	af
+	pop	af
+	pop	bc
 ;src/txt_scroll_hard.c:26: if (texte[div]==' ') {
 	ld	de, #_texte+0
 	add	hl, de
@@ -136,7 +142,7 @@ _scroll_hard::
 _texte:
 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB   AZERTYUIOPQSDFG"
-	.ascii "H     "
+	.ascii "H       "
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER
