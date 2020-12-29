@@ -43,6 +43,7 @@ const u8 g_items_0[4 * 8] = {
 };
 
 void crtc(u8* R12R13) {
+//FIXME cpct_setVideoMemoryOffset((unsigned char)(((unsigned int)R12R13)>>2));
 __asm
 	push	ix
 	ld	ix,#0
@@ -60,7 +61,6 @@ inc b
 out (c),l
 	pop	ix
 __endasm;
-
 }
 
 u8 intCounter=0;
@@ -88,7 +88,6 @@ out (c),c
 ld bc,#0xbd04
 out (c),c
 __endasm;
-
 
 		crtc(screen_location);
 
