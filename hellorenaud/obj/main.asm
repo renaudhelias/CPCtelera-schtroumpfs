@@ -14,6 +14,7 @@
 	.globl _bank7_C000
 	.globl _bank0123
 	.globl _calque8000
+	.globl _calqueC000
 	.globl _akp_musicPlay
 	.globl _akp_musicInit
 	.globl _scroll_hard
@@ -30,10 +31,11 @@
 	.globl _cpct_hflipSpriteM0
 	.globl _cpct_drawSpriteMasked
 	.globl _cpct_drawSprite
+	.globl _cpct_isAnyKeyPressed_f
+	.globl _cpct_scanKeyboard_f
 	.globl _cpct_setStackLocation
 	.globl _cpct_memcpy
 	.globl _cpct_memset_f64
-	.globl _cpct_setInterruptHandler
 	.globl _cpct_disableFirmware
 	.globl _intCounter
 	.globl _screen_plot_address
@@ -320,37 +322,36 @@ _main::
 	push	hl
 	push	bc
 	call	_cpct_drawSpriteMasked
-;src/main.c:164: calque8000();
+;src/main.c:161: calque8000();
 	call	_calque8000
-;src/main.c:166: screen_location=(u8 *)(0x2000);
+;src/main.c:162: calqueC000();
+	call	_calqueC000
+;src/main.c:164: screen_location=(u8 *)(0x2000);
 	ld	hl, #0x2000
 	ld	(_screen_location), hl
-;src/main.c:167: screen_plot_address=(u8 *)(0x8000+80-2);
+;src/main.c:165: screen_plot_address=(u8 *)(0x8000+80-2);
 	ld	hl, #0x804e
 	ld	(_screen_plot_address), hl
-;src/main.c:169: cpct_setInterruptHandler(myInterruptHandler);
-	ld	hl, #_myInterruptHandler
-	call	_cpct_setInterruptHandler
-;src/main.c:172: while (1) {
+;src/main.c:170: while (1) {
 	ld	bc, #0x0000
-00102$:
-;src/main.c:173: cpct_waitVSYNC();
+00104$:
+;src/main.c:171: cpct_waitVSYNC();
 	push	bc
 	call	_cpct_waitVSYNC
 	pop	bc
-;src/main.c:175: screen_location++;
+;src/main.c:173: screen_location++;
 	ld	iy, #_screen_location
 	inc	0 (iy)
-	jr	NZ,00110$
+	jr	NZ,00116$
 	inc	1 (iy)
-00110$:
-;src/main.c:176: screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
+00116$:
+;src/main.c:174: screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
 	ld	hl, (_screen_location)
 	ld	a, h
 	and	a, #0x23
 	ld	h, a
 	ld	(_screen_location), hl
-;src/main.c:177: screen_plot_address+=2;
+;src/main.c:175: screen_plot_address+=2;
 	ld	hl, #_screen_plot_address
 	ld	a, (hl)
 	add	a, #0x02
@@ -359,13 +360,13 @@ _main::
 	ld	a, (hl)
 	adc	a, #0x00
 	ld	(hl), a
-;src/main.c:178: screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
+;src/main.c:176: screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
 	and	a, #0x87
 	ld	h, a
 	ld	(_screen_plot_address), hl
-;src/main.c:184: scroll_hard(t,screen_plot_address);
+;src/main.c:182: scroll_hard(t,screen_plot_address);
 	push	bc
 	ld	hl, (_screen_plot_address)
 	push	hl
@@ -374,9 +375,27 @@ _main::
 	pop	af
 	pop	af
 	pop	bc
-;src/main.c:186: t=t+1;
+;src/main.c:184: t=t+1;
 	inc	bc
-	jr	00102$
+;src/main.c:187: cpct_scanKeyboard_f();
+	push	bc
+	call	_cpct_scanKeyboard_f
+	call	_cpct_isAnyKeyPressed_f
+	pop	bc
+	ld	a, l
+	or	a, a
+	jr	Z,00104$
+;src/main.c:189: cpct_memset_f64(0xC000, 0x0000, 0x4000);
+	push	bc
+	ld	hl, #0x4000
+	push	hl
+	ld	h, #0x00
+	push	hl
+	ld	h, #0xc0
+	push	hl
+	call	_cpct_memset_f64
+	pop	bc
+	jr	00104$
 	.area _CODE
 	.area _INITIALIZER
 __xinit__intCounter:
