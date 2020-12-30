@@ -8,6 +8,8 @@
 // le plot connait l'offset horizontal oui (plot++)
 // il écrit quelque part qu'il ne doit pas, donc si je retire l'écriture, G devrait avoir qu'une seule barre. en fait G a une barre de plus.
 // d'après moi c'est image.
+// faut remonter au char-ligne le bug et aviser
+// FIXME par de boucle for sur height mais sur 4*8 char-lines
 void draw(u8* image, u8* plot, u8 width, u8 height) {
 	u8 x;
 	u8 y;
