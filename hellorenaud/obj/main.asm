@@ -13,7 +13,6 @@
 	.globl _crtc
 	.globl _bank7_C000
 	.globl _bank0123
-	.globl _calque8000
 	.globl _calqueC000
 	.globl _akp_musicPlay
 	.globl _akp_musicInit
@@ -322,8 +321,6 @@ _main::
 	push	hl
 	push	bc
 	call	_cpct_drawSpriteMasked
-;src/main.c:161: calque8000();
-	call	_calque8000
 ;src/main.c:162: calqueC000();
 	call	_calqueC000
 ;src/main.c:164: screen_location=(u8 *)(0x2000);
@@ -351,7 +348,16 @@ _main::
 	and	a, #0x23
 	ld	h, a
 	ld	(_screen_location), hl
-;src/main.c:175: screen_plot_address+=2;
+;src/main.c:176: crtc(screen_location+0x1000);
+	ld	iy, #0x1000
+	ld	de, (_screen_location)
+	add	iy, de
+	push	bc
+	push	iy
+	call	_crtc
+	pop	af
+	pop	bc
+;src/main.c:178: screen_plot_address+=2;
 	ld	hl, #_screen_plot_address
 	ld	a, (hl)
 	add	a, #0x02
@@ -360,13 +366,13 @@ _main::
 	ld	a, (hl)
 	adc	a, #0x00
 	ld	(hl), a
-;src/main.c:176: screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
+;src/main.c:179: screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
 	ld	hl, (_screen_plot_address)
 	ld	a, h
 	and	a, #0x87
 	ld	h, a
 	ld	(_screen_plot_address), hl
-;src/main.c:182: scroll_hard(t,screen_plot_address);
+;src/main.c:185: scroll_hard(t,screen_plot_address);
 	push	bc
 	ld	hl, (_screen_plot_address)
 	push	hl
@@ -375,9 +381,9 @@ _main::
 	pop	af
 	pop	af
 	pop	bc
-;src/main.c:184: t=t+1;
+;src/main.c:187: t=t+1;
 	inc	bc
-;src/main.c:187: cpct_scanKeyboard_f();
+;src/main.c:190: cpct_scanKeyboard_f();
 	push	bc
 	call	_cpct_scanKeyboard_f
 	call	_cpct_isAnyKeyPressed_f
@@ -385,7 +391,7 @@ _main::
 	ld	a, l
 	or	a, a
 	jr	Z,00104$
-;src/main.c:189: cpct_memset_f64(0xC000, 0x0000, 0x4000);
+;src/main.c:192: cpct_memset_f64(0xC000, 0x0000, 0x4000);
 	push	bc
 	ld	hl, #0x4000
 	push	hl

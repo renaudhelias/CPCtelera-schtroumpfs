@@ -158,7 +158,7 @@ void main(void) {
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10,96);
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
-calque8000();
+//calque8000();
 calqueC000();
 
 screen_location=(u8 *)(0x2000);
@@ -172,6 +172,9 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 
 	screen_location++;
 	screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
+
+crtc(screen_location+0x1000);
+
 	screen_plot_address+=2;
 	screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
 	

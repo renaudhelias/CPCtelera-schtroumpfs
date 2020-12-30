@@ -6,20 +6,25 @@
 
 // le plot de connait pas l'offset x8000 non
 // le plot connait l'offset horizontal oui (plot++)
+// il écrit quelque part qu'il ne doit pas, donc si je retire l'écriture, G devrait avoir qu'une seule barre. en fait G a une barre de plus.
+// d'après moi c'est image.
 void draw(u8* image, u8* plot, u8 width, u8 height) {
 	u8 x;
 	u8 y;
+	u8 patch_y;
 	u8* cur_plot;
 	u8* cur_image;
 	for (y=0;y<height;y++) {
 		for (x=0;x<width;x++) {
-			cur_plot=plot+0x4000+ ((y / 8u) * 80u) + ((y % 8u) * 2048u) + x;
+			cur_plot=plot+ 0x4000 +((y / 8u) * 80u) + ((y % 8u) * 2048u) + x;
+			cur_image=image+y*width+x;
 			if (cur_plot<0x4000) {
 				cur_plot=cur_plot-0x4000;
+				//*cur_plot=*cur_image;
+				*cur_plot=0xF0;
+			} else {
+				*cur_plot=*cur_image;
 			}
-			//cur_image=image+y*width+x;
-			//cur_plot=((u16)cur_plot) & 0x7FFF;
-			*cur_plot=0x0F;//*cur_image;
 		}
 	}
 }
