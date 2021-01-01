@@ -17,8 +17,23 @@ void draw_char(u8 c, u8* image, u8* plot) {
 	u8* cur_plot;
 	u8* last_plot;
 	u8* cur_image;
+	u8* p;
 	last_plot=plot+ 0x4000 +80u*c+ 0x3801;
+	// les trou (border) sont au milieu donc c'est plus grand la valeur de saut.
 	if (last_plot<0x4000) {
+	//if (plot-0x8000>640*200/8) {
+	//on ne peut pas chercher où tombe le caractère.
+	//if (plot+0x4000>0xFFCF || plot+0x4000<0x4000) {
+		// moins un screen (rembobinage)
+		//(0xC000 + ((nY / 8u) * 80u) + ((nY % 8u) * 2048u) + nX)
+
+		//(0xC000 + ((640 / 8u) * 80u) + ((640 % 8u) * 2048u) + 200)
+		// (640 / 8u) * 80u == 0x1900
+		// 640*200/8 == 0x3E80
+		//cur_plot = plot - 640*200/8;
+//		cur_plot = plot - 0x4000 + 80u*c;
+//		p = cpct_getScreenPtr(cur_plot+0x4000, 0,8*c);
+//		cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
 		for (y=0;y<8;y++) {
 			for (x=0;x<2;x++) {
 				cur_plot=plot+ 0x4000 +80u*c+ ((y % 8u) * 2048u) + x;
@@ -30,13 +45,8 @@ void draw_char(u8 c, u8* image, u8* plot) {
 			}
 		}
 	} else {
-		for (y=0;y<8;y++) {
-			for (x=0;x<2;x++) {
-				cur_plot=plot+ 0x4000 +80u*c+ ((y % 8u) * 2048u) + x;
-				cur_image=image+(c*8+y)*2+x;
-				*cur_plot=*cur_image;
-			}
-		}
+		p = cpct_getScreenPtr(plot+0x4000, 0,8*c);
+		cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
 	}
 }	
 
