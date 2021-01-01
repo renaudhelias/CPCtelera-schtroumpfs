@@ -7,18 +7,18 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
+    __modsint                                                      **** GX
   0 _draw_char                                                     0000 GR
     _g_tile_fontmap32x32plat_000                                   **** GX
-  0 _scroll_hard                                                   00DC GR
-  0 _texte                                                         0175 GR
-
+  0 _scroll_hard                                                   015E GR
+  0 _texte                                                         01F7 GR
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  1F7   flags    0
+   0 _CODE                                      size  279   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

@@ -22,14 +22,11 @@ void draw_char(u8 c, u8* image, u8* plot) {
 		for (y=0;y<8;y++) {
 			for (x=0;x<2;x++) {
 				cur_plot=plot+ 0x4000 +80u*c+ ((y % 8u) * 2048u) + x;
-				cur_image=image+(c*8+y)*2+x;
+				cur_image=image+(c*8+((y+1)%8))*2+x;
 				if (cur_plot<0x4000) {
 					cur_plot=cur_plot-0x4000;
-					//*cur_plot=*cur_image;
-					*cur_plot=0xF0;
-				} else {
-					*cur_plot=0xFF;
 				}
+				*cur_plot=*cur_image;
 			}
 		}
 	} else {
