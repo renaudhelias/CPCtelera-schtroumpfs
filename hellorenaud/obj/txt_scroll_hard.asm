@@ -9,7 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _scroll_hard
-	.globl _draw
+	.globl _draw_char
 	.globl _texte
 ;--------------------------------------------------------
 ; special function registers
@@ -42,142 +42,156 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/txt_scroll_hard.c:11: void draw(u8* image, u8* plot, u8 width, u8 height) {
+;src/txt_scroll_hard.c:13: void draw_char(u8 c, u8* image, u8* plot) {
 ;	---------------------------------
-; Function draw
+; Function draw_char
 ; ---------------------------------
-_draw::
+_draw_char::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-	ld	hl, #-6
-	add	hl, sp
-	ld	sp, hl
-;src/txt_scroll_hard.c:17: for (y=0;y<height;y++) {
-	ld	a, 6 (ix)
-	add	a, #0x00
-	ld	-2 (ix), a
-	ld	a, 7 (ix)
-	adc	a, #0x40
-	ld	-1 (ix), a
-	ld	e, #0x00
-00110$:
-	ld	a, e
-	sub	a, 9 (ix)
-	jp	NC, 00112$
-;src/txt_scroll_hard.c:18: for (x=0;x<width;x++) {
-	push	de
-	ld	h, 8 (ix)
-	ld	l, #0x00
-	ld	d, l
-	ld	b, #0x08
-00136$:
+	push	af
+	push	af
+;src/txt_scroll_hard.c:20: last_plot=plot+ 0x4000 +80u*c+ 0x3801;
+	ld	c, 4 (ix)
+	ld	b, #0x00
+	ld	l, c
+	ld	h, b
 	add	hl, hl
-	jr	NC,00137$
-	add	hl, de
-00137$:
-	djnz	00136$
-	pop	de
+	add	hl, hl
+	add	hl, bc
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
 	ld	c, l
 	ld	b, h
-	ld	a, 4 (ix)
-	add	a, c
-	ld	-4 (ix), a
-	ld	a, 5 (ix)
-	adc	a, b
-	ld	-3 (ix), a
-	ld	c, #0x00
-00107$:
-	ld	a, c
-	sub	a, 8 (ix)
-	jr	NC,00111$
-;src/txt_scroll_hard.c:19: cur_plot=plot+ 0x4000 +((y / 8u) * 80u) + ((y % 8u) * 2048u) + x;
-	ld	b, e
-	ld	d, #0x00
-	ld	l, b
-	ld	h, d
-	srl	h
-	rr	l
-	srl	h
-	rr	l
-	srl	h
-	rr	l
-	push	de
-	ld	e, l
-	ld	d, h
-	add	hl, hl
-	add	hl, hl
+	ld	hl, #0x7801
+	add	hl,bc
+	ex	de,hl
+	ld	l,7 (ix)
+	ld	h,8 (ix)
 	add	hl, de
-	add	hl, hl
-	add	hl, hl
-	add	hl, hl
-	add	hl, hl
-	pop	de
-	ld	a, -2 (ix)
-	add	a, l
-	ld	-6 (ix), a
-	ld	a, -1 (ix)
-	adc	a, h
-	ld	-5 (ix), a
-	ld	a, b
+	ld	d, h
+;src/txt_scroll_hard.c:21: if (last_plot<0x4000) {
+;src/txt_scroll_hard.c:22: for (y=0;y<8;y++) {
+	ld	a, 7 (ix)
+	add	a, #0x00
+	ld	l, a
+	ld	a, 8 (ix)
+	adc	a, #0x40
+	ld	h, a
+	add	hl,bc
+	ld	c, l
+	ld	b, h
+;src/txt_scroll_hard.c:21: if (last_plot<0x4000) {
+	ld	a, d
+	sub	a, #0x40
+	jr	NC,00129$
+;src/txt_scroll_hard.c:22: for (y=0;y<8;y++) {
+	ld	-4 (ix), #0x00
+;src/txt_scroll_hard.c:23: for (x=0;x<2;x++) {
+00123$:
+	ld	-3 (ix), #0x00
+00111$:
+;src/txt_scroll_hard.c:24: cur_plot=plot+ 0x4000 +80u*c+ ((y % 8u) * 2048u) + x;
+	ld	a, -4 (ix)
 	and	a, #0x07
 	rlca
 	rlca
 	rlca
 	and	a, #0xf8
-	ld	l, a
-	ld	b, #0x00
-	ld	a, -6 (ix)
-	add	a, b
-	ld	b, a
-	ld	a, -5 (ix)
-	adc	a, l
-	ld	d, a
-	ld	a, b
-	add	a, c
-	ld	-6 (ix), a
-	ld	a, d
-	adc	a, #0x00
-	ld	-5 (ix), a
-;src/txt_scroll_hard.c:20: cur_image=image+y*width+x;
-	ld	l,-4 (ix)
-	ld	h,-3 (ix)
-	ld	b, #0x00
-	add	hl, bc
-;src/txt_scroll_hard.c:21: if (cur_plot<0x4000) {
-	ld	d, -5 (ix)
-	ld	a, d
-	sub	a, #0x40
-	jr	NC,00102$
-;src/txt_scroll_hard.c:22: cur_plot=cur_plot-0x4000;
-	ld	a, -6 (ix)
-	add	a, #0x00
-	ld	l, a
-	ld	a, -5 (ix)
-	adc	a, #0xc0
 	ld	h, a
-;src/txt_scroll_hard.c:24: *cur_plot=0xF0;
+	ld	l, #0x00
+	add	hl, bc
+	ld	e,-3 (ix)
+	ld	d,#0x00
+	add	hl, de
+;src/txt_scroll_hard.c:26: if (cur_plot<0x4000) {
+;src/txt_scroll_hard.c:27: cur_plot=cur_plot-0x4000;
+	ld	a,h
+	cp	a,#0x40
+	jr	NC,00102$
+	add	a,#0xc0
+	ld	h, a
+;src/txt_scroll_hard.c:29: *cur_plot=0xF0;
 	ld	(hl), #0xf0
-	jr	00108$
+	jr	00112$
 00102$:
-;src/txt_scroll_hard.c:26: *cur_plot=*cur_image;
-	ld	b, (hl)
-	pop	hl
-	push	hl
-	ld	(hl), b
-00108$:
-;src/txt_scroll_hard.c:18: for (x=0;x<width;x++) {
-	inc	c
-	jr	00107$
-00111$:
-;src/txt_scroll_hard.c:17: for (y=0;y<height;y++) {
-	inc	e
-	jp	00110$
+;src/txt_scroll_hard.c:31: *cur_plot=0xFF;
+	ld	(hl), #0xff
 00112$:
+;src/txt_scroll_hard.c:23: for (x=0;x<2;x++) {
+	inc	-3 (ix)
+	ld	a, -3 (ix)
+	sub	a, #0x02
+	jr	C,00111$
+;src/txt_scroll_hard.c:22: for (y=0;y<8;y++) {
+	inc	-4 (ix)
+	ld	a, -4 (ix)
+	sub	a, #0x08
+	jr	C,00123$
+	jr	00119$
+;src/txt_scroll_hard.c:36: for (y=0;y<8;y++) {
+00129$:
+	ld	-4 (ix), #0x00
+;src/txt_scroll_hard.c:37: for (x=0;x<2;x++) {
+00127$:
+	ld	-3 (ix), #0x00
+00115$:
+;src/txt_scroll_hard.c:38: cur_plot=plot+ 0x4000 +80u*c+ ((y % 8u) * 2048u) + x;
+	ld	a, -4 (ix)
+	and	a, #0x07
+	rlca
+	rlca
+	rlca
+	and	a, #0xf8
+	ld	h, a
+	ld	l, #0x00
+	add	hl, bc
+	ld	a, l
+	add	a, -3 (ix)
+	ld	-2 (ix), a
+	ld	a, h
+	adc	a, #0x00
+	ld	-1 (ix), a
+;src/txt_scroll_hard.c:39: cur_image=image+(c*8+y)*2+x;
+	ld	l, 4 (ix)
+	ld	h, #0x00
+	add	hl, hl
+	add	hl, hl
+	add	hl, hl
+	ld	e, -4 (ix)
+	ld	d, #0x00
+	add	hl, de
+	add	hl, hl
+	ex	de,hl
+	ld	l,5 (ix)
+	ld	h,6 (ix)
+	add	hl, de
+	ld	e,-3 (ix)
+	ld	d,#0x00
+	add	hl, de
+;src/txt_scroll_hard.c:40: *cur_plot=*cur_image;
+	ld	e, (hl)
+	ld	l,-2 (ix)
+	ld	h,-1 (ix)
+	ld	(hl), e
+;src/txt_scroll_hard.c:37: for (x=0;x<2;x++) {
+	inc	-3 (ix)
+	ld	a, -3 (ix)
+	sub	a, #0x02
+	jr	C,00115$
+;src/txt_scroll_hard.c:36: for (y=0;y<8;y++) {
+	inc	-4 (ix)
+	ld	a, -4 (ix)
+	sub	a, #0x08
+	jr	C,00127$
+00119$:
 	ld	sp, ix
 	pop	ix
 	ret
-;src/txt_scroll_hard.c:76: void scroll_hard(u16 step, u8* screen_plot_address) {
+;src/txt_scroll_hard.c:90: void scroll_hard(u16 step, u8* screen_plot_address) {
 ;	---------------------------------
 ; Function scroll_hard
 ; ---------------------------------
@@ -186,10 +200,10 @@ _scroll_hard::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;src/txt_scroll_hard.c:82: u8* plot=screen_plot_address;
+;src/txt_scroll_hard.c:96: u8* plot=screen_plot_address;
 	ld	c,6 (ix)
 	ld	b,7 (ix)
-;src/txt_scroll_hard.c:85: div=step/8;
+;src/txt_scroll_hard.c:99: div=step/8;
 	ld	e,4 (ix)
 	ld	d,5 (ix)
 	srl	d
@@ -198,26 +212,26 @@ _scroll_hard::
 	rr	e
 	srl	d
 	rr	e
-;src/txt_scroll_hard.c:86: mod=step%8;
+;src/txt_scroll_hard.c:100: mod=step%8;
 	ld	a, 4 (ix)
 	and	a, #0x07
 	ld	-2 (ix), a
 	ld	-1 (ix), #0x00
-;src/txt_scroll_hard.c:87: div=div%128;
+;src/txt_scroll_hard.c:101: div=div%128;
 	res	7, e
 	ld	d, #0x00
-;src/txt_scroll_hard.c:88: if (texte[div]==' ') {
+;src/txt_scroll_hard.c:102: if (texte[div]==' ') {
 	ld	hl, #_texte+0
 	add	hl, de
 	ld	e, (hl)
 	ld	a, e
 	sub	a, #0x20
 	jr	NZ,00102$
-;src/txt_scroll_hard.c:89: o=0;
+;src/txt_scroll_hard.c:103: o=0;
 	ld	de, #0x0000
 	jr	00103$
 00102$:
-;src/txt_scroll_hard.c:91: o=texte[div]-'?';
+;src/txt_scroll_hard.c:105: o=texte[div]-'?';
 	ld	d, #0x00
 	ld	a, e
 	add	a, #0xc1
@@ -225,7 +239,7 @@ _scroll_hard::
 	ld	a, d
 	adc	a, #0xff
 00103$:
-;src/txt_scroll_hard.c:94: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+;src/txt_scroll_hard.c:108: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
 	ld	hl, #_g_tile_fontmap32x32plat_000
 	ld	a, e
 	add	a, a
@@ -242,16 +256,56 @@ _scroll_hard::
 	add	hl, hl
 	add	hl, hl
 	add	hl, de
-;src/txt_scroll_hard.c:98: draw((u8*)pointeur, plot, 2, 32);
-	ld	de, #0x2002
-	push	de
+;src/txt_scroll_hard.c:112: draw_char(0,(u8*)pointeur, plot);
+	push	hl
+	push	bc
 	push	bc
 	push	hl
-	call	_draw
-	ld	hl, #6
-	add	hl, sp
-	ld	sp, hl
-	ld	sp, ix
+	xor	a, a
+	push	af
+	inc	sp
+	call	_draw_char
+	pop	af
+	pop	af
+	inc	sp
+	pop	bc
+	pop	hl
+;src/txt_scroll_hard.c:113: draw_char(1,(u8*)pointeur, plot);
+	push	hl
+	push	bc
+	push	bc
+	push	hl
+	ld	a, #0x01
+	push	af
+	inc	sp
+	call	_draw_char
+	pop	af
+	pop	af
+	inc	sp
+	pop	bc
+	pop	hl
+;src/txt_scroll_hard.c:114: draw_char(2,(u8*)pointeur, plot);
+	push	hl
+	push	bc
+	push	bc
+	push	hl
+	ld	a, #0x02
+	push	af
+	inc	sp
+	call	_draw_char
+	pop	af
+	pop	af
+	inc	sp
+	pop	bc
+	pop	hl
+;src/txt_scroll_hard.c:115: draw_char(3,(u8*)pointeur, plot);
+	push	bc
+	push	hl
+	ld	a, #0x03
+	push	af
+	inc	sp
+	call	_draw_char
+	ld	sp,ix
 	pop	ix
 	ret
 _texte:

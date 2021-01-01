@@ -10,26 +10,38 @@
 // d'après moi c'est image.
 // faut remonter au char-ligne le bug et aviser
 // FIXME par de boucle for sur height mais sur 4*8 char-lines
-void draw(u8* image, u8* plot, u8 width, u8 height) {
+void draw_char(u8 c, u8* image, u8* plot) {
 	u8 x;
 	u8 y;
 	u8 patch_y;
 	u8* cur_plot;
+	u8* last_plot;
 	u8* cur_image;
-	for (y=0;y<height;y++) {
-		for (x=0;x<width;x++) {
-			cur_plot=plot+ 0x4000 +((y / 8u) * 80u) + ((y % 8u) * 2048u) + x;
-			cur_image=image+y*width+x;
-			if (cur_plot<0x4000) {
-				cur_plot=cur_plot-0x4000;
-				//*cur_plot=*cur_image;
-				*cur_plot=0xF0;
-			} else {
+	last_plot=plot+ 0x4000 +80u*c+ 0x3801;
+	if (last_plot<0x4000) {
+		for (y=0;y<8;y++) {
+			for (x=0;x<2;x++) {
+				cur_plot=plot+ 0x4000 +80u*c+ ((y % 8u) * 2048u) + x;
+				cur_image=image+(c*8+y)*2+x;
+				if (cur_plot<0x4000) {
+					cur_plot=cur_plot-0x4000;
+					//*cur_plot=*cur_image;
+					*cur_plot=0xF0;
+				} else {
+					*cur_plot=0xFF;
+				}
+			}
+		}
+	} else {
+		for (y=0;y<8;y++) {
+			for (x=0;x<2;x++) {
+				cur_plot=plot+ 0x4000 +80u*c+ ((y % 8u) * 2048u) + x;
+				cur_image=image+(c*8+y)*2+x;
 				*cur_plot=*cur_image;
 			}
 		}
 	}
-}
+}	
 
 
 
@@ -97,7 +109,10 @@ void scroll_hard(u16 step, u8* screen_plot_address) {
 
 	//cpct_drawSolidBox(plot,0xFF,2,32);
 	//cpct_drawSprite((u8*)pointeur, plot, 2, 32);
-	draw((u8*)pointeur, plot, 2, 32);
+	draw_char(0,(u8*)pointeur, plot);
+	draw_char(1,(u8*)pointeur, plot);
+	draw_char(2,(u8*)pointeur, plot);
+	draw_char(3,(u8*)pointeur, plot);
 	//put_frame( plot, 2, 32,(u8*)pointeur);
 	//cpct_drawSpriteBlended(plot, G_TILE_FONTMAP32X32PLAT_000_H, G_TILE_FONTMAP32X32PLAT_000_W, (u8*)pointeur);
 	// FIXME, c'est pire sans _f
