@@ -4,13 +4,16 @@
 
 #define SCREEN_WIDTH 160/2
 
+u8* plot_screen2;
+u8 firstPlotScreen2=1;
+
 // le plot de connait pas l'offset x8000 non
 // le plot connait l'offset horizontal oui (plot++)
 // il écrit quelque part qu'il ne doit pas, donc si je retire l'écriture, G devrait avoir qu'une seule barre. en fait G a une barre de plus.
 // d'après moi c'est image.
 // faut remonter au char-ligne le bug et aviser
 // FIXME par de boucle for sur height mais sur 4*8 char-lines
-void draw_char(u8 c, u8* image, u8* plot) {
+u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
 	u8 x;
 	u8 y;
 	u8 patch_y;
@@ -18,9 +21,18 @@ void draw_char(u8 c, u8* image, u8* plot) {
 	u8* last_plot;
 	u8* cur_image;
 	u8* p;
+	u8 c_screen2=ce2;
 	last_plot=plot+ 0x4000 +80u*c+ 0x3801;
 	// les trou (border) sont au milieu donc c'est plus grand la valeur de saut.
 	if (last_plot<0x4000) {
+		if (c<c_screen2) {
+			c_screen2=c;
+		}
+//		if (firstPlotScreen2) {
+//			// début d'écran 2
+//			plot_screen2=0x8000;
+//			firstPlotScreen2=0;
+//		}
 	//if (plot-0x8000>640*200/8) {
 	//on ne peut pas chercher où tombe le caractère.
 	//if (plot+0x4000>0xFFCF || plot+0x4000<0x4000) {
@@ -32,60 +44,40 @@ void draw_char(u8 c, u8* image, u8* plot) {
 		// 640*200/8 == 0x3E80
 		//cur_plot = plot - 640*200/8;
 //		cur_plot = plot - 0x4000 + 80u*c;
-//		p = cpct_getScreenPtr(cur_plot+0x4000, 0,8*c);
-//		cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-		for (y=0;y<8;y++) {
-			for (x=0;x<2;x++) {
-				cur_plot=plot+ 0x4000 +80u*c+ ((y % 8u) * 2048u) + x;
-				cur_image=image+(c*8+((y+1)%8))*2+x;
-				if (cur_plot<0x4000) {
-					cur_plot=cur_plot-0x4000;
-				}
-				*cur_plot=*cur_image;
-			}
+		p = cpct_getScreenPtr(plot_screen2+0x4000, 0,8*(c-c_screen2));
+		if (c_screen2==3 && c==3) {
+			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+		} else if (c_screen2==2 && c==3) { // le "suivant" en bas, donc 0 1
+			// a priori ça dessine au dessous des 32 lignes
+			cpct_drawSolidBox(p,0xFF,2,8);
+		} else {
+			//cpct_drawSolidBox(p,c_screen2,2,8);
+			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
 		}
+		//p = cpct_getScreenPtr(plot_screen2+0x4000, 0,8*(c-c_screen2));
+		// au début c'est c==3 - on va dire          => c-3
+		// au suivant c'est c==2 + c==3              => c-2
+		// puis finalement c'est c==1 + c==2 + c==3  => c-1
+		//idiot depuis draw_char les c ne sont pas visible d'un à l'autre
+		//cpct_drawTileAligned2x8_f((u8*)image+(2*8)*(c-c_screen2), p);
+		
+
+//		for (y=0;y<8;y++) {
+//			for (x=0;x<2;x++) {
+//				cur_plot=plot+ 0x4000 +80u*c+ ((y % 8u) * 2048u) + x;
+//				cur_image=image+(c*8+((y+1)%8))*2+x;
+//				if (cur_plot<0x4000) {
+//					cur_plot=cur_plot-0x4000;
+//				}
+//				*cur_plot=*cur_image;
+//			}
+//		}
 	} else {
 		p = cpct_getScreenPtr(plot+0x4000, 0,8*c);
 		cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
 	}
+	return c_screen2;
 }	
-
-
-
-/*void put_frame(unsigned char *pAddress, unsigned char nWidth, unsigned char nHeight, const unsigned char *image)
-{
-  __asm
-    LD L, 4(IX) 		; HL --> Adr destination
-    LD H, 5(IX) 
-    LD C, 6(IX) 		; C --> Largeur en octet
-    LD B, 7(IX)         ; B --> Hauteur
-    LD E, 8(IX) 		; DE --> Adresse image source.
-    LD D, 9(IX) 
-
-    _loop_alto000:
-       PUSH BC				; Sauvegarde de BC sur la pile (width et height)
-       LD B,C				; Charge C (width) dans B
-       PUSH HL				; Sauvegarde de HL (adresse de la destination)
-    _loop_ancho000:
-       LD A,(DE)			; Met dans A un octet de de la source
-       LD (HL),A			; Met dans la destination A
-       INC DE				; Avance dans l'adresse de la source
-       INC HL				; Avance dans l'adresse de la destination
-       DJNZ _loop_ancho000		; Décrémente B qui contient la largeur. Si on à pas finit de copier 
-							; l'équivalent de la largeur on saute à _loop_ancho.
-       POP HL				; récupère l'adresse de la cible sauvegardé sur la pile
-       LD A,H				; Charge la partie haute dans A
-       ADD #0x08			; Ajoute la valeur 8 à A --> Permet de passer à la ligne suivante
-       LD H,A				; Réinjecte A dans H, HL nous donne ainsi l'adresse de début de la ligne suivante
-       SUB #0xC0			; On vérifie que la ligne suivante en mémoire n'est pas à remonter ... 
-       JP NC, _sig_linea000	; Non, elle est à la suite en mémoire donc tout va bien
-       LD BC, #0x8050		; On doit remonter, on va ajouter C000 (notre page par défaut + 0x080 pour la ligne suivante)
-       ADD HL,BC			; Ajoute ça dans l'adresse de destination --> On est sur la nouvelle ligne
-    _sig_linea000:
-       POP BC				; Récupère BC --> pour récupérer la hauteur
-       DJNZ _loop_alto000		; Enlève 1 à la hauteur, si on à pas tout traité, on reboucle au début _loop_alto
-  __endasm;
-}*/
 
 const char texte []="WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQSDFG     \0";
 
@@ -98,9 +90,11 @@ void scroll_hard(u16 step, u8* screen_plot_address) {
 	u16 div;
 	u16 mod;
 	u16 o;
+	u8 ce2;
 	//u8* p;
 	u16 pointeur;
 	u8* plot=screen_plot_address;
+
 
 	// on cherche le caractère
 	div=step/8;
@@ -116,11 +110,17 @@ void scroll_hard(u16 step, u8* screen_plot_address) {
 
 	//cpct_drawSolidBox(plot,0xFF,2,32);
 	//cpct_drawSprite((u8*)pointeur, plot, 2, 32);
-	draw_char(0,(u8*)pointeur, plot);
-	draw_char(1,(u8*)pointeur, plot);
-	draw_char(2,(u8*)pointeur, plot);
-	draw_char(3,(u8*)pointeur, plot);
-	//put_frame( plot, 2, 32,(u8*)pointeur);
+	ce2=draw_char(0,  4,(u8*)pointeur, plot);
+	ce2=draw_char(1,ce2,(u8*)pointeur, plot);
+	ce2=draw_char(2,ce2,(u8*)pointeur, plot);
+	ce2=draw_char(3,ce2,(u8*)pointeur, plot);
+	if (ce2==4) {
+		// hors du coup
+		plot_screen2=0x8000;
+	} else {
+		plot_screen2+=2;
+		plot_screen2=(u8 *)(((u16)plot_screen2) & 0x87FF);
+	}
 	//cpct_drawSpriteBlended(plot, G_TILE_FONTMAP32X32PLAT_000_H, G_TILE_FONTMAP32X32PLAT_000_W, (u8*)pointeur);
 	// FIXME, c'est pire sans _f
 	//p = cpct_getScreenPtr(plot, 0,0);
