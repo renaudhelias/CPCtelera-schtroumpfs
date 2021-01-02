@@ -23,16 +23,16 @@
                              23 ; ram data
                              24 ;--------------------------------------------------------
                              25 	.area _DATA
-   4C00                      26 _plot_screen2::
-   4C00                      27 	.ds 2
-   4C02                      28 _c_screen3::
-   4C02                      29 	.ds 1
+   4C24                      26 _plot_screen2::
+   4C24                      27 	.ds 2
+   4C26                      28 _c_screen3::
+   4C26                      29 	.ds 1
                              30 ;--------------------------------------------------------
                              31 ; ram data
                              32 ;--------------------------------------------------------
                              33 	.area _INITIALIZED
-   4C07                      34 _firstPlotScreen2::
-   4C07                      35 	.ds 1
+   4C2B                      34 _firstPlotScreen2::
+   4C2B                      35 	.ds 1
                              36 ;--------------------------------------------------------
                              37 ; absolute external ram data
                              38 ;--------------------------------------------------------
@@ -107,16 +107,16 @@
                             107 ;src/txt_scroll_hard.c:29: c_screen3=c;
    0394 DD 46 04      [19]  108 	ld	b, 4 (ix)
                             109 ;src/txt_scroll_hard.c:28: if (c<c_screen3) {
-   0397 21 02 4C      [10]  110 	ld	hl, #_c_screen3
+   0397 21 26 4C      [10]  110 	ld	hl, #_c_screen3
    039A DD 7E 04      [19]  111 	ld	a, 4 (ix)
    039D 96            [ 7]  112 	sub	a, (hl)
    039E 30 0A         [12]  113 	jr	NC,00102$
                             114 ;src/txt_scroll_hard.c:29: c_screen3=c;
-   03A0 21 02 4C      [10]  115 	ld	hl,#_c_screen3 + 0
+   03A0 21 26 4C      [10]  115 	ld	hl,#_c_screen3 + 0
    03A3 70            [ 7]  116 	ld	(hl), b
                             117 ;src/txt_scroll_hard.c:30: plot_screen2=0x8000;
    03A4 21 00 80      [10]  118 	ld	hl, #0x8000
-   03A7 22 00 4C      [16]  119 	ld	(_plot_screen2), hl
+   03A7 22 24 4C      [16]  119 	ld	(_plot_screen2), hl
    03AA                     120 00102$:
                             121 ;src/txt_scroll_hard.c:32: if (c<c_screen2) {
    03AA DD 7E 04      [19]  122 	ld	a, 4 (ix)
@@ -133,7 +133,7 @@
    03B7 07            [ 4]  133 	rlca
    03B8 E6 F8         [ 7]  134 	and	a, #0xf8
    03BA 47            [ 4]  135 	ld	b, a
-   03BB FD 2A 00 4C   [20]  136 	ld	iy, (_plot_screen2)
+   03BB FD 2A 24 4C   [20]  136 	ld	iy, (_plot_screen2)
    03BF C5            [11]  137 	push	bc
    03C0 D5            [11]  138 	push	de
    03C1 C5            [11]  139 	push	bc
@@ -142,11 +142,11 @@
    03C4 F5            [11]  142 	push	af
    03C5 33            [ 6]  143 	inc	sp
    03C6 FD E5         [15]  144 	push	iy
-   03C8 CD 5A 4B      [17]  145 	call	_cpct_getScreenPtr
+   03C8 CD 56 4B      [17]  145 	call	_cpct_getScreenPtr
    03CB D1            [10]  146 	pop	de
    03CC E5            [11]  147 	push	hl
    03CD D5            [11]  148 	push	de
-   03CE CD 7A 4B      [17]  149 	call	_cpct_drawTileAligned2x8_f
+   03CE CD 9E 4B      [17]  149 	call	_cpct_drawTileAligned2x8_f
    03D1 C1            [10]  150 	pop	bc
    03D2 18 22         [12]  151 	jr	00107$
    03D4                     152 00106$:
@@ -168,11 +168,11 @@
    03E9 33            [ 6]  168 	inc	sp
    03EA 60            [ 4]  169 	ld	h, b
    03EB E5            [11]  170 	push	hl
-   03EC CD 5A 4B      [17]  171 	call	_cpct_getScreenPtr
+   03EC CD 56 4B      [17]  171 	call	_cpct_getScreenPtr
    03EF D1            [10]  172 	pop	de
    03F0 E5            [11]  173 	push	hl
    03F1 D5            [11]  174 	push	de
-   03F2 CD 7A 4B      [17]  175 	call	_cpct_drawTileAligned2x8_f
+   03F2 CD 9E 4B      [17]  175 	call	_cpct_drawTileAligned2x8_f
    03F5 C1            [10]  176 	pop	bc
    03F6                     177 00107$:
                             178 ;src/txt_scroll_hard.c:79: return c_screen2;
@@ -311,14 +311,14 @@
    049F 20 0D         [12]  311 	jr	NZ,00105$
                             312 ;src/txt_scroll_hard.c:118: plot_screen2=0x8000;
    04A1 21 00 80      [10]  313 	ld	hl, #0x8000
-   04A4 22 00 4C      [16]  314 	ld	(_plot_screen2), hl
+   04A4 22 24 4C      [16]  314 	ld	(_plot_screen2), hl
                             315 ;src/txt_scroll_hard.c:119: c_screen3=4;
-   04A7 21 02 4C      [10]  316 	ld	hl,#_c_screen3 + 0
+   04A7 21 26 4C      [10]  316 	ld	hl,#_c_screen3 + 0
    04AA 36 04         [10]  317 	ld	(hl), #0x04
    04AC 18 16         [12]  318 	jr	00107$
    04AE                     319 00105$:
                             320 ;src/txt_scroll_hard.c:121: plot_screen2+=2;
-   04AE 21 00 4C      [10]  321 	ld	hl, #_plot_screen2
+   04AE 21 24 4C      [10]  321 	ld	hl, #_plot_screen2
    04B1 7E            [ 7]  322 	ld	a, (hl)
    04B2 C6 02         [ 7]  323 	add	a, #0x02
    04B4 77            [ 7]  324 	ld	(hl), a
@@ -327,11 +327,11 @@
    04B7 CE 00         [ 7]  327 	adc	a, #0x00
    04B9 77            [ 7]  328 	ld	(hl), a
                             329 ;src/txt_scroll_hard.c:122: plot_screen2=(u8 *)(((u16)plot_screen2) & 0x87FF);
-   04BA 2A 00 4C      [16]  330 	ld	hl, (_plot_screen2)
+   04BA 2A 24 4C      [16]  330 	ld	hl, (_plot_screen2)
    04BD 7C            [ 4]  331 	ld	a, h
    04BE E6 87         [ 7]  332 	and	a, #0x87
    04C0 67            [ 4]  333 	ld	h, a
-   04C1 22 00 4C      [16]  334 	ld	(_plot_screen2), hl
+   04C1 22 24 4C      [16]  334 	ld	(_plot_screen2), hl
    04C4                     335 00107$:
    04C4 DD F9         [10]  336 	ld	sp, ix
    04C6 DD E1         [14]  337 	pop	ix
@@ -363,6 +363,6 @@
    054A 00                  344 	.db 0x00
                             345 	.area _CODE
                             346 	.area _INITIALIZER
-   4C0F                     347 __xinit__firstPlotScreen2:
-   4C0F 01                  348 	.db #0x01	; 1
+   4C33                     347 __xinit__firstPlotScreen2:
+   4C33 01                  348 	.db #0x01	; 1
                             349 	.area _CABS (ABS)

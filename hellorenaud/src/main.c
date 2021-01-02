@@ -164,7 +164,7 @@ calque8000();
 screen_location=(u8 *)(0x2000);
 screen_plot_address=(u8 *)(0x8000+80-2);
 
-   //cpct_setInterruptHandler(myInterruptHandler);
+   cpct_setInterruptHandler(myInterruptHandler);
    t=0;
    while (1) {
 	cpct_waitVSYNC();
@@ -172,7 +172,7 @@ screen_plot_address=(u8 *)(0x8000+80-2);
 	screen_location++;
 	screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
 
-crtc(screen_location);
+//crtc(screen_location);
 
 	screen_plot_address+=2;
 	screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);

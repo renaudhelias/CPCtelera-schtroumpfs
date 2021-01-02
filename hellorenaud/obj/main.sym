@@ -22,6 +22,7 @@ Symbol Table
     _cpct_memcpy                                                   **** GX
     _cpct_memset_f64                                               **** GX
     _cpct_scanKeyboard_f                                           **** GX
+    _cpct_setInterruptHandler                                      **** GX
     _cpct_setPALColour                                             **** GX
     _cpct_setPalette                                               **** GX
     _cpct_setStackLocation                                         **** GX
@@ -43,12 +44,13 @@ Symbol Table
   1 _screen_plot_address                                           0002 GR
     _scroll_hard                                                   **** GX
 
+
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  1DD   flags    0
+   0 _CODE                                      size  1D9   flags    0
    1 _DATA                                      size    4   flags    0
    2 _INITIALIZED                               size    1   flags    0
    3 _DABS                                      size    0   flags    8

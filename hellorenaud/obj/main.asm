@@ -35,6 +35,7 @@
 	.globl _cpct_setStackLocation
 	.globl _cpct_memcpy
 	.globl _cpct_memset_f64
+	.globl _cpct_setInterruptHandler
 	.globl _cpct_disableFirmware
 	.globl _intCounter
 	.globl _screen_plot_address
@@ -329,6 +330,9 @@ _main::
 ;src/main.c:165: screen_plot_address=(u8 *)(0x8000+80-2);
 	ld	hl, #0x804e
 	ld	(_screen_plot_address), hl
+;src/main.c:167: cpct_setInterruptHandler(myInterruptHandler);
+	ld	hl, #_myInterruptHandler
+	call	_cpct_setInterruptHandler
 ;src/main.c:169: while (1) {
 	ld	bc, #0x0000
 00104$:
@@ -348,13 +352,6 @@ _main::
 	and	a, #0x23
 	ld	h, a
 	ld	(_screen_location), hl
-;src/main.c:175: crtc(screen_location);
-	push	bc
-	ld	hl, (_screen_location)
-	push	hl
-	call	_crtc
-	pop	af
-	pop	bc
 ;src/main.c:177: screen_plot_address+=2;
 	ld	hl, #_screen_plot_address
 	ld	a, (hl)
