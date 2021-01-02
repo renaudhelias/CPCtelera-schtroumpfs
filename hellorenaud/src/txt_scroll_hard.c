@@ -6,7 +6,7 @@
 
 u8* plot_screen2;
 u8 firstPlotScreen2=1;
-
+u8 c_screen3;
 // le plot de connait pas l'offset x8000 non
 // le plot connait l'offset horizontal oui (plot++)
 // il écrit quelque part qu'il ne doit pas, donc si je retire l'écriture, G devrait avoir qu'une seule barre. en fait G a une barre de plus.
@@ -25,6 +25,10 @@ u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
 	last_plot=plot+ 0x4000 +80u*c+ 0x3801;
 	// les trou (border) sont au milieu donc c'est plus grand la valeur de saut.
 	if (last_plot<0x4000) {
+		if (c<c_screen3) {
+			c_screen3=c;
+			plot_screen2=0x8000;
+		}
 		if (c<c_screen2) {
 			c_screen2=c;
 		}
@@ -51,8 +55,8 @@ u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
 			// a priori ça dessine au dessous des 32 lignes
 			cpct_drawSolidBox(p,0xFF,2,8);
 		} else {
-			//cpct_drawSolidBox(p,c_screen2,2,8);
-			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+			cpct_drawSolidBox(p,c_screen2,2,8);
+			//cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
 		}
 		//p = cpct_getScreenPtr(plot_screen2+0x4000, 0,8*(c-c_screen2));
 		// au début c'est c==3 - on va dire          => c-3
@@ -81,6 +85,7 @@ u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
 
 const char texte []="WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQSDFG     \0";
 
+
 /**
  * texte : le texte
  * l : la longueur du texte
@@ -90,7 +95,7 @@ void scroll_hard(u16 step, u8* screen_plot_address) {
 	u16 div;
 	u16 mod;
 	u16 o;
-	u8 ce2;
+	u8 ce2;	
 	//u8* p;
 	u16 pointeur;
 	u8* plot=screen_plot_address;
@@ -110,13 +115,14 @@ void scroll_hard(u16 step, u8* screen_plot_address) {
 
 	//cpct_drawSolidBox(plot,0xFF,2,32);
 	//cpct_drawSprite((u8*)pointeur, plot, 2, 32);
-	ce2=draw_char(0,  4,(u8*)pointeur, plot);
+	ce2=draw_char(0,4,(u8*)pointeur, plot);
 	ce2=draw_char(1,ce2,(u8*)pointeur, plot);
 	ce2=draw_char(2,ce2,(u8*)pointeur, plot);
 	ce2=draw_char(3,ce2,(u8*)pointeur, plot);
 	if (ce2==4) {
 		// hors du coup
 		plot_screen2=0x8000;
+		c_screen3=4;
 	} else {
 		plot_screen2+=2;
 		plot_screen2=(u8 *)(((u16)plot_screen2) & 0x87FF);

@@ -23,8 +23,8 @@
                              23 ; ram data
                              24 ;--------------------------------------------------------
                              25 	.area _INITIALIZED
-   4CF5                      26 _vblPosition::
-   4CF5                      27 	.ds 2
+   4D19                      26 _vblPosition::
+   4D19                      27 	.ds 2
                              28 ;--------------------------------------------------------
                              29 ; absolute external ram data
                              30 ;--------------------------------------------------------
@@ -49,60 +49,60 @@
                              49 ;	---------------------------------
                              50 ; Function killVBL
                              51 ; ---------------------------------
-   44D9                      52 _killVBL::
+   44FC                      52 _killVBL::
                              53 ;src/rupture.c:14: __endasm;
-   44D9 01 07 BC      [10]   54 	ld	bc,#0xbc07 ; Kill VBL
-   44DC 3E 7F         [ 7]   55 	ld	a,#0x7f
-   44DE ED 49         [12]   56 	out	(c),c
-   44E0 04            [ 4]   57 	inc	b
-   44E1 ED 79         [12]   58 	out	(c),a
+   44FC 01 07 BC      [10]   54 	ld	bc,#0xbc07 ; Kill VBL
+   44FF 3E 7F         [ 7]   55 	ld	a,#0x7f
+   4501 ED 49         [12]   56 	out	(c),c
+   4503 04            [ 4]   57 	inc	b
+   4504 ED 79         [12]   58 	out	(c),a
                              59 ;src/rupture.c:15: vblPosition=37;
-   44E3 21 25 00      [10]   60 	ld	hl, #0x0025
-   44E6 22 F5 4C      [16]   61 	ld	(_vblPosition), hl
-   44E9 C9            [10]   62 	ret
+   4506 21 25 00      [10]   60 	ld	hl, #0x0025
+   4509 22 19 4D      [16]   61 	ld	(_vblPosition), hl
+   450C C9            [10]   62 	ret
                              63 ;src/rupture.c:18: void restoreVBL() {
                              64 ;	---------------------------------
                              65 ; Function restoreVBL
                              66 ; ---------------------------------
-   44EA                      67 _restoreVBL::
+   450D                      67 _restoreVBL::
                              68 ;src/rupture.c:25: __endasm;
-   44EA 01 07 BC      [10]   69 	ld	bc,#0xbc07 ; On repositionne la VBL
-   44ED 3A F5 4C      [13]   70 	ld	a,(_vblPosition)
-   44F0 ED 49         [12]   71 	out	(c),c
-   44F2 04            [ 4]   72 	inc	b
-   44F3 ED 79         [12]   73 	out	(c),a
-   44F5 C9            [10]   74 	ret
+   450D 01 07 BC      [10]   69 	ld	bc,#0xbc07 ; On repositionne la VBL
+   4510 3A 19 4D      [13]   70 	ld	a,(_vblPosition)
+   4513 ED 49         [12]   71 	out	(c),c
+   4515 04            [ 4]   72 	inc	b
+   4516 ED 79         [12]   73 	out	(c),a
+   4518 C9            [10]   74 	ret
                              75 ;src/rupture.c:31: void rupture(unsigned char nbCharLigne) {
                              76 ;	---------------------------------
                              77 ; Function rupture
                              78 ; ---------------------------------
-   44F6                      79 _rupture::
+   4519                      79 _rupture::
                              80 ;src/rupture.c:42: __endasm;
-   44F6 01 04 BC      [10]   81 	ld	bc,#0xbc04 ; Rupture 1
+   4519 01 04 BC      [10]   81 	ld	bc,#0xbc04 ; Rupture 1
                              82 ;;ld	a,(_nbCharLigne)
-   44F9 21 02 00      [10]   83 	ld	hl, #2+0
-   44FC 39            [11]   84 	add	hl, sp
-   44FD 7E            [ 7]   85 	ld	a, (hl)
-   44FE 3D            [ 4]   86 	dec	a
-   44FF ED 49         [12]   87 	out	(c),c
-   4501 04            [ 4]   88 	inc	b
-   4502 ED 79         [12]   89 	out	(c),a
+   451C 21 02 00      [10]   83 	ld	hl, #2+0
+   451F 39            [11]   84 	add	hl, sp
+   4520 7E            [ 7]   85 	ld	a, (hl)
+   4521 3D            [ 4]   86 	dec	a
+   4522 ED 49         [12]   87 	out	(c),c
+   4524 04            [ 4]   88 	inc	b
+   4525 ED 79         [12]   89 	out	(c),a
                              90 ;src/rupture.c:43: vblPosition=vblPosition-nbCharLigne;
-   4504 21 02 00      [10]   91 	ld	hl, #2+0
-   4507 39            [11]   92 	add	hl, sp
-   4508 4E            [ 7]   93 	ld	c, (hl)
-   4509 06 00         [ 7]   94 	ld	b, #0x00
-   450B 21 F5 4C      [10]   95 	ld	hl, #_vblPosition
-   450E 7E            [ 7]   96 	ld	a, (hl)
-   450F 91            [ 4]   97 	sub	a, c
-   4510 77            [ 7]   98 	ld	(hl), a
-   4511 23            [ 6]   99 	inc	hl
-   4512 7E            [ 7]  100 	ld	a, (hl)
-   4513 98            [ 4]  101 	sbc	a, b
-   4514 77            [ 7]  102 	ld	(hl), a
-   4515 C9            [10]  103 	ret
+   4527 21 02 00      [10]   91 	ld	hl, #2+0
+   452A 39            [11]   92 	add	hl, sp
+   452B 4E            [ 7]   93 	ld	c, (hl)
+   452C 06 00         [ 7]   94 	ld	b, #0x00
+   452E 21 19 4D      [10]   95 	ld	hl, #_vblPosition
+   4531 7E            [ 7]   96 	ld	a, (hl)
+   4532 91            [ 4]   97 	sub	a, c
+   4533 77            [ 7]   98 	ld	(hl), a
+   4534 23            [ 6]   99 	inc	hl
+   4535 7E            [ 7]  100 	ld	a, (hl)
+   4536 98            [ 4]  101 	sbc	a, b
+   4537 77            [ 7]  102 	ld	(hl), a
+   4538 C9            [10]  103 	ret
                             104 	.area _CODE
                             105 	.area _INITIALIZER
-   4CFD                     106 __xinit__vblPosition:
-   4CFD 00 00               107 	.dw #0x0000
+   4D21                     106 __xinit__vblPosition:
+   4D21 00 00               107 	.dw #0x0000
                             108 	.area _CABS (ABS)
