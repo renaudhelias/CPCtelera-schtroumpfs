@@ -11,430 +11,341 @@
                              11 	.globl _scroll_hard
                              12 	.globl _draw_char
                              13 	.globl _cpct_getScreenPtr
-                             14 	.globl _cpct_drawSolidBox
-                             15 	.globl _cpct_drawTileAligned2x8_f
-                             16 	.globl _firstPlotScreen2
-                             17 	.globl _c_screen3
-                             18 	.globl _plot_screen2
-                             19 	.globl _texte
-                             20 ;--------------------------------------------------------
-                             21 ; special function registers
+                             14 	.globl _cpct_drawTileAligned2x8_f
+                             15 	.globl _firstPlotScreen2
+                             16 	.globl _c_screen3
+                             17 	.globl _plot_screen2
+                             18 	.globl _texte
+                             19 ;--------------------------------------------------------
+                             20 ; special function registers
+                             21 ;--------------------------------------------------------
                              22 ;--------------------------------------------------------
-                             23 ;--------------------------------------------------------
-                             24 ; ram data
-                             25 ;--------------------------------------------------------
-                             26 	.area _DATA
-   0000                      27 _plot_screen2::
-   0000                      28 	.ds 2
-   0002                      29 _c_screen3::
-   0002                      30 	.ds 1
-                             31 ;--------------------------------------------------------
-                             32 ; ram data
-                             33 ;--------------------------------------------------------
-                             34 	.area _INITIALIZED
-   0000                      35 _firstPlotScreen2::
-   0000                      36 	.ds 1
-                             37 ;--------------------------------------------------------
-                             38 ; absolute external ram data
-                             39 ;--------------------------------------------------------
-                             40 	.area _DABS (ABS)
-                             41 ;--------------------------------------------------------
-                             42 ; global & static initialisations
-                             43 ;--------------------------------------------------------
-                             44 	.area _HOME
-                             45 	.area _GSINIT
-                             46 	.area _GSFINAL
-                             47 	.area _GSINIT
-                             48 ;--------------------------------------------------------
-                             49 ; Home
-                             50 ;--------------------------------------------------------
+                             23 ; ram data
+                             24 ;--------------------------------------------------------
+                             25 	.area _DATA
+   0000                      26 _plot_screen2::
+   0000                      27 	.ds 2
+   0002                      28 _c_screen3::
+   0002                      29 	.ds 1
+                             30 ;--------------------------------------------------------
+                             31 ; ram data
+                             32 ;--------------------------------------------------------
+                             33 	.area _INITIALIZED
+   0000                      34 _firstPlotScreen2::
+   0000                      35 	.ds 1
+                             36 ;--------------------------------------------------------
+                             37 ; absolute external ram data
+                             38 ;--------------------------------------------------------
+                             39 	.area _DABS (ABS)
+                             40 ;--------------------------------------------------------
+                             41 ; global & static initialisations
+                             42 ;--------------------------------------------------------
+                             43 	.area _HOME
+                             44 	.area _GSINIT
+                             45 	.area _GSFINAL
+                             46 	.area _GSINIT
+                             47 ;--------------------------------------------------------
+                             48 ; Home
+                             49 ;--------------------------------------------------------
+                             50 	.area _HOME
                              51 	.area _HOME
-                             52 	.area _HOME
-                             53 ;--------------------------------------------------------
-                             54 ; code
-                             55 ;--------------------------------------------------------
-                             56 	.area _CODE
-                             57 ;src/txt_scroll_hard.c:16: u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
-                             58 ;	---------------------------------
-                             59 ; Function draw_char
-                             60 ; ---------------------------------
-   0000                      61 _draw_char::
-   0000 DD E5         [15]   62 	push	ix
-   0002 DD 21 00 00   [14]   63 	ld	ix,#0
-   0006 DD 39         [15]   64 	add	ix,sp
-   0008 F5            [11]   65 	push	af
-                             66 ;src/txt_scroll_hard.c:24: u8 c_screen2=ce2;
-   0009 DD 4E 05      [19]   67 	ld	c, 5 (ix)
-                             68 ;src/txt_scroll_hard.c:25: last_plot=plot+ 0x4000 +80u*c+ 0x3801;
-   000C DD 5E 04      [19]   69 	ld	e, 4 (ix)
-   000F 16 00         [ 7]   70 	ld	d, #0x00
-   0011 6B            [ 4]   71 	ld	l, e
-   0012 62            [ 4]   72 	ld	h, d
-   0013 29            [11]   73 	add	hl, hl
-   0014 29            [11]   74 	add	hl, hl
-   0015 19            [11]   75 	add	hl, de
-   0016 29            [11]   76 	add	hl, hl
-   0017 29            [11]   77 	add	hl, hl
-   0018 29            [11]   78 	add	hl, hl
-   0019 29            [11]   79 	add	hl, hl
-   001A EB            [ 4]   80 	ex	de,hl
-   001B 21 01 78      [10]   81 	ld	hl, #0x7801
-   001E 19            [11]   82 	add	hl,de
-   001F EB            [ 4]   83 	ex	de,hl
-   0020 DD 6E 08      [19]   84 	ld	l,8 (ix)
-   0023 DD 66 09      [19]   85 	ld	h,9 (ix)
-   0026 19            [11]   86 	add	hl, de
-                             87 ;src/txt_scroll_hard.c:27: if (last_plot<0x4000) {
-   0027 33            [ 6]   88 	inc	sp
-   0028 33            [ 6]   89 	inc	sp
-   0029 E5            [11]   90 	push	hl
-                             91 ;src/txt_scroll_hard.c:53: cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-   002A DD 6E 04      [19]   92 	ld	l, 4 (ix)
-   002D 26 00         [ 7]   93 	ld	h, #0x00
-   002F 29            [11]   94 	add	hl, hl
-   0030 29            [11]   95 	add	hl, hl
-   0031 29            [11]   96 	add	hl, hl
-   0032 29            [11]   97 	add	hl, hl
-   0033 EB            [ 4]   98 	ex	de,hl
-   0034 DD 6E 06      [19]   99 	ld	l,6 (ix)
-   0037 DD 66 07      [19]  100 	ld	h,7 (ix)
-   003A 19            [11]  101 	add	hl, de
-   003B EB            [ 4]  102 	ex	de,hl
-                            103 ;src/txt_scroll_hard.c:27: if (last_plot<0x4000) {
-   003C DD 7E FF      [19]  104 	ld	a, -1 (ix)
-   003F D6 40         [ 7]  105 	sub	a, #0x40
-   0041 D2rFAr00      [10]  106 	jp	NC, 00122$
-                            107 ;src/txt_scroll_hard.c:29: c_screen3=c;
-   0044 DD 46 04      [19]  108 	ld	b, 4 (ix)
-                            109 ;src/txt_scroll_hard.c:28: if (c<c_screen3) {
-   0047 21r02r00      [10]  110 	ld	hl, #_c_screen3
-   004A DD 7E 04      [19]  111 	ld	a, 4 (ix)
-   004D 96            [ 7]  112 	sub	a, (hl)
-   004E 30 0A         [12]  113 	jr	NC,00102$
-                            114 ;src/txt_scroll_hard.c:29: c_screen3=c;
-   0050 21r02r00      [10]  115 	ld	hl,#_c_screen3 + 0
-   0053 70            [ 7]  116 	ld	(hl), b
-                            117 ;src/txt_scroll_hard.c:30: plot_screen2=0x8000;
-   0054 21 00 80      [10]  118 	ld	hl, #0x8000
-   0057 22r00r00      [16]  119 	ld	(_plot_screen2), hl
-   005A                     120 00102$:
-                            121 ;src/txt_scroll_hard.c:32: if (c<c_screen2) {
-   005A DD 7E 04      [19]  122 	ld	a, 4 (ix)
-   005D 91            [ 4]  123 	sub	a, c
-   005E 30 01         [12]  124 	jr	NC,00104$
-                            125 ;src/txt_scroll_hard.c:33: c_screen2=c;
-   0060 48            [ 4]  126 	ld	c, b
-   0061                     127 00104$:
-                            128 ;src/txt_scroll_hard.c:51: p = cpct_getScreenPtr(plot_screen2+0x4000, 0,8*(c-c_screen2));
-   0061 DD 7E 04      [19]  129 	ld	a, 4 (ix)
-   0064 91            [ 4]  130 	sub	a, c
+                             52 ;--------------------------------------------------------
+                             53 ; code
+                             54 ;--------------------------------------------------------
+                             55 	.area _CODE
+                             56 ;src/txt_scroll_hard.c:16: u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
+                             57 ;	---------------------------------
+                             58 ; Function draw_char
+                             59 ; ---------------------------------
+   0000                      60 _draw_char::
+   0000 DD E5         [15]   61 	push	ix
+   0002 DD 21 00 00   [14]   62 	ld	ix,#0
+   0006 DD 39         [15]   63 	add	ix,sp
+   0008 F5            [11]   64 	push	af
+                             65 ;src/txt_scroll_hard.c:24: u8 c_screen2=ce2;
+   0009 DD 4E 05      [19]   66 	ld	c, 5 (ix)
+                             67 ;src/txt_scroll_hard.c:25: last_plot=plot+ 0x4000 +80u*c+ 0x3801;
+   000C DD 5E 04      [19]   68 	ld	e, 4 (ix)
+   000F 16 00         [ 7]   69 	ld	d, #0x00
+   0011 6B            [ 4]   70 	ld	l, e
+   0012 62            [ 4]   71 	ld	h, d
+   0013 29            [11]   72 	add	hl, hl
+   0014 29            [11]   73 	add	hl, hl
+   0015 19            [11]   74 	add	hl, de
+   0016 29            [11]   75 	add	hl, hl
+   0017 29            [11]   76 	add	hl, hl
+   0018 29            [11]   77 	add	hl, hl
+   0019 29            [11]   78 	add	hl, hl
+   001A EB            [ 4]   79 	ex	de,hl
+   001B 21 01 78      [10]   80 	ld	hl, #0x7801
+   001E 19            [11]   81 	add	hl,de
+   001F EB            [ 4]   82 	ex	de,hl
+   0020 DD 6E 08      [19]   83 	ld	l,8 (ix)
+   0023 DD 66 09      [19]   84 	ld	h,9 (ix)
+   0026 19            [11]   85 	add	hl, de
+                             86 ;src/txt_scroll_hard.c:27: if (last_plot<0x4000) {
+   0027 33            [ 6]   87 	inc	sp
+   0028 33            [ 6]   88 	inc	sp
+   0029 E5            [11]   89 	push	hl
+                             90 ;src/txt_scroll_hard.c:71: cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+   002A DD 6E 04      [19]   91 	ld	l, 4 (ix)
+   002D 26 00         [ 7]   92 	ld	h, #0x00
+   002F 29            [11]   93 	add	hl, hl
+   0030 29            [11]   94 	add	hl, hl
+   0031 29            [11]   95 	add	hl, hl
+   0032 29            [11]   96 	add	hl, hl
+   0033 EB            [ 4]   97 	ex	de,hl
+   0034 DD 6E 06      [19]   98 	ld	l,6 (ix)
+   0037 DD 66 07      [19]   99 	ld	h,7 (ix)
+   003A 19            [11]  100 	add	hl, de
+   003B EB            [ 4]  101 	ex	de,hl
+                            102 ;src/txt_scroll_hard.c:27: if (last_plot<0x4000) {
+   003C DD 7E FF      [19]  103 	ld	a, -1 (ix)
+   003F D6 40         [ 7]  104 	sub	a, #0x40
+   0041 30 48         [12]  105 	jr	NC,00106$
+                            106 ;src/txt_scroll_hard.c:29: c_screen3=c;
+   0043 DD 46 04      [19]  107 	ld	b, 4 (ix)
+                            108 ;src/txt_scroll_hard.c:28: if (c<c_screen3) {
+   0046 21r02r00      [10]  109 	ld	hl, #_c_screen3
+   0049 DD 7E 04      [19]  110 	ld	a, 4 (ix)
+   004C 96            [ 7]  111 	sub	a, (hl)
+   004D 30 0A         [12]  112 	jr	NC,00102$
+                            113 ;src/txt_scroll_hard.c:29: c_screen3=c;
+   004F 21r02r00      [10]  114 	ld	hl,#_c_screen3 + 0
+   0052 70            [ 7]  115 	ld	(hl), b
+                            116 ;src/txt_scroll_hard.c:30: plot_screen2=0x8000;
+   0053 21 00 80      [10]  117 	ld	hl, #0x8000
+   0056 22r00r00      [16]  118 	ld	(_plot_screen2), hl
+   0059                     119 00102$:
+                            120 ;src/txt_scroll_hard.c:32: if (c<c_screen2) {
+   0059 DD 7E 04      [19]  121 	ld	a, 4 (ix)
+   005C 91            [ 4]  122 	sub	a, c
+   005D 30 01         [12]  123 	jr	NC,00104$
+                            124 ;src/txt_scroll_hard.c:33: c_screen2=c;
+   005F 48            [ 4]  125 	ld	c, b
+   0060                     126 00104$:
+                            127 ;src/txt_scroll_hard.c:51: p = cpct_getScreenPtr(plot_screen2+0x4000, 0,8*(c-c_screen2));
+   0060 DD 7E 04      [19]  128 	ld	a, 4 (ix)
+   0063 91            [ 4]  129 	sub	a, c
+   0064 07            [ 4]  130 	rlca
    0065 07            [ 4]  131 	rlca
    0066 07            [ 4]  132 	rlca
-   0067 07            [ 4]  133 	rlca
-   0068 E6 F8         [ 7]  134 	and	a, #0xf8
-   006A 47            [ 4]  135 	ld	b, a
-   006B FD 21 00 40   [14]  136 	ld	iy, #0x4000
-   006F C5            [11]  137 	push	bc
-   0070 ED 4Br00r00   [20]  138 	ld	bc, (_plot_screen2)
-   0074 FD 09         [15]  139 	add	iy, bc
-   0076 C1            [10]  140 	pop	bc
-   0077 C5            [11]  141 	push	bc
-   0078 D5            [11]  142 	push	de
-   0079 C5            [11]  143 	push	bc
-   007A 33            [ 6]  144 	inc	sp
-   007B AF            [ 4]  145 	xor	a, a
-   007C F5            [11]  146 	push	af
-   007D 33            [ 6]  147 	inc	sp
-   007E FD E5         [15]  148 	push	iy
-   0080 CDr00r00      [17]  149 	call	_cpct_getScreenPtr
-   0083 D1            [10]  150 	pop	de
-   0084 C1            [10]  151 	pop	bc
-                            152 ;src/txt_scroll_hard.c:52: if (c_screen2==3 && c==3) {
-   0085 DD 7E 04      [19]  153 	ld	a, 4 (ix)
-   0088 D6 03         [ 7]  154 	sub	a, #0x03
-   008A 20 04         [12]  155 	jr	NZ,00170$
-   008C 3E 01         [ 7]  156 	ld	a,#0x01
-   008E 18 01         [12]  157 	jr	00171$
-   0090                     158 00170$:
-   0090 AF            [ 4]  159 	xor	a,a
-   0091                     160 00171$:
-   0091 47            [ 4]  161 	ld	b, a
-                            162 ;src/txt_scroll_hard.c:53: cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-                            163 ;src/txt_scroll_hard.c:52: if (c_screen2==3 && c==3) {
-   0092 79            [ 4]  164 	ld	a, c
-   0093 D6 03         [ 7]  165 	sub	a,#0x03
-   0095 20 0D         [12]  166 	jr	NZ,00118$
-   0097 B0            [ 4]  167 	or	a,b
-   0098 28 0A         [12]  168 	jr	Z,00118$
-                            169 ;src/txt_scroll_hard.c:53: cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-   009A C5            [11]  170 	push	bc
-   009B E5            [11]  171 	push	hl
-   009C D5            [11]  172 	push	de
-   009D CDr00r00      [17]  173 	call	_cpct_drawTileAligned2x8_f
-   00A0 C1            [10]  174 	pop	bc
-   00A1 C3r22r01      [10]  175 	jp	00123$
-   00A4                     176 00118$:
-                            177 ;src/txt_scroll_hard.c:54: } else if (c_screen2==2 && c==2) { // le "suivant" en bas, donc 0 1
-   00A4 79            [ 4]  178 	ld	a, c
-   00A5 D6 02         [ 7]  179 	sub	a, #0x02
-   00A7 20 04         [12]  180 	jr	NZ,00174$
-   00A9 3E 01         [ 7]  181 	ld	a,#0x01
-   00AB 18 01         [12]  182 	jr	00175$
-   00AD                     183 00174$:
-   00AD AF            [ 4]  184 	xor	a,a
-   00AE                     185 00175$:
-   00AE DD 77 FE      [19]  186 	ld	-2 (ix), a
-   00B1 B7            [ 4]  187 	or	a, a
-   00B2 28 10         [12]  188 	jr	Z,00114$
-   00B4 DD 7E 04      [19]  189 	ld	a, 4 (ix)
-   00B7 D6 02         [ 7]  190 	sub	a, #0x02
-   00B9 20 09         [12]  191 	jr	NZ,00114$
-                            192 ;src/txt_scroll_hard.c:57: cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-   00BB C5            [11]  193 	push	bc
-   00BC E5            [11]  194 	push	hl
-   00BD D5            [11]  195 	push	de
-   00BE CDr00r00      [17]  196 	call	_cpct_drawTileAligned2x8_f
-   00C1 C1            [10]  197 	pop	bc
-   00C2 18 5E         [12]  198 	jr	00123$
-   00C4                     199 00114$:
-                            200 ;src/txt_scroll_hard.c:58: } else if (c_screen2==2 && c==3) { // le "suivant" en bas, donc 0 1
-   00C4 DD 7E FE      [19]  201 	ld	a, -2 (ix)
-   00C7 B7            [ 4]  202 	or	a, a
-   00C8 28 0D         [12]  203 	jr	Z,00110$
-   00CA 78            [ 4]  204 	ld	a, b
-   00CB B7            [ 4]  205 	or	a, a
-   00CC 28 09         [12]  206 	jr	Z,00110$
-                            207 ;src/txt_scroll_hard.c:61: cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-   00CE C5            [11]  208 	push	bc
-   00CF E5            [11]  209 	push	hl
-   00D0 D5            [11]  210 	push	de
-   00D1 CDr00r00      [17]  211 	call	_cpct_drawTileAligned2x8_f
-   00D4 C1            [10]  212 	pop	bc
-   00D5 18 4B         [12]  213 	jr	00123$
-   00D7                     214 00110$:
-                            215 ;src/txt_scroll_hard.c:62: } else if (c_screen2==1 && c==3) { // le "suivant" en bas, donc 0 1
-   00D7 79            [ 4]  216 	ld	a, c
-   00D8 3D            [ 4]  217 	dec	a
-   00D9 20 0D         [12]  218 	jr	NZ,00106$
-   00DB 78            [ 4]  219 	ld	a, b
-   00DC B7            [ 4]  220 	or	a, a
-   00DD 28 09         [12]  221 	jr	Z,00106$
-                            222 ;src/txt_scroll_hard.c:63: cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-   00DF C5            [11]  223 	push	bc
-   00E0 E5            [11]  224 	push	hl
-   00E1 D5            [11]  225 	push	de
-   00E2 CDr00r00      [17]  226 	call	_cpct_drawTileAligned2x8_f
-   00E5 C1            [10]  227 	pop	bc
-   00E6 18 3A         [12]  228 	jr	00123$
-   00E8                     229 00106$:
-                            230 ;src/txt_scroll_hard.c:65: cpct_drawSolidBox(p,c_screen2,2,8);
-   00E8 C5            [11]  231 	push	bc
-   00E9 11 02 08      [10]  232 	ld	de, #0x0802
-   00EC D5            [11]  233 	push	de
-   00ED 79            [ 4]  234 	ld	a, c
-   00EE F5            [11]  235 	push	af
-   00EF 33            [ 6]  236 	inc	sp
-   00F0 E5            [11]  237 	push	hl
-   00F1 CDr00r00      [17]  238 	call	_cpct_drawSolidBox
-   00F4 F1            [10]  239 	pop	af
-   00F5 F1            [10]  240 	pop	af
-   00F6 33            [ 6]  241 	inc	sp
-   00F7 C1            [10]  242 	pop	bc
-   00F8 18 28         [12]  243 	jr	00123$
-   00FA                     244 00122$:
-                            245 ;src/txt_scroll_hard.c:87: p = cpct_getScreenPtr(plot+0x4000, 0,8*c);
-   00FA DD 7E 04      [19]  246 	ld	a, 4 (ix)
-   00FD 07            [ 4]  247 	rlca
-   00FE 07            [ 4]  248 	rlca
-   00FF 07            [ 4]  249 	rlca
-   0100 E6 F8         [ 7]  250 	and	a, #0xf8
-   0102 67            [ 4]  251 	ld	h, a
-   0103 DD 7E 08      [19]  252 	ld	a, 8 (ix)
-   0106 C6 00         [ 7]  253 	add	a, #0x00
-   0108 6F            [ 4]  254 	ld	l, a
-   0109 DD 7E 09      [19]  255 	ld	a, 9 (ix)
-   010C CE 40         [ 7]  256 	adc	a, #0x40
-   010E 47            [ 4]  257 	ld	b, a
-   010F C5            [11]  258 	push	bc
-   0110 D5            [11]  259 	push	de
-   0111 E5            [11]  260 	push	hl
-   0112 33            [ 6]  261 	inc	sp
-   0113 AF            [ 4]  262 	xor	a, a
-   0114 F5            [11]  263 	push	af
-   0115 33            [ 6]  264 	inc	sp
-   0116 60            [ 4]  265 	ld	h, b
-   0117 E5            [11]  266 	push	hl
-   0118 CDr00r00      [17]  267 	call	_cpct_getScreenPtr
-   011B D1            [10]  268 	pop	de
-   011C E5            [11]  269 	push	hl
-   011D D5            [11]  270 	push	de
-   011E CDr00r00      [17]  271 	call	_cpct_drawTileAligned2x8_f
-   0121 C1            [10]  272 	pop	bc
-   0122                     273 00123$:
-                            274 ;src/txt_scroll_hard.c:90: return c_screen2;
-   0122 69            [ 4]  275 	ld	l, c
-   0123 DD F9         [10]  276 	ld	sp, ix
-   0125 DD E1         [14]  277 	pop	ix
-   0127 C9            [10]  278 	ret
-                            279 ;src/txt_scroll_hard.c:101: void scroll_hard(u16 step, u8* screen_plot_address) {
-                            280 ;	---------------------------------
-                            281 ; Function scroll_hard
-                            282 ; ---------------------------------
-   0128                     283 _scroll_hard::
-   0128 DD E5         [15]  284 	push	ix
-   012A DD 21 00 00   [14]  285 	ld	ix,#0
-   012E DD 39         [15]  286 	add	ix,sp
-   0130 F5            [11]  287 	push	af
-                            288 ;src/txt_scroll_hard.c:108: u8* plot=screen_plot_address;
-   0131 DD 4E 06      [19]  289 	ld	c,6 (ix)
-   0134 DD 46 07      [19]  290 	ld	b,7 (ix)
-                            291 ;src/txt_scroll_hard.c:112: div=step/8;
-   0137 DD 5E 04      [19]  292 	ld	e,4 (ix)
-   013A DD 56 05      [19]  293 	ld	d,5 (ix)
-   013D CB 3A         [ 8]  294 	srl	d
-   013F CB 1B         [ 8]  295 	rr	e
-   0141 CB 3A         [ 8]  296 	srl	d
-   0143 CB 1B         [ 8]  297 	rr	e
-   0145 CB 3A         [ 8]  298 	srl	d
-   0147 CB 1B         [ 8]  299 	rr	e
-                            300 ;src/txt_scroll_hard.c:113: mod=step%8;
-   0149 DD 7E 04      [19]  301 	ld	a, 4 (ix)
-   014C E6 07         [ 7]  302 	and	a, #0x07
-   014E DD 77 FE      [19]  303 	ld	-2 (ix), a
-   0151 DD 36 FF 00   [19]  304 	ld	-1 (ix), #0x00
-                            305 ;src/txt_scroll_hard.c:114: div=div%128;
-   0155 CB BB         [ 8]  306 	res	7, e
-   0157 16 00         [ 7]  307 	ld	d, #0x00
-                            308 ;src/txt_scroll_hard.c:115: if (texte[div]==' ') {
-   0159 21rF7r01      [10]  309 	ld	hl, #_texte+0
-   015C 19            [11]  310 	add	hl, de
-   015D 5E            [ 7]  311 	ld	e, (hl)
-   015E 7B            [ 4]  312 	ld	a, e
-   015F D6 20         [ 7]  313 	sub	a, #0x20
-   0161 20 05         [12]  314 	jr	NZ,00102$
-                            315 ;src/txt_scroll_hard.c:116: o=0;
-   0163 11 00 00      [10]  316 	ld	de, #0x0000
-   0166 18 09         [12]  317 	jr	00103$
-   0168                     318 00102$:
-                            319 ;src/txt_scroll_hard.c:118: o=texte[div]-'?';
-   0168 16 00         [ 7]  320 	ld	d, #0x00
-   016A 7B            [ 4]  321 	ld	a, e
-   016B C6 C1         [ 7]  322 	add	a, #0xc1
-   016D 5F            [ 4]  323 	ld	e, a
-   016E 7A            [ 4]  324 	ld	a, d
-   016F CE FF         [ 7]  325 	adc	a, #0xff
-   0171                     326 00103$:
-                            327 ;src/txt_scroll_hard.c:121: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
-   0171 21r00r00      [10]  328 	ld	hl, #_g_tile_fontmap32x32plat_000
-   0174 7B            [ 4]  329 	ld	a, e
-   0175 87            [ 4]  330 	add	a, a
-   0176 57            [ 4]  331 	ld	d, a
-   0177 1E 00         [ 7]  332 	ld	e, #0x00
-   0179 19            [11]  333 	add	hl,de
-   017A EB            [ 4]  334 	ex	de,hl
-   017B E1            [10]  335 	pop	hl
-   017C E5            [11]  336 	push	hl
-   017D 29            [11]  337 	add	hl, hl
-   017E 29            [11]  338 	add	hl, hl
-   017F 29            [11]  339 	add	hl, hl
-   0180 29            [11]  340 	add	hl, hl
-   0181 29            [11]  341 	add	hl, hl
-   0182 29            [11]  342 	add	hl, hl
-   0183 19            [11]  343 	add	hl,de
-   0184 EB            [ 4]  344 	ex	de,hl
-                            345 ;src/txt_scroll_hard.c:125: ce2=draw_char(0,4,(u8*)pointeur, plot);
-   0185 C5            [11]  346 	push	bc
-   0186 D5            [11]  347 	push	de
-   0187 C5            [11]  348 	push	bc
-   0188 D5            [11]  349 	push	de
-   0189 21 00 04      [10]  350 	ld	hl, #0x0400
-   018C E5            [11]  351 	push	hl
-   018D CDr00r00      [17]  352 	call	_draw_char
-   0190 F1            [10]  353 	pop	af
-   0191 F1            [10]  354 	pop	af
-   0192 F1            [10]  355 	pop	af
-   0193 D1            [10]  356 	pop	de
-   0194 C1            [10]  357 	pop	bc
-   0195 65            [ 4]  358 	ld	h, l
-                            359 ;src/txt_scroll_hard.c:126: ce2=draw_char(1,ce2,(u8*)pointeur, plot);
-   0196 C5            [11]  360 	push	bc
-   0197 D5            [11]  361 	push	de
-   0198 C5            [11]  362 	push	bc
-   0199 D5            [11]  363 	push	de
-   019A E5            [11]  364 	push	hl
-   019B 33            [ 6]  365 	inc	sp
-   019C 3E 01         [ 7]  366 	ld	a, #0x01
-   019E F5            [11]  367 	push	af
-   019F 33            [ 6]  368 	inc	sp
-   01A0 CDr00r00      [17]  369 	call	_draw_char
-   01A3 F1            [10]  370 	pop	af
-   01A4 F1            [10]  371 	pop	af
-   01A5 F1            [10]  372 	pop	af
-   01A6 D1            [10]  373 	pop	de
-   01A7 C1            [10]  374 	pop	bc
-   01A8 65            [ 4]  375 	ld	h, l
-                            376 ;src/txt_scroll_hard.c:127: ce2=draw_char(2,ce2,(u8*)pointeur, plot);
-   01A9 C5            [11]  377 	push	bc
-   01AA D5            [11]  378 	push	de
-   01AB C5            [11]  379 	push	bc
-   01AC D5            [11]  380 	push	de
-   01AD E5            [11]  381 	push	hl
-   01AE 33            [ 6]  382 	inc	sp
-   01AF 3E 02         [ 7]  383 	ld	a, #0x02
-   01B1 F5            [11]  384 	push	af
-   01B2 33            [ 6]  385 	inc	sp
-   01B3 CDr00r00      [17]  386 	call	_draw_char
-   01B6 F1            [10]  387 	pop	af
-   01B7 F1            [10]  388 	pop	af
-   01B8 F1            [10]  389 	pop	af
-   01B9 D1            [10]  390 	pop	de
-   01BA C1            [10]  391 	pop	bc
-   01BB 65            [ 4]  392 	ld	h, l
-                            393 ;src/txt_scroll_hard.c:128: ce2=draw_char(3,ce2,(u8*)pointeur, plot);
-   01BC C5            [11]  394 	push	bc
-   01BD D5            [11]  395 	push	de
-   01BE E5            [11]  396 	push	hl
-   01BF 33            [ 6]  397 	inc	sp
-   01C0 3E 03         [ 7]  398 	ld	a, #0x03
-   01C2 F5            [11]  399 	push	af
-   01C3 33            [ 6]  400 	inc	sp
-   01C4 CDr00r00      [17]  401 	call	_draw_char
-   01C7 F1            [10]  402 	pop	af
-   01C8 F1            [10]  403 	pop	af
-   01C9 F1            [10]  404 	pop	af
-                            405 ;src/txt_scroll_hard.c:129: if (ce2==4) {
-   01CA 7D            [ 4]  406 	ld	a, l
-   01CB D6 04         [ 7]  407 	sub	a, #0x04
-   01CD 20 0D         [12]  408 	jr	NZ,00105$
-                            409 ;src/txt_scroll_hard.c:131: plot_screen2=0x8000;
-   01CF 21 00 80      [10]  410 	ld	hl, #0x8000
-   01D2 22r00r00      [16]  411 	ld	(_plot_screen2), hl
-                            412 ;src/txt_scroll_hard.c:132: c_screen3=4;
-   01D5 21r02r00      [10]  413 	ld	hl,#_c_screen3 + 0
-   01D8 36 04         [10]  414 	ld	(hl), #0x04
-   01DA 18 16         [12]  415 	jr	00107$
-   01DC                     416 00105$:
-                            417 ;src/txt_scroll_hard.c:134: plot_screen2+=2;
-   01DC 21r00r00      [10]  418 	ld	hl, #_plot_screen2
-   01DF 7E            [ 7]  419 	ld	a, (hl)
-   01E0 C6 02         [ 7]  420 	add	a, #0x02
-   01E2 77            [ 7]  421 	ld	(hl), a
-   01E3 23            [ 6]  422 	inc	hl
-   01E4 7E            [ 7]  423 	ld	a, (hl)
-   01E5 CE 00         [ 7]  424 	adc	a, #0x00
-   01E7 77            [ 7]  425 	ld	(hl), a
-                            426 ;src/txt_scroll_hard.c:135: plot_screen2=(u8 *)(((u16)plot_screen2) & 0x87FF);
-   01E8 2Ar00r00      [16]  427 	ld	hl, (_plot_screen2)
-   01EB 7C            [ 4]  428 	ld	a, h
-   01EC E6 87         [ 7]  429 	and	a, #0x87
-   01EE 67            [ 4]  430 	ld	h, a
-   01EF 22r00r00      [16]  431 	ld	(_plot_screen2), hl
-   01F2                     432 00107$:
-   01F2 DD F9         [10]  433 	ld	sp, ix
-   01F4 DD E1         [14]  434 	pop	ix
-   01F6 C9            [10]  435 	ret
-   01F7                     436 _texte:
-   01F7 57 45 20 57 49 53   437 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
+   0067 E6 F8         [ 7]  133 	and	a, #0xf8
+   0069 47            [ 4]  134 	ld	b, a
+   006A FD 21 00 40   [14]  135 	ld	iy, #0x4000
+   006E C5            [11]  136 	push	bc
+   006F ED 4Br00r00   [20]  137 	ld	bc, (_plot_screen2)
+   0073 FD 09         [15]  138 	add	iy, bc
+   0075 C1            [10]  139 	pop	bc
+   0076 C5            [11]  140 	push	bc
+   0077 D5            [11]  141 	push	de
+   0078 C5            [11]  142 	push	bc
+   0079 33            [ 6]  143 	inc	sp
+   007A AF            [ 4]  144 	xor	a, a
+   007B F5            [11]  145 	push	af
+   007C 33            [ 6]  146 	inc	sp
+   007D FD E5         [15]  147 	push	iy
+   007F CDr00r00      [17]  148 	call	_cpct_getScreenPtr
+   0082 D1            [10]  149 	pop	de
+   0083 E5            [11]  150 	push	hl
+   0084 D5            [11]  151 	push	de
+   0085 CDr00r00      [17]  152 	call	_cpct_drawTileAligned2x8_f
+   0088 C1            [10]  153 	pop	bc
+   0089 18 28         [12]  154 	jr	00107$
+   008B                     155 00106$:
+                            156 ;src/txt_scroll_hard.c:92: p = cpct_getScreenPtr(plot+0x4000, 0,8*c);
+   008B DD 7E 04      [19]  157 	ld	a, 4 (ix)
+   008E 07            [ 4]  158 	rlca
+   008F 07            [ 4]  159 	rlca
+   0090 07            [ 4]  160 	rlca
+   0091 E6 F8         [ 7]  161 	and	a, #0xf8
+   0093 67            [ 4]  162 	ld	h, a
+   0094 DD 7E 08      [19]  163 	ld	a, 8 (ix)
+   0097 C6 00         [ 7]  164 	add	a, #0x00
+   0099 6F            [ 4]  165 	ld	l, a
+   009A DD 7E 09      [19]  166 	ld	a, 9 (ix)
+   009D CE 40         [ 7]  167 	adc	a, #0x40
+   009F 47            [ 4]  168 	ld	b, a
+   00A0 C5            [11]  169 	push	bc
+   00A1 D5            [11]  170 	push	de
+   00A2 E5            [11]  171 	push	hl
+   00A3 33            [ 6]  172 	inc	sp
+   00A4 AF            [ 4]  173 	xor	a, a
+   00A5 F5            [11]  174 	push	af
+   00A6 33            [ 6]  175 	inc	sp
+   00A7 60            [ 4]  176 	ld	h, b
+   00A8 E5            [11]  177 	push	hl
+   00A9 CDr00r00      [17]  178 	call	_cpct_getScreenPtr
+   00AC D1            [10]  179 	pop	de
+   00AD E5            [11]  180 	push	hl
+   00AE D5            [11]  181 	push	de
+   00AF CDr00r00      [17]  182 	call	_cpct_drawTileAligned2x8_f
+   00B2 C1            [10]  183 	pop	bc
+   00B3                     184 00107$:
+                            185 ;src/txt_scroll_hard.c:95: return c_screen2;
+   00B3 69            [ 4]  186 	ld	l, c
+   00B4 DD F9         [10]  187 	ld	sp, ix
+   00B6 DD E1         [14]  188 	pop	ix
+   00B8 C9            [10]  189 	ret
+                            190 ;src/txt_scroll_hard.c:106: void scroll_hard(u16 step, u8* screen_plot_address) {
+                            191 ;	---------------------------------
+                            192 ; Function scroll_hard
+                            193 ; ---------------------------------
+   00B9                     194 _scroll_hard::
+   00B9 DD E5         [15]  195 	push	ix
+   00BB DD 21 00 00   [14]  196 	ld	ix,#0
+   00BF DD 39         [15]  197 	add	ix,sp
+   00C1 F5            [11]  198 	push	af
+                            199 ;src/txt_scroll_hard.c:113: u8* plot=screen_plot_address;
+   00C2 DD 4E 06      [19]  200 	ld	c,6 (ix)
+   00C5 DD 46 07      [19]  201 	ld	b,7 (ix)
+                            202 ;src/txt_scroll_hard.c:117: div=step/8;
+   00C8 DD 5E 04      [19]  203 	ld	e,4 (ix)
+   00CB DD 56 05      [19]  204 	ld	d,5 (ix)
+   00CE CB 3A         [ 8]  205 	srl	d
+   00D0 CB 1B         [ 8]  206 	rr	e
+   00D2 CB 3A         [ 8]  207 	srl	d
+   00D4 CB 1B         [ 8]  208 	rr	e
+   00D6 CB 3A         [ 8]  209 	srl	d
+   00D8 CB 1B         [ 8]  210 	rr	e
+                            211 ;src/txt_scroll_hard.c:118: mod=step%8;
+   00DA DD 7E 04      [19]  212 	ld	a, 4 (ix)
+   00DD E6 07         [ 7]  213 	and	a, #0x07
+   00DF DD 77 FE      [19]  214 	ld	-2 (ix), a
+   00E2 DD 36 FF 00   [19]  215 	ld	-1 (ix), #0x00
+                            216 ;src/txt_scroll_hard.c:119: div=div%128;
+   00E6 CB BB         [ 8]  217 	res	7, e
+   00E8 16 00         [ 7]  218 	ld	d, #0x00
+                            219 ;src/txt_scroll_hard.c:120: if (texte[div]==' ') {
+   00EA 21r88r01      [10]  220 	ld	hl, #_texte+0
+   00ED 19            [11]  221 	add	hl, de
+   00EE 5E            [ 7]  222 	ld	e, (hl)
+   00EF 7B            [ 4]  223 	ld	a, e
+   00F0 D6 20         [ 7]  224 	sub	a, #0x20
+   00F2 20 05         [12]  225 	jr	NZ,00102$
+                            226 ;src/txt_scroll_hard.c:121: o=0;
+   00F4 11 00 00      [10]  227 	ld	de, #0x0000
+   00F7 18 09         [12]  228 	jr	00103$
+   00F9                     229 00102$:
+                            230 ;src/txt_scroll_hard.c:123: o=texte[div]-'?';
+   00F9 16 00         [ 7]  231 	ld	d, #0x00
+   00FB 7B            [ 4]  232 	ld	a, e
+   00FC C6 C1         [ 7]  233 	add	a, #0xc1
+   00FE 5F            [ 4]  234 	ld	e, a
+   00FF 7A            [ 4]  235 	ld	a, d
+   0100 CE FF         [ 7]  236 	adc	a, #0xff
+   0102                     237 00103$:
+                            238 ;src/txt_scroll_hard.c:126: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+   0102 21r00r00      [10]  239 	ld	hl, #_g_tile_fontmap32x32plat_000
+   0105 7B            [ 4]  240 	ld	a, e
+   0106 87            [ 4]  241 	add	a, a
+   0107 57            [ 4]  242 	ld	d, a
+   0108 1E 00         [ 7]  243 	ld	e, #0x00
+   010A 19            [11]  244 	add	hl,de
+   010B EB            [ 4]  245 	ex	de,hl
+   010C E1            [10]  246 	pop	hl
+   010D E5            [11]  247 	push	hl
+   010E 29            [11]  248 	add	hl, hl
+   010F 29            [11]  249 	add	hl, hl
+   0110 29            [11]  250 	add	hl, hl
+   0111 29            [11]  251 	add	hl, hl
+   0112 29            [11]  252 	add	hl, hl
+   0113 29            [11]  253 	add	hl, hl
+   0114 19            [11]  254 	add	hl,de
+   0115 EB            [ 4]  255 	ex	de,hl
+                            256 ;src/txt_scroll_hard.c:130: ce2=draw_char(0,4,(u8*)pointeur, plot);
+   0116 C5            [11]  257 	push	bc
+   0117 D5            [11]  258 	push	de
+   0118 C5            [11]  259 	push	bc
+   0119 D5            [11]  260 	push	de
+   011A 21 00 04      [10]  261 	ld	hl, #0x0400
+   011D E5            [11]  262 	push	hl
+   011E CDr00r00      [17]  263 	call	_draw_char
+   0121 F1            [10]  264 	pop	af
+   0122 F1            [10]  265 	pop	af
+   0123 F1            [10]  266 	pop	af
+   0124 D1            [10]  267 	pop	de
+   0125 C1            [10]  268 	pop	bc
+   0126 65            [ 4]  269 	ld	h, l
+                            270 ;src/txt_scroll_hard.c:131: ce2=draw_char(1,ce2,(u8*)pointeur, plot);
+   0127 C5            [11]  271 	push	bc
+   0128 D5            [11]  272 	push	de
+   0129 C5            [11]  273 	push	bc
+   012A D5            [11]  274 	push	de
+   012B E5            [11]  275 	push	hl
+   012C 33            [ 6]  276 	inc	sp
+   012D 3E 01         [ 7]  277 	ld	a, #0x01
+   012F F5            [11]  278 	push	af
+   0130 33            [ 6]  279 	inc	sp
+   0131 CDr00r00      [17]  280 	call	_draw_char
+   0134 F1            [10]  281 	pop	af
+   0135 F1            [10]  282 	pop	af
+   0136 F1            [10]  283 	pop	af
+   0137 D1            [10]  284 	pop	de
+   0138 C1            [10]  285 	pop	bc
+   0139 65            [ 4]  286 	ld	h, l
+                            287 ;src/txt_scroll_hard.c:132: ce2=draw_char(2,ce2,(u8*)pointeur, plot);
+   013A C5            [11]  288 	push	bc
+   013B D5            [11]  289 	push	de
+   013C C5            [11]  290 	push	bc
+   013D D5            [11]  291 	push	de
+   013E E5            [11]  292 	push	hl
+   013F 33            [ 6]  293 	inc	sp
+   0140 3E 02         [ 7]  294 	ld	a, #0x02
+   0142 F5            [11]  295 	push	af
+   0143 33            [ 6]  296 	inc	sp
+   0144 CDr00r00      [17]  297 	call	_draw_char
+   0147 F1            [10]  298 	pop	af
+   0148 F1            [10]  299 	pop	af
+   0149 F1            [10]  300 	pop	af
+   014A D1            [10]  301 	pop	de
+   014B C1            [10]  302 	pop	bc
+   014C 65            [ 4]  303 	ld	h, l
+                            304 ;src/txt_scroll_hard.c:133: ce2=draw_char(3,ce2,(u8*)pointeur, plot);
+   014D C5            [11]  305 	push	bc
+   014E D5            [11]  306 	push	de
+   014F E5            [11]  307 	push	hl
+   0150 33            [ 6]  308 	inc	sp
+   0151 3E 03         [ 7]  309 	ld	a, #0x03
+   0153 F5            [11]  310 	push	af
+   0154 33            [ 6]  311 	inc	sp
+   0155 CDr00r00      [17]  312 	call	_draw_char
+   0158 F1            [10]  313 	pop	af
+   0159 F1            [10]  314 	pop	af
+   015A F1            [10]  315 	pop	af
+                            316 ;src/txt_scroll_hard.c:134: if (ce2==4) {
+   015B 7D            [ 4]  317 	ld	a, l
+   015C D6 04         [ 7]  318 	sub	a, #0x04
+   015E 20 0D         [12]  319 	jr	NZ,00105$
+                            320 ;src/txt_scroll_hard.c:136: plot_screen2=0x8000;
+   0160 21 00 80      [10]  321 	ld	hl, #0x8000
+   0163 22r00r00      [16]  322 	ld	(_plot_screen2), hl
+                            323 ;src/txt_scroll_hard.c:137: c_screen3=4;
+   0166 21r02r00      [10]  324 	ld	hl,#_c_screen3 + 0
+   0169 36 04         [10]  325 	ld	(hl), #0x04
+   016B 18 16         [12]  326 	jr	00107$
+   016D                     327 00105$:
+                            328 ;src/txt_scroll_hard.c:139: plot_screen2+=2;
+   016D 21r00r00      [10]  329 	ld	hl, #_plot_screen2
+   0170 7E            [ 7]  330 	ld	a, (hl)
+   0171 C6 02         [ 7]  331 	add	a, #0x02
+   0173 77            [ 7]  332 	ld	(hl), a
+   0174 23            [ 6]  333 	inc	hl
+   0175 7E            [ 7]  334 	ld	a, (hl)
+   0176 CE 00         [ 7]  335 	adc	a, #0x00
+   0178 77            [ 7]  336 	ld	(hl), a
+                            337 ;src/txt_scroll_hard.c:140: plot_screen2=(u8 *)(((u16)plot_screen2) & 0x87FF);
+   0179 2Ar00r00      [16]  338 	ld	hl, (_plot_screen2)
+   017C 7C            [ 4]  339 	ld	a, h
+   017D E6 87         [ 7]  340 	and	a, #0x87
+   017F 67            [ 4]  341 	ld	h, a
+   0180 22r00r00      [16]  342 	ld	(_plot_screen2), hl
+   0183                     343 00107$:
+   0183 DD F9         [10]  344 	ld	sp, ix
+   0185 DD E1         [14]  345 	pop	ix
+   0187 C9            [10]  346 	ret
+   0188                     347 _texte:
+   0188 57 45 20 57 49 53   348 	.ascii "WE WISH YOU A MERRY CHRISTMAS WE WISH YOU A MERRY CHRISTMAS "
         48 20 59 4F 55 20
         41 20 4D 45 52 52
         59 20 43 48 52 49
@@ -444,7 +355,7 @@
         41 20 4D 45 52 52
         59 20 43 48 52 49
         53 54 4D 41 53 20
-   0233 41 4E 44 20 41 20   438 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQS"
+   01C4 41 4E 44 20 41 20   349 	.ascii "AND A HAPPY NEW YEAR FROM THSF AND TETALAB      AZERTYUIOPQS"
         48 41 50 50 59 20
         4E 45 57 20 59 45
         41 52 20 46 52 4F
@@ -454,12 +365,12 @@
         20 20 20 20 20 20
         41 5A 45 52 54 59
         55 49 4F 50 51 53
-   026F 44 46 47 20 20 20   439 	.ascii "DFG     "
+   0200 44 46 47 20 20 20   350 	.ascii "DFG     "
         20 20
-   0277 00                  440 	.db 0x00
-   0278 00                  441 	.db 0x00
-                            442 	.area _CODE
-                            443 	.area _INITIALIZER
-   0000                     444 __xinit__firstPlotScreen2:
-   0000 01                  445 	.db #0x01	; 1
-                            446 	.area _CABS (ABS)
+   0208 00                  351 	.db 0x00
+   0209 00                  352 	.db 0x00
+                            353 	.area _CODE
+                            354 	.area _INITIALIZER
+   0000                     355 __xinit__firstPlotScreen2:
+   0000 01                  356 	.db #0x01	; 1
+                            357 	.area _CABS (ABS)

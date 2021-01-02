@@ -49,22 +49,27 @@ u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
 		//cur_plot = plot - 640*200/8;
 //		cur_plot = plot - 0x4000 + 80u*c;
 		p = cpct_getScreenPtr(plot_screen2+0x4000, 0,8*(c-c_screen2));
-		if (c_screen2==3 && c==3) {
-			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-		} else if (c_screen2==2 && c==2) { // le "suivant" en bas, donc 0 1
-			// a priori ça dessine au dessous des 32 lignes
-			//cpct_drawSolidBox(p,0xFF,2,8);
-			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-		} else if (c_screen2==2 && c==3) { // le "suivant" en bas, donc 0 1
-			// a priori ça dessine au dessous des 32 lignes
-//			cpct_drawSolidBox(p,0xFF,2,8);
-			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-		} else if (c_screen2==1 && c==3) { // le "suivant" en bas, donc 0 1
-			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-		} else {
-			cpct_drawSolidBox(p,c_screen2,2,8);
-			//cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-		}
+//invariants
+//		if (c_screen2==3 && c==3) {
+//			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+//		} else if (c_screen2==2 && c==2) { // le "suivant" en bas, donc 0 1
+//			// a priori ça dessine au dessous des 32 lignes
+//			//cpct_drawSolidBox(p,0xFF,2,8);
+//			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+//		} else if (c_screen2==2 && c==3) { // le "suivant" en bas, donc 0 1
+//			// a priori ça dessine au dessous des 32 lignes
+//			//cpct_drawSolidBox(p,0xFF,2,8);
+//			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+//		} else if (c_screen2==1 && c==3) { // le "suivant" en bas, donc 0 1
+//			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+//		} else {
+//			cpct_drawSolidBox(p,c_screen2,2,8);
+//			//cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+//		}
+
+
+		cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+
 		//p = cpct_getScreenPtr(plot_screen2+0x4000, 0,8*(c-c_screen2));
 		// au début c'est c==3 - on va dire          => c-3
 		// au suivant c'est c==2 + c==3              => c-2
