@@ -158,22 +158,21 @@ void main(void) {
    p = cpct_getScreenPtr(CPCT_VMEM_START, 10,96);
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
-//calque8000();
-calqueC000();
+calque8000();
+//calqueC000();
 
 screen_location=(u8 *)(0x2000);
 screen_plot_address=(u8 *)(0x8000+80-2);
 
    //cpct_setInterruptHandler(myInterruptHandler);
    t=0;
-   //cpct_setBlendMode(CPCT_BLEND_LDI);
    while (1) {
 	cpct_waitVSYNC();
 
 	screen_location++;
 	screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
 
-crtc(screen_location+0x1000);
+crtc(screen_location);
 
 	screen_plot_address+=2;
 	screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
@@ -185,11 +184,10 @@ crtc(screen_location+0x1000);
       scroll_hard(t,screen_plot_address);
       // size of texte
       t=t+1;
-//      if (t==110*8) {t=0;}
 
 cpct_scanKeyboard_f();
 if (cpct_isAnyKeyPressed_f()){
-	cpct_memset_f64(0xC000, 0x0000, 0x4000);
+	cpct_memset_f64(0x8000, 0x0000, 0x4000);
 }
 
       //intCounter=0;

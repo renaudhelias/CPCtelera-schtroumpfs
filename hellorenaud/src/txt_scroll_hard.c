@@ -22,9 +22,9 @@ u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
 	u8* cur_image;
 	u8* p;
 	u8 c_screen2=ce2;
-	last_plot=plot+ 0x4000 +80u*c+ 0x3801;
+	last_plot=plot +80u*c+ 0x3801;
 	// les trou (border) sont au milieu donc c'est plus grand la valeur de saut.
-	if (last_plot<0x4000) {
+	if (last_plot>0xBFFF) {
 		if (c<c_screen3) {
 			c_screen3=c;
 			plot_screen2=0x8000;
@@ -32,23 +32,7 @@ u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
 		if (c<c_screen2) {
 			c_screen2=c;
 		}
-//		if (firstPlotScreen2) {
-//			// début d'écran 2
-//			plot_screen2=0x8000;
-//			firstPlotScreen2=0;
-//		}
-	//if (plot-0x8000>640*200/8) {
-	//on ne peut pas chercher où tombe le caractère.
-	//if (plot+0x4000>0xFFCF || plot+0x4000<0x4000) {
-		// moins un screen (rembobinage)
-		//(0xC000 + ((nY / 8u) * 80u) + ((nY % 8u) * 2048u) + nX)
-
-		//(0xC000 + ((640 / 8u) * 80u) + ((640 % 8u) * 2048u) + 200)
-		// (640 / 8u) * 80u == 0x1900
-		// 640*200/8 == 0x3E80
-		//cur_plot = plot - 640*200/8;
-//		cur_plot = plot - 0x4000 + 80u*c;
-		p = cpct_getScreenPtr(plot_screen2+0x4000, 0,8*(c-c_screen2));
+		p = cpct_getScreenPtr(plot_screen2, 0,8*(c-c_screen2));
 //invariants
 //		if (c_screen2==3 && c==3) {
 //			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
@@ -89,7 +73,7 @@ u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
 //			}
 //		}
 	} else {
-		p = cpct_getScreenPtr(plot+0x4000, 0,8*c);
+		p = cpct_getScreenPtr(plot, 0,8*c);
 		cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
 	}
 	return c_screen2;
@@ -125,8 +109,6 @@ void scroll_hard(u16 step, u8* screen_plot_address) {
 
 	pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
 
-	//cpct_drawSolidBox(plot,0xFF,2,32);
-	//cpct_drawSprite((u8*)pointeur, plot, 2, 32);
 	ce2=draw_char(0,4,(u8*)pointeur, plot);
 	ce2=draw_char(1,ce2,(u8*)pointeur, plot);
 	ce2=draw_char(2,ce2,(u8*)pointeur, plot);
@@ -139,15 +121,5 @@ void scroll_hard(u16 step, u8* screen_plot_address) {
 		plot_screen2+=2;
 		plot_screen2=(u8 *)(((u16)plot_screen2) & 0x87FF);
 	}
-	//cpct_drawSpriteBlended(plot, G_TILE_FONTMAP32X32PLAT_000_H, G_TILE_FONTMAP32X32PLAT_000_W, (u8*)pointeur);
-	// FIXME, c'est pire sans _f
-	//p = cpct_getScreenPtr(plot, 0,0);
-	//cpct_drawTileAligned2x8_f((u8*)pointeur, p);
-	//p = cpct_getScreenPtr(plot, 0,8);
-	//cpct_drawTileAligned2x8_f((u8*)pointeur+(2*8), p);
-	//p = cpct_getScreenPtr(plot, 0,16);
-	//cpct_drawTileAligned2x8_f((u8*)pointeur+(4*8), p);
-	//p = cpct_getScreenPtr(plot, 0,24);
-	//cpct_drawTileAligned2x8_f((u8*)pointeur+(6*8), p);
 }
 

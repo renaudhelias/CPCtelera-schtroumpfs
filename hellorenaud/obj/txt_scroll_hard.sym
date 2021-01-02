@@ -15,8 +15,8 @@ Symbol Table
   2 _firstPlotScreen2                                              0000 GR
     _g_tile_fontmap32x32plat_000                                   **** GX
   1 _plot_screen2                                                  0000 GR
-  0 _scroll_hard                                                   00B9 GR
-  0 _texte                                                         0188 GR
+  0 _scroll_hard                                                   00B2 GR
+  0 _texte                                                         0181 GR
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
@@ -24,7 +24,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  20A   flags    0
+   0 _CODE                                      size  203   flags    0
    1 _DATA                                      size    3   flags    0
    2 _INITIALIZED                               size    1   flags    0
    3 _DABS                                      size    0   flags    8

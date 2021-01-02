@@ -46,108 +46,108 @@
                              46 ;	---------------------------------
                              47 ; Function akp_musicInit
                              48 ; ---------------------------------
-   4152                      49 _akp_musicInit::
+   414B                      49 _akp_musicInit::
                              50 ;src/audio.c:50: __endasm;
                              51 ;;	backup Z80 state
-   4152 F5            [11]   52 	push	af
-   4153 C5            [11]   53 	push	bc
-   4154 D5            [11]   54 	push	de
-   4155 E5            [11]   55 	push	hl
-   4156 DD E5         [15]   56 	push	ix
-   4158 FD E5         [15]   57 	push	iy
-   415A D9            [ 4]   58 	exx
-   415B 08            [ 4]   59 	ex	af, af' ;; '
-   415C F5            [11]   60 	push	af
-   415D C5            [11]   61 	push	bc
-   415E D5            [11]   62 	push	de
-   415F E5            [11]   63 	push	hl
+   414B F5            [11]   52 	push	af
+   414C C5            [11]   53 	push	bc
+   414D D5            [11]   54 	push	de
+   414E E5            [11]   55 	push	hl
+   414F DD E5         [15]   56 	push	ix
+   4151 FD E5         [15]   57 	push	iy
+   4153 D9            [ 4]   58 	exx
+   4154 08            [ 4]   59 	ex	af, af' ;; '
+   4155 F5            [11]   60 	push	af
+   4156 C5            [11]   61 	push	bc
+   4157 D5            [11]   62 	push	de
+   4158 E5            [11]   63 	push	hl
                              64 ;;	AKG6000.BIN/exemple.asm
-   4160 01 00 D0      [10]   65 	ld	bc,#0xD000
-   4163 CD 00 C0      [17]   66 	call	#0xC000
+   4159 01 00 D0      [10]   65 	ld	bc,#0xD000
+   415C CD 00 C0      [17]   66 	call	#0xC000
                              67 ;;	restore Z80 state
-   4166 E1            [10]   68 	pop	hl
-   4167 D1            [10]   69 	pop	de
-   4168 C1            [10]   70 	pop	bc
-   4169 F1            [10]   71 	pop	af
-   416A 08            [ 4]   72 	ex	af, af' ;; '
-   416B D9            [ 4]   73 	exx
-   416C FD E1         [14]   74 	pop	iy
-   416E DD E1         [14]   75 	pop	ix
-   4170 E1            [10]   76 	pop	hl
-   4171 D1            [10]   77 	pop	de
-   4172 C1            [10]   78 	pop	bc
-   4173 F1            [10]   79 	pop	af
-   4174 C9            [10]   80 	ret
+   415F E1            [10]   68 	pop	hl
+   4160 D1            [10]   69 	pop	de
+   4161 C1            [10]   70 	pop	bc
+   4162 F1            [10]   71 	pop	af
+   4163 08            [ 4]   72 	ex	af, af' ;; '
+   4164 D9            [ 4]   73 	exx
+   4165 FD E1         [14]   74 	pop	iy
+   4167 DD E1         [14]   75 	pop	ix
+   4169 E1            [10]   76 	pop	hl
+   416A D1            [10]   77 	pop	de
+   416B C1            [10]   78 	pop	bc
+   416C F1            [10]   79 	pop	af
+   416D C9            [10]   80 	ret
                              81 ;src/audio.c:53: void akp_musicPlay()
                              82 ;	---------------------------------
                              83 ; Function akp_musicPlay
                              84 ; ---------------------------------
-   4175                      85 _akp_musicPlay::
+   416E                      85 _akp_musicPlay::
                              86 ;src/audio.c:86: __endasm;
                              87 ;;	backup Z80 state
-   4175 F5            [11]   88 	push	af
-   4176 C5            [11]   89 	push	bc
-   4177 D5            [11]   90 	push	de
-   4178 E5            [11]   91 	push	hl
-   4179 DD E5         [15]   92 	push	ix
-   417B FD E5         [15]   93 	push	iy
-   417D D9            [ 4]   94 	exx
-   417E 08            [ 4]   95 	ex	af, af' ;; '
-   417F F5            [11]   96 	push	af
-   4180 C5            [11]   97 	push	bc
-   4181 D5            [11]   98 	push	de
-   4182 E5            [11]   99 	push	hl
+   416E F5            [11]   88 	push	af
+   416F C5            [11]   89 	push	bc
+   4170 D5            [11]   90 	push	de
+   4171 E5            [11]   91 	push	hl
+   4172 DD E5         [15]   92 	push	ix
+   4174 FD E5         [15]   93 	push	iy
+   4176 D9            [ 4]   94 	exx
+   4177 08            [ 4]   95 	ex	af, af' ;; '
+   4178 F5            [11]   96 	push	af
+   4179 C5            [11]   97 	push	bc
+   417A D5            [11]   98 	push	de
+   417B E5            [11]   99 	push	hl
                             100 ;;	AKG6000.BIN/exemple.asm
-   4183 CD 03 C0      [17]  101 	call	#0xC003
+   417C CD 03 C0      [17]  101 	call	#0xC003
                             102 ;;	restore Z80 state
-   4186 E1            [10]  103 	pop	hl
-   4187 D1            [10]  104 	pop	de
-   4188 C1            [10]  105 	pop	bc
-   4189 F1            [10]  106 	pop	af
-   418A 08            [ 4]  107 	ex	af, af' ;; '
-   418B D9            [ 4]  108 	exx
-   418C FD E1         [14]  109 	pop	iy
-   418E DD E1         [14]  110 	pop	ix
-   4190 E1            [10]  111 	pop	hl
-   4191 D1            [10]  112 	pop	de
-   4192 C1            [10]  113 	pop	bc
-   4193 F1            [10]  114 	pop	af
-   4194 C9            [10]  115 	ret
+   417F E1            [10]  103 	pop	hl
+   4180 D1            [10]  104 	pop	de
+   4181 C1            [10]  105 	pop	bc
+   4182 F1            [10]  106 	pop	af
+   4183 08            [ 4]  107 	ex	af, af' ;; '
+   4184 D9            [ 4]  108 	exx
+   4185 FD E1         [14]  109 	pop	iy
+   4187 DD E1         [14]  110 	pop	ix
+   4189 E1            [10]  111 	pop	hl
+   418A D1            [10]  112 	pop	de
+   418B C1            [10]  113 	pop	bc
+   418C F1            [10]  114 	pop	af
+   418D C9            [10]  115 	ret
                             116 ;src/audio.c:89: void akp_sfxPlay()
                             117 ;	---------------------------------
                             118 ; Function akp_sfxPlay
                             119 ; ---------------------------------
-   4195                     120 _akp_sfxPlay::
+   418E                     120 _akp_sfxPlay::
                             121 ;src/audio.c:122: __endasm;
                             122 ;;	backup Z80 state
-   4195 F5            [11]  123 	push	af
-   4196 C5            [11]  124 	push	bc
-   4197 D5            [11]  125 	push	de
-   4198 E5            [11]  126 	push	hl
-   4199 DD E5         [15]  127 	push	ix
-   419B FD E5         [15]  128 	push	iy
-   419D D9            [ 4]  129 	exx
-   419E 08            [ 4]  130 	ex	af, af' ;; '
-   419F F5            [11]  131 	push	af
-   41A0 C5            [11]  132 	push	bc
-   41A1 D5            [11]  133 	push	de
-   41A2 E5            [11]  134 	push	hl
+   418E F5            [11]  123 	push	af
+   418F C5            [11]  124 	push	bc
+   4190 D5            [11]  125 	push	de
+   4191 E5            [11]  126 	push	hl
+   4192 DD E5         [15]  127 	push	ix
+   4194 FD E5         [15]  128 	push	iy
+   4196 D9            [ 4]  129 	exx
+   4197 08            [ 4]  130 	ex	af, af' ;; '
+   4198 F5            [11]  131 	push	af
+   4199 C5            [11]  132 	push	bc
+   419A D5            [11]  133 	push	de
+   419B E5            [11]  134 	push	hl
                             135 ;;	AKG6000.BIN/exemple.asm
-   41A3 CD 06 C0      [17]  136 	call	#0xC006
+   419C CD 06 C0      [17]  136 	call	#0xC006
                             137 ;;	restore Z80 state
-   41A6 E1            [10]  138 	pop	hl
-   41A7 D1            [10]  139 	pop	de
-   41A8 C1            [10]  140 	pop	bc
-   41A9 F1            [10]  141 	pop	af
-   41AA 08            [ 4]  142 	ex	af, af' ;; '
-   41AB D9            [ 4]  143 	exx
-   41AC FD E1         [14]  144 	pop	iy
-   41AE DD E1         [14]  145 	pop	ix
-   41B0 E1            [10]  146 	pop	hl
-   41B1 D1            [10]  147 	pop	de
-   41B2 C1            [10]  148 	pop	bc
-   41B3 F1            [10]  149 	pop	af
-   41B4 C9            [10]  150 	ret
+   419F E1            [10]  138 	pop	hl
+   41A0 D1            [10]  139 	pop	de
+   41A1 C1            [10]  140 	pop	bc
+   41A2 F1            [10]  141 	pop	af
+   41A3 08            [ 4]  142 	ex	af, af' ;; '
+   41A4 D9            [ 4]  143 	exx
+   41A5 FD E1         [14]  144 	pop	iy
+   41A7 DD E1         [14]  145 	pop	ix
+   41A9 E1            [10]  146 	pop	hl
+   41AA D1            [10]  147 	pop	de
+   41AB C1            [10]  148 	pop	bc
+   41AC F1            [10]  149 	pop	af
+   41AD C9            [10]  150 	ret
                             151 	.area _CODE
                             152 	.area _INITIALIZER
                             153 	.area _CABS (ABS)

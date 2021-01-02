@@ -61,10 +61,9 @@ _draw_char::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-	push	af
 ;src/txt_scroll_hard.c:24: u8 c_screen2=ce2;
 	ld	c, 5 (ix)
-;src/txt_scroll_hard.c:25: last_plot=plot+ 0x4000 +80u*c+ 0x3801;
+;src/txt_scroll_hard.c:25: last_plot=plot +80u*c+ 0x3801;
 	ld	e, 4 (ix)
 	ld	d, #0x00
 	ld	l, e
@@ -77,31 +76,33 @@ _draw_char::
 	add	hl, hl
 	add	hl, hl
 	ex	de,hl
-	ld	hl, #0x7801
-	add	hl,de
-	ex	de,hl
 	ld	l,8 (ix)
 	ld	h,9 (ix)
 	add	hl, de
-;src/txt_scroll_hard.c:27: if (last_plot<0x4000) {
-	inc	sp
-	inc	sp
-	push	hl
-;src/txt_scroll_hard.c:71: cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
-	ld	l, 4 (ix)
-	ld	h, #0x00
-	add	hl, hl
-	add	hl, hl
-	add	hl, hl
-	add	hl, hl
-	ex	de,hl
-	ld	l,6 (ix)
-	ld	h,7 (ix)
+	ld	de, #0x3801
 	add	hl, de
-	ex	de,hl
-;src/txt_scroll_hard.c:27: if (last_plot<0x4000) {
-	ld	a, -1 (ix)
-	sub	a, #0x40
+;src/txt_scroll_hard.c:55: cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
+	ld	e, 4 (ix)
+	ld	d, #0x00
+	sla	e
+	rl	d
+	sla	e
+	rl	d
+	sla	e
+	rl	d
+	sla	e
+	rl	d
+	ld	a, 6 (ix)
+	add	a, e
+	ld	e, a
+	ld	a, 7 (ix)
+	adc	a, d
+	ld	d, a
+;src/txt_scroll_hard.c:27: if (last_plot>0xBFFF) {
+	ld	a, #0xff
+	cp	a, l
+	ld	a, #0xbf
+	sbc	a, h
 	jr	NC,00106$
 ;src/txt_scroll_hard.c:29: c_screen3=c;
 	ld	b, 4 (ix)
@@ -124,7 +125,7 @@ _draw_char::
 ;src/txt_scroll_hard.c:33: c_screen2=c;
 	ld	c, b
 00104$:
-;src/txt_scroll_hard.c:51: p = cpct_getScreenPtr(plot_screen2+0x4000, 0,8*(c-c_screen2));
+;src/txt_scroll_hard.c:35: p = cpct_getScreenPtr(plot_screen2, 0,8*(c-c_screen2));
 	ld	a, 4 (ix)
 	sub	a, c
 	rlca
@@ -132,11 +133,7 @@ _draw_char::
 	rlca
 	and	a, #0xf8
 	ld	b, a
-	ld	iy, #0x4000
-	push	bc
-	ld	bc, (_plot_screen2)
-	add	iy, bc
-	pop	bc
+	ld	iy, (_plot_screen2)
 	push	bc
 	push	de
 	push	bc
@@ -153,19 +150,15 @@ _draw_char::
 	pop	bc
 	jr	00107$
 00106$:
-;src/txt_scroll_hard.c:92: p = cpct_getScreenPtr(plot+0x4000, 0,8*c);
+;src/txt_scroll_hard.c:76: p = cpct_getScreenPtr(plot, 0,8*c);
 	ld	a, 4 (ix)
 	rlca
 	rlca
 	rlca
 	and	a, #0xf8
 	ld	h, a
-	ld	a, 8 (ix)
-	add	a, #0x00
-	ld	l, a
-	ld	a, 9 (ix)
-	adc	a, #0x40
-	ld	b, a
+	ld	l, 8 (ix)
+	ld	b, 9 (ix)
 	push	bc
 	push	de
 	push	hl
@@ -182,12 +175,11 @@ _draw_char::
 	call	_cpct_drawTileAligned2x8_f
 	pop	bc
 00107$:
-;src/txt_scroll_hard.c:95: return c_screen2;
+;src/txt_scroll_hard.c:79: return c_screen2;
 	ld	l, c
-	ld	sp, ix
 	pop	ix
 	ret
-;src/txt_scroll_hard.c:106: void scroll_hard(u16 step, u8* screen_plot_address) {
+;src/txt_scroll_hard.c:90: void scroll_hard(u16 step, u8* screen_plot_address) {
 ;	---------------------------------
 ; Function scroll_hard
 ; ---------------------------------
@@ -196,10 +188,10 @@ _scroll_hard::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;src/txt_scroll_hard.c:113: u8* plot=screen_plot_address;
+;src/txt_scroll_hard.c:97: u8* plot=screen_plot_address;
 	ld	c,6 (ix)
 	ld	b,7 (ix)
-;src/txt_scroll_hard.c:117: div=step/8;
+;src/txt_scroll_hard.c:101: div=step/8;
 	ld	e,4 (ix)
 	ld	d,5 (ix)
 	srl	d
@@ -208,26 +200,26 @@ _scroll_hard::
 	rr	e
 	srl	d
 	rr	e
-;src/txt_scroll_hard.c:118: mod=step%8;
+;src/txt_scroll_hard.c:102: mod=step%8;
 	ld	a, 4 (ix)
 	and	a, #0x07
 	ld	-2 (ix), a
 	ld	-1 (ix), #0x00
-;src/txt_scroll_hard.c:119: div=div%128;
+;src/txt_scroll_hard.c:103: div=div%128;
 	res	7, e
 	ld	d, #0x00
-;src/txt_scroll_hard.c:120: if (texte[div]==' ') {
+;src/txt_scroll_hard.c:104: if (texte[div]==' ') {
 	ld	hl, #_texte+0
 	add	hl, de
 	ld	e, (hl)
 	ld	a, e
 	sub	a, #0x20
 	jr	NZ,00102$
-;src/txt_scroll_hard.c:121: o=0;
+;src/txt_scroll_hard.c:105: o=0;
 	ld	de, #0x0000
 	jr	00103$
 00102$:
-;src/txt_scroll_hard.c:123: o=texte[div]-'?';
+;src/txt_scroll_hard.c:107: o=texte[div]-'?';
 	ld	d, #0x00
 	ld	a, e
 	add	a, #0xc1
@@ -235,7 +227,7 @@ _scroll_hard::
 	ld	a, d
 	adc	a, #0xff
 00103$:
-;src/txt_scroll_hard.c:126: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
+;src/txt_scroll_hard.c:110: pointeur=(u16)g_tile_fontmap32x32plat_000+o*8*(32*2)+mod*(32*2);
 	ld	hl, #_g_tile_fontmap32x32plat_000
 	ld	a, e
 	add	a, a
@@ -253,7 +245,7 @@ _scroll_hard::
 	add	hl, hl
 	add	hl,de
 	ex	de,hl
-;src/txt_scroll_hard.c:130: ce2=draw_char(0,4,(u8*)pointeur, plot);
+;src/txt_scroll_hard.c:112: ce2=draw_char(0,4,(u8*)pointeur, plot);
 	push	bc
 	push	de
 	push	bc
@@ -267,7 +259,7 @@ _scroll_hard::
 	pop	de
 	pop	bc
 	ld	h, l
-;src/txt_scroll_hard.c:131: ce2=draw_char(1,ce2,(u8*)pointeur, plot);
+;src/txt_scroll_hard.c:113: ce2=draw_char(1,ce2,(u8*)pointeur, plot);
 	push	bc
 	push	de
 	push	bc
@@ -284,7 +276,7 @@ _scroll_hard::
 	pop	de
 	pop	bc
 	ld	h, l
-;src/txt_scroll_hard.c:132: ce2=draw_char(2,ce2,(u8*)pointeur, plot);
+;src/txt_scroll_hard.c:114: ce2=draw_char(2,ce2,(u8*)pointeur, plot);
 	push	bc
 	push	de
 	push	bc
@@ -301,7 +293,7 @@ _scroll_hard::
 	pop	de
 	pop	bc
 	ld	h, l
-;src/txt_scroll_hard.c:133: ce2=draw_char(3,ce2,(u8*)pointeur, plot);
+;src/txt_scroll_hard.c:115: ce2=draw_char(3,ce2,(u8*)pointeur, plot);
 	push	bc
 	push	de
 	push	hl
@@ -313,19 +305,19 @@ _scroll_hard::
 	pop	af
 	pop	af
 	pop	af
-;src/txt_scroll_hard.c:134: if (ce2==4) {
+;src/txt_scroll_hard.c:116: if (ce2==4) {
 	ld	a, l
 	sub	a, #0x04
 	jr	NZ,00105$
-;src/txt_scroll_hard.c:136: plot_screen2=0x8000;
+;src/txt_scroll_hard.c:118: plot_screen2=0x8000;
 	ld	hl, #0x8000
 	ld	(_plot_screen2), hl
-;src/txt_scroll_hard.c:137: c_screen3=4;
+;src/txt_scroll_hard.c:119: c_screen3=4;
 	ld	hl,#_c_screen3 + 0
 	ld	(hl), #0x04
 	jr	00107$
 00105$:
-;src/txt_scroll_hard.c:139: plot_screen2+=2;
+;src/txt_scroll_hard.c:121: plot_screen2+=2;
 	ld	hl, #_plot_screen2
 	ld	a, (hl)
 	add	a, #0x02
@@ -334,7 +326,7 @@ _scroll_hard::
 	ld	a, (hl)
 	adc	a, #0x00
 	ld	(hl), a
-;src/txt_scroll_hard.c:140: plot_screen2=(u8 *)(((u16)plot_screen2) & 0x87FF);
+;src/txt_scroll_hard.c:122: plot_screen2=(u8 *)(((u16)plot_screen2) & 0x87FF);
 	ld	hl, (_plot_screen2)
 	ld	a, h
 	and	a, #0x87
