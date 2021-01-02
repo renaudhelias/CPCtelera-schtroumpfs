@@ -53,7 +53,8 @@ u8 draw_char(u8 c, u8 ce2, u8* image, u8* plot) {
 			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
 		} else if (c_screen2==2 && c==2) { // le "suivant" en bas, donc 0 1
 			// a priori ça dessine au dessous des 32 lignes
-			cpct_drawSolidBox(p,0xFF,2,8);
+			//cpct_drawSolidBox(p,0xFF,2,8);
+			cpct_drawTileAligned2x8_f((u8*)image+(2*8)*c, p);
 		} else if (c_screen2==2 && c==3) { // le "suivant" en bas, donc 0 1
 			// a priori ça dessine au dessous des 32 lignes
 //			cpct_drawSolidBox(p,0xFF,2,8);
