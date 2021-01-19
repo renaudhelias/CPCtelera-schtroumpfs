@@ -1,0 +1,84 @@
+ASxxxx Linker V03.00 + NoICE + sdld,  page 1.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  .__.ABS.                           cpct_video
+     00000000  l__CABS                         
+     00000000  l__DABS                         
+     00000000  l__DATA                         
+     00000000  l__GSFINAL                      
+     00000000  l__GSINIT                       
+     00000000  l__HOME                         
+     00000000  l__INITIALIZED                  
+     00000000  l__INITIALIZER                  
+     00000000  s__CABS                         
+     00000000  s__DABS                         
+     000001C1  l__CODE                         
+     00004000  s__CODE                         
+     000041C1  s__DATA                         
+     000041C1  s__GSFINAL                      
+     000041C1  s__GSINIT                       
+     000041C1  s__HOME                         
+     000041C1  s__INITIALIZED                  
+     000041C1  s__INITIALIZER                  
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               00004000    000001C1 =         449. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00004000  _main                              main
+     0000405C  _StoreDriveLetter                  cpct_floppy
+     0000406A  _InitializeAmsdos                  cpct_floppy
+     000040A7  _cpct_loadBinaryFile               cpct_floppy
+     000040DA  gsl                                cpct_floppy
+     000040E2  gsl2                               cpct_floppy
+     000040E5  _cpct_drawStringM1                 cpct_strings
+     000040ED  cpct_drawStringM1_asm              cpct_strings
+     00004107  _cpct_drawCharM1                   cpct_strings
+     00004114  cpct_drawCharM1_asm                cpct_strings
+     0000418E  dc_mode1_ct                        
+     00004192  _cpct_memset                       cpct_memutils
+     000041A0  _cpct_mode_rom_status              cpct_firmware
+     000041A1  _cpct_getScreenPtr                 cpct_video
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
+
+Files Linked                              [ module(s) ]
+
+obj/main.rel                              [ main ]
+obj/cpct_floppy.rel                       [ cpct_floppy ]
+
+
+Libraries Linked                          [ object file ]
+
+/home/freemac/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_drawStringM1.rel ]
+/home/freemac/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_drawCharM1.rel ]
+/home/freemac/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_dc_mode1_ct.rel ]
+/home/freemac/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_memset_cbinding.rel ]
+/home/freemac/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpc_mode_rom_status.rel ]
+/home/freemac/cpctelera/cpctelera/cpctelera.lib
+                                          [ cpct_getScreenPtr_cbindings.rel ]
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
+
+User Base Address Definitions
+
+_CODE = 0x4000
+_DATA = 0x0000
+
+

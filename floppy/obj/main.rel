@@ -1,0 +1,47 @@
+XL2
+H 9 areas 8 global symbols
+M main
+O -mz80
+S _cpct_drawStringM1 Ref0000
+S _StoreDriveLetter Ref0000
+S _InitializeAmsdos Ref0000
+S .__.ABS. Def0000
+S _cpct_loadBinaryFile Ref0000
+S _cpct_memset Ref0000
+S _cpct_getScreenPtr Ref0000
+A _CODE size 5C flags 0 addr 0
+S _main Def0000
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00
+R 00 00 00 00
+T 00 00 CD 00 00 CD 00 00 21 00 40 E5 AF F5 33 26
+R 00 00 00 00 02 03 01 00 02 06 02 00
+T 0E 00 C0 E5 CD 00 00 21 00 C0 E5 21 3D 00 E5 CD
+R 00 00 00 00 02 05 05 00 00 0C 00 00
+T 1C 00 00 00 F1 21 14 60 E3 21 00 C0 E5 CD 00 00
+R 00 00 00 00 02 02 04 00 02 0E 06 00
+T 2A 00 01 46 00 11 01 00 D5 E5 C5 CD 00 00 21
+R 00 00 00 00 00 03 00 00 02 0C 00 00
+T 37 00 06 00 39 F9
+R 00 00 00 00
+T 3B 00
+R 00 00 00 00
+T 3B 00 18 FE
+R 00 00 00 00
+T 3D 00
+R 00 00 00 00
+T 3D 00 46 4F 4E 44 2E 53 43 52 00
+R 00 00 00 00
+T 46 00
+R 00 00 00 00
+T 46 00 57 65 6C 63 6F 6D 65 20 74 6F 20 43 50 43
+R 00 00 00 00
+T 54 00 74 65 6C 65 72 61 21 00
+R 00 00 00 00
