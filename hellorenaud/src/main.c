@@ -137,6 +137,10 @@ void main(void) {
 StoreDriveLetter();
 InitializeAmsdos();
 
+   cpct_setVideoMode(0);
+   cpct_setBorder(HW_BLACK);
+   cpct_setPalette(g_tile_palette, 6);
+
 cpct_loadBinaryFile("CPC-BAT.SCR", 0xC000);
 
 
@@ -157,9 +161,6 @@ cpct_loadBinaryFile("CPC-BAT.SCR", 0xC000);
    //LoadFile("FOND.SCR",0xC000);
 
    bank0123();
-   cpct_setVideoMode(0);
-   cpct_setBorder(HW_BLACK);
-   cpct_setPalette(g_tile_palette, 6);
 
    // Draw the sprite to screen
    p = cpct_getScreenPtr(CPCT_VMEM_START, 0,110+16);

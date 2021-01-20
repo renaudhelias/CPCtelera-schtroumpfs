@@ -252,63 +252,63 @@
    4292 CD 0D 49      [17]  252 	call	_StoreDriveLetter
                             253 ;src/main.c:138: InitializeAmsdos();
    4295 CD 1B 49      [17]  254 	call	_InitializeAmsdos
-                            255 ;src/main.c:140: cpct_loadBinaryFile("CPC-BAT.SCR", 0xC000);
-   4298 21 00 C0      [10]  256 	ld	hl, #0xc000
-   429B E5            [11]  257 	push	hl
-   429C 21 97 43      [10]  258 	ld	hl, #___str_0
-   429F E5            [11]  259 	push	hl
-   42A0 CD 58 49      [17]  260 	call	_cpct_loadBinaryFile
-   42A3 F1            [10]  261 	pop	af
-   42A4 F1            [10]  262 	pop	af
-                            263 ;src/main.c:145: bank7_C000();
-   42A5 CD 50 44      [17]  264 	call	_bank7_C000
-                            265 ;src/main.c:146: akp_musicInit();
-   42A8 CD 4B 41      [17]  266 	call	_akp_musicInit
-                            267 ;src/main.c:147: bank0123();
-   42AB CD 4A 44      [17]  268 	call	_bank0123
-                            269 ;src/main.c:150: cpct_disableFirmware();
-   42AE CD DD 4B      [17]  270 	call	_cpct_disableFirmware
-                            271 ;src/main.c:151: cpct_memcpy(0x6000,0x8000,0x2000);// la pile peut etre négative...
-   42B1 21 00 20      [10]  272 	ld	hl, #0x2000
-   42B4 E5            [11]  273 	push	hl
-   42B5 26 80         [ 7]  274 	ld	h, #0x80
-   42B7 E5            [11]  275 	push	hl
-   42B8 26 60         [ 7]  276 	ld	h, #0x60
-   42BA E5            [11]  277 	push	hl
-   42BB CD D5 4B      [17]  278 	call	_cpct_memcpy
-                            279 ;src/main.c:152: cpct_setStackLocation(0x6000);
-   42BE 21 00 60      [10]  280 	ld	hl, #0x6000
-   42C1 CD 5B 4B      [17]  281 	call	_cpct_setStackLocation
-                            282 ;src/main.c:153: cpct_memset_f64(0x8000, 0x0000, 0x4000);
-   42C4 21 00 40      [10]  283 	ld	hl, #0x4000
-   42C7 E5            [11]  284 	push	hl
-   42C8 26 00         [ 7]  285 	ld	h, #0x00
-   42CA E5            [11]  286 	push	hl
-   42CB 26 80         [ 7]  287 	ld	h, #0x80
-   42CD E5            [11]  288 	push	hl
-   42CE CD 13 4B      [17]  289 	call	_cpct_memset_f64
-                            290 ;src/main.c:159: bank0123();
-   42D1 CD 4A 44      [17]  291 	call	_bank0123
-                            292 ;src/main.c:160: cpct_setVideoMode(0);
-   42D4 2E 00         [ 7]  293 	ld	l, #0x00
-   42D6 CD AC 4B      [17]  294 	call	_cpct_setVideoMode
-                            295 ;src/main.c:161: cpct_setBorder(HW_BLACK);
-   42D9 21 10 14      [10]  296 	ld	hl, #0x1410
-   42DC E5            [11]  297 	push	hl
-   42DD CD 17 4A      [17]  298 	call	_cpct_setPALColour
-                            299 ;src/main.c:162: cpct_setPalette(g_tile_palette, 6);
-   42E0 21 06 00      [10]  300 	ld	hl, #0x0006
-   42E3 E5            [11]  301 	push	hl
-   42E4 21 FD 44      [10]  302 	ld	hl, #_g_tile_palette
-   42E7 E5            [11]  303 	push	hl
-   42E8 CD 96 49      [17]  304 	call	_cpct_setPalette
-                            305 ;src/main.c:165: p = cpct_getScreenPtr(CPCT_VMEM_START, 0,110+16);
+                            255 ;src/main.c:140: cpct_setVideoMode(0);
+   4298 2E 00         [ 7]  256 	ld	l, #0x00
+   429A CD AC 4B      [17]  257 	call	_cpct_setVideoMode
+                            258 ;src/main.c:141: cpct_setBorder(HW_BLACK);
+   429D 21 10 14      [10]  259 	ld	hl, #0x1410
+   42A0 E5            [11]  260 	push	hl
+   42A1 CD 17 4A      [17]  261 	call	_cpct_setPALColour
+                            262 ;src/main.c:142: cpct_setPalette(g_tile_palette, 6);
+   42A4 21 06 00      [10]  263 	ld	hl, #0x0006
+   42A7 E5            [11]  264 	push	hl
+   42A8 21 FD 44      [10]  265 	ld	hl, #_g_tile_palette
+   42AB E5            [11]  266 	push	hl
+   42AC CD 96 49      [17]  267 	call	_cpct_setPalette
+                            268 ;src/main.c:144: cpct_loadBinaryFile("CPC-BAT.SCR", 0xC000);
+   42AF 21 00 C0      [10]  269 	ld	hl, #0xc000
+   42B2 E5            [11]  270 	push	hl
+   42B3 21 97 43      [10]  271 	ld	hl, #___str_0
+   42B6 E5            [11]  272 	push	hl
+   42B7 CD 58 49      [17]  273 	call	_cpct_loadBinaryFile
+   42BA F1            [10]  274 	pop	af
+   42BB F1            [10]  275 	pop	af
+                            276 ;src/main.c:149: bank7_C000();
+   42BC CD 50 44      [17]  277 	call	_bank7_C000
+                            278 ;src/main.c:150: akp_musicInit();
+   42BF CD 4B 41      [17]  279 	call	_akp_musicInit
+                            280 ;src/main.c:151: bank0123();
+   42C2 CD 4A 44      [17]  281 	call	_bank0123
+                            282 ;src/main.c:154: cpct_disableFirmware();
+   42C5 CD DD 4B      [17]  283 	call	_cpct_disableFirmware
+                            284 ;src/main.c:155: cpct_memcpy(0x6000,0x8000,0x2000);// la pile peut etre négative...
+   42C8 21 00 20      [10]  285 	ld	hl, #0x2000
+   42CB E5            [11]  286 	push	hl
+   42CC 26 80         [ 7]  287 	ld	h, #0x80
+   42CE E5            [11]  288 	push	hl
+   42CF 26 60         [ 7]  289 	ld	h, #0x60
+   42D1 E5            [11]  290 	push	hl
+   42D2 CD D5 4B      [17]  291 	call	_cpct_memcpy
+                            292 ;src/main.c:156: cpct_setStackLocation(0x6000);
+   42D5 21 00 60      [10]  293 	ld	hl, #0x6000
+   42D8 CD 5B 4B      [17]  294 	call	_cpct_setStackLocation
+                            295 ;src/main.c:157: cpct_memset_f64(0x8000, 0x0000, 0x4000);
+   42DB 21 00 40      [10]  296 	ld	hl, #0x4000
+   42DE E5            [11]  297 	push	hl
+   42DF 26 00         [ 7]  298 	ld	h, #0x00
+   42E1 E5            [11]  299 	push	hl
+   42E2 26 80         [ 7]  300 	ld	h, #0x80
+   42E4 E5            [11]  301 	push	hl
+   42E5 CD 13 4B      [17]  302 	call	_cpct_memset_f64
+                            303 ;src/main.c:163: bank0123();
+   42E8 CD 4A 44      [17]  304 	call	_bank0123
+                            305 ;src/main.c:166: p = cpct_getScreenPtr(CPCT_VMEM_START, 0,110+16);
    42EB 21 00 7E      [10]  306 	ld	hl, #0x7e00
    42EE E5            [11]  307 	push	hl
    42EF 26 C0         [ 7]  308 	ld	h, #0xc0
    42F1 E5            [11]  309 	push	hl
    42F2 CD 05 4C      [17]  310 	call	_cpct_getScreenPtr
-                            311 ;src/main.c:166: cpct_hflipSpriteM0(4, 8, sprite);
+                            311 ;src/main.c:167: cpct_hflipSpriteM0(4, 8, sprite);
    42F5 01 CE 41      [10]  312 	ld	bc, #_g_items_0
    42F8 E5            [11]  313 	push	hl
    42F9 C5            [11]  314 	push	bc
@@ -318,56 +318,56 @@
    42FF CD 60 4B      [17]  318 	call	_cpct_hflipSpriteM0
    4302 C1            [10]  319 	pop	bc
    4303 E1            [10]  320 	pop	hl
-                            321 ;src/main.c:167: cpct_drawSprite(sprite, p, 4, 8);
+                            321 ;src/main.c:168: cpct_drawSprite(sprite, p, 4, 8);
    4304 11 04 08      [10]  322 	ld	de, #0x0804
    4307 D5            [11]  323 	push	de
    4308 E5            [11]  324 	push	hl
    4309 C5            [11]  325 	push	bc
    430A CD 2C 4A      [17]  326 	call	_cpct_drawSprite
-                            327 ;src/main.c:170: p = cpct_getScreenPtr(CPCT_VMEM_START, 1,96+16);
+                            327 ;src/main.c:171: p = cpct_getScreenPtr(CPCT_VMEM_START, 1,96+16);
    430D 21 01 70      [10]  328 	ld	hl, #0x7001
    4310 E5            [11]  329 	push	hl
    4311 21 00 C0      [10]  330 	ld	hl, #0xc000
    4314 E5            [11]  331 	push	hl
    4315 CD 05 4C      [17]  332 	call	_cpct_getScreenPtr
-                            333 ;src/main.c:171: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
+                            333 ;src/main.c:172: cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
    4318 01 0D 45      [10]  334 	ld	bc, #_g_tile_schtroumpf+0
    431B 11 10 20      [10]  335 	ld	de, #0x2010
    431E D5            [11]  336 	push	de
    431F E5            [11]  337 	push	hl
    4320 C5            [11]  338 	push	bc
    4321 CD E4 4A      [17]  339 	call	_cpct_drawSpriteMasked
-                            340 ;src/main.c:173: calque8000();
+                            340 ;src/main.c:174: calque8000();
    4324 CD 29 44      [17]  341 	call	_calque8000
-                            342 ;src/main.c:176: screen_location=(u8 *)(0x2000);
+                            342 ;src/main.c:177: screen_location=(u8 *)(0x2000);
    4327 21 00 20      [10]  343 	ld	hl, #0x2000
    432A 22 D6 4C      [16]  344 	ld	(_screen_location), hl
-                            345 ;src/main.c:177: screen_plot_address=(u8 *)(0x8000+80-2);
+                            345 ;src/main.c:178: screen_plot_address=(u8 *)(0x8000+80-2);
    432D 21 4E 80      [10]  346 	ld	hl, #0x804e
    4330 22 D8 4C      [16]  347 	ld	(_screen_plot_address), hl
-                            348 ;src/main.c:179: cpct_setInterruptHandler(myInterruptHandler);
+                            348 ;src/main.c:180: cpct_setInterruptHandler(myInterruptHandler);
    4333 21 EE 41      [10]  349 	ld	hl, #_myInterruptHandler
    4336 CD 25 4C      [17]  350 	call	_cpct_setInterruptHandler
-                            351 ;src/main.c:181: while (1) {
+                            351 ;src/main.c:182: while (1) {
    4339 01 00 00      [10]  352 	ld	bc, #0x0000
    433C                     353 00104$:
-                            354 ;src/main.c:182: cpct_waitVSYNC();
+                            354 ;src/main.c:183: cpct_waitVSYNC();
    433C C5            [11]  355 	push	bc
    433D CD A4 4B      [17]  356 	call	_cpct_waitVSYNC
    4340 C1            [10]  357 	pop	bc
-                            358 ;src/main.c:184: screen_location++;
+                            358 ;src/main.c:185: screen_location++;
    4341 FD 21 D6 4C   [14]  359 	ld	iy, #_screen_location
    4345 FD 34 00      [23]  360 	inc	0 (iy)
    4348 20 03         [12]  361 	jr	NZ,00116$
    434A FD 34 01      [23]  362 	inc	1 (iy)
    434D                     363 00116$:
-                            364 ;src/main.c:185: screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
+                            364 ;src/main.c:186: screen_location=(u8 *)(((u16)screen_location) & 0x23FF);
    434D 2A D6 4C      [16]  365 	ld	hl, (_screen_location)
    4350 7C            [ 4]  366 	ld	a, h
    4351 E6 23         [ 7]  367 	and	a, #0x23
    4353 67            [ 4]  368 	ld	h, a
    4354 22 D6 4C      [16]  369 	ld	(_screen_location), hl
-                            370 ;src/main.c:189: screen_plot_address+=2;
+                            370 ;src/main.c:190: screen_plot_address+=2;
    4357 21 D8 4C      [10]  371 	ld	hl, #_screen_plot_address
    435A 7E            [ 7]  372 	ld	a, (hl)
    435B C6 02         [ 7]  373 	add	a, #0x02
@@ -376,13 +376,13 @@
    435F 7E            [ 7]  376 	ld	a, (hl)
    4360 CE 00         [ 7]  377 	adc	a, #0x00
    4362 77            [ 7]  378 	ld	(hl), a
-                            379 ;src/main.c:190: screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
+                            379 ;src/main.c:191: screen_plot_address=(u8 *)(((u16)screen_plot_address) & 0x87FF);
    4363 2A D8 4C      [16]  380 	ld	hl, (_screen_plot_address)
    4366 7C            [ 4]  381 	ld	a, h
    4367 E6 87         [ 7]  382 	and	a, #0x87
    4369 67            [ 4]  383 	ld	h, a
    436A 22 D8 4C      [16]  384 	ld	(_screen_plot_address), hl
-                            385 ;src/main.c:196: scroll_hard(t,screen_plot_address);
+                            385 ;src/main.c:197: scroll_hard(t,screen_plot_address);
    436D C5            [11]  386 	push	bc
    436E 2A D8 4C      [16]  387 	ld	hl, (_screen_plot_address)
    4371 E5            [11]  388 	push	hl
@@ -391,9 +391,9 @@
    4376 F1            [10]  391 	pop	af
    4377 F1            [10]  392 	pop	af
    4378 C1            [10]  393 	pop	bc
-                            394 ;src/main.c:198: t=t+1;
+                            394 ;src/main.c:199: t=t+1;
    4379 03            [ 6]  395 	inc	bc
-                            396 ;src/main.c:200: cpct_scanKeyboard_f();
+                            396 ;src/main.c:201: cpct_scanKeyboard_f();
    437A C5            [11]  397 	push	bc
    437B CD AD 49      [17]  398 	call	_cpct_scanKeyboard_f
    437E CD BA 4B      [17]  399 	call	_cpct_isAnyKeyPressed_f
@@ -401,7 +401,7 @@
    4382 7D            [ 4]  401 	ld	a, l
    4383 B7            [ 4]  402 	or	a, a
    4384 28 B6         [12]  403 	jr	Z,00104$
-                            404 ;src/main.c:202: cpct_memset_f64(0x8000, 0x0000, 0x4000);
+                            404 ;src/main.c:203: cpct_memset_f64(0x8000, 0x0000, 0x4000);
    4386 C5            [11]  405 	push	bc
    4387 21 00 40      [10]  406 	ld	hl, #0x4000
    438A E5            [11]  407 	push	hl
