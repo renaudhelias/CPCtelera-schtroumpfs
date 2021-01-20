@@ -15,5 +15,6 @@ obj/main.rel
 obj/jdvapi_sync.rel
 obj/rupture.rel
 obj/schtroumpf.rel
+obj/cpct_floppy.rel
 
 -e

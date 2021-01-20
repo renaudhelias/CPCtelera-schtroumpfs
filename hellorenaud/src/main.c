@@ -29,6 +29,7 @@
 #include "audio.h"
 #endif
 #include "jdvapi_sync.h"
+#include "cpct_floppy.h"
 
 // Tile g_items_0: 8x8 pixels, 4x8 bytes.
 const u8 g_items_0[4 * 8] = {
@@ -77,9 +78,9 @@ void myInterruptHandler() {
    if (intCounter == 6) intCounter=0;
 
    if (intCounter == 2) {
-	cpct_setBorder(2);
+	cpct_setBorder(0x54);
    } else {
-	cpct_setBorder(3);
+	cpct_setBorder(0x50);
    }
 
 	if (intCounter==5) {
@@ -133,6 +134,13 @@ void main(void) {
    u8* p;
    u8* sprite=g_items_0;
 
+StoreDriveLetter();
+InitializeAmsdos();
+
+cpct_loadBinaryFile("CPC-BAT.SCR", 0xC000);
+
+
+
 #ifndef NO_SOUND
    bank7_C000();
    akp_musicInit();
@@ -142,7 +150,11 @@ void main(void) {
    cpct_disableFirmware();
    cpct_memcpy(0x6000,0x8000,0x2000);// la pile peut etre négative...
    cpct_setStackLocation(0x6000);
-   cpct_memset_f64(0x8000, 0xFFFF, 0x4000);
+   cpct_memset_f64(0x8000, 0x0000, 0x4000);
+
+   //load fond
+   //SetupDOS();
+   //LoadFile("FOND.SCR",0xC000);
 
    bank0123();
    cpct_setVideoMode(0);
@@ -150,12 +162,12 @@ void main(void) {
    cpct_setPalette(g_tile_palette, 6);
 
    // Draw the sprite to screen
-   p = cpct_getScreenPtr(CPCT_VMEM_START, 9,110);
+   p = cpct_getScreenPtr(CPCT_VMEM_START, 0,110+16);
    cpct_hflipSpriteM0(4, 8, sprite);
    cpct_drawSprite(sprite, p, 4, 8);
 
    // le schtroumpf
-   p = cpct_getScreenPtr(CPCT_VMEM_START, 10,96);
+   p = cpct_getScreenPtr(CPCT_VMEM_START, 1,96+16);
    cpct_drawSpriteMasked(g_tile_schtroumpf, p, G_TILE_SCHTROUMPF_W, G_TILE_SCHTROUMPF_H);
 
 calque8000();
